@@ -1,0 +1,85 @@
+version: '2'
+services:
+  dbms:
+    container_name: apim_rdbms
+    build:
+        context: .
+        dockerfile: database/Dockerfile
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+  svnrepo:
+    container_name: svnrepo
+    image: dockerhub.private.wso2.com/svnrepo
+  gateway-manager:
+    container_name: gateway-manager
+    build:
+      context: .
+      dockerfile: gateway-manager/Dockerfile
+    environment:
+      - SLEEP=150
+    links:
+      - nginx:apim-gateway-worker
+      - nginx:apim-store
+      - nginx:apim-publisher
+      - nginx:apim-keymanager
+  gateway-worker:
+    container_name: gateway-worker
+    build:
+      context: .
+      dockerfile: gateway-worker/Dockerfile
+    environment:
+      - SLEEP=500
+    links:
+      - nginx:mgt.gw.apim.wso2.org
+      - nginx:apim-store
+      - nginx:apim-publisher
+      - nginx:apim-keymanager
+  store:
+    container_name: store
+    build:
+      context: .
+      dockerfile: store/Dockerfile
+    environment:
+      - SLEEP=250
+    links:
+      - nginx:mgt.gw.apim.wso2.org
+      - nginx:apim-gateway-worker
+      - nginx:apim-publisher
+      - nginx:apim-keymanager
+  keymanager:
+    container_name: keymanager
+    build:
+      context: .
+      dockerfile: keymanager/Dockerfile
+    environment:
+      - SLEEP=50
+    links:
+      - nginx:mgt.gw.apim.wso2.org
+      - nginx:apim-keymanager
+      - nginx:apim-gateway-worker
+      - nginx:apim-store
+  keymanager2:
+    container_name: keymanager2
+    build:
+      context: .
+      dockerfile: keymanager/Dockerfile
+    environment:
+      - SLEEP=100
+    links:
+      - nginx:mgt.gw.apim.wso2.org
+      - nginx:apim-keymanager
+      - nginx:apim-gateway-worker
+      - nginx:apim-store
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    environment:
+      - SLEEP=100
+    ports:
+      - "443:9443"
+      - "80:9763"
+      - "8280:8280"
+      - "8243:8243"
+
