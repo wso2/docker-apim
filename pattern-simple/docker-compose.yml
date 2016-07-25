@@ -1,0 +1,31 @@
+version: '2'
+services:
+  dbms:
+    container_name: apim_rdbms
+    build:
+        context: .
+        dockerfile: database/Dockerfile
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+  api-manager:
+    container_name: api-manager
+    build:
+      context: .
+      dockerfile: api-manager/Dockerfile
+    environment:
+      - SLEEP=100
+    links:
+      - nginx:api-manager
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    environment:
+      - SLEEP=100
+    ports:
+      - "444:9443"
+      - "81:9763"
+      - "8280:8280"
+      - "8243:8243"
+
