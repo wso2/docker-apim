@@ -1,6 +1,6 @@
 ### This repository contains API Manager 1.10.0 with Identity Server 5.1.0 pre packaged Key Manager deployment with Docker compose
 
-![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/1.10.0/patterns/design/is-askm.png)
+![alt tag](https://github.com/sanjeewa-malalgoda/deployment-patterns/blob/master/wso2am/1.10.0/patterns/design/is-askm.png)
 
 #### How to run
 

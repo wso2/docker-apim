@@ -1,6 +1,6 @@
 ### This repository contains API Manager 1.10.0 Basic All in one deployment with Docker compose
 
-![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/1.10.0/patterns/design/simple-pattern.png)
+![alt tag](https://github.com/sanjeewa-malalgoda/deployment-patterns/blob/master/wso2am/1.10.0/patterns/design/simple-pattern.png)
 
 #### How to run
 
