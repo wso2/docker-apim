@@ -76,7 +76,7 @@ services:
       context: .
       dockerfile: nginx/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=300
     ports:
       - "443:9443"
       - "80:9763"
