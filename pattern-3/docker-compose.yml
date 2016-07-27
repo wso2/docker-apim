@@ -3,8 +3,8 @@ services:
   dbms:
     container_name: apim_rdbms
     build:
-        context: .
-        dockerfile: database/Dockerfile
+        context: ../
+        dockerfile: pattern-3/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
@@ -25,8 +25,8 @@ services:
   gateway-worker:
     container_name: gateway-worker
     build:
-      context: .
-      dockerfile: gateway-worker/Dockerfile
+      context: ../
+      dockerfile: pattern-3/gateway-worker/Dockerfile
     environment:
       - SLEEP=500
     links:
@@ -37,8 +37,8 @@ services:
   store:
     container_name: store
     build:
-      context: .
-      dockerfile: store/Dockerfile
+      context: ../
+      dockerfile: pattern-3/store/Dockerfile
     environment:
       - SLEEP=250
     links:
@@ -49,8 +49,8 @@ services:
   publisher:
     container_name: publisher
     build:
-      context: .
-      dockerfile: publisher/Dockerfile
+      context: ../
+      dockerfile: pattern-3/publisher/Dockerfile
     environment:
       - SLEEP=200
     links:
@@ -61,8 +61,8 @@ services:
   keymanager:
     container_name: keymanager
     build:
-      context: .
-      dockerfile: keymanager/Dockerfile
+      context: ../
+      dockerfile: pattern-3/keymanager/Dockerfile
     environment:
       - SLEEP=50
     links:
@@ -73,8 +73,8 @@ services:
   keymanager1:
     container_name: keymanager1
     build:
-      context: .
-      dockerfile: keymanager/Dockerfile
+      context: ../
+      dockerfile: pattern-3/keymanager/Dockerfile
     environment:
       - SLEEP=150
     links:
@@ -85,8 +85,8 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: .
-      dockerfile: nginx/Dockerfile
+      context: ../
+      dockerfile: pattern-3/nginx/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -95,8 +95,8 @@ services:
   nginx-dmz:
     container_name: nginx-dmz
     build:
-      context: .
-      dockerfile: nginx-dmz/Dockerfile
+      context: ../
+      dockerfile: pattern-3/nginx-dmz/Dockerfile
     environment:
       - SLEEP=150
     links:
