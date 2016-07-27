@@ -3,8 +3,8 @@ services:
   dbms:
     container_name: apim_rdbms
     build:
-        context: .
-        dockerfile: database/Dockerfile
+        context: ../
+        dockerfile: pattern-4/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
@@ -13,8 +13,8 @@ services:
   gateway:
     container_name: gateway
     build:
-      context: .
-      dockerfile: gateway/Dockerfile
+      context: ../
+      dockerfile: pattern-4/gateway/Dockerfile
     environment:
       - SLEEP=100
     links:
@@ -25,8 +25,8 @@ services:
   gateway-dmz:
     container_name: gateway-dmz
     build:
-      context: .
-      dockerfile: gateway-dmz/Dockerfile
+      context: ../
+      dockerfile: pattern-4/gateway-dmz/Dockerfile
     environment:
       - SLEEP=250
     links:
@@ -37,8 +37,8 @@ services:
   store:
     container_name: store
     build:
-      context: .
-      dockerfile: store/Dockerfile
+      context: ../
+      dockerfile: pattern-4/store/Dockerfile
     environment:
       - SLEEP=200
     links:
@@ -53,8 +53,8 @@ services:
   publisher:
     container_name: publisher
     build:
-      context: .
-      dockerfile: publisher/Dockerfile
+      context: ../
+      dockerfile: pattern-4/publisher/Dockerfile
     environment:
       - SLEEP=150
     links:
@@ -68,8 +68,8 @@ services:
   keymanager:
     container_name: keymanager
     build:
-      context: .
-      dockerfile: keymanager/Dockerfile
+      context: ../
+      dockerfile: pattern-4/keymanager/Dockerfile
     environment:
       - SLEEP=50
     links:
@@ -80,8 +80,8 @@ services:
   store-dmz:
     container_name: store-dmz
     build:
-      context: .
-      dockerfile: store-dmz/Dockerfile
+      context: ../
+      dockerfile: pattern-4/store-dmz/Dockerfile
     environment:
       - SLEEP=300
     links:
@@ -92,8 +92,8 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: .
-      dockerfile: nginx/Dockerfile
+      context: ../
+      dockerfile: pattern-4/nginx/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -104,8 +104,8 @@ services:
   nginx-dmz:
     container_name: nginx-dmz
     build:
-      context: .
-      dockerfile: nginx-dmz/Dockerfile
+      context: ../
+      dockerfile: pattern-4/nginx-dmz/Dockerfile
     environment:
       - SLEEP=100
     links:
