@@ -3,15 +3,15 @@ services:
   dbms:
     container_name: apim_rdbms
     build:
-        context: .
-        dockerfile: database/Dockerfile
+        context: ../
+        dockerfile: pattern-9/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   api-manager:
     container_name: api-manager
     build:
-      context: .
-      dockerfile: api-manager/Dockerfile
+      context: ../
+      dockerfile: pattern-9/api-manager/Dockerfile
     environment:
       - SLEEP=100
     links:
@@ -19,8 +19,8 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: .
-      dockerfile: nginx/Dockerfile
+      context: ../
+      dockerfile: pattern-9/nginx/Dockerfile
     environment:
       - SLEEP=100
     ports:

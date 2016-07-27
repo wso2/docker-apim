@@ -1,6 +1,6 @@
-from dockerhub.private.wso2.com/wso2am:1.10.0
+FROM dockerhub.private.wso2.com/wso2am:1.10.0
 
-COPY api-manager/carbon/ /mnt/wso2/carbon-home/
+COPY pattern-9/api-manager/carbon/ /mnt/wso2/carbon-home/
 
 COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2/carbon-home/repository/components/lib/
 
