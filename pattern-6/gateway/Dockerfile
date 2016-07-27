@@ -1,8 +1,6 @@
-from dockerhub.private.wso2.com/wso2am:1.10.0
+FROM dockerhub.private.wso2.com/wso2am:1.10.0
 
-RUN mkdir -p /mnt/wso2/carbon-home
-
-COPY gateway/carbon/ /mnt/wso2/carbon-home/
+COPY pattern-6/gateway/carbon/ /mnt/wso2/carbon-home/
 
 COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2/carbon-home/repository/components/lib/
 COPY artifacts/svnkit-all-1.8.7.wso2v1.jar /mnt/wso2/carbon-home/repository/components/dropins/

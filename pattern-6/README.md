@@ -6,7 +6,7 @@
 
  ```docker login dockerhub.private.wso2.com ```
 
- ```docker-compose up ```
+ ```docker-compose up --build```
 
 This will deploy the following,
 
