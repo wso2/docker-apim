@@ -4,7 +4,7 @@ services:
     container_name: apim_rdbms
     build:
         context: ../
-        dockerfile: pattern-7/database/Dockerfile
+        dockerfile: pattern-8/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
@@ -14,7 +14,7 @@ services:
     container_name: gateway-manager
     build:
       context: ../
-      dockerfile: pattern-7/gateway-manager/Dockerfile
+      dockerfile: pattern-8/gateway-manager/Dockerfile
     environment:
       - SLEEP=150
     links:
@@ -26,7 +26,7 @@ services:
     container_name: gateway-worker
     build:
       context: ../
-      dockerfile: pattern-7/gateway-worker/Dockerfile
+      dockerfile: pattern-8/gateway-worker/Dockerfile
     environment:
       - SLEEP=500
     links:
@@ -38,7 +38,7 @@ services:
     container_name: store
     build:
       context: ../
-      dockerfile: pattern-7/store/Dockerfile
+      dockerfile: pattern-8/store/Dockerfile
     environment:
       - SLEEP=250
     links:
@@ -50,7 +50,7 @@ services:
     container_name: keymanager
     build:
       context: ../
-      dockerfile: pattern-7/keymanager/Dockerfile
+      dockerfile: pattern-8/keymanager/Dockerfile
     environment:
       - SLEEP=50
     links:
@@ -62,7 +62,7 @@ services:
     container_name: keymanager2
     build:
       context: ../
-      dockerfile: pattern-7/keymanager/Dockerfile
+      dockerfile: pattern-8/keymanager/Dockerfile
     environment:
       - SLEEP=100
     links:
@@ -74,7 +74,7 @@ services:
     container_name: nginx
     build:
       context: ../
-      dockerfile: pattern-7/nginx/Dockerfile
+      dockerfile: pattern-8/nginx/Dockerfile
     environment:
       - SLEEP=100
     ports:
