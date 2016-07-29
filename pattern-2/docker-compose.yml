@@ -18,22 +18,22 @@ services:
     environment:
       - SLEEP=100
     links:
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
+      - nginx-dmz:apim-gateway-worker
+      - nginx-lan:apim-store
+      - nginx-lan:apim-publisher
+      - nginx-lan:apim-keymanager
   gateway-worker:
     container_name: gateway-worker
     build:
       context: ../
       dockerfile: pattern-2/gateway-worker/Dockerfile
     environment:
-      - SLEEP=500
+      - SLEEP=400
     links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-store
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
+      - nginx-dmz:mgt.gw.apim.wso2.org
+      - nginx-lan:apim-store
+      - nginx-lan:apim-publisher
+      - nginx-lan:apim-keymanager
   store:
     container_name: store
     build:
@@ -42,10 +42,10 @@ services:
     environment:
       - SLEEP=200
     links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-gateway-worker
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
+      - nginx-dmz:mgt.gw.apim.wso2.org
+      - nginx-lan:apim-gateway-worker
+      - nginx-lan:apim-publisher
+      - nginx-lan:apim-keymanager
   publisher:
     container_name: publisher
     build:
@@ -54,10 +54,10 @@ services:
     environment:
       - SLEEP=150
     links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-keymanager
+      - nginx-dmz:mgt.gw.apim.wso2.org
+      - nginx-lan:apim-gateway-worker
+      - nginx-lan:apim-store
+      - nginx-lan:apim-keymanager
   keymanager:
     container_name: keymanager
     build:
@@ -66,20 +66,10 @@ services:
     environment:
       - SLEEP=50
     links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-keymanager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-  nginx:
-    container_name: nginx
-    build:
-      context: ../
-      dockerfile: pattern-2/nginx/Dockerfile
-    environment:
-      - SLEEP=100
-    ports:
-      - "9443:9443"
-      - "9763:9763"
+      - nginx-dmz:mgt.gw.apim.wso2.org
+      - nginx-lan:apim-keymanager
+      - nginx-lan:apim-gateway-worker
+      - nginx-lan:apim-store
   nginx-dmz:
     container_name: nginx-dmz
     build:
@@ -88,14 +78,20 @@ services:
     environment:
       - SLEEP=100
     links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-keymanager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-publisher
+    - nginx-lan:apim-keymanager
+    ports:
+      - "9443:9443"
+      - "9763:9763"
+      - "8243:8243"
+      - "8280:8280"
+  nginx-lan:
+    container_name: nginx-lan
+    build:
+      context: ../
+      dockerfile: pattern-2/nginx-lan/Dockerfile
+    environment:
+      - SLEEP=100
     ports:
       - "443:9443"
       - "80:9763"
-      - "8280:8280"
-      - "8243:8243"
 
