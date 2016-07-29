@@ -327,12 +327,12 @@
 	-Gateway use this parameter to connect key validation thrift service. 
         -->
 
-        <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
+        <KeyValidatorClientType>WSClient</KeyValidatorClientType>
         <ThriftClientPort>10397</ThriftClientPort>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <ThriftServerPort>10397</ThriftServerPort>
 	<!--ThriftServerHost>localhost</ThriftServerHost-->
-	<EnableThriftServer>true</EnableThriftServer>
+	<EnableThriftServer>false</EnableThriftServer>
 
         <!-- 
         Scope used for marking Application Tokens. If a token is generated with this scope, they will be treated as Application Access Tokens
@@ -411,12 +411,12 @@
 	<!--GroupingExtractor>org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl</GroupingExtractor-->
 	<CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://apim-front-store/store</URL>
+        <URL>https://lan-apim-store/store</URL>
 
 	<!--
             Server URL of the API Store.
         -->
-        <ServerURL>https://apim-front-store/services/</ServerURL>
+        <ServerURL>https://lan-apim-store/services/</ServerURL>
         <!--
             Admin username for API Store.
         -->
