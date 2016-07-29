@@ -298,7 +298,7 @@
         <!--
             Server URL of the API key manager
         -->
-        <ServerURL>https://keymanager:9443/services/</ServerURL>
+	<ServerURL>https://apim-keymanager:9443/services/</ServerURL>
 
         <!--
             Admin username for API key manager.
@@ -327,12 +327,12 @@
 	-Gateway use this parameter to connect key validation thrift service. 
         -->
 
-        <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
+        <KeyValidatorClientType>WSClient</KeyValidatorClientType>
         <ThriftClientPort>10397</ThriftClientPort>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <ThriftServerPort>10397</ThriftServerPort>
 	<!--ThriftServerHost>localhost</ThriftServerHost-->
-	<EnableThriftServer>true</EnableThriftServer>
+	<EnableThriftServer>false</EnableThriftServer>
 
         <!-- 
         Scope used for marking Application Tokens. If a token is generated with this scope, they will be treated as Application Access Tokens
