@@ -1,5 +1,12 @@
 version: '2'
 services:
+  dbms:
+    container_name: apim_rdbms
+    build:
+        context: ../
+        dockerfile: pattern-1/database/Dockerfile
+    environment:
+        MYSQL_ROOT_PASSWORD: root
   api-manager:
     container_name: api-manager
     build:

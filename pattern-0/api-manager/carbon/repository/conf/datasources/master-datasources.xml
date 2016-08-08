@@ -35,11 +35,11 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:h2:repository/database/WSO2AM_DB;DB_CLOSE_ON_EXIT=FALSE</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
+                    <url>jdbc:mysql://apim_rdbms:3306/apimgtdb?autoReconnect=true</url>
+                    <username>root</username>
+                    <password>root</password>
                     <defaultAutoCommit>false</defaultAutoCommit>
-                    <driverClassName>org.h2.Driver</driverClassName>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -49,7 +49,49 @@
             </definition>
         </datasource>
 
-         <datasource>
+        <datasource>
+            <name>WSO2UM_DB</name>
+            <description>The datasource used by user manager</description>
+            <jndiConfig>
+                <name>jdbc/WSO2UM_DB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:mysql://apim_rdbms:3306/userdb?autoReconnect=true</url>
+                    <username>root</username>
+                    <password>root</password>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <datasource>
+            <name>WSO2REG_DB</name>
+            <description>The datasource used by the registry</description>
+            <jndiConfig>
+                <name>jdbc/WSO2REG_DB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:mysql://apim_rdbms:3306/regdb?autoReconnect=true</url>
+                    <username>root</username>
+                    <password>root</password>
+                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <datasource>
             <name>WSO2AM_STATS_DB</name>
             <description>The datasource used for getting statistics to API Manager</description>
             <jndiConfig>
@@ -69,7 +111,7 @@
                     <validationInterval>30000</validationInterval>
                 </configuration>
             </definition>
-         </datasource>
+        </datasource>
 
         <datasource>
             <name>WSO2_MB_STORE_DB</name>

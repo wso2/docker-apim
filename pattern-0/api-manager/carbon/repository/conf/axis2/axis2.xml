@@ -543,7 +543,7 @@
                 <Password>wso2carbon</Password>
             </TrustStore>
         </parameter>
-        <!--<parameter name="HostnameVerifier">DefaultAndLocalhost</parameter>-->
+        <parameter name="HostnameVerifier">AllowAll</parameter>
             <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
     </transportSender>
 
@@ -658,7 +658,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">wso2.carbon.domain</parameter>
+        <parameter name="domain">wso2.am.domain</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
@@ -679,7 +679,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">127.0.0.1</parameter>
+        <parameter name="localMemberHost">api-manager</parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>127.0.0.1</hostName>
+                <hostName>api-manager</hostName>
                 <port>4000</port>
             </member>
         </members>
