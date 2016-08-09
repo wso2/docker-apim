@@ -11,21 +11,21 @@ services:
     container_name: am-analytics
     build:
       context: ../
-      dockerfile: pattern-10/am-analytics/Dockerfile
+      dockerfile: pattern-1/am-analytics/Dockerfile
     environment:
       - SLEEP=5
   api-manager:
     container_name: api-manager
     build:
       context: ../
-      dockerfile: pattern-10/api-manager/Dockerfile
+      dockerfile: pattern-1/api-manager/Dockerfile
     environment:
-      - SLEEP=5
+      - SLEEP=90
   nginx:
     container_name: nginx
     build:
       context: ../
-      dockerfile: pattern-10/nginx/Dockerfile
+      dockerfile: pattern-1/nginx/Dockerfile
     environment:
       - SLEEP=60
     ports:
@@ -33,3 +33,5 @@ services:
       - "80:9763"
       - "8280:8280"
       - "8243:8243"
+      - "9444:9444"
+      - "9764:9764"
