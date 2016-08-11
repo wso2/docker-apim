@@ -25,7 +25,7 @@
     <fileSets>
         <!-- docker -->
         <fileSet>
-            <directory>${project.basedir}/../</directory>
+            <directory>${project.basedir}</directory>
             <outputDirectory>./</outputDirectory>
             <includes>
                 <include>${wso2.product.name}/**</include>
@@ -44,7 +44,7 @@
 
         <!-- common -->
         <fileSet>
-            <directory>${project.basedir}/../common/</directory>
+            <directory>${project.basedir}/common/</directory>
             <outputDirectory>./common/</outputDirectory>
             <includes>
                 <include>**</include>
