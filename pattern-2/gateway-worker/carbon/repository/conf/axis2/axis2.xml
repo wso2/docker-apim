@@ -628,7 +628,7 @@
      getting this node to join the cluster.
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
-                enable="false">
+                enable="true">
 
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
@@ -650,7 +650,7 @@
                     is deemed to have left the cluster, it will be detected by the Group Membership
                     Service (GMS) using a TCP ping mechanism.
         -->
-        <parameter name="membershipScheme">multicast</parameter>
+        <parameter name="membershipScheme">wka</parameter>
         <!--<parameter name="licenseKey">xxx</parameter>-->
         <!--<parameter name="mgtCenterURL">http://localhost:8081/mancenter/</parameter>-->
 
@@ -679,7 +679,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">api-manager</parameter>
+        <parameter name="localMemberHost">gateway-worker</parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>api-manager</hostName>
+                <hostName>gateway-manager</hostName>
                 <port>4000</port>
             </member>
         </members>

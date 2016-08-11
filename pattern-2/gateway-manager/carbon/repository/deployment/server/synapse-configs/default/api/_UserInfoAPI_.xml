@@ -5,7 +5,7 @@
 	    <property name="uri.var.hostname" expression="get-property('keyManager.hostname')"/>
             <send>
                 <endpoint>
-                    <http uri-template="https://{uri.var.hostname}:{uri.var.portnum}/oauth2/userinfo">
+                    <http uri-template="https://apim-keymanager/oauth2/userinfo">
                         <timeout>
                             <duration>60000</duration>
                             <responseAction>fault</responseAction>

@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+        <ServerURL>https://apim-keymanager:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -216,7 +216,7 @@
              -If you need to start two API Manager instances in the same machine, you need to give different ports to "ThriftServerPort" value in two nodes.
              -ThriftServerHost - Allows to configure a hostname for the thrift server. It uses the carbon hostname by default.
 	         -The Gateway uses this parameter to connect to the key validation thrift service. -->
-        <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
+        <KeyValidatorClientType>WSClient</KeyValidatorClientType>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <!--ThriftClientPort>10397</ThriftClientPort-->
 
@@ -464,8 +464,8 @@
         <DataPublisher>
             <Enabled>true</Enabled>
             <Type>Binary</Type>
-            <ReceiverUrlGroup>tcp://${carbon.local.ip}:${receiver.url.port}</ReceiverUrlGroup>
-            <AuthUrlGroup>ssl://${carbon.local.ip}:${auth.url.port}</AuthUrlGroup>
+            <ReceiverUrlGroup>tcp://traffic-manager:9611</ReceiverUrlGroup>
+            <AuthUrlGroup>ssl://traffic-manager:9711</AuthUrlGroup>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <DataPublisherPool>
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
+            <ServiceURL>https://apim-traffic-manager:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
@@ -490,7 +490,7 @@
         </BlockCondition>
         <JMSConnectionDetails>
             <Enabled>true</Enabled>
-            <ServiceURL>tcp://${carbon.local.ip}:${jms.port}</ServiceURL>
+            <ServiceURL>tcp://traffic-manager:5672</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <Destination>throttleData</Destination>

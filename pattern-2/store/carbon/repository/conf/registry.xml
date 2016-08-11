@@ -33,7 +33,7 @@
     <dbConfig name="govregistry">
         <dataSource>jdbc/WSO2REG_DB</dataSource>
     </dbConfig>
-    <remoteInstance url="https://publisher">
+    <remoteInstance url="https://store">
         <id>gov</id>
         <cacheId>root@jdbc:mysql://apim_rdbms:3306/regdb</cacheId>
         <dbConfig>govregistry</dbConfig>
