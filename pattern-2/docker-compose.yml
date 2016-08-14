@@ -25,11 +25,13 @@ services:
     environment:
       - SLEEP=5
     links:
-      - nginx:apim-traffic-manager
-      - nginx:apim-gateway-manager
-      - nginx:apim-keymanager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
+      - nginx:gateway.apim.wso2.com
+      - nginx:mgt.gateway.apim.wso2.com
+      - nginx:publisher.apim.wso2.com
+      - nginx:store.apim.wso2.com
+      - nginx:keymanager.apim.wso2.com
+      - nginx:trafficm.apim.wso2.com
+      - nginx:analytics.apim.wso2.com
   keymanager:
     container_name: keymanager
     build:
@@ -38,11 +40,13 @@ services:
     environment:
       - SLEEP=60
     links:
-      - nginx:apim-traffic-manager
-      - nginx:apim-gateway-manager
-      - nginx:apim-keymanager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
+      - nginx:gateway.apim.wso2.com
+      - nginx:mgt.gateway.apim.wso2.com
+      - nginx:publisher.apim.wso2.com
+      - nginx:store.apim.wso2.com
+      - nginx:keymanager.apim.wso2.com
+      - nginx:trafficm.apim.wso2.com
+      - nginx:analytics.apim.wso2.com
   gateway-manager:
     container_name: gateway-manager
     build:
@@ -51,50 +55,58 @@ services:
     environment:
       - SLEEP=100
     links:
-      - nginx:apim-traffic-manager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
+      - nginx:gateway.apim.wso2.com
+      - nginx:mgt.gateway.apim.wso2.com
+      - nginx:publisher.apim.wso2.com
+      - nginx:store.apim.wso2.com
+      - nginx:keymanager.apim.wso2.com
+      - nginx:trafficm.apim.wso2.com
+      - nginx:analytics.apim.wso2.com
   gateway-worker:
     container_name: gateway-worker
     build:
       context: ../
       dockerfile: pattern-2/gateway-worker/Dockerfile
     environment:
-      - SLEEP=220
+      - SLEEP=180
     links:
-      - nginx:apim-traffic-manager
-      - nginx:apim-gateway-manager
-      - nginx:apim-store
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
+      - nginx:gateway.apim.wso2.com
+      - nginx:mgt.gateway.apim.wso2.com
+      - nginx:publisher.apim.wso2.com
+      - nginx:store.apim.wso2.com
+      - nginx:keymanager.apim.wso2.com
+      - nginx:trafficm.apim.wso2.com
+      - nginx:analytics.apim.wso2.com
   store:
     container_name: store
     build:
       context: ../
       dockerfile: pattern-2/store/Dockerfile
     environment:
-      - SLEEP=240
+      - SLEEP=200
     links:
-      - nginx:apim-traffic-manager
-      - nginx:apim-gateway-manager
-      - nginx:apim-gateway-worker
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
+      - nginx:gateway.apim.wso2.com
+      - nginx:mgt.gateway.apim.wso2.com
+      - nginx:publisher.apim.wso2.com
+      - nginx:store.apim.wso2.com
+      - nginx:keymanager.apim.wso2.com
+      - nginx:trafficm.apim.wso2.com
+      - nginx:analytics.apim.wso2.com
   publisher:
     container_name: publisher
     build:
       context: ../
       dockerfile: pattern-2/publisher/Dockerfile
     environment:
-      - SLEEP=280
+      - SLEEP=200
     links:
-      - nginx:apim-traffic-manager
-      - nginx:apim-gateway-manager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-keymanager
+      - nginx:gateway.apim.wso2.com
+      - nginx:mgt.gateway.apim.wso2.com
+      - nginx:publisher.apim.wso2.com
+      - nginx:store.apim.wso2.com
+      - nginx:keymanager.apim.wso2.com
+      - nginx:trafficm.apim.wso2.com
+      - nginx:analytics.apim.wso2.com
   nginx:
     container_name: nginx
     build:

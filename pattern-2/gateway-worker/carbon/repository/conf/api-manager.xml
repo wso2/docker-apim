@@ -147,7 +147,7 @@
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRdbmsClientImpl</StatsProviderImpl>
 
         <!-- DAS REST API configuration -->
-        <DASRestApiURL>https://am-analytics:9444</DASRestApiURL>
+        <DASRestApiURL>https://analytics.apim.wso2.com:9444</DASRestApiURL>
         <DASRestApiUsername>admin</DASRestApiUsername>
         <DASRestApiPassword>admin</DASRestApiPassword>
 
@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://apim-keymanager:9443/services/</ServerURL>
+        <ServerURL>https://keymanager.apim.wso2.com:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://apim-traffic-manager:9443/services/</ServiceURL>
+            <ServiceURL>https://trafficm.apim.wso2.com:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
@@ -508,14 +508,14 @@
                 <JobQueueSize>10</JobQueueSize>
             </JMSTaskManager>
         </JMSConnectionDetails>
-        <JMSEventPublisherParameters>
-                <java.naming.factory.initial>org.wso2.andes.jndi.PropertiesFileInitialContextFactory</java.naming.factory.initial>
-                <java.naming.provider.url>repository/conf/jndi.properties</java.naming.provider.url>
-                <transport.jms.DestinationType>topic</transport.jms.DestinationType>
-                <transport.jms.Destination>throttleData</transport.jms.Destination>
-                <transport.jms.ConcurrentPublishers>allow</transport.jms.ConcurrentPublishers>
-                <transport.jms.ConnectionFactoryJNDIName>TopicConnectionFactory</transport.jms.ConnectionFactoryJNDIName>
-        </JMSEventPublisherParameters>
+        <!--<JMSEventPublisherParameters>-->
+                <!--<java.naming.factory.initial>org.wso2.andes.jndi.PropertiesFileInitialContextFactory</java.naming.factory.initial>-->
+                <!--<java.naming.provider.url>repository/conf/jndi.properties</java.naming.provider.url>-->
+                <!--<transport.jms.DestinationType>topic</transport.jms.DestinationType>-->
+                <!--<transport.jms.Destination>throttleData</transport.jms.Destination>-->
+                <!--<transport.jms.ConcurrentPublishers>allow</transport.jms.ConcurrentPublishers>-->
+                <!--<transport.jms.ConnectionFactoryJNDIName>TopicConnectionFactory</transport.jms.ConnectionFactoryJNDIName>-->
+        <!--</JMSEventPublisherParameters>-->
         <!--DefaultLimits>
             <SubscriptionTierLimits>
                 <Gold>5000</Gold>

@@ -5,7 +5,7 @@
 	    <property name="uri.var.hostname" expression="get-property('keyManager.hostname')"/>
             <send>
                 <endpoint>
-                    <http uri-template="https://apim-keymanager/oauth2/authorize">
+                    <http uri-template="https://keymanager.apim.wso2.com:9443/oauth2/authorize">
                         <timeout>
                             <duration>60000</duration>
                             <responseAction>fault</responseAction>

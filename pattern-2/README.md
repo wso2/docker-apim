@@ -48,5 +48,5 @@ https://api-manager/carbon/
 AM Analytics
 
 ```
-https://am-analytics:9444/carbon/
+https://analytics.apim.wso2.com:9444/carbon/
 ```

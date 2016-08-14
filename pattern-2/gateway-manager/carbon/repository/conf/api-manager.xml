@@ -124,7 +124,7 @@
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
-        <Enabled>true</Enabled>
+        <Enabled>false</Enabled>
 
         <!-- Server URL of the remote DAS/CEP server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
@@ -147,7 +147,7 @@
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRdbmsClientImpl</StatsProviderImpl>
 
         <!-- DAS REST API configuration -->
-        <DASRestApiURL>https://am-analytics:9444</DASRestApiURL>
+        <DASRestApiURL>https://analytics.apim.wso2.com:9444</DASRestApiURL>
         <DASRestApiUsername>admin</DASRestApiUsername>
         <DASRestApiPassword>admin</DASRestApiPassword>
 
@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://apim-keymanager:9443/services/</ServerURL>
+        <ServerURL>https://keymanager.apim.wso2.com:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>

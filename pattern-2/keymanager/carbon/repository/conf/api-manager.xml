@@ -87,13 +87,13 @@
                 <Name>Production and Sandbox</Name>
                 <Description>This is a hybrid gateway that handles both production and sandbox token traffic.</Description>
                 <!-- Server URL of the API gateway -->
-                <ServerURL>https://apim-gateway-manager:9443/services/</ServerURL>
+                <ServerURL>https://mgt.gateway.apim.wso2.com:9443/services/</ServerURL>
 		        <!-- Admin username for the API gateway. -->
                 <Username>${admin.username}</Username>
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://apim-gateway-worker:8280,https://apim-gateway-worker:8243</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway.apim.wso2.com:8280,https://gateway.apim.wso2.com:8243</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -124,7 +124,7 @@
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
-        <Enabled>true</Enabled>
+        <Enabled>false</Enabled>
 
         <!-- Server URL of the remote DAS/CEP server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
@@ -147,7 +147,7 @@
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRdbmsClientImpl</StatsProviderImpl>
 
         <!-- DAS REST API configuration -->
-        <DASRestApiURL>https://am-analytics:9444</DASRestApiURL>
+        <DASRestApiURL>https://analytics.apim.wso2.com:9444</DASRestApiURL>
         <DASRestApiUsername>admin</DASRestApiUsername>
         <DASRestApiPassword>admin</DASRestApiPassword>
 
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://apim-traffic-manager:9443/services/</ServiceURL>
+            <ServiceURL>https://trafficm.apim.wso2.com:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
