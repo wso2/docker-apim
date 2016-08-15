@@ -11,7 +11,7 @@
 This will deploy the following,
 
 * Mysql server (container) with apimdb, userdb, regdb
-* APIM Container
+* APIM Store, Publisher, Gateway Manager, Gateway Worker, Traffic Manager distributed Containers
 * APIM Analytics Container
 * Nginx Load Balancer container and points the APIM components through the load balancer.
 
@@ -20,7 +20,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 api-manager
+127.0.0.1 gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -29,24 +29,42 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://api-manager/publisher
+https://publisher.apim.wso2.com/publisher
 ```
 
 Store
 
 ```
-https://api-manager/store/
+https://store.apim.wso2.com/store
 ```
-
 
 Gateway Manager
 
 ```
-https://api-manager/carbon/
+https://mgt.gateway.apim.wso2.com/carbon
+```
+
+Gateway Worker
+
+```
+https://gateway.apim.wso2.com:8243
+http://gateway.apim.wso2.com:8280
+```
+
+Key Manager
+
+```
+https://keymanager.apim.wso2.com/carbon
+```
+
+Traffic Manager
+
+```
+https://trafficm.apim.wso2.com/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9444/carbon/
+https://analytics.apim.wso2.com:9444/carbon
 ```
