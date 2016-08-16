@@ -1,4 +1,4 @@
-### This repository contains API Manager 1.10.0 distributed deployment with Docker compose
+### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
 
 ![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-2.png)
 
