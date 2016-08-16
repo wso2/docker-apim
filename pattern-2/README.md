@@ -11,7 +11,7 @@
 This will deploy the following,
 
 * Mysql server (container) with apimdb, userdb, regdb
-* APIM Store, Publisher, Gateway Manager, Gateway Worker, Traffic Manager distributed Containers
+* APIM Store, Publisher, Gateway Manager, Gateway Worker, Keymanager, Traffic Manager distributed Containers
 * APIM Analytics Container
 * Nginx Load Balancer container and points the APIM components through the load balancer.
 

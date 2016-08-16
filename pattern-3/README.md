@@ -1,4 +1,4 @@
-### This repository contains API Manager 1.10.0 distributed deployment with Docker compose
+### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
 
 ![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-3.png)
 
@@ -12,7 +12,7 @@ This will deploy the following,
 
 * Mysql server (container) with apimdb, userdb, regdb
 * SVN containers in internal and dmz
-* APIM Store, Publisher, Gateway Manager, Gateway Worker, Traffic Manager distributed Containers
+* APIM Store, Publisher, Gateway Manager, Gateway Worker, Keymanager, Traffic Manager distributed Containers
 * DMZ Gateway Manager and DMZ Gateway Worker
 * APIM Analytics Container
 * Nginx Load Balancer container and points the APIM components through the load balancer.
