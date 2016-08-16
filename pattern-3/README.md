@@ -58,7 +58,7 @@ http://gateway.apim.wso2.com:8280
 Gateway Manager DMZ
 
 ```
-https://mgt.gateway-dmz.apim.wso2.com/carbon
+https://mgt.gateway-dmz.apim.wso2.com:9445/carbon
 ```
 
 Gateway Worker DMZ
