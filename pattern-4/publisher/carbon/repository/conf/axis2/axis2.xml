@@ -658,7 +658,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">wso2.pub.store.domain</parameter>
+        <parameter name="domain">wso2.pub.store-km.domain</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>store</hostName>
+                <hostName>store-km</hostName>
                 <port>4000</port>
             </member>
         </members>
