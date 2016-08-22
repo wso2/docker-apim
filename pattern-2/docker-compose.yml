@@ -11,14 +11,12 @@ services:
     container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
   am-analytics:
-    container_name: am-analytics
     build:
       context: ../
       dockerfile: pattern-2/am-analytics/Dockerfile
     environment:
       - SLEEP=5
   traffic-manager:
-    container_name: traffic-manager
     build:
       context: ../
       dockerfile: pattern-2/traffic-manager/Dockerfile
@@ -33,7 +31,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   keymanager:
-    container_name: keymanager
     build:
       context: ../
       dockerfile: pattern-2/keymanager/Dockerfile
@@ -48,7 +45,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   gateway-manager:
-    container_name: gateway-manager
     build:
       context: ../
       dockerfile: pattern-2/gateway-manager/Dockerfile
@@ -63,7 +59,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   gateway-worker:
-    container_name: gateway-worker
     build:
       context: ../
       dockerfile: pattern-2/gateway-worker/Dockerfile
@@ -78,7 +73,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   store:
-    container_name: store
     build:
       context: ../
       dockerfile: pattern-2/store/Dockerfile
@@ -93,7 +87,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   publisher:
-    container_name: publisher
     build:
       context: ../
       dockerfile: pattern-2/publisher/Dockerfile
