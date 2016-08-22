@@ -47,6 +47,8 @@ https://mgt.gateway.apim.wso2.com/carbon
 Gateway Worker/ Keymanager
 
 ```
+https://gateway-km.apim.wso2.com/carbon
+
 https://gateway-km.apim.wso2.com:8243
 http://gateway-km.apim.wso2.com:8280
 ```

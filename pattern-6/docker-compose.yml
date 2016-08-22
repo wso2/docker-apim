@@ -79,7 +79,7 @@ services:
       context: ../
       dockerfile: pattern-6/publisher/Dockerfile
     environment:
-      - SLEEP=200
+      - SLEEP=240
     links:
       - nginx:gateway-km.apim.wso2.com
       - nginx:mgt.gateway.apim.wso2.com

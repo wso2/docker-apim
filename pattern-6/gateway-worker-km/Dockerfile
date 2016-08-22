@@ -7,5 +7,6 @@ COPY artifacts/svnkit-all-1.8.7.wso2v1.jar /mnt/wso2/carbon-home/repository/comp
 COPY artifacts/trilead-ssh2-1.0.0-build215.jar /mnt/wso2/carbon-home/repository/components/lib/
 
 RUN rm -r /mnt/wso2am-2.0.0/repository/deployment/server/jaggeryapps/*
+RUN rm -r /mnt/wso2am-2.0.0/repository/deployment/server/webapps/*
 
 USER root
