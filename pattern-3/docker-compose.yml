@@ -139,21 +139,6 @@ services:
       - nginx:analytics.apim.wso2.com
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
-#  store-dmz:
-#    container_name: store-dmz
-#    build:
-#      context: ../
-#      dockerfile: pattern-3/store-dmz/Dockerfile
-#    environment:
-#      - SLEEP=200
-#    links:
-#      - nginx:gateway-dmz.apim.wso2.com
-#      - nginx:mgt.gateway-dmz.apim.wso2.com
-#      - nginx:publisher.apim.wso2.com
-#      - nginx:store-dmz.apim.wso2.com
-#      - nginx:keymanager.apim.wso2.com
-#      - nginx:trafficm.apim.wso2.com
-#      - nginx:analytics.apim.wso2.com
   publisher:
     container_name: publisher
     build:
