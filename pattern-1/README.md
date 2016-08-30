@@ -13,7 +13,6 @@ This will deploy the following,
 * Mysql server (container) with apimdb, userdb, regdb
 * APIM Container
 * APIM Analytics Container
-* Nginx Load Balancer container and points the APIM components through the load balancer.
 
 
 #### How to test
