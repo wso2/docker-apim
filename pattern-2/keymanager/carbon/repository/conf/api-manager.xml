@@ -332,7 +332,7 @@
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <ThriftServerPort>10397</ThriftServerPort>
 	<!--ThriftServerHost>localhost</ThriftServerHost-->
-	<EnableThriftServer>true</EnableThriftServer>
+	<EnableThriftServer>false</EnableThriftServer>
 
         <!-- 
         Scope used for marking Application Tokens. If a token is generated with this scope, they will be treated as Application Access Tokens
