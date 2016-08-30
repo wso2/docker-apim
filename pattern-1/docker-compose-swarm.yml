@@ -1,33 +1,31 @@
 version: '2'
 services:
   apim_rdbms:
+    image: dockerhub.private.wso2.com/apim-attern1-mysql:5.5
     build:
         context: ../
         dockerfile: pattern-1/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   am-analytics:
+    image: dockerhub.private.wso2.com/apim-pattern1-wso2am-analytics:2.0.0
     build:
       context: ../
       dockerfile: pattern-1/am-analytics/Dockerfile
     environment:
-      SLEEP: 5
+        SLEEP: 5
+    ports:
+      - "9444:9444"
+      - "9764:9764"
   api-manager:
+    image: dockerhub.private.wso2.com/apim-pattern1-wso2am:2.0.0
     build:
       context: ../
       dockerfile: pattern-1/api-manager/Dockerfile
     environment:
-      SLEEP: 90
-  nginx:
-    build:
-      context: ../
-      dockerfile: pattern-1/nginx/Dockerfile
-    environment:
-      SLEEP: 60
+        SLEEP: 20
     ports:
       - "443:9443"
-      - "80:9763"
-      - "8280:8280"
       - "8243:8243"
-      - "9444:9444"
-      - "9764:9764"
+      - "8280:8280"
+      - "80:9763"
