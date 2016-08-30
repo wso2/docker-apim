@@ -1,4 +1,4 @@
-FROM dockerhub.private.wso2.com/wso2am:1.10.0
+FROm dockerhub.private.wso2.com/wso2am:1.10.0
 
 COPY pattern-2/store/carbon/ /mnt/wso2/carbon-home/
 

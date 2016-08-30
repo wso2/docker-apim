@@ -6,7 +6,7 @@
 
  ```docker login dockerhub.private.wso2.com ```
 
- ```docker-compose up --build```
+ ```docker-compose up -d```
 
 This will deploy the following,
 
@@ -22,10 +22,12 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 apim-front-publisher
-127.0.0.1 apim-front-store
+127.0.0.1 apim-publisher
+127.0.0.1 apim-store
 127.0.0.1 apim-gateway-worker
+127.0.0.1 apim-gateway-dmz-worker
 127.0.0.1 mgt.gw.apim.wso2.org
+127.0.0.1 mgt.gw-dmz.apim.wso2.org
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -34,13 +36,13 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://apim-front-publisher/publisher
+https://apim-publisher/publisher
 ```
 
 Store
 
 ```
-https://apim-front-store/store/
+https://apim-store/store/
 ```
 
 
@@ -50,5 +52,11 @@ Gateway Manager
 https://mgt.gw.apim.wso2.org/carbon/
 ```
 
+
+Gateway Manager DMZ
+
+```
+https://mgt.gw-dmz.apim.wso2.org/carbon/
+```
 
 

@@ -141,32 +141,51 @@
     -->
     <APIGateway>
 	<!-- The environments to which an API will be published -->
-	<Environments>
+	<!--<Environments>-->
 		<!-- Environments can be of different types. Allowed values are 'hybrid', 'production' and 'sandbox'.
 		     An API deployed on a 'production' type gateway will only support production keys
 		     An API deployed on a 'sandbox' type gateway will only support sandbox keys
 		     An API deployed on a 'hybrid' type gateway will support both production and sandbox keys. -->
 		<!-- api-console element specifies whether the environment should be listed in API Console or not -->
-                <Environment type="hybrid" api-console="true">
-                        <Name>Production and Sandbox</Name>
-                    <Description> Description of environment</Description>
+                <!--<Environment type="hybrid" api-console="true">-->
+                        <!--<Name>Production and Sandbox</Name>-->
+                    <!--<Description> Description of environment</Description>-->
 			<!--
             			Server URL of the API gateway.
         		-->
-                        <ServerURL>https://gateway-manager:9443/services/</ServerURL>
+                        <!--<ServerURL>https://gateway-manager:9443/services/</ServerURL>-->
 			<!--
             			Admin username for the API gateway.
         		-->
-                        <Username>${admin.username}</Username>
+                        <!--<Username>${admin.username}</Username>-->
 			<!--
             			Admin password for the API gateway.
         		-->
-                        <Password>${admin.password}</Password>
+                        <!--<Password>${admin.password}</Password>-->
 			<!--
             			Endpoint URLs for the APIs hosted in this API gateway.
         		-->
-                        <GatewayEndpoint>http://apim-gateway-worker:8280,https://apim-gateway-worker:8243</GatewayEndpoint>
-                </Environment>
+                        <!--<GatewayEndpoint>http://apim-gateway-worker:8280,https://apim-gateway-worker:8243</GatewayEndpoint>-->
+                <!--</Environment>-->
+        <!--</Environments>-->
+
+        <Environments>
+            <Environment type="dmz">
+                <Name>DMZ Gateway</Name>
+                <Description>External Gateway Environment</Description>
+                <ServerURL>https://mgt.gw-dmz.apim.wso2.org/services/</ServerURL>
+                <Username>admin</Username>
+                <Password>admin</Password>
+                <GatewayEndpoint>http://apim-gateway-dmz-worker:8280,https://apim-gateway-dmz-worker:8243</GatewayEndpoint>
+            </Environment>
+            <Environment type="internal">
+                <Name>Internal Gateway</Name>
+                <Description>Internal Gateway Environment</Description>
+                <ServerURL>https://mgt.gw.apim.wso2.org:9443/services/</ServerURL>
+                <Username>admin</Username>
+                <Password>admin</Password>
+                <GatewayEndpoint>http://apim-gateway-worker:8280,https://apim-gateway-worker:8243</GatewayEndpoint>
+            </Environment>
         </Environments>
 
         <!--
@@ -411,12 +430,12 @@
 	<!--GroupingExtractor>org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl</GroupingExtractor-->
 	<CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://apim-front-store/store</URL>
+        <URL>https://apim-store/store</URL>
 
 	<!--
             Server URL of the API Store.
         -->
-        <ServerURL>https://apim-front-store/services/</ServerURL>
+        <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
         <!--
             Admin username for API Store.
         -->

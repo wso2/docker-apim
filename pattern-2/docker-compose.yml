@@ -10,6 +10,9 @@ services:
   svnrepo:
     container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
+  svnrepo-dmz:
+    container_name: svnrepo-dmz
+    image: dockerhub.private.wso2.com/svnrepo
   gateway-manager:
     container_name: gateway-manager
     build:
@@ -34,6 +37,30 @@ services:
       - nginx:apim-store
       - nginx:apim-publisher
       - nginx:apim-keymanager
+  gateway-manager-dmz:
+    container_name: gateway-manager-dmz
+    build:
+      context: ../
+      dockerfile: pattern-2/gateway-manager-dmz/Dockerfile
+    environment:
+      - SLEEP=100
+    links:
+      - nginx:apim-gateway-worker
+      - nginx:apim-store
+      - nginx:apim-publisher
+      - nginx:apim-keymanager
+  gateway-worker-dmz:
+    container_name: gateway-worker-dmz
+    build:
+      context: ../
+      dockerfile: pattern-2/gateway-worker-dmz/Dockerfile
+    environment:
+      - SLEEP=500
+    links:
+      - nginx:mgt.gw.apim.wso2.org
+      - nginx:apim-store
+      - nginx:apim-publisher
+      - nginx:apim-keymanager
   store:
     container_name: store
     build:
@@ -46,6 +73,8 @@ services:
       - nginx:apim-gateway-worker
       - nginx:apim-publisher
       - nginx:apim-keymanager
+      - nginx-dmz:mgt.gw-dmz.apim.wso2.org
+      - nginx:apim-gateway-dmz-worker
   publisher:
     container_name: publisher
     build:
@@ -58,6 +87,8 @@ services:
       - nginx:apim-gateway-worker
       - nginx:apim-store
       - nginx:apim-keymanager
+      - nginx-dmz:mgt.gw-dmz.apim.wso2.org
+      - nginx:apim-gateway-dmz-worker
   keymanager:
     container_name: keymanager
     build:
@@ -76,23 +107,19 @@ services:
       context: ../
       dockerfile: pattern-2/nginx/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=300
     ports:
-      - "9443:9443"
-      - "9763:9763"
+      - "443:9443"
+      - "80:9763"
+      - "8280:8280"
+      - "8243:8243"
   nginx-dmz:
     container_name: nginx-dmz
     build:
       context: ../
       dockerfile: pattern-2/nginx-dmz/Dockerfile
     environment:
-      - SLEEP=100
-    links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-keymanager
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-publisher
+      - SLEEP=300
     ports:
       - "443:9443"
       - "80:9763"
