@@ -173,10 +173,10 @@
             <Environment type="dmz">
                 <Name>DMZ Gateway</Name>
                 <Description>External Gateway Environment</Description>
-                <ServerURL>https://mgt.gw-dmz.apim.wso2.org/services/</ServerURL>
+                <ServerURL>https://mgt.gw-dmz.apim.wso2.org:9443/services/</ServerURL>
                 <Username>admin</Username>
                 <Password>admin</Password>
-                <GatewayEndpoint>http://apim-gateway-dmz-worker:8280,https://apim-gateway-dmz-worker:8243</GatewayEndpoint>
+                <GatewayEndpoint>http://apim-gateway-worker-dmz:8280,https://apim-gateway-worker-dmz:8243</GatewayEndpoint>
             </Environment>
             <Environment type="internal">
                 <Name>Internal Gateway</Name>

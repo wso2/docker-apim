@@ -586,7 +586,7 @@
         <AutoCommit>true</AutoCommit>
         <AutoCheckout>true</AutoCheckout>
         <RepositoryType>svn</RepositoryType>
-        <SvnUrl>http://svnrepo/repo</SvnUrl>
+        <SvnUrl>http://svnrepo-dmz/repo</SvnUrl>
         <SvnUser>user</SvnUser>
         <SvnPassword>password</SvnPassword>
         <SvnUrlAppendTenantId>false</SvnUrlAppendTenantId>
