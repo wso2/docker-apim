@@ -16,7 +16,7 @@ services:
       context: ../
       dockerfile: pattern-1/gateway-manager/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=60
     links:
       - nginx:apim-gateway-worker
       - nginx:apim-store
@@ -28,7 +28,7 @@ services:
       context: ../
       dockerfile: pattern-1/gateway-worker/Dockerfile
     environment:
-      - SLEEP=500
+      - SLEEP=120
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-store
@@ -40,7 +40,7 @@ services:
       context: ../
       dockerfile: pattern-1/store/Dockerfile
     environment:
-      - SLEEP=200
+      - SLEEP=180
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-gateway-worker
@@ -52,7 +52,7 @@ services:
       context: ../
       dockerfile: pattern-1/publisher/Dockerfile
     environment:
-      - SLEEP=150
+      - SLEEP=180
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-gateway-worker
@@ -64,7 +64,7 @@ services:
       context: ../
       dockerfile: pattern-1/keymanager/Dockerfile
     environment:
-      - SLEEP=50
+      - SLEEP=5
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-keymanager
@@ -76,7 +76,7 @@ services:
       context: ../
       dockerfile: pattern-1/nginx/Dockerfile
     environment:
-      - SLEEP=300
+      - SLEEP=60
     ports:
       - "443:9443"
       - "80:9763"

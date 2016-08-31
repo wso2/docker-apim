@@ -153,7 +153,7 @@
 			<!--
             			Server URL of the API gateway.
         		-->
-                        <ServerURL>https://gateway-manager:9443/services/</ServerURL>
+                        <ServerURL>https://mgt.gw.apim.wso2.org:9443/services/</ServerURL>
 			<!--
             			Admin username for the API gateway.
         		-->
