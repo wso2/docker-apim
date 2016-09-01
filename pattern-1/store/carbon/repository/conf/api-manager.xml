@@ -327,7 +327,7 @@
 	-Gateway use this parameter to connect key validation thrift service. 
         -->
 
-        <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
+        <KeyValidatorClientType>WSClient</KeyValidatorClientType>
         <ThriftClientPort>10397</ThriftClientPort>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <ThriftServerPort>10397</ThriftServerPort>
@@ -365,7 +365,7 @@
 	     gateway https( /http, we recommend users to use 'https' endpoints for security purpose) url.
          Also please note that we should point gateway revoke service to key manager
 	-->
-	<RevokeAPIURL>https://gateway-manager:8243/revoke</RevokeAPIURL>
+	<RevokeAPIURL>https://apim-gateway-worker:8243/revoke</RevokeAPIURL>
 
 	<!-- Whether to encrypt tokens when storing in the Database
 	Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to

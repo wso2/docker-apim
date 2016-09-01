@@ -1,17 +1,14 @@
 version: '2'
 services:
-  dbms:
-    container_name: apim_rdbms
+  apim_rdbms:
     build:
         context: ../
         dockerfile: pattern-1/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
   gateway-manager:
-    container_name: gateway-manager
     build:
       context: ../
       dockerfile: pattern-1/gateway-manager/Dockerfile
@@ -22,8 +19,8 @@ services:
       - nginx:apim-store
       - nginx:apim-publisher
       - nginx:apim-keymanager
+      - nginx:mgt.gw.apim.wso2.org
   gateway-worker:
-    container_name: gateway-worker
     build:
       context: ../
       dockerfile: pattern-1/gateway-worker/Dockerfile
@@ -35,7 +32,6 @@ services:
       - nginx:apim-publisher
       - nginx:apim-keymanager
   store:
-    container_name: store
     build:
       context: ../
       dockerfile: pattern-1/store/Dockerfile
@@ -47,7 +43,6 @@ services:
       - nginx:apim-publisher
       - nginx:apim-keymanager
   publisher:
-    container_name: publisher
     build:
       context: ../
       dockerfile: pattern-1/publisher/Dockerfile
@@ -59,7 +54,6 @@ services:
       - nginx:apim-store
       - nginx:apim-keymanager
   keymanager:
-    container_name: keymanager
     build:
       context: ../
       dockerfile: pattern-1/keymanager/Dockerfile
@@ -71,7 +65,6 @@ services:
       - nginx:apim-gateway-worker
       - nginx:apim-store
   nginx:
-    container_name: nginx
     build:
       context: ../
       dockerfile: pattern-1/nginx/Dockerfile
