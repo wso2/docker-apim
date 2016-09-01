@@ -45,7 +45,7 @@ services:
       context: ../
       dockerfile: pattern-5/publisher/Dockerfile
     environment:
-      - SLEEP=180
+      - SLEEP=200
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-gateway-worker-km
