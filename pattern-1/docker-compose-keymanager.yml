@@ -56,7 +56,7 @@ services:
   keymanager:
     build:
       context: ../
-      dockerfile: pattern-1/keymanager/Dockerfile
+      dockerfile: pattern-1/is-keymanager/Dockerfile
     environment:
       - SLEEP=5
     links:

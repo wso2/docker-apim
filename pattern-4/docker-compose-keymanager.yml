@@ -3,7 +3,7 @@ services:
   apim_rdbms:
     build:
         context: ../
-        dockerfile: pattern-1/database/Dockerfile
+        dockerfile: pattern-4/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
@@ -11,63 +11,48 @@ services:
   gateway-manager:
     build:
       context: ../
-      dockerfile: pattern-1/gateway-manager/Dockerfile
+      dockerfile: pattern-4/gateway-manager/Dockerfile
     environment:
       - SLEEP=60
     links:
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
       - nginx:mgt.gw.apim.wso2.org
+      - nginx:apim-gateway-worker
+      - nginx:apim-pub-store
+      - nginx:apim-keymanager
   gateway-worker:
     build:
       context: ../
-      dockerfile: pattern-1/gateway-worker/Dockerfile
+      dockerfile: pattern-4/gateway-worker/Dockerfile
     environment:
       - SLEEP=120
     links:
       - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-store
-      - nginx:apim-publisher
+      - nginx:apim-pub-store
       - nginx:apim-keymanager
-  store:
+  pub-store:
     build:
       context: ../
-      dockerfile: pattern-1/store/Dockerfile
+      dockerfile: pattern-4/pub-store/Dockerfile
     environment:
       - SLEEP=180
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-gateway-worker
-      - nginx:apim-publisher
-      - nginx:apim-keymanager
-  publisher:
-    build:
-      context: ../
-      dockerfile: pattern-1/publisher/Dockerfile
-    environment:
-      - SLEEP=200
-    links:
-      - nginx:mgt.gw.apim.wso2.org
-      - nginx:apim-gateway-worker
-      - nginx:apim-store
       - nginx:apim-keymanager
   keymanager:
     build:
       context: ../
-      dockerfile: pattern-1/keymanager/Dockerfile
+      dockerfile: pattern-4/is-keymanager/Dockerfile
     environment:
       - SLEEP=5
     links:
       - nginx:mgt.gw.apim.wso2.org
       - nginx:apim-keymanager
       - nginx:apim-gateway-worker
-      - nginx:apim-store
   nginx:
     build:
       context: ../
-      dockerfile: pattern-1/nginx/Dockerfile
+      dockerfile: pattern-4/nginx/Dockerfile
     environment:
       - SLEEP=60
     ports:
