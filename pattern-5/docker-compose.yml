@@ -1,24 +1,20 @@
 version: '2'
 services:
-  dbms:
-    container_name: apim_rdbms
+  apim_rdbms:
     build:
         context: ../
         dockerfile: pattern-5/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
   am-analytics:
-    container_name: am-analytics
     build:
       context: ../
       dockerfile: pattern-5/am-analytics/Dockerfile
     environment:
       - SLEEP=5
   traffic-manager:
-    container_name: traffic-manager
     build:
       context: ../
       dockerfile: pattern-5/traffic-manager/Dockerfile
@@ -32,7 +28,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   keymanager:
-    container_name: keymanager
     build:
       context: ../
       dockerfile: pattern-5/keymanager/Dockerfile
@@ -46,7 +41,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   gateway-manager:
-    container_name: gateway-manager
     build:
       context: ../
       dockerfile: pattern-5/gateway-manager/Dockerfile
@@ -60,7 +54,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   gateway-worker:
-    container_name: gateway-worker
     build:
       context: ../
       dockerfile: pattern-5/gateway-worker/Dockerfile
@@ -74,7 +67,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   publisher-store:
-    container_name: publisher-store
     build:
       context: ../
       dockerfile: pattern-5/publisher-store/Dockerfile
@@ -88,7 +80,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   nginx:
-    container_name: nginx
     build:
       context: ../
       dockerfile: pattern-5/nginx/Dockerfile

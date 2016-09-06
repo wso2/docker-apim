@@ -1,24 +1,20 @@
 version: '2'
 services:
-  dbms:
-    container_name: apim_rdbms
+  apim_rdbms:
     build:
         context: ../
         dockerfile: pattern-8/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
   am-analytics:
-    container_name: am-analytics
     build:
       context: ../
       dockerfile: pattern-8/am-analytics/Dockerfile
     environment:
       - SLEEP=5
   keymanager-tm-gw:
-    container_name: keymanager-tm-gw
     build:
       context: ../
       dockerfile: pattern-8/keymanager-tm-gw/Dockerfile
@@ -31,7 +27,6 @@ services:
       - nginx:keymanager-tm-gw.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   gateway-manager:
-    container_name: gateway-manager
     build:
       context: ../
       dockerfile: pattern-8/gateway-manager/Dockerfile
@@ -44,7 +39,6 @@ services:
       - nginx:keymanager-tm-gw.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   store:
-    container_name: store
     build:
       context: ../
       dockerfile: pattern-8/store/Dockerfile
@@ -57,7 +51,6 @@ services:
       - nginx:keymanager-tm-gw.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   publisher:
-    container_name: publisher
     build:
       context: ../
       dockerfile: pattern-8/publisher/Dockerfile
@@ -70,7 +63,6 @@ services:
       - nginx:keymanager-tm-gw.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   nginx:
-    container_name: nginx
     build:
       context: ../
       dockerfile: pattern-8/nginx/Dockerfile

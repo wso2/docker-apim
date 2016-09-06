@@ -1,27 +1,22 @@
 version: '2'
 services:
-  dbms:
-    container_name: apim_rdbms
+  apim_rdbms:
     build:
         context: ../
         dockerfile: pattern-3/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
   svnrepo-dmz:
-    container_name: svnrepo-dmz
     image: dockerhub.private.wso2.com/svnrepo
   am-analytics:
-    container_name: am-analytics
     build:
       context: ../
       dockerfile: pattern-3/am-analytics/Dockerfile
     environment:
       - SLEEP=5
   traffic-manager:
-    container_name: traffic-manager
     build:
       context: ../
       dockerfile: pattern-3/traffic-manager/Dockerfile
@@ -38,7 +33,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   keymanager:
-    container_name: keymanager
     build:
       context: ../
       dockerfile: pattern-3/keymanager/Dockerfile
@@ -55,7 +49,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   gateway-manager:
-    container_name: gateway-manager
     build:
       context: ../
       dockerfile: pattern-3/gateway-manager/Dockerfile
@@ -72,7 +65,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   gateway-worker:
-    container_name: gateway-worker
     build:
       context: ../
       dockerfile: pattern-3/gateway-worker/Dockerfile
@@ -89,7 +81,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   store:
-    container_name: store
     build:
       context: ../
       dockerfile: pattern-3/store/Dockerfile
@@ -106,7 +97,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   gateway-manager-dmz:
-    container_name: gateway-manager-dmz
     build:
       context: ../
       dockerfile: pattern-3/gateway-manager-dmz/Dockerfile
@@ -123,7 +113,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   gateway-worker-dmz:
-    container_name: gateway-worker-dmz
     build:
       context: ../
       dockerfile: pattern-3/gateway-worker-dmz/Dockerfile
@@ -140,7 +129,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   publisher:
-    container_name: publisher
     build:
       context: ../
       dockerfile: pattern-3/publisher/Dockerfile
@@ -157,7 +145,6 @@ services:
       - nginx-dmz:gateway-dmz.apim.wso2.com
       - nginx-dmz:mgt.gateway-dmz.apim.wso2.com
   nginx:
-    container_name: nginx
     build:
       context: ../
       dockerfile: pattern-3/nginx/Dockerfile
@@ -171,7 +158,6 @@ services:
       - "9444:9444"
       - "9764:9764"
   nginx-dmz:
-    container_name: nginx-dmz
     build:
       context: ../
       dockerfile: pattern-3/nginx-dmz/Dockerfile

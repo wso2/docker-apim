@@ -1,14 +1,12 @@
 version: '2'
 services:
-  dbms:
-    container_name: apim_rdbms
+  apim_rdbms:
     build:
         context: ../
         dockerfile: pattern-2/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    container_name: svnrepo
     image: dockerhub.private.wso2.com/svnrepo
   am-analytics:
     build:
@@ -101,7 +99,6 @@ services:
       - nginx:trafficm.apim.wso2.com
       - nginx:analytics.apim.wso2.com
   nginx:
-    container_name: nginx
     build:
       context: ../
       dockerfile: pattern-2/nginx/Dockerfile
