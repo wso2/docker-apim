@@ -9,7 +9,7 @@ services:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
     image: dockerhub.private.wso2.com/svnrepo
-  apim-analytics:
+  analytics:
     image: dockerhub.private.wso2.com/apim-pattern2-am-analytics:2.0.0
     build:
       context: ../
@@ -18,7 +18,7 @@ services:
       - SLEEP=5
     ports:
     - "9448:9444"
-  apim-traffic-manager:
+  traffic-manager:
     image: dockerhub.private.wso2.com/apim-pattern2-traffic-manager:2.0.0
     build:
       context: ../
@@ -27,7 +27,7 @@ services:
       - SLEEP=5
     ports:
     - "9447:9443"
-  apim-keymanager:
+  keymanager:
     image: dockerhub.private.wso2.com/apim-pattern2-keymanager:2.0.0
     build:
       context: ../
@@ -36,7 +36,7 @@ services:
       - SLEEP=60
     ports:
     - "9443:9443"
-  apim-gateway-manager:
+  gateway-manager:
     image: dockerhub.private.wso2.com/apim-pattern2-gateway-manager:2.0.0
     build:
       context: ../
@@ -45,7 +45,7 @@ services:
       - SLEEP=100
     ports:
     - "9444:9443"
-  apim-gateway-worker:
+  gateway-worker:
     image: dockerhub.private.wso2.com/apim-pattern2-gateway-worker:2.0.0
     build:
       context: ../
@@ -55,7 +55,7 @@ services:
     ports:
     - "8280:8280"
     - "8243:8243"
-  apim-store:
+  store:
     image: dockerhub.private.wso2.com/apim-pattern2-store:2.0.0
     build:
       context: ../
@@ -64,7 +64,7 @@ services:
       - SLEEP=200
     ports:
     - "9446:9443"
-  apim-publisher:
+  publisher:
     image: dockerhub.private.wso2.com/apim-pattern2-publisher:2.0.0
     build:
       context: ../
