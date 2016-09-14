@@ -5,7 +5,7 @@
 	    <property name="uri.var.hostname" expression="get-property('keyManager.hostname')"/>
             <send>
                 <endpoint>
-                    <http uri-template="https://keymanager.apim.wso2.com:9443/oauth2/revoke">
+                    <http uri-template="https://keymanager:9443/oauth2/revoke">
                         <timeout>
                             <duration>60000</duration>
                             <responseAction>fault</responseAction>
