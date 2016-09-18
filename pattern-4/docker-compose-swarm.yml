@@ -1,0 +1,53 @@
+version: '2'
+services:
+  apim_rdbms:
+    image: dockerhub.private.wso2.com/apim-pattern4-mysql:5.5
+    build:
+        context: ../
+        dockerfile: pattern-4/database/Dockerfile
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+  svnrepo:
+    image: dockerhub.private.wso2.com/svnrepo
+  analytics.apim.wso2.com:
+    image: dockerhub.private.wso2.com/apim-pattern4-wso2am-analytics:2.0.0
+    build:
+      context: ../
+      dockerfile: pattern-4/am-analytics/Dockerfile
+    environment:
+      - SLEEP=5
+  trafficm.apim.wso2.com:
+    image: dockerhub.private.wso2.com/apim-pattern4-traffic-manager:2.0.0
+    build:
+      context: ../
+      dockerfile: pattern-4/traffic-manager/Dockerfile
+    environment:
+      - SLEEP=5
+  mgt.gateway.apim.wso2.com:
+    image: dockerhub.private.wso2.com/apim-pattern4-gateway-manager:2.0.0
+    build:
+      context: ../
+      dockerfile: pattern-4/gateway-manager/Dockerfile
+    environment:
+      - SLEEP=100
+  gateway-worker:
+    image: dockerhub.private.wso2.com/apim-pattern4-gateway-worker:2.0.0
+    build:
+      context: ../
+      dockerfile: pattern-4/gateway-worker/Dockerfile
+    environment:
+      - SLEEP=180
+  store-km:
+    image: dockerhub.private.wso2.com/apim-pattern4-store-km:2.0.0
+    build:
+      context: ../
+      dockerfile: pattern-4/store-km/Dockerfile
+    environment:
+      - SLEEP=200
+  publisher:
+    image: dockerhub.private.wso2.com/apim-pattern4-publisher:2.0.0
+    build:
+      context: ../
+      dockerfile: pattern-4/publisher/Dockerfile
+    environment:
+      - SLEEP=200
