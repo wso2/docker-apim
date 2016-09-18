@@ -9,6 +9,7 @@ services:
   svnrepo:
     image: dockerhub.private.wso2.com/svnrepo
   analytics:
+    image: dockerhub.private.wso2.com/apim-pattern8-wso2am-analytics:2.0.0
     build:
       context: ../
       dockerfile: pattern-8/am-analytics/Dockerfile
@@ -17,6 +18,7 @@ services:
     ports:
     - "9448:9444"
   keymanager-tm-gw:
+    image: dockerhub.private.wso2.com/apim-pattern8-keymanager-tm-gw:2.0.0
     build:
       context: ../
       dockerfile: pattern-8/keymanager-tm-gw/Dockerfile
@@ -27,6 +29,7 @@ services:
     - "8280:8280"
     - "8243:8243"
   gateway-manager:
+    image: dockerhub.private.wso2.com/apim-pattern8-gateway-manager:2.0.0
     build:
       context: ../
       dockerfile: pattern-8/gateway-manager/Dockerfile
@@ -35,6 +38,7 @@ services:
     ports:
     - "9444:9443"
   store:
+    image: dockerhub.private.wso2.com/apim-pattern8-store:2.0.0
     build:
       context: ../
       dockerfile: pattern-8/store/Dockerfile
@@ -43,6 +47,7 @@ services:
     ports:
     - "9446:9443"
   publisher:
+    image: dockerhub.private.wso2.com/apim-pattern8-publisher:2.0.0
     build:
       context: ../
       dockerfile: pattern-8/publisher/Dockerfile
@@ -50,12 +55,3 @@ services:
       - SLEEP=200
     ports:
       - "9445:9443"
-  nginx:
-    build:
-      context: ../
-      dockerfile: pattern-8/nginx/Dockerfile
-    environment:
-      - SLEEP=60
-    ports:
-      - "443:9443"
-      - "80:9763"
