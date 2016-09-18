@@ -16,7 +16,7 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://keymanager-tm.apim.wso2.com:9443/services/</ServerURL>
+        <ServerURL>https://keymanager-tm:9443/services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
         <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
@@ -87,13 +87,13 @@
                 <Name>Production and Sandbox</Name>
                 <Description>This is a hybrid gateway that handles both production and sandbox token traffic.</Description>
                 <!-- Server URL of the API gateway -->
-                <ServerURL>https://mgt.gateway.apim.wso2.com:9443/services/</ServerURL>
+                <ServerURL>https://gateway-manager:9443/services/</ServerURL>
 		        <!-- Admin username for the API gateway. -->
                 <Username>${admin.username}</Username>
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://gateway.apim.wso2.com:8280,https://gateway.apim.wso2.com:8243</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway-worker:8280,https://gateway-worker:8243</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -136,8 +136,8 @@
 
              Ex - Multiple Receiver Groups with two receivers each
              {tcp://localhost:7612/,tcp://localhost:7613},{tcp://localhost:7712/,tcp://localhost:7713/} -->
-        <DASServerURL>tcp://am-analytics:7612</DASServerURL>
-        <DASAuthServerURL>ssl://am-analytics:7712</DASAuthServerURL>
+        <DASServerURL>tcp://analytics:7612</DASServerURL>
+        <DASAuthServerURL>ssl://analytics:7712</DASAuthServerURL>
         <!-- Administrator username to login to the remote DAS server. -->
         <DASUsername>admin</DASUsername>
         <!-- Administrator password to login to the remote DAS server. -->
@@ -147,7 +147,7 @@
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRdbmsClientImpl</StatsProviderImpl>
 
         <!-- DAS REST API configuration -->
-        <DASRestApiURL>https://analytics.apim.wso2.com:9444</DASRestApiURL>
+        <DASRestApiURL>https://analytics:9444</DASRestApiURL>
         <DASRestApiUsername>admin</DASRestApiUsername>
         <DASRestApiPassword>admin</DASRestApiPassword>
 
@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://keymanager-tm.apim.wso2.com:9443/services/</ServerURL>
+        <ServerURL>https://keymanager-tm:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -284,7 +284,7 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://store.apim.wso2.com/store</URL>
+        <URL>https://store:9446/store</URL>
 
         <!-- Server URL of the API Store. -->
         <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://keymanager-tm.apim.wso2.com:9443/services/</ServiceURL>
+            <ServiceURL>https://keymanager-tm:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
