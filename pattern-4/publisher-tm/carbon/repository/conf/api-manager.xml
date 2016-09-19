@@ -16,7 +16,7 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+        <ServerURL>https://gateway-worker-km:9443/services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
         <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
@@ -87,13 +87,13 @@
                 <Name>Production and Sandbox</Name>
                 <Description>This is a hybrid gateway that handles both production and sandbox token traffic.</Description>
                 <!-- Server URL of the API gateway -->
-                <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+                <ServerURL>https://gateway-manager:9443/services/</ServerURL>
 		        <!-- Admin username for the API gateway. -->
                 <Username>${admin.username}</Username>
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://${carbon.local.ip}:${http.nio.port},https://${carbon.local.ip}:${https.nio.port}</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway-worker-km:8280,https://gateway-worker-km:8243</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -124,7 +124,7 @@
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
-        <Enabled>false</Enabled>
+        <Enabled>true</Enabled>
 
         <!-- Server URL of the remote DAS/CEP server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+        <ServerURL>https://gateway-worker-km:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -284,7 +284,7 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://localhost:${mgt.transport.https.port}/store</URL>
+        <URL>https://store:9446/store</URL>
 
         <!-- Server URL of the API Store. -->
         <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
@@ -460,9 +460,9 @@
         </WhiteListedURIs>
     </RESTAPI>
     <ThrottlingConfigurations>
-        <EnableAdvanceThrottling>false</EnableAdvanceThrottling>
+        <EnableAdvanceThrottling>true</EnableAdvanceThrottling>
         <DataPublisher>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <Type>Binary</Type>
             <ReceiverUrlGroup>tcp://${carbon.local.ip}:${receiver.url.port}</ReceiverUrlGroup>
             <AuthUrlGroup>ssl://${carbon.local.ip}:${auth.url.port}</AuthUrlGroup>
@@ -479,17 +479,17 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
+            <ServiceURL>https://publisher-tm:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
         <BlockCondition>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <!--InitDelay>300000</InitDelay>
             <Period>3600000</Period-->
         </BlockCondition>
         <JMSConnectionDetails>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <ServiceURL>tcp://${carbon.local.ip}:${jms.port}</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>

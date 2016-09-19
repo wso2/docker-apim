@@ -658,7 +658,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">wso2.am.domain</parameter>
+        <parameter name="domain">wso2.pub.store.domain</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
@@ -679,7 +679,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">gateway-manager</parameter>
+        <parameter name="localMemberHost">store</parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -711,7 +711,7 @@
         <parameter name="properties">
             <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
             <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
-            <property name="subDomain" value="mgt"/>
+            <property name="subDomain" value="worker"/>
         </parameter>
 
         <!--
@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>gateway-worker-km</hostName>
+                <hostName>publisher</hostName>
                 <port>4000</port>
             </member>
         </members>

@@ -124,7 +124,7 @@
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
-        <Enabled>false</Enabled>
+        <Enabled>true</Enabled>
 
         <!-- Server URL of the remote DAS/CEP server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
@@ -460,12 +460,12 @@
         </WhiteListedURIs>
     </RESTAPI>
     <ThrottlingConfigurations>
-        <EnableAdvanceThrottling>false</EnableAdvanceThrottling>
+        <EnableAdvanceThrottling>true</EnableAdvanceThrottling>
         <DataPublisher>
             <Enabled>true</Enabled>
             <Type>Binary</Type>
-            <ReceiverUrlGroup>tcp://${carbon.local.ip}:${receiver.url.port}</ReceiverUrlGroup>
-            <AuthUrlGroup>ssl://${carbon.local.ip}:${auth.url.port}</AuthUrlGroup>
+            <ReceiverUrlGroup>tcp://publisher-tm:9611</ReceiverUrlGroup>
+            <AuthUrlGroup>ssl://publisher-tm:9711</AuthUrlGroup>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <DataPublisherPool>
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
+            <ServiceURL>https://publisher-tm:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
@@ -490,7 +490,7 @@
         </BlockCondition>
         <JMSConnectionDetails>
             <Enabled>true</Enabled>
-            <ServiceURL>tcp://${carbon.local.ip}:${jms.port}</ServiceURL>
+            <ServiceURL>tcp://publisher-tm:5672</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <Destination>throttleData</Destination>
