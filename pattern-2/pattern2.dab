@@ -1,0 +1,129 @@
+{
+  "Services": {
+    "analytics": {
+      "Env": [
+        "SLEEP=5"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-am-analytics@sha256:ae981b8345a5e94b0089c639aae6b88b82a7e544541ccd63c78f7bf836590f4f", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9444, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "apim_rdbms": {
+      "Env": [
+        "MYSQL_ROOT_PASSWORD=root"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-attern1-mysql@sha256:10618c589ed6af723057f6c81bc31b99a3b81fa2d35a95f37e35bd1019c8f1ba", 
+      "Networks": [
+        "default"
+      ]
+    }, 
+    "gateway-manager": {
+      "Env": [
+        "SLEEP=100"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-gateway-manager@sha256:f04169cfca851e55415236a21913fd1775808f25dc443e4afbf4a4f27064a8e0", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "gateway-worker": {
+      "Env": [
+        "SLEEP=180"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-gateway-worker@sha256:69e15b615c917efc1280f86ce6b77f985c3e5d2872b7ab0ecd6b1712790caea5", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 8280, 
+          "Protocol": "tcp"
+        }, 
+        {
+          "Port": 8243, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "keymanager": {
+      "Env": [
+        "SLEEP=60"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-keymanager@sha256:c7c3217e746cf7cc07f1f662351bd38eb8ebafea4d321aa5b1c0c5f56836b13b", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "publisher": {
+      "Env": [
+        "SLEEP=200"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-publisher@sha256:ef6cc2eaabab5e21183edda361ef7fc6fb1f0e8cb6f3be8ff745b799af90016c", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "store": {
+      "Env": [
+        "SLEEP=200"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-store@sha256:b0b8cd44fda88880f53e65199a93e154746234f3c8532fdde32022c58e31cc50", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "svnrepo": {
+      "Image": "dockerhub.private.wso2.com/svnrepo@sha256:dbacceabd8dd1dca7db23f189869a9ed390bbb14cbf86350c7d455ded4d71ba9", 
+      "Networks": [
+        "default"
+      ]
+    }, 
+    "traffic-manager": {
+      "Env": [
+        "SLEEP=5"
+      ], 
+      "Image": "dockerhub.private.wso2.com/apim-pattern2-traffic-manager@sha256:d88dbdcbbc973e1d06e72377a604347f55819a896d9cc24fd93663fba3a60679", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  }, 
+  "Version": "0.1"
+}
