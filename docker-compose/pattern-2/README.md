@@ -1,6 +1,6 @@
 ### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-0.png)
+![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-1.png)
 
 ## Pre-requisites
 
@@ -67,6 +67,12 @@ Gateway Manager
 
 ```
 https://api-manager/carbon/
+```
+
+AM Analytics
+
+```
+https://am-analytics:9444/carbon/
 ```
 
 ## How to run in Docker Swarm Cluster
