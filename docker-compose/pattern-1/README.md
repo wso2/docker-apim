@@ -85,29 +85,29 @@ eg. If you have a docker public registry account (say account name is "lakwarus"
 docker.wso2.com/apim-pattern1-wso2am:2.0.0	-> lakwarus/apim-pattern1-wso2am:2.0.0
 docker.wso2.com/apim-pattern1-mysql:5.5		-> lakwarus/apim-pattern1-mysql:5.5
 ```
+To build all docker images
 ```
 docker-compose -f docker-compose-swarm.yml build
 ```
-This will build all docker images
 
+To push newly built images to relevant docker registry
 ```
 docker-compose -f docker-compose-swarm.yml push
 ```
 
-This will push newly built images to relevant docker registry
+To create bundle file
 
 ```
 docker-compose -f docker-compose-swarm.yml bundle
 ```
-This will create pattern1.dab json file
 
 Copy dockercompose.dab file to docker swarm manager node and run following
 
+To deploy all docker services on swarm cluster
 ```
 docker deploy pattern1
 ```
-This will deploy all docker services on swarm cluster
-
+To update AWS ELB endpoits
 ```
 docker service update --publish-add 443:9443 pattern1_api-manager
 docker service update --publish-add 80:9763 pattern1_api-manager
