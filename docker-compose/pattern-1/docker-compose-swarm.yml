@@ -1,17 +1,17 @@
 version: '2'
 services:
   apim_rdbms:
-    image: dockerhub.private.wso2.com/apim-attern0-mysql:5.5
+    image: docker.wso2.com/apim-pattern1-mysql:5.5
     build:
         context: ../
         dockerfile: pattern-1/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   api-manager:
-    image: dockerhub.private.wso2.com/apim-pattern0-wso2am:2.0.0
+    image: docker.wso2.com/apim-pattern1-wso2am:2.0.0
     build:
       context: ../
-      dockerfile: pattern-0/api-manager/Dockerfile
+      dockerfile: pattern-1/api-manager/Dockerfile
     environment:
        SLEEP: 20
     ports:

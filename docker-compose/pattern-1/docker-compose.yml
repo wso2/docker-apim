@@ -9,13 +9,13 @@ services:
   api-manager:
     build:
       context: ../
-      dockerfile: pattern-0/api-manager/Dockerfile
+      dockerfile: pattern-1/api-manager/Dockerfile
     environment:
       - SLEEP=5
   nginx:
     build:
       context: ../
-      dockerfile: pattern-0/nginx/Dockerfile
+      dockerfile: pattern-1/nginx/Dockerfile
     environment:
       - SLEEP=60
     ports:
