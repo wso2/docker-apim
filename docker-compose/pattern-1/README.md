@@ -4,7 +4,7 @@
 
 #### How to run
 
- ```docker login dockerhub.private.wso2.com ```
+ ```docker login docker.wso2.com ```
 
  ```docker-compose up -d```
 
