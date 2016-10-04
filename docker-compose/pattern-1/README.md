@@ -46,7 +46,7 @@ Add the following entries to the /etc/hosts
 ```
 127.0.0.1 api-manager
 ```
-If you are using docker machine, please use the docker machine IP instead of the local machine IP.
+If you are using docker machine, please use the docker machine IP instead of the local maGchine IP.
 
 #### How to access the environment
 
@@ -109,11 +109,28 @@ docker deploy pattern1
 This will deploy all docker services on swarm cluster
 
 ```
-docker service update --publish-add 32080:80 dockercompose_admin-fe
-docker service update --publish-add 32081:80 dockercompose_store-fe
-docker service update --publish-add 39763:9763 dockercompose_das
+docker service update --publish-add 443:9443 pattern1_api-manager
+docker service update --publish-add 80:9763 pattern1_api-manager
+docker service update --publish-add 8280:8280 pattern1_api-manager
+docker service update --publish-add 8243:8243 pattern1_api-manager
+```
+#### How to access the environment
+Update your DNS (or add host entries) by poining "api-manager" domain name to AWS ELB IP.  
+
+Publisher
+
+```
+https://api-manager/publisher
+```
+Store
+
+```
+https://api-manager/store/
 ```
 
-Point your browser to AWS ELB domain with relevent ports to access deployed petstore in swarm cluster
+Gateway Manager
 
+```
+https://api-manager/carbon/
+```
 
