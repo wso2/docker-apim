@@ -30,7 +30,8 @@ https://docs.docker.com/compose/install/
  ```docker login docker.wso2.com ```
 
  ```docker-compose pull```
- ```docker-compose up --build -d ```
+
+```docker-compose up --build -d ```
 
 This will deploy the following,
 
