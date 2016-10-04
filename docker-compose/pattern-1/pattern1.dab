@@ -7,24 +7,6 @@
       "Image": "docker.wso2.com/apim-pattern1-wso2am@sha256:2aa1fc4c9c8cd851497075ad0c5dbb770eacef822a1b92753ce46b95e7128d3d", 
       "Networks": [
         "default"
-      ], 
-      "Ports": [
-        {
-          "Port": 9443, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 8243, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 8280, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 9763, 
-          "Protocol": "tcp"
-        }
       ]
     }, 
     "apim_rdbms": {
