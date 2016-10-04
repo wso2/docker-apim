@@ -77,7 +77,7 @@ https://beta.docker.com/docs/aws/
 
 ### Deploy on Swarm
 
-Change docker-compose image names according to your docker private registry or public registry.
+Change docker-compose-swarm.yml image names according to your docker private registry or public registry.
 
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
