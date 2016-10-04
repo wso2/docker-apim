@@ -31,7 +31,9 @@ https://docs.docker.com/compose/install/
 
  ```docker-compose pull```
 
-```docker-compose up --build -d ```
+```docker-compose build```
+
+```docker-compose up -d ```
 
 This will deploy the following,
 
@@ -88,8 +90,8 @@ Change docker-compose image names according to your docker private registry or p
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/apim-pattern1-wso2am:2.0.0	-> lakwarus/apim-pattern1-wso2am:2.0.0
-docker.wso2.com/apim-pattern1-mysql:5.5		-> lakwarus/apim-pattern1-mysql:5.5
+docker.wso2.com/apim-pattern2-wso2am:2.0.0	-> lakwarus/apim-pattern2-wso2am:2.0.0
+docker.wso2.com/apim-pattern2-mysql:5.5		-> lakwarus/apim-pattern2-mysql:5.5
 ```
 To build all docker images
 ```
@@ -107,11 +109,11 @@ To create bundle file
 docker-compose -f docker-compose-swarm.yml bundle
 ```
 
-Copy pattern1.dab file to docker swarm manager node and run following
+Copy pattern2.dab file to docker swarm manager node and run following
 
 To deploy all docker services on swarm cluster
 ```
-docker deploy pattern1
+docker deploy pattern2
 ```
 To update AWS ELB endpoits
 ```
