@@ -1,4 +1,4 @@
-FROM dockerhub.private.wso2.com/nginx
+FROM docker.wso2.com/nginx
 
 COPY pattern-0/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY pattern-0/nginx/mgt.crt /etc/nginx/ssl/
