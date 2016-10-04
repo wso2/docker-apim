@@ -6,7 +6,7 @@
 
  ```docker login docker.wso2.com ```
 
- ```docker-compose up -d```
+ ```docker-compose up --build -d ```
 
 This will deploy the following,
 
