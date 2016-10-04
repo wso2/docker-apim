@@ -91,8 +91,9 @@ Change docker-compose image names according to your docker private registry or p
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/apim-pattern2-wso2am:2.0.0	-> lakwarus/apim-pattern2-wso2am:2.0.0
-docker.wso2.com/apim-pattern2-mysql:5.5		-> lakwarus/apim-pattern2-mysql:5.5
+docker.wso2.com/swarm-apim-pattern2-mysql:5.5			-> lakwarus/swarm-apim-pattern2-mysql:5.5
+docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.0.0	-> lakwarus/swarm-apim-pattern2-wso2am-analytics:2.0.0
+docker.wso2.com/swarm-apim-pattern2-wso2am:2.0.0		-> lakwarus/swarm-apim-pattern2-wso2am:2.0.0
 ```
 To build all docker images
 ```

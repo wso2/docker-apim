@@ -1,7 +1,7 @@
 version: '2'
 services:
   apim_rdbms:
-    image: docker.wso2.com/swarm-apim-attern2-mysql:5.5
+    image: docker.wso2.com/swarm-apim-pattern2-mysql:5.5
     build:
         context: ../
         dockerfile: pattern-2/database/Dockerfile
