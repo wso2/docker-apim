@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>gateway-worker</hostName>
+                <hostName>gateway-worker-km</hostName>
                 <port>4000</port>
             </member>
         </members>

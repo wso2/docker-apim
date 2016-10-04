@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>keymanager-tm-gw</hostName>
+                <hostName>gateway-worker</hostName>
                 <port>4000</port>
             </member>
         </members>

@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://keymanager:9443/services/</ServerURL>
+        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>

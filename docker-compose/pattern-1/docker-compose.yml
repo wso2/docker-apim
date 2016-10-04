@@ -6,28 +6,20 @@ services:
         dockerfile: pattern-1/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
-  am-analytics:
-    build:
-      context: ../
-      dockerfile: pattern-1/am-analytics/Dockerfile
-    environment:
-      SLEEP: 5
   api-manager:
     build:
       context: ../
-      dockerfile: pattern-1/api-manager/Dockerfile
+      dockerfile: pattern-0/api-manager/Dockerfile
     environment:
-      SLEEP: 90
+      - SLEEP=5
   nginx:
     build:
       context: ../
-      dockerfile: pattern-1/nginx/Dockerfile
+      dockerfile: pattern-0/nginx/Dockerfile
     environment:
-      SLEEP: 60
+      - SLEEP=60
     ports:
       - "443:9443"
       - "80:9763"
       - "8280:8280"
       - "8243:8243"
-      - "9444:9444"
-      - "9764:9764"

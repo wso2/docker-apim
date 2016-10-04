@@ -16,7 +16,7 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://gateway-worker-km:9443/services/</ServerURL>
+        <ServerURL>https://keymanager:9443/services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
         <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
@@ -77,23 +77,42 @@
          create/update published API configurations. -->
     <APIGateway>
         <!-- The environments to which an API will be published -->
-        <Environments>
+        <!--<Environments>-->
             <!-- Environments can be of different types. Allowed values are 'hybrid', 'production' and 'sandbox'.
                  An API deployed on a 'production' type gateway will only support production keys
                  An API deployed on a 'sandbox' type gateway will only support sandbox keys
                  An API deployed on a 'hybrid' type gateway will support both production and sandbox keys. -->
             <!-- api-console element specifies whether the environment should be listed in API Console or not -->
-            <Environment type="hybrid" api-console="true">
-                <Name>Production and Sandbox</Name>
-                <Description>This is a hybrid gateway that handles both production and sandbox token traffic.</Description>
+            <!--<Environment type="hybrid" api-console="true">-->
+                <!--<Name>Production and Sandbox</Name>-->
+                <!--<Description>This is a hybrid gateway that handles both production and sandbox token traffic.</Description>-->
                 <!-- Server URL of the API gateway -->
-                <ServerURL>https://gateway-manager:9443/services/</ServerURL>
+                <!--<ServerURL>https://gateway-manager:9443/services/</ServerURL>-->
 		        <!-- Admin username for the API gateway. -->
-                <Username>${admin.username}</Username>
+                <!--<Username>${admin.username}</Username>-->
                 <!-- Admin password for the API gateway.-->
-                <Password>${admin.password}</Password>
+                <!--<Password>${admin.password}</Password>-->
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://gateway-worker-km:8280,https://gateway-worker-km:8243</GatewayEndpoint>
+                <!--<GatewayEndpoint>http://gateway-worker:8280,https://gateway-worker:8243</GatewayEndpoint>-->
+            <!--</Environment>-->
+        <!--</Environments>-->
+
+        <Environments>
+            <Environment type="dmz">
+                <Name>External Gateway</Name>
+                <Description>External Gateway Environment</Description>
+                <ServerURL>https://gateway-manager-lan2:9443/services/</ServerURL>
+                <Username>admin</Username>
+                <Password>admin</Password>
+                <GatewayEndpoint>http://gateway-worker-lan2:8280,https://gateway-worker-lan2:8243</GatewayEndpoint>
+            </Environment>
+            <Environment type="internal">
+                <Name>Internal Gateway</Name>
+                <Description>Internal Gateway Environment</Description>
+                <ServerURL>https://gateway-manager:9443/services/</ServerURL>
+                <Username>admin</Username>
+                <Password>admin</Password>
+                <GatewayEndpoint>http://gateway-worker:8280,https://gateway-worker:8243</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -202,7 +221,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://gateway-worker-km:9443/services/</ServerURL>
+        <ServerURL>https://keymanager:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -264,7 +283,7 @@
              In distributed deployment we should configure this property in key manager node by pointing
              gateway https( /http, we recommend users to use 'https' endpoints for security purpose) url.
              Also please note that we should point gateway revoke service to key manager -->
-        <RevokeAPIURL>https://gateway-worker-km:8243/revoke</RevokeAPIURL>
+        <RevokeAPIURL>https://gateway-worker:8243/revoke</RevokeAPIURL>
         <!-- Whether to encrypt tokens when storing in the Database
         Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to
         org.wso2.carbon.identity.oauth.tokenprocessor.EncryptionDecryptionPersistenceProcessor in the identity.xml -->

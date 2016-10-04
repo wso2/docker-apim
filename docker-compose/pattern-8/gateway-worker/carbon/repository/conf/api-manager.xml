@@ -147,7 +147,7 @@
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRdbmsClientImpl</StatsProviderImpl>
 
         <!-- DAS REST API configuration -->
-        <DASRestApiURL>https://analytics.apim.wso2.com:9444</DASRestApiURL>
+        <DASRestApiURL>https://analytics:9444</DASRestApiURL>
         <DASRestApiUsername>admin</DASRestApiUsername>
         <DASRestApiPassword>admin</DASRestApiPassword>
 
@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://keymanager-tm-gw:9443/services/</ServerURL>
+        <ServerURL>https://keymanager-tm:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -464,8 +464,8 @@
         <DataPublisher>
             <Enabled>true</Enabled>
             <Type>Binary</Type>
-            <ReceiverUrlGroup>tcp://keymanager-tm-gw:9611</ReceiverUrlGroup>
-            <AuthUrlGroup>ssl://keymanager-tm-gw:9711</AuthUrlGroup>
+            <ReceiverUrlGroup>tcp://keymanager-tm:9611</ReceiverUrlGroup>
+            <AuthUrlGroup>ssl://keymanager-tm:9711</AuthUrlGroup>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <DataPublisherPool>
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://keymanager-tm-gw:9443/services/</ServiceURL>
+            <ServiceURL>https://keymanager-tm:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
@@ -490,7 +490,7 @@
         </BlockCondition>
         <JMSConnectionDetails>
             <Enabled>true</Enabled>
-            <ServiceURL>tcp://keymanager-tm-gw:5672</ServiceURL>
+            <ServiceURL>tcp://keymanager-tm:5672</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <Destination>throttleData</Destination>

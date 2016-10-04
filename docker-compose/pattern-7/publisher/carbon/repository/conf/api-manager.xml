@@ -16,7 +16,7 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://keymanager-tm:9443/services/</ServerURL>
+        <ServerURL>https://gateway-worker-km:9443/services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
         <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
@@ -93,7 +93,7 @@
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://gateway-worker:8280,https://gateway-worker:8243</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway-worker-km:8280,https://gateway-worker-km:8243</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -202,7 +202,7 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://keymanager-tm:9443/services/</ServerURL>
+        <ServerURL>https://gateway-worker-km:9443/services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
         <Username>${admin.username}</Username>
@@ -479,7 +479,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://keymanager-tm:9443/services/</ServiceURL>
+            <ServiceURL>https://traffic-manager:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>

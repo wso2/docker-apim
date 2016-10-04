@@ -1,6 +1,6 @@
-### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
+### This repository contains API Manager 1.10.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-5.png)
+![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-4.png)
 
 #### How to run
 
@@ -11,7 +11,7 @@
 This will deploy the following,
 
 * Mysql server (container) with apimdb, userdb, regdb
-* APIM Store/Publisher, Gateway Manager, Gateway Worker, Keymanager, Traffic Manager distributed Containers
+* APIM Store, Publisher, Gateway Manager, Gateway Worker/ Key manager, Traffic Manager distributed Containers
 * APIM Analytics Container
 * Nginx Load Balancer container and points the APIM components through the load balancer.
 
@@ -20,7 +20,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com
+127.0.0.1 gateway-km.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -29,13 +29,13 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher-store.apim.wso2.com/storepublisher
+https://publisher.apim.wso2.com/publisher
 ```
 
 Store
 
 ```
-https://publisher-store.apim.wso2.com/store
+https://store.apim.wso2.com/store
 ```
 
 Gateway Manager
@@ -44,17 +44,13 @@ Gateway Manager
 https://mgt.gateway.apim.wso2.com/carbon
 ```
 
-Gateway Worker
+Gateway Worker/ Keymanager
 
 ```
-https://gateway.apim.wso2.com:8243
-http://gateway.apim.wso2.com:8280
-```
+https://gateway-km.apim.wso2.com/carbon
 
-Key Manager
-
-```
-https://keymanager.apim.wso2.com/carbon
+https://gateway-km.apim.wso2.com:8243
+http://gateway-km.apim.wso2.com:8280
 ```
 
 Traffic Manager
