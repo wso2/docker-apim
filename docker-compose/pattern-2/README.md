@@ -47,6 +47,7 @@ This will deploy the following,
 Add the following entries to the /etc/hosts
 ```
 127.0.0.1 api-manager
+127.0.0.1 am-analytics
 ```
 If you are using docker machine, please use the docker machine IP instead of the local maGchine IP.
 
@@ -117,13 +118,15 @@ docker deploy pattern2
 ```
 To update AWS ELB endpoits
 ```
-docker service update --publish-add 443:9443 pattern1_api-manager
-docker service update --publish-add 80:9763 pattern1_api-manager
-docker service update --publish-add 8280:8280 pattern1_api-manager
-docker service update --publish-add 8243:8243 pattern1_api-manager
+docker service update --publish-add 9444:9444 pattern2_am-analytics
+docker service update --publish-add 9764:9764 pattern2_am-analytics
+docker service update --publish-add 443:9443 pattern2_api-manager
+docker service update --publish-add 8243:8243 pattern2_api-manager
+docker service update --publish-add 8280:8280 pattern2_api-manager
+docker service update --publish-add 80:9763 pattern2_api-manager
 ```
 #### How to access the environment
-Update your DNS (or add host entries) by poining "api-manager" domain name to AWS ELB IP.  
+Update your DNS (or add host entries) by poining "api-manager" and "am-analytics" domain names to AWS ELB IP.  
 
 Publisher
 
@@ -140,5 +143,9 @@ Gateway Manager
 
 ```
 https://api-manager/carbon/
+```
+AM Analytics
+```
+https://am-analytics:9444/carbon/
 ```
 

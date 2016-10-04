@@ -7,16 +7,6 @@
       "Image": "docker.wso2.com/apim-pattern2-wso2am-analytics@sha256:8b7ab7b4c662e4fe6257b37524d5ac03a2b72bf2a008c0dd020ff0289f52c42d", 
       "Networks": [
         "default"
-      ], 
-      "Ports": [
-        {
-          "Port": 9444, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 9764, 
-          "Protocol": "tcp"
-        }
       ]
     }, 
     "api-manager": {
@@ -26,24 +16,6 @@
       "Image": "docker.wso2.com/apim-pattern2-wso2am@sha256:f15e2b0226a437763f868227e79c24ae1c982c3aa39067c3e8b5815894178ca4", 
       "Networks": [
         "default"
-      ], 
-      "Ports": [
-        {
-          "Port": 9443, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 8243, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 8280, 
-          "Protocol": "tcp"
-        }, 
-        {
-          "Port": 9763, 
-          "Protocol": "tcp"
-        }
       ]
     }, 
     "apim_rdbms": {
