@@ -3,25 +3,25 @@ services:
   apim_rdbms:
     build:
         context: ../
-        dockerfile: pattern-1/database/Dockerfile
+        dockerfile: pattern-2/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   am-analytics:
     build:
       context: ../
-      dockerfile: pattern-1/am-analytics/Dockerfile
+      dockerfile: pattern-2/am-analytics/Dockerfile
     environment:
       SLEEP: 5
   api-manager:
     build:
       context: ../
-      dockerfile: pattern-1/api-manager/Dockerfile
+      dockerfile: pattern-2/api-manager/Dockerfile
     environment:
       SLEEP: 90
   nginx:
     build:
       context: ../
-      dockerfile: pattern-1/nginx/Dockerfile
+      dockerfile: pattern-2/nginx/Dockerfile
     environment:
       SLEEP: 60
     ports:
