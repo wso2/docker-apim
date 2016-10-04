@@ -101,7 +101,7 @@ To create bundle file
 docker-compose -f docker-compose-swarm.yml bundle
 ```
 
-Copy dockercompose.dab file to docker swarm manager node and run following
+Copy pattern1.dab file to docker swarm manager node and run following
 
 To deploy all docker services on swarm cluster
 ```
