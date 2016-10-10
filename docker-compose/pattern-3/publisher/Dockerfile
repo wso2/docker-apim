@@ -6,4 +6,3 @@ COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2-artifacts/repositor
 
 COPY pattern-3/publisher/carbon/repository/components/api-publisher/configuration /mnt/wso2am-2.0.0/repository/components/api-publisher/
 
-USER root
