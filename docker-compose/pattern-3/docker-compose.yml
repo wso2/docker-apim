@@ -1,14 +1,16 @@
 version: '2'
 services:
   apim_rdbms:
+          image: docker.wso2.com/swarm-apim-pattern3-mysql:5.5
     build:
         context: ../
-        dockerfile: pattern-2/database/Dockerfile
+        dockerfile: pattern-3/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    image: dockerhub.private.wso2.com/svnrepo
+    image: docker.wso2.com/svnrepo
   analytics:
+          image: docker.wso2.com/swarm-apim-pattern3-am-analytics:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/am-analytics/Dockerfile
@@ -17,6 +19,7 @@ services:
     ports:
     - "9448:9444"
   traffic-manager:
+          image: docker.wso2.com/swarm-apim-pattern3-traffic-manager:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/traffic-manager/Dockerfile
@@ -25,6 +28,7 @@ services:
     ports:
     - "9447:9443"
   keymanager:
+          image: docker.wso2.com/swarm-apim-pattern3-keymanager:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/keymanager/Dockerfile
@@ -33,6 +37,7 @@ services:
     ports:
     - "9443:9443"
   gateway-manager:
+          image: docker.wso2.com/swarm-apim-pattern3-gateway-manager:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/gateway-manager/Dockerfile
@@ -41,6 +46,7 @@ services:
     ports:
     - "9444:9443"
   gateway-worker:
+          image: docker.wso2.com/swarm-apim-pattern3-gateway-worker:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/gateway-worker/Dockerfile
@@ -50,6 +56,7 @@ services:
     - "8280:8280"
     - "8243:8243"
   store:
+          image: docker.wso2.com/swarm-apim-pattern3-store:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/store/Dockerfile
@@ -58,6 +65,7 @@ services:
     ports:
     - "9446:9443"
   publisher:
+          image: docker.wso2.com/swarm-apim-pattern3-publisher:2.0.0
     build:
       context: ../
       dockerfile: pattern-3/publisher/Dockerfile
