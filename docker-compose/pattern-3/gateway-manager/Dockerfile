@@ -9,4 +9,3 @@ COPY artifacts/trilead-ssh2-1.0.0-build215.jar /mnt/wso2/carbon-home/repository/
 RUN rm -r /mnt/wso2am-2.0.0/repository/deployment/server/webapps/*
 RUN rm -r /mnt/wso2am-2.0.0/repository/deployment/server/jaggeryapps/*
 
-USER root
