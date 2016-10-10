@@ -53,19 +53,19 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher.apim.wso2.com/publisher
+https://publisher.apim.wso2.com:9445/publisher
 ```
 
 Store
 
 ```
-https://store.apim.wso2.com/store
+https://store.apim.wso2.com:9446/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com/carbon
+https://mgt.gateway.apim.wso2.com:9444/carbon
 ```
 
 Gateway Worker
@@ -78,19 +78,19 @@ http://gateway.apim.wso2.com:8280
 Key Manager
 
 ```
-https://keymanager.apim.wso2.com/carbon
+https://keymanager.apim.wso2.com:9443/carbon
 ```
 
 Traffic Manager
 
 ```
-https://trafficm.apim.wso2.com/carbon
+https://trafficm.apim.wso2.com:9447/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9444/carbon
+https://analytics.apim.wso2.com:9448/carbon
 ```
 
 ## How to run in Docker Swarm Cluster
