@@ -11,7 +11,7 @@ services:
   analytics:
     build:
       context: ../
-      dockerfile: pattern-2/am-analytics/Dockerfile
+      dockerfile: pattern-3/am-analytics/Dockerfile
     environment:
       - SLEEP=5
     ports:
@@ -19,7 +19,7 @@ services:
   traffic-manager:
     build:
       context: ../
-      dockerfile: pattern-2/traffic-manager/Dockerfile
+      dockerfile: pattern-3/traffic-manager/Dockerfile
     environment:
       - SLEEP=5
     ports:
@@ -27,7 +27,7 @@ services:
   keymanager:
     build:
       context: ../
-      dockerfile: pattern-2/keymanager/Dockerfile
+      dockerfile: pattern-3/keymanager/Dockerfile
     environment:
       - SLEEP=60
     ports:
@@ -35,7 +35,7 @@ services:
   gateway-manager:
     build:
       context: ../
-      dockerfile: pattern-2/gateway-manager/Dockerfile
+      dockerfile: pattern-3/gateway-manager/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -43,7 +43,7 @@ services:
   gateway-worker:
     build:
       context: ../
-      dockerfile: pattern-2/gateway-worker/Dockerfile
+      dockerfile: pattern-3/gateway-worker/Dockerfile
     environment:
       - SLEEP=180
     ports:
@@ -52,7 +52,7 @@ services:
   store:
     build:
       context: ../
-      dockerfile: pattern-2/store/Dockerfile
+      dockerfile: pattern-3/store/Dockerfile
     environment:
       - SLEEP=200
     ports:
@@ -60,7 +60,7 @@ services:
   publisher:
     build:
       context: ../
-      dockerfile: pattern-2/publisher/Dockerfile
+      dockerfile: pattern-3/publisher/Dockerfile
     environment:
       - SLEEP=200
     ports:
@@ -68,7 +68,7 @@ services:
   nginx:
     build:
       context: ../
-      dockerfile: pattern-2/nginx/Dockerfile
+      dockerfile: pattern-3/nginx/Dockerfile
     environment:
       - SLEEP=60
     ports:
