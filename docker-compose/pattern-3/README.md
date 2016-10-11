@@ -133,28 +133,60 @@ docker deploy pattern1
 ```
 To update AWS ELB endpoits
 ```
-docker service update --publish-add 443:9443 pattern1_api-manager
-docker service update --publish-add 80:9763 pattern1_api-manager
-docker service update --publish-add 8280:8280 pattern1_api-manager
-docker service update --publish-add 8243:8243 pattern1_api-manager
+docker service update --publish-add 9448:9444 pattern3_analytics
+docker service update --publish-add 9447:9443 pattern3_traffic-manager
+docker service update --publish-add 9444:9443 pattern3_gateway-manager
+docker service update --publish-add 8280:8280 pattern3_gateway-worker
+docker service update --publish-add 8243:8243 pattern3_gateway-worker
+docker service update --publish-add 9446:9443 pattern3_store
+docker service update --publish-add 9445:9443 pattern3_publisher
 ```
 #### How to access the environment
-Update your DNS (or add host entries) by poining "api-manager" domain name to AWS ELB IP.  
+Update your DNS (or add host entries) by poining following domain name (gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com) to AWS ELB IP.  
+
+#### How to access the environment
 
 Publisher
 
 ```
-https://api-manager/publisher
+https://publisher.apim.wso2.com:9445/publisher
 ```
+
 Store
 
 ```
-https://api-manager/store/
+https://store.apim.wso2.com:9446/store
 ```
 
 Gateway Manager
 
 ```
-https://api-manager/carbon/
+https://mgt.gateway.apim.wso2.com:9444/carbon
 ```
+
+Gateway Worker
+
+```
+https://gateway.apim.wso2.com:8243
+http://gateway.apim.wso2.com:8280
+```
+
+Key Manager
+
+```
+https://keymanager.apim.wso2.com:9443/carbon
+```
+
+Traffic Manager
+
+```
+https://trafficm.apim.wso2.com:9447/carbon
+```
+
+AM Analytics
+
+```
+https://analytics.apim.wso2.com:9448/carbon
+```
+
 
