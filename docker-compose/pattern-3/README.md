@@ -106,8 +106,16 @@ Change docker-compose-swarm.yml image names according to your docker private reg
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/swarm-apim-pattern1-wso2am:2.0.0	-> lakwarus/swarm-apim-pattern1-wso2am:2.0.0
-docker.wso2.com/swarm-apim-pattern1-mysql:5.5		-> lakwarus/swarm-apim-pattern1-mysql:5.5
+docker.wso2.com/swarm-apim-pattern3-mysql:5.5			-> lakwarus/swarm-apim-pattern3-mysql:5.5
+docker.wso2.com/swarm-apim-pattern3-am-analytics:2.0.0		-> lakwarus/swarm-apim-pattern3-am-analytics:2.0.0
+docker.wso2.com/swarm-apim-pattern3-traffic-manager:2.0.0	-> lakwarus/swarm-apim-pattern3-traffic-manager:2.0.0
+docker.wso2.com/swarm-apim-pattern3-keymanager:2.0.0		-> lakwarus/swarm-apim-pattern3-keymanager:2.0.0
+docker.wso2.com/swarm-apim-pattern3-gateway-manager:2.0.0	-> lakwarus/swarm-apim-pattern3-gateway-manager:2.0.0
+docker.wso2.com/swarm-apim-pattern3-gateway-worker:2.0.0	-> lakwarus/swarm-apim-pattern3-gateway-worker:2.0.0
+docker.wso2.com/swarm-apim-pattern3-gateway-worker:2.0.0	-> lakwarus/swarm-apim-pattern3-gateway-worker:2.0.0
+docker.wso2.com/swarm-apim-pattern3-store:2.0.0			-> lakwarus/swarm-apim-pattern3-store:2.0.0
+docker.wso2.com/swarm-apim-pattern3-publisher:2.0.0		-> lakwarus/swarm-apim-pattern3-publisher:2.0.0
+
 ```
 To build all docker images
 ```
@@ -125,11 +133,11 @@ To create bundle file
 docker-compose -f docker-compose-swarm.yml bundle
 ```
 
-Copy pattern1.dab file to docker swarm manager node and run following
+Copy pattern3.dab file to docker swarm manager node and run following
 
 To deploy all docker services on swarm cluster
 ```
-docker deploy pattern1
+docker deploy pattern3
 ```
 To update AWS ELB endpoits
 ```
