@@ -27,9 +27,9 @@ https://docs.docker.com/compose/install/
 
 #### How to run
 
- ```docker login docker.wso2.com ```
+```docker login docker.wso2.com ```
 
- ```docker-compose pull```
+```docker-compose pull```
 
 ```docker-compose build```
 
@@ -91,9 +91,9 @@ Change docker-compose-swarm.yml image names according to your docker private reg
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/swarm-apim-pattern2-mysql:5.5			-> lakwarus/swarm-apim-pattern2-mysql:5.5
-docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.0.0	-> lakwarus/swarm-apim-pattern2-wso2am-analytics:2.0.0
-docker.wso2.com/swarm-apim-pattern2-wso2am:2.0.0		-> lakwarus/swarm-apim-pattern2-wso2am:2.0.0
+docker.wso2.com/swarm-apim-pattern2-mysql:5.5 -> lakwarus/swarm-apim-pattern2-mysql:5.5
+docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.0.0 -> lakwarus/swarm-apim-pattern2-wso2am-analytics:2.0.0
+docker.wso2.com/swarm-apim-pattern2-wso2am:2.0.0 -> lakwarus/swarm-apim-pattern2-wso2am:2.0.0
 ```
 To build all docker images
 ```
@@ -117,7 +117,7 @@ To deploy all docker services on swarm cluster
 ```
 docker deploy pattern2
 ```
-To update AWS ELB endpoits
+To update AWS ELB endpoints
 ```
 docker service update --publish-add 9444:9444 pattern2_am-analytics
 docker service update --publish-add 9764:9764 pattern2_am-analytics

@@ -11,13 +11,7 @@ services:
       context: ../
       dockerfile: pattern-1/api-manager/Dockerfile
     environment:
-      - SLEEP=5
-  nginx:
-    build:
-      context: ../
-      dockerfile: pattern-1/nginx/Dockerfile
-    environment:
-      - SLEEP=60
+      - SLEEP=10
     ports:
       - "443:9443"
       - "80:9763"
