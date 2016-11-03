@@ -1,0 +1,114 @@
+{
+  "Services": {
+    "analytics": {
+      "Env": [
+        "SLEEP=5"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern6-wso2am-analytics@sha256:5d49aa1500685bc47544cba4cc6407ca1f5c405571a28a6cc4906a2284815885", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9444, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "apim_rdbms": {
+      "Env": [
+        "MYSQL_ROOT_PASSWORD=root"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern2-mysql@sha256:7272a95a600ebdc405de89c7947178af81f4d98b91cb2763a7c76e489eaa07cb", 
+      "Networks": [
+        "default"
+      ]
+    }, 
+    "gateway-manager": {
+      "Env": [
+        "SLEEP=100"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern6-gateway-manager@sha256:bd73a4445f2c81f70e85a9c77d1985d9582d83215f1fa8e6058990c0310f6067", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "gateway-worker": {
+      "Env": [
+        "SLEEP=180"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern6-gateway-worker@sha256:23e3c0e13970a374570a5876e3c3938345d0181b11cf619f191ffdea0eb5e918", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 8280, 
+          "Protocol": "tcp"
+        }, 
+        {
+          "Port": 8243, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "keymanager": {
+      "Env": [
+        "SLEEP=60"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern6-keymanager@sha256:cbb70f7caf3e2bb7b90611a88d08477cdc411b47e37a3c52360567db494b46e4", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "publisher-store": {
+      "Env": [
+        "SLEEP=200"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern6-publisher-store@sha256:589da902b0a8122559989e14a9ab2b37c6bf2f3c9a49f08b6b5e414d0add52ec", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "svnrepo": {
+      "Image": "docker.wso2.com/svnrepo@sha256:dbacceabd8dd1dca7db23f189869a9ed390bbb14cbf86350c7d455ded4d71ba9", 
+      "Networks": [
+        "default"
+      ]
+    }, 
+    "traffic-manager": {
+      "Env": [
+        "SLEEP=5"
+      ], 
+      "Image": "localhost:5000/swarm-apim-pattern6-traffic-manager@sha256:c97608c0d42a030cca61ee1220e88db3902ca30badb0fdd1a388ed246a7f5e9d", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  }, 
+  "Version": "0.1"
+}
