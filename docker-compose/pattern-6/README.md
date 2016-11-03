@@ -20,7 +20,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager
+127.0.0.1	analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -125,49 +125,49 @@ docker service update --publish-add 8243:8243 pattern6_gateway-worker
 docker service update --publish-add 9445:9443 pattern6_publisher-store
 ```
 #### How to access the environment
-Update your DNS (or add host entries) by poining following domain name (gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com) to AWS ELB IP.  
+Update your DNS (or add host entries) by poining following domain name (analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager) to AWS ELB IP.  
 
 #### How to access the environment
 
 Publisher
 
 ```
-https://publisher.apim.wso2.com:9445/publisher
+https://publisher-store:9445/publisher
 ```
 
 Store
 
 ```
-https://store.apim.wso2.com:9445/store
+https://publisher-store:9445/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com:9444/carbon
+https://gateway-manager:9444/carbon
 ```
 
 Gateway Worker
 
 ```
-https://gateway.apim.wso2.com:8243
-http://gateway.apim.wso2.com:8280
+https://gateway-worker:8243
+http://gateway-worker:8280
 ```
 
 Key Manager
 
 ```
-https://keymanager.apim.wso2.com:9443/carbon
+https://keymanager:9443/carbon
 ```
 
 Traffic Manager
 
 ```
-https://trafficm.apim.wso2.com:9447/carbon
+https://traffic-manager:9447/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9448/carbon
+https://analytics:9448/carbon
 ```
