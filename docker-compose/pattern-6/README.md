@@ -4,7 +4,7 @@
 
 #### How to run
 
- ```docker login dockerhub.private.wso2.com ```
+ ```docker login docker.wso2.com ```
 
  ```docker-compose up -d```
 
@@ -29,19 +29,19 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher-store.apim.wso2.com/storepublisher
+https://publisher.apim.wso2.com:9445/publisher
 ```
 
 Store
 
 ```
-https://publisher-store.apim.wso2.com/store
+https://store.apim.wso2.com:9445/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com/carbon
+https://mgt.gateway.apim.wso2.com:9444/carbon
 ```
 
 Gateway Worker
@@ -54,17 +54,17 @@ http://gateway.apim.wso2.com:8280
 Key Manager
 
 ```
-https://keymanager.apim.wso2.com/carbon
+https://keymanager.apim.wso2.com:9443/carbon
 ```
 
 Traffic Manager
 
 ```
-https://trafficm.apim.wso2.com/carbon
+https://trafficm.apim.wso2.com:9447/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9444/carbon
+https://analytics.apim.wso2.com:9448/carbon
 ```
