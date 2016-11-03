@@ -1,10 +1,10 @@
 ### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-5.png)
+![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.0-pattern-5.png)
 
 #### How to run
 
- ```docker login dockerhub.private.wso2.com ```
+ ```docker login docker.wso2.com ```
 
  ```docker-compose up -d```
 
@@ -20,7 +20,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com
+127.0.0.1	analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -29,42 +29,145 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher-store.apim.wso2.com/storepublisher
+https://publisher-store:9445/publisher
 ```
 
 Store
 
 ```
-https://publisher-store.apim.wso2.com/store
+https://publisher-store:9445/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com/carbon
+https://gateway-manager:9444/carbon
 ```
 
 Gateway Worker
 
 ```
-https://gateway.apim.wso2.com:8243
-http://gateway.apim.wso2.com:8280
+https://gateway-worker:8243
+http://gateway-worker:8280
 ```
 
 Key Manager
 
 ```
-https://keymanager.apim.wso2.com/carbon
+https://keymanager:9443/carbon
 ```
 
 Traffic Manager
 
 ```
-https://trafficm.apim.wso2.com/carbon
+https://traffic-manager:9447/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9444/carbon
+https://analytics:9448/carbon
+```
+
+## How to run in Docker Swarm Cluster
+
+### Setup Docker Swarm Cluster in Amazon AWS
+
+https://beta.docker.com/docs/aws/
+
+### Deploy on Swarm
+
+Change docker-compose-swarm.yml image names according to your docker private registry or public registry.
+
+eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
+
+```
+docker.wso2.com/swarm-apim-pattern6-mysql:5.5			-> lakwarus/swarm-apim-pattern6-mysql:5.5
+docker.wso2.com/swarm-apim-pattern6-am-analytics:2.0.0		-> lakwarus/swarm-apim-pattern6-am-analytics:2.0.0
+docker.wso2.com/swarm-apim-pattern6-traffic-manager:2.0.0	-> lakwarus/swarm-apim-pattern6-traffic-manager:2.0.0
+docker.wso2.com/swarm-apim-pattern6-keymanager:2.0.0		-> lakwarus/swarm-apim-pattern6-keymanager:2.0.0
+docker.wso2.com/swarm-apim-pattern6-gateway-manager:2.0.0	-> lakwarus/swarm-apim-pattern6-gateway-manager:2.0.0
+docker.wso2.com/swarm-apim-pattern6-gateway-worker:2.0.0	-> lakwarus/swarm-apim-pattern6-gateway-worker:2.0.0
+docker.wso2.com/swarm-apim-pattern6-gateway-worker:2.0.0	-> lakwarus/swarm-apim-pattern6-gateway-worker:2.0.0
+docker.wso2.com/swarm-apim-pattern6-store:2.0.0			-> lakwarus/swarm-apim-pattern6-store:2.0.0
+docker.wso2.com/swarm-apim-pattern6-publisher:2.0.0		-> lakwarus/swarm-apim-pattern6-publisher:2.0.0
+
+```
+To build all docker images
+```
+docker-compose -f docker-compose-swarm.yml build
+```
+
+To push newly built images to relevant docker registry
+```
+docker-compose -f docker-compose-swarm.yml push
+```
+
+To create bundle file
+```
+docker-compose -f docker-compose-swarm.yml bundle
+```
+
+Copy pattern6.dab file to docker swarm manager node and run following
+
+To deploy all docker services on swarm cluster
+```
+docker deploy pattern6
+```
+To update AWS ELB endpoits
+```
+docker service update --publish-add 9448:9444 pattern6_analytics
+docker service update --publish-add 9447:9443 pattern6_traffic-manager
+docker service update --publish-add 9443:9443 pattern6_keymanager
+docker service update --publish-add 9444:9443 pattern6_gateway-manager
+docker service update --publish-add 8280:8280 pattern6_gateway-worker
+docker service update --publish-add 8243:8243 pattern6_gateway-worker
+docker service update --publish-add 9445:9443 pattern6_publisher-store
+```
+#### How to access the environment
+Update your DNS (or add host entries) by poining following domain name (analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager) to AWS ELB IP.  
+
+#### How to access the environment
+
+Publisher
+
+```
+https://publisher-store:9445/publisher
+```
+
+Store
+
+```
+https://publisher-store:9445/store
+```
+
+Gateway Manager
+
+```
+https://gateway-manager:9444/carbon
+```
+
+Gateway Worker
+
+```
+https://gateway-worker:8243
+http://gateway-worker:8280
+```
+
+Key Manager
+
+```
+https://keymanager:9443/carbon
+```
+
+Traffic Manager
+
+```
+https://traffic-manager:9447/carbon
+```
+
+AM Analytics
+
+```
+https://analytics:9448/carbon
 ```
