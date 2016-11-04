@@ -1,6 +1,6 @@
-FROM dockerhub.private.wso2.com/wso2am:2.0.0
+FROM docker.wso2.com/wso2am:2.0.0
 
-COPY pattern-6/gateway-manager/carbon/ /mnt/wso2-artifacts
+COPY pattern-7/gateway-manager/carbon/ /mnt/wso2-artifacts
 
 COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2-artifacts/repository/components/lib/
 COPY artifacts/svnkit-all-1.8.7.wso2v1.jar /mnt/wso2/carbon-home/repository/components/dropins/

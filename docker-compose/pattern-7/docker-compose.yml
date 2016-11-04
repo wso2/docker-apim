@@ -3,15 +3,15 @@ services:
   apim_rdbms:
     build:
         context: ../
-        dockerfile: pattern-6/database/Dockerfile
+        dockerfile: pattern-7/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    image: dockerhub.private.wso2.com/svnrepo
+    image: docker.wso2.com/svnrepo
   analytics:
     build:
       context: ../
-      dockerfile: pattern-6/am-analytics/Dockerfile
+      dockerfile: pattern-7/am-analytics/Dockerfile
     environment:
       - SLEEP=5
     ports:
@@ -19,7 +19,7 @@ services:
   traffic-manager:
     build:
       context: ../
-      dockerfile: pattern-6/traffic-manager/Dockerfile
+      dockerfile: pattern-7/traffic-manager/Dockerfile
     environment:
       - SLEEP=5
     ports:
@@ -27,7 +27,7 @@ services:
   gateway-manager:
     build:
       context: ../
-      dockerfile: pattern-6/gateway-manager/Dockerfile
+      dockerfile: pattern-7/gateway-manager/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -35,7 +35,7 @@ services:
   gateway-worker-km:
     build:
       context: ../
-      dockerfile: pattern-6/gateway-worker-km/Dockerfile
+      dockerfile: pattern-7/gateway-worker-km/Dockerfile
     environment:
       - SLEEP=180
     ports:
@@ -45,7 +45,7 @@ services:
   store:
     build:
       context: ../
-      dockerfile: pattern-6/store/Dockerfile
+      dockerfile: pattern-7/store/Dockerfile
     environment:
       - SLEEP=200
     ports:
@@ -53,17 +53,17 @@ services:
   publisher:
     build:
       context: ../
-      dockerfile: pattern-6/publisher/Dockerfile
+      dockerfile: pattern-7/publisher/Dockerfile
     environment:
       - SLEEP=240
     ports:
       - "9445:9443"
-  nginx:
-    build:
-      context: ../
-      dockerfile: pattern-6/nginx/Dockerfile
-    environment:
-      - SLEEP=60
-    ports:
-      - "443:9443"
-      - "80:9763"
+  # nginx:
+  #   build:
+  #     context: ../
+  #     dockerfile: pattern-7/nginx/Dockerfile
+  #   environment:
+  #     - SLEEP=60
+  #   ports:
+  #     - "443:9443"
+  #     - "80:9763"
