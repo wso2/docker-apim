@@ -1,0 +1,114 @@
+{
+  "Services": {
+    "analytics": {
+      "Env": [
+        "SLEEP=5"
+      ], 
+      "Image": "localhost:5000/apim-pattern8-wso2am-analytics@sha256:269c38a8d58c550a2c4424d3ade9d0f4df2d4903661daa29539d2a4fff0078e2", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9444, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "apim_rdbms": {
+      "Env": [
+        "MYSQL_ROOT_PASSWORD=root"
+      ], 
+      "Image": "localhost:5000/apim-pattern2-mysql@sha256:7272a95a600ebdc405de89c7947178af81f4d98b91cb2763a7c76e489eaa07cb", 
+      "Networks": [
+        "default"
+      ]
+    }, 
+    "gateway-manager": {
+      "Env": [
+        "SLEEP=100"
+      ], 
+      "Image": "localhost:5000/apim-pattern8-gateway-manager@sha256:732e410ad6d6c61c2e1222b68fd14ffe37eaaa4364e9898a8200fd5bd31f00fd", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "gateway-worker": {
+      "Env": [
+        "SLEEP=180"
+      ], 
+      "Image": "localhost:5000/apim-pattern8-gateway-worker@sha256:80669e7ea942d798ed3aa1e973568e16406cdfd95c0d3907b4893a01d92909aa", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 8280, 
+          "Protocol": "tcp"
+        }, 
+        {
+          "Port": 8243, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "keymanager-tm": {
+      "Env": [
+        "SLEEP=60"
+      ], 
+      "Image": "localhost:5000/apim-pattern8-keymanager-tm@sha256:8aba333e35d960074ba528bbc350c4fcbd1175acb744bfff2e174d5561dc646d", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "publisher": {
+      "Env": [
+        "SLEEP=200"
+      ], 
+      "Image": "localhost:5000/apim-pattern8-publisher@sha256:c68501aa49d1a1e7d071ae79456bce5a53fb09d4f538bdb09773f3262d72542a", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "store": {
+      "Env": [
+        "SLEEP=200"
+      ], 
+      "Image": "localhost:5000/apim-pattern8-store@sha256:0859d9f5ca2d08e620a2ddc7231e27c568703ec5dc05b4024175d2d4950c805c", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 9443, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "svnrepo": {
+      "Image": "dockerhub.private.wso2.com/svnrepo@sha256:f47f955e30417ffd72e558a23fbdecbbb285e45aad8c0f07949a5c7928815295", 
+      "Networks": [
+        "default"
+      ]
+    }
+  }, 
+  "Version": "0.1"
+}
