@@ -1,6 +1,6 @@
 ### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2-support/deployment-patterns/blob/master/wso2am/2.0.0/patterns/design/am-2.0-pattern-2.png)
+![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.0-pattern-3.png)
 
 ## Pre-requisites
 
@@ -27,9 +27,9 @@ https://docs.docker.com/compose/install/
 
 #### How to run
 
- ```docker login docker.wso2.com ```
+```docker login docker.wso2.com ```
 
- ```docker-compose pull```
+```docker-compose pull```
 
 ```docker-compose up --build -d ```
 
@@ -44,7 +44,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com
+127.0.0.1 gateway-worker gateway-manager publisher store keymanager traffic-manager analytics
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -53,44 +53,44 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher.apim.wso2.com:9445/publisher
+https://publisher:9445/publisher
 ```
 
 Store
 
 ```
-https://store.apim.wso2.com:9446/store
+https://store:9446/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com:9444/carbon
+https://gateway-manager:9444/carbon
 ```
 
 Gateway Worker
 
 ```
-https://gateway.apim.wso2.com:8243
-http://gateway.apim.wso2.com:8280
+https://gateway-worker:8243
+http://gateway-worker:8280
 ```
 
 Key Manager
 
 ```
-https://keymanager.apim.wso2.com:9443/carbon
+https://keymanager:9443/carbon
 ```
 
 Traffic Manager
 
 ```
-https://trafficm.apim.wso2.com:9447/carbon
+https://traffic-manager:9447/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9448/carbon
+https://analytics:9448/carbon
 ```
 
 ## How to run in Docker Swarm Cluster
@@ -150,51 +150,49 @@ docker service update --publish-add 9446:9443 pattern3_store
 docker service update --publish-add 9445:9443 pattern3_publisher
 ```
 #### How to access the environment
-Update your DNS (or add host entries) by poining following domain name (gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com) to AWS ELB IP.  
+Update your DNS (or add host entries) by poining following domain name (gateway-worker gateway-manager publisher store keymanager traffic-manager analytics) to AWS ELB IP.  
 
 #### How to access the environment
 
 Publisher
 
 ```
-https://publisher.apim.wso2.com:9445/publisher
+https://publisher:9445/publisher
 ```
 
 Store
 
 ```
-https://store.apim.wso2.com:9446/store
+https://store:9446/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com:9444/carbon
+https://gateway-manager:9444/carbon
 ```
 
 Gateway Worker
 
 ```
-https://gateway.apim.wso2.com:8243
-http://gateway.apim.wso2.com:8280
+https://gateway-worker:8243
+http://gateway-worker:8280
 ```
 
 Key Manager
 
 ```
-https://keymanager.apim.wso2.com:9443/carbon
+https://keymanager:9443/carbon
 ```
 
 Traffic Manager
 
 ```
-https://trafficm.apim.wso2.com:9447/carbon
+https://traffic-manager:9447/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9448/carbon
+https://analytics:9448/carbon
 ```
-
-
