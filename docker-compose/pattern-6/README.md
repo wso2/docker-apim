@@ -1,6 +1,6 @@
 ### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.0-pattern-5.png)
+![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.0-pattern-6.png)
 
 #### How to run
 
@@ -82,15 +82,15 @@ Change docker-compose-swarm.yml image names according to your docker private reg
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/swarm-apim-pattern6-mysql:5.5			-> lakwarus/swarm-apim-pattern6-mysql:5.5
+docker.wso2.com/swarm-apim-pattern6-mysql:5.5				-> lakwarus/swarm-apim-pattern6-mysql:5.5
+docker.wso2.com/svnrepo										-> lakwarus/svnrepo
 docker.wso2.com/swarm-apim-pattern6-am-analytics:2.0.0		-> lakwarus/swarm-apim-pattern6-am-analytics:2.0.0
 docker.wso2.com/swarm-apim-pattern6-traffic-manager:2.0.0	-> lakwarus/swarm-apim-pattern6-traffic-manager:2.0.0
 docker.wso2.com/swarm-apim-pattern6-keymanager:2.0.0		-> lakwarus/swarm-apim-pattern6-keymanager:2.0.0
 docker.wso2.com/swarm-apim-pattern6-gateway-manager:2.0.0	-> lakwarus/swarm-apim-pattern6-gateway-manager:2.0.0
 docker.wso2.com/swarm-apim-pattern6-gateway-worker:2.0.0	-> lakwarus/swarm-apim-pattern6-gateway-worker:2.0.0
-docker.wso2.com/swarm-apim-pattern6-gateway-worker:2.0.0	-> lakwarus/swarm-apim-pattern6-gateway-worker:2.0.0
-docker.wso2.com/swarm-apim-pattern6-store:2.0.0			-> lakwarus/swarm-apim-pattern6-store:2.0.0
-docker.wso2.com/swarm-apim-pattern6-publisher:2.0.0		-> lakwarus/swarm-apim-pattern6-publisher:2.0.0
+docker.wso2.com/swarm-apim-pattern6-store:2.0.0				-> lakwarus/swarm-apim-pattern6-store:2.0.0
+docker.wso2.com/swarm-apim-pattern6-publisher-store:2.0.0	-> lakwarus/swarm-apim-pattern6-publisher-store:2.0.0
 
 ```
 To build all docker images
