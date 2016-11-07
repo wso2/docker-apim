@@ -50,12 +50,3 @@ services:
       - SLEEP=200
     ports:
       - "9445:9443"
-  # nginx:
-  #   build:
-  #     context: ../
-  #     dockerfile: pattern-9/nginx/Dockerfile
-  #   environment:
-  #     - SLEEP=60
-  #   ports:
-  #     - "443:9443"
-  #     - "80:9763"
