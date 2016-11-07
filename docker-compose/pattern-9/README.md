@@ -4,7 +4,7 @@
 
 #### How to run
 
- ```docker login dockerhub.private.wso2.com ```
+ ```docker login docker.wso2.com ```
 
  ```docker-compose up -d```
 
@@ -20,7 +20,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager-tm-gw.apim.wso2.com analytics.apim.wso2.com
+127.0.0.1	gateway-manager publisher store keymanager-tm-gw analytics
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -29,36 +29,36 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher.apim.wso2.com/publisher
+https://publisher:9445/publisher
 ```
 
 Store
 
 ```
-https://store.apim.wso2.com/store
+https://store:9446/store
 ```
 
 Gateway Manager
 
 ```
-https://mgt.gateway.apim.wso2.com/carbon
+https://gateway-manager:9444/carbon
 ```
 
 Gateway Worker
 
 ```
-https://keymanager-tm-gw.apim.wso2.com:8243
-http://keymanager-tm-gw.apim.wso2.com:8280
+https://keymanager-tm-gw:8243
+http://keymanager-tm-gw:8280
 ```
 
 Key Manager/ Traffic Manager
 
 ```
-https://keymanager-tm-gw.apim.wso2.com/carbon
+https://keymanager-tm-gw:9443/carbon
 ```
 
 AM Analytics
 
 ```
-https://analytics.apim.wso2.com:9444/carbon
+https://analytics:9448/carbon
 ```
