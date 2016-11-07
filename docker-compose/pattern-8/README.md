@@ -112,7 +112,8 @@ docker service update --publish-add 8243:8243 pattern8_gateway-worker
 docker service update --publish-add 9446:9443 pattern8_store
 docker service update --publish-add 9445:9443 pattern8_publisher
 ```
-#### How to access the environment
+#### How to test
+
 Update your DNS (or add host entries) by poining following domain names,
 ```
 gateway-worker gateway-manager publisher store keymanager-tm analytics

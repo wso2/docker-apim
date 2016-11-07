@@ -115,8 +115,13 @@ docker service update --publish-add 8243:8243 pattern7_gateway-worker-km
 docker service update --publish-add 9446:9443 pattern7_store
 docker service update --publish-add 9445:9443 pattern7_publisher
 ```
-#### How to access the environment
-Update your DNS (or add host entries) by poining following domain name (analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager) to AWS ELB IP.  
+#### How to test
+
+Update your DNS (or add host entries) by poining following domain names,
+```
+analytics keymanager gateway-worker gateway-manager publisher-store traffic-manager
+```
+to AWS ELB IP.  
 
 #### How to access the environment
 
