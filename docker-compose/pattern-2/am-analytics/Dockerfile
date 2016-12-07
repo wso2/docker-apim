@@ -1,4 +1,4 @@
-FROM docker.wso2.com/wso2am-analytics:2.0.0
+FROM docker.wso2.com/wso2am-analytics:2.1.0
 
 COPY pattern-2/am-analytics/carbon/ /mnt/wso2-artifacts
 
