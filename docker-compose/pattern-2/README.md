@@ -1,4 +1,4 @@
-### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
+### This repository contains API Manager 2.1.0 distributed deployment with Docker compose
 
 ![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.0-pattern-2.png)
 
@@ -92,8 +92,8 @@ eg. If you have a docker public registry account (say account name is "lakwarus"
 
 ```
 docker.wso2.com/swarm-apim-pattern2-mysql:5.5 -> lakwarus/swarm-apim-pattern2-mysql:5.5
-docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.0.0 -> lakwarus/swarm-apim-pattern2-wso2am-analytics:2.0.0
-docker.wso2.com/swarm-apim-pattern2-wso2am:2.0.0 -> lakwarus/swarm-apim-pattern2-wso2am:2.0.0
+docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.1.0 -> lakwarus/swarm-apim-pattern2-wso2am-analytics:2.1.0
+docker.wso2.com/swarm-apim-pattern2-wso2am:2.1.0 -> lakwarus/swarm-apim-pattern2-wso2am:2.1.0
 ```
 To build all docker images
 ```
