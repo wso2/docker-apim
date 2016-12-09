@@ -601,7 +601,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
+            <ServiceURL>https://traffic-manager:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
@@ -661,8 +661,7 @@
         <EnableJWTClaimConditions>false</EnableJWTClaimConditions>
         <EnableQueryParamConditions>false</EnableQueryParamConditions>
     </ThrottlingConfigurations>
-
-
+    
     <WorkflowConfigurations>
         <Enabled>false</Enabled>
         <ServerUrl>https://localhost:9445/bpmn</ServerUrl>

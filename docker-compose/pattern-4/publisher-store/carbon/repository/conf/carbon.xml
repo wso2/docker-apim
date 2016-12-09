@@ -442,11 +442,6 @@
                 <!--Pattern></Pattern-->
             </Patterns>
         </XSSPreventionConfig>
-        <!-- Configuration to enable or disable CR and LF sanitization filter-->
-        <CRLFPreventionConfig>
-            <!--Set below to true to enable the CRLFPreventionFilter-->
-            <Enabled>true</Enabled>
-        </CRLFPreventionConfig>
     </Security>
 
     <!--

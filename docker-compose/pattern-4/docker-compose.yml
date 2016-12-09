@@ -1,6 +1,7 @@
 version: '2'
 services:
   apim_rdbms:
+    image: docker.wso2.com/apim-pattern4-mysql:5.5
     build:
         context: ../
         dockerfile: pattern-4/database/Dockerfile
@@ -9,6 +10,7 @@ services:
   svnrepo:
     image: docker.wso2.com/svnrepo
   analytics:
+    image: docker.wso2.com/apim-pattern4-am-analytics:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/am-analytics/Dockerfile
@@ -17,6 +19,7 @@ services:
     ports:
     - "9448:9444"
   traffic-manager:
+    image: docker.wso2.com/apim-pattern4-traffic-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/traffic-manager/Dockerfile
@@ -33,6 +36,7 @@ services:
     ports:
     - "9443:9443"
   gateway-manager:
+    image: docker.wso2.com/apim-pattern4-gateway-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/gateway-manager/Dockerfile
@@ -41,6 +45,7 @@ services:
     ports:
     - "9444:9443"
   gateway-worker:
+    image: docker.wso2.com/apim-pattern4-gateway-worker:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/gateway-worker/Dockerfile
@@ -50,6 +55,7 @@ services:
     - "8280:8280"
     - "8243:8243"
   publisher-store:
+    image: docker.wso2.com/apim-pattern4-publisher-store:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/publisher-store/Dockerfile
