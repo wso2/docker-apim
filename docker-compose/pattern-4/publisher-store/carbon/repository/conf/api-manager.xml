@@ -584,7 +584,7 @@
     <ThrottlingConfigurations>
         <EnableAdvanceThrottling>true</EnableAdvanceThrottling>
         <DataPublisher>
-            <Enabled>false</Enabled>
+            <Enabled>true</Enabled>
             <Type>Binary</Type>
             <ReceiverUrlGroup>tcp://${carbon.local.ip}:${receiver.url.port}</ReceiverUrlGroup>
             <AuthUrlGroup>ssl://${carbon.local.ip}:${auth.url.port}</AuthUrlGroup>
@@ -661,7 +661,7 @@
         <EnableJWTClaimConditions>false</EnableJWTClaimConditions>
         <EnableQueryParamConditions>false</EnableQueryParamConditions>
     </ThrottlingConfigurations>
-    
+
     <WorkflowConfigurations>
         <Enabled>false</Enabled>
         <ServerUrl>https://localhost:9445/bpmn</ServerUrl>
