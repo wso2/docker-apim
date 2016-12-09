@@ -7,6 +7,8 @@ COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2-artifacts/repositor
 RUN rm -r /mnt/wso2am-2.1.0/repository/deployment/server/webapps/*
 RUN rm -r /mnt/wso2am-2.1.0/repository/deployment/server/jaggeryapps/*
 
+RUN rm -r /mnt/wso2am-2.1.0/repository/deployment/server/synapse-configs/default/inbound-endpoints/WebSocketInboundEndpoint.xml
+
 RUN rm /mnt/wso2am-2.1.0/repository/conf/registry.xml
 RUN mv /mnt/wso2am-2.1.0/repository/conf/registry_TM.xml /mnt/wso2am-2.1.0/repository/conf/registry.xml
 
