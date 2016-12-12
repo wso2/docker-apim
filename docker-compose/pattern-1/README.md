@@ -1,4 +1,4 @@
-### This repository contains API Manager 2.0.0 distributed deployment with Docker compose
+### This repository contains API Manager 2.1.0 distributed deployment with Docker compose
 
 ![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.0-pattern-1.png)
 
@@ -82,7 +82,7 @@ Change docker-compose-swarm.yml image names according to your docker private reg
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/swarm-apim-pattern1-wso2am:2.0.0	-> lakwarus/swarm-apim-pattern1-wso2am:2.0.0
+docker.wso2.com/swarm-apim-pattern1-wso2am:2.1.0	-> lakwarus/swarm-apim-pattern1-wso2am:2.1.0
 docker.wso2.com/swarm-apim-pattern1-mysql:5.5		-> lakwarus/swarm-apim-pattern1-mysql:5.5
 ```
 To build all docker images

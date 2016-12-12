@@ -8,7 +8,7 @@ services:
     environment:
         MYSQL_ROOT_PASSWORD: root
   api-manager:
-    image: docker.wso2.com/swarm-apim-pattern1-wso2am:2.0.0
+    image: docker.wso2.com/swarm-apim-pattern1-wso2am:2.1.0
     build:
       context: ../
       dockerfile: pattern-1/api-manager/Dockerfile

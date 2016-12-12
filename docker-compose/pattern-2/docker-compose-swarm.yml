@@ -8,14 +8,14 @@ services:
     environment:
         MYSQL_ROOT_PASSWORD: root
   am-analytics:
-    image: docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.0.0
+    image: docker.wso2.com/swarm-apim-pattern2-wso2am-analytics:2.1.0
     build:
       context: ../
       dockerfile: pattern-2/am-analytics/Dockerfile
     environment:
         SLEEP: 5
   api-manager:
-    image: docker.wso2.com/swarm-apim-pattern2-wso2am:2.0.0
+    image: docker.wso2.com/swarm-apim-pattern2-wso2am:2.1.0
     build:
       context: ../
       dockerfile: pattern-2/api-manager/Dockerfile
