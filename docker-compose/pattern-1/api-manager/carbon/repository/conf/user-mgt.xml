@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright WSO2, Inc. (http://wso2.com)
   ~
@@ -25,10 +26,10 @@
             </AdminUser>
             <EveryOneRoleName>everyone</EveryOneRoleName> <!-- By default users in this role sees the registry root -->
             <Property name="isCascadeDeleteEnabled">true</Property>
+            <Property name="initializeNewClaimManager">true</Property>
             <Property name="dataSource">jdbc/WSO2UM_DB</Property>
         </Configuration>
-
-	    <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
+        <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
 	         In case if application needs to manage passwords externally set property
 	         <Property name="PasswordsExternallyManaged">true</Property>.
 	         In case if user core cache domain is needed to identify uniquely set property
@@ -61,8 +62,7 @@
             <Property name="UserRolesCacheEnabled">true</Property>
             <Property name="UserNameUniqueAcrossTenants">false</Property>
         </UserStoreManager>
-	
-	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
+        <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
 		     In case if user core cache domain is needed to identify uniquely set property
 		     <Property name="UserCoreCacheIdentifier">domain</Property>
  	    -->
@@ -99,8 +99,7 @@
             <Property name="RetryAttempts"/>
             <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
         </UserStoreManager-->
-	
-	    <!-- Active directory configuration is as follows.
+        <!-- Active directory configuration is as follows.
 	         In case if user core cache domain is needed to identify uniquely set property
 	         <Property name="UserCoreCacheIdentifier">domain</Property>
 	         There are few special properties for "Active Directory".
