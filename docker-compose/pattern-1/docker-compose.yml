@@ -11,7 +11,7 @@ services:
       context: ../
       dockerfile: pattern-1/api-manager/Dockerfile
     environment:
-      - SLEEP=10
+      - SLEEP=100
     ports:
       - "443:9443"
       - "80:9763"
