@@ -69,7 +69,7 @@ services:
     build:
       context: ../
       dockerfile: pattern-3/publisher/Dockerfile
-#    environment:
-#      - SLEEP=200
+    environment:
+      - SLEEP=200
     ports:
       - "9445:9443"
