@@ -24,7 +24,7 @@ services:
       context: ../
       dockerfile: pattern-3/traffic-manager/Dockerfile
     environment:
-      - SLEEP=5
+      - SLEEP=50
     ports:
     - "9447:9443"
   keymanager:
@@ -33,7 +33,7 @@ services:
       context: ../
       dockerfile: pattern-3/keymanager/Dockerfile
     environment:
-      - SLEEP=60
+      - SLEEP=110
     ports:
     - "9443:9443"
   gateway-manager:
@@ -42,7 +42,7 @@ services:
       context: ../
       dockerfile: pattern-3/gateway-manager/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=150
     ports:
     - "9444:9443"
   gateway-worker:
@@ -51,7 +51,7 @@ services:
       context: ../
       dockerfile: pattern-3/gateway-worker/Dockerfile
     environment:
-      - SLEEP=180
+      - SLEEP=230
     ports:
     - "8280:8280"
     - "8243:8243"
@@ -61,7 +61,7 @@ services:
       context: ../
       dockerfile: pattern-3/store/Dockerfile
     environment:
-      - SLEEP=200
+      - SLEEP=250
     ports:
     - "9446:9443"
   publisher:
@@ -69,7 +69,7 @@ services:
     build:
       context: ../
       dockerfile: pattern-3/publisher/Dockerfile
-#    environment:
-#      - SLEEP=200
+    environment:
+      - SLEEP=200
     ports:
       - "9445:9443"
