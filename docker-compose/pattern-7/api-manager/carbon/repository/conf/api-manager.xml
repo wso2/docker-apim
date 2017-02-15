@@ -93,7 +93,7 @@
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://localhost:${http.nio.port},https://localhost:${https.nio.port}</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway:${http.nio.port},https://gateway:${https.nio.port}</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -284,7 +284,7 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://store:${mgt.transport.https.port}/store</URL>
+        <URL>https://store/store</URL>
 
         <!-- Server URL of the API Store. -->
         <ServerURL>https://store:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
