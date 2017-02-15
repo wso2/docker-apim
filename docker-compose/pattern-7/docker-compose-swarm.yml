@@ -1,0 +1,22 @@
+version: '2'
+services:
+  apim_rdbms:
+    image: docker.wso2.com/swarm-apim-pattern1-mysql:5.5
+    build:
+        context: ../
+        dockerfile: pattern-7/database/Dockerfile
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+  api-manager:
+    image: docker.wso2.com/swarm-apim-pattern1-wso2am:2.1.0
+    build:
+      context: ../
+      dockerfile: pattern-7/api-manager/Dockerfile
+    environment:
+       SLEEP: 50
+  is-key-manager:
+    build:
+      context: ../
+      dockerfile: pattern-7/is-key-manager/Dockerfile
+    environment:
+      - SLEEP=100
