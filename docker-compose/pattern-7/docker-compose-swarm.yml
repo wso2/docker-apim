@@ -13,10 +13,10 @@ services:
       context: ../
       dockerfile: pattern-7/api-manager/Dockerfile
     environment:
-       SLEEP: 50
+       SLEEP: 100
   is-key-manager:
     build:
       context: ../
       dockerfile: pattern-7/is-key-manager/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=120

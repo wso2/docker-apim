@@ -13,4 +13,4 @@ services:
       context: ../
       dockerfile: pattern-1/api-manager/Dockerfile
     environment:
-       SLEEP: 20
+       SLEEP: 100
