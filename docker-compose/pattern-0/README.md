@@ -82,8 +82,7 @@ Change docker-compose-swarm.yml image names according to your docker private reg
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/swarm-apim-pattern1-wso2am:2.1.0	-> lakwarus/swarm-apim-pattern1-wso2am:2.1.0
-docker.wso2.com/swarm-apim-pattern1-mysql:5.5		-> lakwarus/swarm-apim-pattern1-mysql:5.5
+docker.wso2.com/swarm-apim-pattern0-wso2am:2.1.0	-> lakwarus/swarm-apim-pattern0-wso2am:2.1.0
 ```
 To build all docker images
 ```
@@ -101,18 +100,18 @@ To create bundle file
 docker-compose -f docker-compose-swarm.yml bundle
 ```
 
-Copy pattern1.dab file to docker swarm manager node and run following
+Copy pattern0.dab file to docker swarm manager node and run following
 
 To deploy all docker services on swarm cluster
 ```
-docker deploy pattern1
+docker deploy pattern0
 ```
 To update AWS ELB endpoits
 ```
-docker service update --publish-add 443:9443 pattern1_api-manager
-docker service update --publish-add 80:9763 pattern1_api-manager
-docker service update --publish-add 8280:8280 pattern1_api-manager
-docker service update --publish-add 8243:8243 pattern1_api-manager
+docker service update --publish-add 443:9443 pattern0_api-manager
+docker service update --publish-add 80:9763 pattern0_api-manager
+docker service update --publish-add 8280:8280 pattern0_api-manager
+docker service update --publish-add 8243:8243 pattern0_api-manager
 ```
 #### How to access the environment
 Update your DNS (or add host entries) by poining "api-manager" domain name to AWS ELB IP.  
