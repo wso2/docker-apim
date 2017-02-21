@@ -15,7 +15,7 @@ services:
     environment:
        SLEEP: 100
   is-key-manager:
-    image: docker.wso2.com/swarm-apim-pattern7-wso2is-key-manager:2.1.0
+    image: docker.wso2.com/swarm-apim-pattern7-wso2is-as-keymanager:2.1.0
     build:
       context: ../
       dockerfile: pattern-7/is-key-manager/Dockerfile
