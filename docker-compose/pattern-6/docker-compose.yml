@@ -1,28 +1,28 @@
 version: '2'
 services:
   apim_rdbms:
-    image: docker.wso2.com/apim-pattern4-mysql:5.5
+    image: docker.wso2.com/apim-pattern6-mysql:5.5
     build:
         context: ../
-        dockerfile: pattern-4/database/Dockerfile
+        dockerfile: pattern-6/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
     image: docker.wso2.com/svnrepo
   analytics:
-    image: docker.wso2.com/apim-pattern4-am-analytics:2.1.0
+    image: docker.wso2.com/apim-pattern6-am-analytics:2.1.0
     build:
       context: ../
-      dockerfile: pattern-4/am-analytics/Dockerfile
+      dockerfile: pattern-6/am-analytics/Dockerfile
     environment:
       - SLEEP=100
     ports:
     - "9448:9444"
   traffic-manager:
-    image: docker.wso2.com/apim-pattern4-traffic-manager:2.1.0
+    image: docker.wso2.com/apim-pattern6-traffic-manager:2.1.0
     build:
       context: ../
-      dockerfile: pattern-4/traffic-manager/Dockerfile
+      dockerfile: pattern-6/traffic-manager/Dockerfile
     environment:
       - SLEEP=5
     ports:
@@ -30,35 +30,35 @@ services:
   keymanager:
     build:
       context: ../
-      dockerfile: pattern-4/keymanager/Dockerfile
+      dockerfile: pattern-6/keymanager/Dockerfile
     environment:
       - SLEEP=60
     ports:
     - "9443:9443"
   gateway-manager:
-    image: docker.wso2.com/apim-pattern4-gateway-manager:2.1.0
+    image: docker.wso2.com/apim-pattern6-gateway-manager:2.1.0
     build:
       context: ../
-      dockerfile: pattern-4/gateway-manager/Dockerfile
+      dockerfile: pattern-6/gateway-manager/Dockerfile
     environment:
       - SLEEP=100
     ports:
     - "9444:9443"
   gateway-worker:
-    image: docker.wso2.com/apim-pattern4-gateway-worker:2.1.0
+    image: docker.wso2.com/apim-pattern6-gateway-worker:2.1.0
     build:
       context: ../
-      dockerfile: pattern-4/gateway-worker/Dockerfile
+      dockerfile: pattern-6/gateway-worker/Dockerfile
     environment:
       - SLEEP=180
     ports:
     - "8280:8280"
     - "8243:8243"
   publisher-store:
-    image: docker.wso2.com/apim-pattern4-publisher-store:2.1.0
+    image: docker.wso2.com/apim-pattern6-publisher-store:2.1.0
     build:
       context: ../
-      dockerfile: pattern-4/publisher-store/Dockerfile
+      dockerfile: pattern-6/publisher-store/Dockerfile
     environment:
       - SLEEP=200
     ports:
