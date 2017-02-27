@@ -15,7 +15,7 @@ services:
       context: ../
       dockerfile: pattern-6/am-analytics/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=150
     ports:
     - "9448:9444"
   traffic-manager:
@@ -24,7 +24,7 @@ services:
       context: ../
       dockerfile: pattern-6/traffic-manager/Dockerfile
     environment:
-      - SLEEP=5
+      - SLEEP=60
     ports:
     - "9447:9443"
   keymanager:
@@ -32,7 +32,7 @@ services:
       context: ../
       dockerfile: pattern-6/keymanager/Dockerfile
     environment:
-      - SLEEP=60
+      - SLEEP=100
     ports:
     - "9443:9443"
   gateway-manager:
@@ -41,7 +41,7 @@ services:
       context: ../
       dockerfile: pattern-6/gateway-manager/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=150
     ports:
     - "9444:9443"
   gateway-worker:
@@ -50,7 +50,7 @@ services:
       context: ../
       dockerfile: pattern-6/gateway-worker/Dockerfile
     environment:
-      - SLEEP=180
+      - SLEEP=200
     ports:
     - "8280:8280"
     - "8243:8243"
@@ -60,6 +60,6 @@ services:
       context: ../
       dockerfile: pattern-6/publisher-store/Dockerfile
     environment:
-      - SLEEP=200
+      - SLEEP=230
     ports:
       - "9445:9443"
