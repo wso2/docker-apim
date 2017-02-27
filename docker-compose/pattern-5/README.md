@@ -20,7 +20,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1	gateway-worker-km gateway-manager publisher store traffic-manager analytics
+127.0.0.1	apim_rdbms gateway-worker-km gateway-manager publisher store traffic-manager analytics
 ```
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
 
@@ -73,14 +73,14 @@ Change docker-compose-swarm.yml image names according to your docker private reg
 eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
 
 ```
-docker.wso2.com/swarm-apim-pattern7-mysql:5.5				-> lakwarus/swarm-apim-pattern7-mysql:5.5
+docker.wso2.com/swarm-apim-pattern5-mysql:5.5				-> lakwarus/swarm-apim-pattern5-mysql:5.5
 docker.wso2.com/svnrepo										-> lakwarus/svnrepo
-docker.wso2.com/swarm-apim-pattern7-am-analytics:2.1.0		-> lakwarus/swarm-apim-pattern7-am-analytics:2.1.0
-docker.wso2.com/swarm-apim-pattern7-traffic-manager:2.1.0	-> lakwarus/swarm-apim-pattern7-traffic-manager:2.1.0
-docker.wso2.com/swarm-apim-pattern7-gateway-manager:2.1.0	-> lakwarus/swarm-apim-pattern7-gateway-manager:2.1.0
-docker.wso2.com/swarm-apim-pattern7-gateway-worker-km:2.1.0	-> lakwarus/swarm-apim-pattern7-gateway-worker-km:2.1.0
-docker.wso2.com/swarm-apim-pattern7-store:2.1.0				-> lakwarus/swarm-apim-pattern7-store:2.1.0
-docker.wso2.com/swarm-apim-pattern7-publisher:2.1.0			-> lakwarus/swarm-apim-pattern7-publisher:2.1.0
+docker.wso2.com/swarm-apim-pattern5-am-analytics:2.1.0		-> lakwarus/swarm-apim-pattern5-am-analytics:2.1.0
+docker.wso2.com/swarm-apim-pattern5-traffic-manager:2.1.0	-> lakwarus/swarm-apim-pattern5-traffic-manager:2.1.0
+docker.wso2.com/swarm-apim-pattern5-gateway-manager:2.1.0	-> lakwarus/swarm-apim-pattern5-gateway-manager:2.1.0
+docker.wso2.com/swarm-apim-pattern5-gateway-worker-km:2.1.0	-> lakwarus/swarm-apim-pattern5-gateway-worker-km:2.1.0
+docker.wso2.com/swarm-apim-pattern5-store:2.1.0				-> lakwarus/swarm-apim-pattern5-store:2.1.0
+docker.wso2.com/swarm-apim-pattern5-publisher:2.1.0			-> lakwarus/swarm-apim-pattern5-publisher:2.1.0
 
 ```
 To build all docker images
@@ -98,22 +98,22 @@ To create bundle file
 docker-compose -f docker-compose-swarm.yml bundle
 ```
 
-Copy pattern7.dab file to docker swarm manager node and run following
+Copy pattern5.dab file to docker swarm manager node and run following
 
 To deploy all docker services on swarm cluster
 ```
-docker deploy pattern7
+docker deploy pattern5
 ```
 To update AWS ELB endpoits
 ```
-docker service update --publish-add 9448:9444 pattern7_analytics
-docker service update --publish-add 9447:9443 pattern7_traffic-manager
-docker service update --publish-add 9444:9443 pattern7_gateway-manager
-docker service update --publish-add 9443:9443 pattern7_gateway-worker-km
-docker service update --publish-add 8280:8280 pattern7_gateway-worker-km
-docker service update --publish-add 8243:8243 pattern7_gateway-worker-km
-docker service update --publish-add 9446:9443 pattern7_store
-docker service update --publish-add 9445:9443 pattern7_publisher
+docker service update --publish-add 9448:9444 pattern5_analytics
+docker service update --publish-add 9447:9443 pattern5_traffic-manager
+docker service update --publish-add 9444:9443 pattern5_gateway-manager
+docker service update --publish-add 9443:9443 pattern5_gateway-worker-km
+docker service update --publish-add 8280:8280 pattern5_gateway-worker-km
+docker service update --publish-add 8243:8243 pattern5_gateway-worker-km
+docker service update --publish-add 9446:9443 pattern5_store
+docker service update --publish-add 9445:9443 pattern5_publisher
 ```
 #### How to test
 
