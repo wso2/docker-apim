@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright WSO2, Inc. (http://wso2.com)
   ~
@@ -13,7 +14,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-        
 <UserManager>
     <Realm>
         <Configuration>
@@ -27,8 +27,7 @@
             <Property name="isCascadeDeleteEnabled">true</Property>
             <Property name="dataSource">jdbc/WSO2UM_DB</Property>
         </Configuration>
-
-	    <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
+        <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
 	         In case if application needs to manage passwords externally set property
 	         <Property name="PasswordsExternallyManaged">true</Property>.
 	         In case if user core cache domain is needed to identify uniquely set property
@@ -61,8 +60,7 @@
             <Property name="UserRolesCacheEnabled">true</Property>
             <Property name="UserNameUniqueAcrossTenants">false</Property>
         </UserStoreManager>
-	
-	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
+        <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
 		     In case if user core cache domain is needed to identify uniquely set property
 		     <Property name="UserCoreCacheIdentifier">domain</Property>
  	    -->
@@ -99,8 +97,7 @@
             <Property name="RetryAttempts"/>
             <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
         </UserStoreManager-->
-	
-	    <!-- Active directory configuration is as follows.
+        <!-- Active directory configuration is as follows.
 	         In case if user core cache domain is needed to identify uniquely set property
 	         <Property name="UserCoreCacheIdentifier">domain</Property>
 	         There are few special properties for "Active Directory".
@@ -158,7 +155,6 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
         </UserStoreManager-->
-
         <!-- Following user manager is used by Identity Server (IS) as its default user manager.
              IS will do token replacement when building the product. Therefore do not change the syntax.
              If "kdcEnabled" parameter is true, IS will allow service principle management.
@@ -210,7 +206,6 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
         </ISUserStoreManager-->
-
         <AuthorizationManager class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager">
             <Property name="AdminRoleManagementPermissions">/permission</Property>
             <Property name="AuthorizationCacheEnabled">true</Property>
@@ -218,7 +213,6 @@
         </AuthorizationManager>
     </Realm>
 </UserManager>
-
 <!--
 
 ************* Description of some of the configuration properties used in user-mgt.xml *********************************

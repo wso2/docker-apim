@@ -443,6 +443,13 @@
             </Patterns>
         </XSSPreventionConfig>
     </Security>
+                                           
+    <!--Hide unnecessary menu Items-->                                           
+    <HideMenuItemIds>                                           
+        <HideMenuItemId>claim_mgt_menu</HideMenuItemId>                                           
+        <HideMenuItemId>identity_mgt_emailtemplate_menu</HideMenuItemId>                                           
+        <HideMenuItemId>identity_security_questions_menu</HideMenuItemId>                                           
+    </HideMenuItemIds>
 
     <!--
        The temporary work directory
