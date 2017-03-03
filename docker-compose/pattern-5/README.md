@@ -1,6 +1,6 @@
 ### This repository contains API Manager 2.1.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2/docker-apim/blob/master/docker-compose/patterns/design/am-2.1.0-pattern-5.png)
+![alt tag](https://github.com/wso2/docker-apim/blob/2.1.x/docker-compose/patterns/design/am-2.1.0-pattern-5.jpeg)
 
 #### How to run
 
