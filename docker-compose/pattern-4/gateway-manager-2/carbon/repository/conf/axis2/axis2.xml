@@ -658,7 +658,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">wso2.gateway-lan2.domain</parameter>
+        <parameter name="domain">wso2.gateway-2.domain</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->

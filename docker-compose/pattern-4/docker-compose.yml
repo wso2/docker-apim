@@ -59,18 +59,18 @@ services:
       - SLEEP=260
     ports:
     - "9446:9443"
-  gateway-manager-lan2:
+  gateway-manager-2:
     build:
       context: ../
-      dockerfile: pattern-4/gateway-manager-lan2/Dockerfile
+      dockerfile: pattern-4/gateway-manager-2/Dockerfile
     environment:
       - SLEEP=140
     ports:
     - "9449:9443"
-  gateway-worker-lan2:
+  gateway-worker-2:
     build:
       context: ../
-      dockerfile: pattern-4/gateway-worker-lan2/Dockerfile
+      dockerfile: pattern-4/gateway-worker-2/Dockerfile
     environment:
       - SLEEP=230
     ports:

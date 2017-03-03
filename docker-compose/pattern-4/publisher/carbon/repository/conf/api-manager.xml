@@ -101,10 +101,10 @@
             <Environment type="dmz">
                 <Name>External Gateway</Name>
                 <Description>External Gateway Environment</Description>
-                <ServerURL>https://gateway-manager-lan2:9443/services/</ServerURL>
+                <ServerURL>https://gateway-manager-2:9443/services/</ServerURL>
                 <Username>admin</Username>
                 <Password>admin</Password>
-                <GatewayEndpoint>http://gateway-worker-lan2:8280,https://gateway-worker-lan2:8243</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway-worker-2:8280,https://gateway-worker-2:8243</GatewayEndpoint>
             </Environment>
             <Environment type="internal">
                 <Name>Internal Gateway</Name>
