@@ -26,7 +26,7 @@ This will deploy the following,
 Add the following entries to the /etc/hosts
 ```
 127.0.0.1 gateway.apim.wso2.com mgt.gateway.apim.wso2.com publisher.apim.wso2.com store.apim.wso2.com keymanager.apim.wso2.com trafficm.apim.wso2.com analytics.apim.wso2.com
-127.0.0.1 gateway-dmz.apim.wso2.com mgt.gateway-dmz.apim.wso2.com
+127.0.0.1 gateway-dmz.apim.wso2.com mgt.gateway-dmz.apim.wso2.com apim_rdbms
 ```
 
 If you are using docker machine, please use the docker machine IP instead of the local machine IP.
@@ -36,13 +36,13 @@ If you are using docker machine, please use the docker machine IP instead of the
 Publisher
 
 ```
-https://publisher.apim.wso2.com/publisher
+https://publisher.apim.wso2.com:9445/publisher
 ```
 
 Store
 
 ```
-https://store.apim.wso2.com/store
+https://store.apim.wso2.com:9446/store
 ```
 
 Gateway Manager
