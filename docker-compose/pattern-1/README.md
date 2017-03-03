@@ -44,7 +44,7 @@ This will deploy the following,
 
 Add the following entries to the /etc/hosts
 ```
-127.0.0.1 api-manager
+127.0.0.1 api-manager apim_rdbms
 ```
 If you are using docker machine, please use the docker machine IP instead of the local maGchine IP.
 
