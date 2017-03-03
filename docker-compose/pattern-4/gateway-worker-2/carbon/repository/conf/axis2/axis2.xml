@@ -679,7 +679,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">gateway-manager-lan2</parameter>
+        <parameter name="localMemberHost">gateway-worker-2</parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -711,7 +711,7 @@
         <parameter name="properties">
             <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
             <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
-            <property name="subDomain" value="mgt"/>
+            <property name="subDomain" value="worker"/>
         </parameter>
 
         <!--
@@ -720,7 +720,7 @@
         -->
         <members>
             <member>
-                <hostName>gateway-worker-lan2</hostName>
+                <hostName>gateway-manager-2</hostName>
                 <port>4000</port>
             </member>
         </members>
