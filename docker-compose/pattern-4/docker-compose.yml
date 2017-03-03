@@ -1,7 +1,6 @@
 version: '2'
 services:
   apim_rdbms:
-    image: docker.wso2.com/apim-pattern4-mysql:5.5
     build:
         context: ../
         dockerfile: pattern-4/database/Dockerfile
@@ -9,22 +8,22 @@ services:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
     image: docker.wso2.com/svnrepo
+  svnrepo-lan2:
+    image: docker.wso2.com/svnrepo
   analytics:
-    image: docker.wso2.com/apim-pattern4-am-analytics:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/am-analytics/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=60
     ports:
     - "9448:9444"
   traffic-manager:
-    image: docker.wso2.com/apim-pattern4-traffic-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/traffic-manager/Dockerfile
     environment:
-      - SLEEP=5
+      - SLEEP=60
     ports:
     - "9447:9443"
   keymanager:
@@ -32,11 +31,10 @@ services:
       context: ../
       dockerfile: pattern-4/keymanager/Dockerfile
     environment:
-      - SLEEP=60
+      - SLEEP=100
     ports:
     - "9443:9443"
   gateway-manager:
-    image: docker.wso2.com/apim-pattern4-gateway-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/gateway-manager/Dockerfile
@@ -45,21 +43,62 @@ services:
     ports:
     - "9444:9443"
   gateway-worker:
-    image: docker.wso2.com/apim-pattern4-gateway-worker:2.1.0
     build:
       context: ../
       dockerfile: pattern-4/gateway-worker/Dockerfile
     environment:
-      - SLEEP=180
+      - SLEEP=230
     ports:
     - "8280:8280"
     - "8243:8243"
-  publisher-store:
-    image: docker.wso2.com/apim-pattern4-publisher-store:2.1.0
+  store:
     build:
       context: ../
-      dockerfile: pattern-4/publisher-store/Dockerfile
+      dockerfile: pattern-4/store/Dockerfile
     environment:
-      - SLEEP=200
+      - SLEEP=260
+    ports:
+    - "9446:9443"
+  gateway-manager-lan2:
+    build:
+      context: ../
+      dockerfile: pattern-4/gateway-manager-lan2/Dockerfile
+    environment:
+      - SLEEP=140
+    ports:
+    - "9449:9443"
+  gateway-worker-lan2:
+    build:
+      context: ../
+      dockerfile: pattern-4/gateway-worker-lan2/Dockerfile
+    environment:
+      - SLEEP=230
+    ports:
+    - "8281:8280"
+    - "8244:8243"
+  publisher:
+    build:
+      context: ../
+      dockerfile: pattern-4/publisher/Dockerfile
+    environment:
+      - SLEEP=260
     ports:
       - "9445:9443"
+  nginx:
+    build:
+      context: ../
+      dockerfile: pattern-4/nginx/Dockerfile
+    environment:
+      - SLEEP=100
+    ports:
+      - "443:9443"
+      - "80:9763"
+#  nginx-lan2:
+#    build:
+#      context: ../
+#      dockerfile: pattern-4/nginx-lan2/Dockerfile
+#    environment:
+#      - SLEEP=60
+#    ports:
+#      - "9445:9443"
+#      - "9765:9763"

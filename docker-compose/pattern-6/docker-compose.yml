@@ -1,6 +1,7 @@
 version: '2'
 services:
   apim_rdbms:
+    image: docker.wso2.com/apim-pattern6-mysql:5.5
     build:
         context: ../
         dockerfile: pattern-6/database/Dockerfile
@@ -9,21 +10,23 @@ services:
   svnrepo:
     image: docker.wso2.com/svnrepo
   analytics:
+    image: docker.wso2.com/apim-pattern6-am-analytics:2.1.0
     build:
       context: ../
       dockerfile: pattern-6/am-analytics/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=150
     ports:
     - "9448:9444"
-  publisher-tm:
+  traffic-manager:
+    image: docker.wso2.com/apim-pattern6-traffic-manager:2.1.0
     build:
       context: ../
-      dockerfile: pattern-6/publisher-tm/Dockerfile
+      dockerfile: pattern-6/traffic-manager/Dockerfile
     environment:
-      - SLEEP=5
+      - SLEEP=60
     ports:
-      - "9445:9443"
+    - "9447:9443"
   keymanager:
     build:
       context: ../
@@ -33,27 +36,30 @@ services:
     ports:
     - "9443:9443"
   gateway-manager:
+    image: docker.wso2.com/apim-pattern6-gateway-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-6/gateway-manager/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=150
     ports:
     - "9444:9443"
   gateway-worker:
+    image: docker.wso2.com/apim-pattern6-gateway-worker:2.1.0
     build:
       context: ../
       dockerfile: pattern-6/gateway-worker/Dockerfile
     environment:
-      - SLEEP=180
+      - SLEEP=200
     ports:
     - "8280:8280"
     - "8243:8243"
-  store:
+  publisher-store:
+    image: docker.wso2.com/apim-pattern6-publisher-store:2.1.0
     build:
       context: ../
-      dockerfile: pattern-6/store/Dockerfile
+      dockerfile: pattern-6/publisher-store/Dockerfile
     environment:
-      - SLEEP=200
+      - SLEEP=230
     ports:
-    - "9446:9443"
+      - "9445:9443"

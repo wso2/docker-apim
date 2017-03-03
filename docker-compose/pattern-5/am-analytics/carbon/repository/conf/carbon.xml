@@ -142,21 +142,21 @@
             <!-- Port which KDC (Kerberos Key Distribution Center) server runs -->
             <KDCServerPort>8000</KDCServerPort>
         </EmbeddedLDAP>
-
-	<!--
+	
+	<!-- 
              Override datasources JNDIproviderPort defined in bps.xml and datasources.properties files
 	-->
 	<!--<JNDIProviderPort>2199</JNDIProviderPort>-->
 	<!--Override receive port of thrift based entitlement service.-->
 	<ThriftEntitlementReceivePort>10500</ThriftEntitlementReceivePort>
 
-        <!--
-         This is the proxy port of the worker cluster. These need to be configured in a scenario where
-         manager node is not exposed through the load balancer through which the workers are exposed
-         therefore doesn't have a proxy port.
-        <WorkerHttpProxyPort>80</WorkerHttpProxyPort>
-        <WorkerHttpsProxyPort>443</WorkerHttpsProxyPort>
-        -->
+    <!--
+     This is the proxy port of the worker cluster. These need to be configured in a scenario where
+     manager node is not exposed through the load balancer through which the workers are exposed
+     therefore doesn't have a proxy port.
+    <WorkerHttpProxyPort>80</WorkerHttpProxyPort>
+    <WorkerHttpsProxyPort>443</WorkerHttpsProxyPort>
+    -->
 
     </Ports>
 
@@ -398,12 +398,12 @@
                 exceptions at runtime.
             -->
             <!-- <Credential> -->
-                <!--
+                <!-- 
                     the pattern that would match a subset of URLs for which this authenticator
                     would be used
                 -->
                 <!-- <Pattern>regularExpression</Pattern> -->
-                <!--
+                <!-- 
                     the type of this authenticator. Allowed values are:
                     1. server
                     2. proxy
@@ -430,11 +430,11 @@
 	<!--Option to disable storing of tokens issued by STS-->
 	<DisableTokenStore>false</DisableTokenStore>
 
-        <!--
-         Security token store class name. If this is not set, default class will be
-         org.wso2.carbon.security.util.SecurityTokenStore
-        -->
-        <!--TokenStoreClassName>org.wso2.carbon.identity.sts.store.DBTokenStore</TokenStoreClassName-->
+	<!--
+	 Security token store class name. If this is not set, default class will be
+	 org.wso2.carbon.security.util.SecurityTokenStore
+	-->
+	<!--TokenStoreClassName>org.wso2.carbon.identity.sts.store.DBTokenStore</TokenStoreClassName-->
 
         <XSSPreventionConfig>
             <Enabled>true</Enabled>
@@ -443,24 +443,14 @@
                 <!--Pattern></Pattern-->
             </Patterns>
         </XSSPreventionConfig>
-
-        <!-- Configurations to avoid Cross Site Request Forgery vulnerabilities -->
-        <CSRFPreventionConfig>
-            <!-- CSRFPreventionFilter configurations that adopts Synchronizer Token Pattern -->
-            <CSRFPreventionFilter>
-                <!-- Set below to true to enable the CSRFPreventionFilter -->
-                <Enabled>false</Enabled>
-                <!-- Url Pattern to skip application of CSRF protection-->
-                <SkipUrlPattern>(.*)(/images|/css|/js|/docs)(.*)</SkipUrlPattern>
-            </CSRFPreventionFilter>
-        </CSRFPreventionConfig>
-
-        <!-- Configuration to enable or disable CR and LF sanitization filter-->
-        <CRLFPreventionConfig>
-            <!--Set below to true to enable the CRLFPreventionFilter-->
-            <Enabled>true</Enabled>
-        </CRLFPreventionConfig>
     </Security>
+                                           
+    <!--Hide unnecessary menu Items-->                                           
+    <HideMenuItemIds>                                           
+        <HideMenuItemId>claim_mgt_menu</HideMenuItemId>                                           
+        <HideMenuItemId>identity_mgt_emailtemplate_menu</HideMenuItemId>                                           
+        <HideMenuItemId>identity_security_questions_menu</HideMenuItemId>                                           
+    </HideMenuItemIds>
 
     <!--
        The temporary work directory
@@ -577,7 +567,7 @@
         </Processor>
     </HttpGetRequestProcessors>
 
-    <!-- Deployment Synchronizer Configuration. t Enabled value to true when running with "svn based" dep sync.
+    <!-- Deployment Synchronizer Configuration. Enable value to true when running with "svn based" dep sync.
 	In master nodes you need to set both AutoCommit and AutoCheckout to true
 	and in  worker nodes set only AutoCheckout to true.
     -->

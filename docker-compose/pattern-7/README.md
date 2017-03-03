@@ -1,6 +1,6 @@
 ### This repository contains API Manager 2.1.0 distributed deployment with Docker compose
 
-![alt tag](https://github.com/wso2/docker-apim/blob/2.1.x/docker-compose/patterns/design/am-2.0-pattern-7.png)
+![alt tag](https://github.com/wso2/docker-apim/blob/2.1.x/docker-compose/patterns/design/am-2.1.0-pattern-7.png)
 
 ## Pre-requisites
 
@@ -62,71 +62,6 @@ Store
 https://api-manager/store/
 ```
 
-
-Gateway Manager
-
-```
-https://api-manager/carbon/
-```
-
-## How to run in Docker Swarm Cluster
-
-### Setup Docker Swarm Cluster in Amazon AWS
-
-https://beta.docker.com/docs/aws/
-
-### Deploy on Swarm
-
-Change docker-compose-swarm.yml image names according to your docker private registry or public registry.
-
-eg. If you have a docker public registry account (say account name is "lakwarus"), you can change images as following
-
-```
-docker.wso2.com/swarm-apim-pattern7-wso2am:2.1.0	-> lakwarus/swarm-apim-pattern7-wso2am:2.1.0
-docker.wso2.com/swarm-apim-pattern7-mysql:5.5		-> lakwarus/swarm-apim-pattern7-mysql:5.5
-```
-To build all docker images
-```
-docker-compose -f docker-compose-swarm.yml build
-```
-
-To push newly built images to relevant docker registry
-```
-docker-compose -f docker-compose-swarm.yml push
-```
-
-To create bundle file
-
-```
-docker-compose -f docker-compose-swarm.yml bundle
-```
-
-Copy pattern7.dab file to docker swarm manager node and run following
-
-To deploy all docker services on swarm cluster
-```
-docker deploy pattern7
-```
-To update AWS ELB endpoits
-```
-docker service update --publish-add 443:9443 pattern7_api-manager
-docker service update --publish-add 80:9763 pattern7_api-manager
-docker service update --publish-add 8280:8280 pattern7_api-manager
-docker service update --publish-add 8243:8243 pattern7_api-manager
-```
-#### How to access the environment
-Update your DNS (or add host entries) by poining "api-manager" domain name to AWS ELB IP.  
-
-Publisher
-
-```
-https://api-manager/publisher
-```
-Store
-
-```
-https://api-manager/store/
-```
 
 Gateway Manager
 
