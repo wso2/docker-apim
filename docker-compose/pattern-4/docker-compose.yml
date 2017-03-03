@@ -3,17 +3,17 @@ services:
   apim_rdbms:
     build:
         context: ../
-        dockerfile: pattern-3/database/Dockerfile
+        dockerfile: pattern-4/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   svnrepo:
-    image: dockerhub.private.wso2.com/svnrepo
+    image: docker.wso2.com/svnrepo
   svnrepo-lan2:
-    image: dockerhub.private.wso2.com/svnrepo
+    image: docker.wso2.com/svnrepo
   analytics:
     build:
       context: ../
-      dockerfile: pattern-3/am-analytics/Dockerfile
+      dockerfile: pattern-4/am-analytics/Dockerfile
     environment:
       - SLEEP=60
     ports:
@@ -21,7 +21,7 @@ services:
   traffic-manager:
     build:
       context: ../
-      dockerfile: pattern-3/traffic-manager/Dockerfile
+      dockerfile: pattern-4/traffic-manager/Dockerfile
     environment:
       - SLEEP=60
     ports:
@@ -29,7 +29,7 @@ services:
   keymanager:
     build:
       context: ../
-      dockerfile: pattern-3/keymanager/Dockerfile
+      dockerfile: pattern-4/keymanager/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -37,7 +37,7 @@ services:
   gateway-manager:
     build:
       context: ../
-      dockerfile: pattern-3/gateway-manager/Dockerfile
+      dockerfile: pattern-4/gateway-manager/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -45,7 +45,7 @@ services:
   gateway-worker:
     build:
       context: ../
-      dockerfile: pattern-3/gateway-worker/Dockerfile
+      dockerfile: pattern-4/gateway-worker/Dockerfile
     environment:
       - SLEEP=230
     ports:
@@ -54,7 +54,7 @@ services:
   store:
     build:
       context: ../
-      dockerfile: pattern-3/store/Dockerfile
+      dockerfile: pattern-4/store/Dockerfile
     environment:
       - SLEEP=260
     ports:
@@ -62,7 +62,7 @@ services:
   gateway-manager-lan2:
     build:
       context: ../
-      dockerfile: pattern-3/gateway-manager-lan2/Dockerfile
+      dockerfile: pattern-4/gateway-manager-lan2/Dockerfile
     environment:
       - SLEEP=140
     ports:
@@ -70,7 +70,7 @@ services:
   gateway-worker-lan2:
     build:
       context: ../
-      dockerfile: pattern-3/gateway-worker-lan2/Dockerfile
+      dockerfile: pattern-4/gateway-worker-lan2/Dockerfile
     environment:
       - SLEEP=230
     ports:
@@ -79,7 +79,7 @@ services:
   publisher:
     build:
       context: ../
-      dockerfile: pattern-3/publisher/Dockerfile
+      dockerfile: pattern-4/publisher/Dockerfile
     environment:
       - SLEEP=260
     ports:
@@ -87,7 +87,7 @@ services:
   nginx:
     build:
       context: ../
-      dockerfile: pattern-3/nginx/Dockerfile
+      dockerfile: pattern-4/nginx/Dockerfile
     environment:
       - SLEEP=100
     ports:
@@ -96,7 +96,7 @@ services:
 #  nginx-lan2:
 #    build:
 #      context: ../
-#      dockerfile: pattern-3/nginx-lan2/Dockerfile
+#      dockerfile: pattern-4/nginx-lan2/Dockerfile
 #    environment:
 #      - SLEEP=60
 #    ports:
