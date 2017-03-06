@@ -571,14 +571,14 @@
 	and in  worker nodes set only AutoCheckout to true.
     -->
     <DeploymentSynchronizer>
-        <Enabled>true</Enabled>
-        <AutoCommit>true</AutoCommit>
+        <Enabled>false</Enabled>
+        <AutoCommit>false</AutoCommit>
         <AutoCheckout>true</AutoCheckout>
         <RepositoryType>svn</RepositoryType>
-        <SvnUrl>http://svnrepo-lan2/repo</SvnUrl>
-        <SvnUser>user</SvnUser>
+        <SvnUrl>http://svnrepo.example.com/repos/</SvnUrl>
+        <SvnUser>username</SvnUser>
         <SvnPassword>password</SvnPassword>
-        <SvnUrlAppendTenantId>false</SvnUrlAppendTenantId>
+        <SvnUrlAppendTenantId>true</SvnUrlAppendTenantId>
     </DeploymentSynchronizer>
 
     <!-- Deployment Synchronizer Configuration. Uncomment the following section when running with "registry based" dep sync.
