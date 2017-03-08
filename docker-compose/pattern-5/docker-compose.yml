@@ -6,6 +6,8 @@ services:
         dockerfile: pattern-5/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
+  svnrepo:
+    image: docker.wso2.com/svnrepo
   analytics:
     build:
       context: ../
