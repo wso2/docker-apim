@@ -47,6 +47,8 @@ services:
     ports:
     - "8280:8280"
     - "8243:8243"
+    links:
+      - gateway-manager
   store:
     build:
       context: ../
@@ -72,6 +74,8 @@ services:
     ports:
     - "8281:8280"
     - "8244:8243"
+    links:
+      - gateway-manager-2
   publisher:
     build:
       context: ../

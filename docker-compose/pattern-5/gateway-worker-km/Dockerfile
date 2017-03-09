@@ -7,3 +7,17 @@ COPY artifacts/svnkit-all-1.8.7.wso2v1.jar /mnt/wso2/carbon-home/repository/comp
 COPY artifacts/trilead-ssh2-1.0.0-build215.jar /mnt/wso2/carbon-home/repository/components/lib/
 
 USER root
+RUN adduser --quiet --disabled-password --shell /bin/bash --home /home/rsyncuser --gecos "User" rsyncuser
+RUN usermod -aG sudo rsyncuser
+RUN adduser rsyncuser sudo
+RUN echo "rsyncuser:rsyncuser" | chpasswd
+
+RUN apt-get update && apt-get install -y apt-utils rsync ssh openssh-server sshpass supervisor
+RUN mkdir -p  /var/run/sshd /var/log/supervisor
+COPY pattern-5/supervisor/supervisord-gateway-worker.conf /etc/supervisor/conf.d/supervisord.conf
+COPY pattern-5/gateway-worker-km/worker-manager-rsync.sh /usr/bin/worker-manager-rsync
+
+RUN chmod +x /usr/bin/worker-manager-rsync
+
+EXPOSE 22 80
+CMD ["/usr/bin/supervisord"]
