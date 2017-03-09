@@ -10,3 +10,17 @@ RUN rm -r /mnt/wso2am-2.1.0/repository/deployment/server/webapps/*
 RUN rm -r /mnt/wso2am-2.1.0/repository/deployment/server/jaggeryapps/*
 
 USER root
+RUN adduser --quiet --disabled-password --shell /bin/bash --home /home/rsyncuser --gecos "User" rsyncuser
+RUN usermod -aG sudo rsyncuser
+RUN adduser rsyncuser sudo
+RUN echo "rsyncuser:rsyncuser" | chpasswd
+
+RUN apt-get update && apt-get install -y apt-utils rsync ssh openssh-server supervisor
+RUN mkdir -p  /var/run/sshd /var/log/supervisor
+COPY pattern-4/supervisor/supervisord-gateway-manager-2.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+EXPOSE 22 80
+CMD ["/usr/bin/supervisord"]
