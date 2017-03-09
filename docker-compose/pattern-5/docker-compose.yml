@@ -40,6 +40,8 @@ services:
     - "9443:9443"
     - "8280:8280"
     - "8243:8243"
+    links:
+      - gateway-manager
   store:
     build:
       context: ../
