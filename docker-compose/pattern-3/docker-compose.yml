@@ -53,6 +53,8 @@ services:
     ports:
     - "8280:8280"
     - "8243:8243"
+    links:
+            - gateway-manager
   store:
     image: docker.wso2.com/apim-pattern3-store:2.1.0
     build:
