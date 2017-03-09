@@ -566,11 +566,11 @@
     -->
     <DeploymentSynchronizer>
         <Enabled>false</Enabled>
-        <AutoCommit>true</AutoCommit>
+        <AutoCommit>false</AutoCommit>
         <AutoCheckout>true</AutoCheckout>
         <RepositoryType>svn</RepositoryType>
-        <SvnUrl>http://svnrepo/repo</SvnUrl>
-        <SvnUser>user</SvnUser>
+        <SvnUrl>http://svnrepo.example.com/repos/</SvnUrl>
+        <SvnUser>username</SvnUser>
         <SvnPassword>password</SvnPassword>
         <SvnUrlAppendTenantId>true</SvnUrlAppendTenantId>
     </DeploymentSynchronizer>

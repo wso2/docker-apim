@@ -7,8 +7,6 @@ services:
         dockerfile: pattern-6/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
-  svnrepo:
-    image: docker.wso2.com/svnrepo
   analytics:
     image: docker.wso2.com/apim-pattern6-am-analytics:2.1.0
     build:
