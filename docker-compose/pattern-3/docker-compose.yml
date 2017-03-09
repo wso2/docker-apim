@@ -43,6 +43,9 @@ services:
       - SLEEP=150
     ports:
     - "9444:9443"
+    expose:
+      - "22"
+      - "80"
   gateway-worker:
     image: docker.wso2.com/apim-pattern3-gateway-worker:2.1.0
     build:
@@ -53,6 +56,11 @@ services:
     ports:
     - "8280:8280"
     - "8243:8243"
+    expose:
+      - "22"
+      - "80"
+    links:
+            - gateway-manager
   store:
     image: docker.wso2.com/apim-pattern3-store:2.1.0
     build:
