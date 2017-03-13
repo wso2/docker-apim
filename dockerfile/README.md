@@ -12,8 +12,9 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
 * Build the docker image
     - Navigate to `<DOCKERFILES_HOME>/wso2am`.
     - Execute `build.sh` script and provide the product version.
-        +  ```./build.sh ```
-        ``` Usage: ./build.sh 
+        +  `./build.sh `
+        ```bash
+        Usage: ./build.sh 
           Options:
           
             -l	[OPTIONAL] '|' separated WSO2AM profiles to build. All the profiles are selected if no value is specified.
@@ -31,13 +32,13 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
           Ex: ./build.sh -r puppet
           Ex: ./build.sh -l worker|manager -o myorganization -i 2.1.0
           Ex: ./build.sh -t wso2am-customized 
-        
+        ```
 
 * Docker run
     - Navigate to `<DOCKERFILES_HOME>/wso2am`.
     - Execute `run.sh` script and provide the product version.
         + `./run.sh `
-        ``` 
+        ```bash 
         Options:
          
            -i	[OPTIONAL] Docker image version.
@@ -49,6 +50,7 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
            
            Ex: ./run.sh 
            Ex: ./run.sh -v 2.1.0 -l 'manager' -k 'wso2carbon'
+           ```
 
 * Access management console
     -  To access the management console, use the docker host IP and port 9443.
