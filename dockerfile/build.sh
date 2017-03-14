@@ -20,9 +20,12 @@
 set -e
 
 product_name=wso2am
+product_version=2.1.0
+module_name=wso2am_runtime
+pattern=0
 
 prgdir=$(dirname "$0")
 script_path=$(cd "$prgdir"; pwd)
 common_folder=$(cd "${script_path}/common/scripts/"; pwd)
 
-bash ${common_folder}/docker-build.sh -n ${product_name} -d ${script_path} $*
+bash ${common_folder}/docker-build.sh -n ${product_name} -d ${script_path} -v ${product_version} -m ${module_name} -p ${pattern} $*

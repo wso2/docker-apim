@@ -236,7 +236,7 @@
     <!-- Uncomment this section only if you are going to have an instance other than KeyValidator as your KeyManager.
          Unless a ThirdParty KeyManager is used, you don't need to configure this section. -->
     <!--APIKeyManager>
-        <KeyManagerClientImpl>org.wso2.carbon.apimgt.keymgt.AMDefaultKeyManagerImpl</KeyManagerClientImpl>
+        <KeyManagerClientImpl>org.wso2.carbon.apimgt.impl.AMDefaultKeyManagerImpl</KeyManagerClientImpl>
         <Configuration>
             <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
             <Username>${admin.username}</Username>
@@ -458,14 +458,136 @@
                 <HTTPMethods>GET,HEAD</HTTPMethods>
             </WhiteListedURI>
         </WhiteListedURIs>
+        <ETagSkipList>
+            <ETagSkipURI>
+                <URI>/api/am/store/apis/generate-sdk</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/tiers/{tierLevel}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/tiers/{tierLevel}/{tierName}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/apis</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/applications</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/applications/generate-keys</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/{apiId}/documents</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/subscriptions</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/tags</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/tiers/api</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/{tierLevel}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/v0.10/{tierLevel}/{tierName}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}</URI>
+                <HTTPMethods>GET,DELETE,PUT</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/swagger</URI>
+                <HTTPMethods>GET,PUT</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/thumbnail</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/change-lifecycle</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/copy-api</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/applications/{applicationId}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/documents</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/documents/{documentId}/content</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/apis/{apiId}/documents/{documentId}</URI>
+                <HTTPMethods>GET,PUT,DELETE</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/environments</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/subscriptions</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/subscriptions/block-subscription</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/subscriptions/{subscriptionId}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/subscriptions/unblock-subscription</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/tiers/{tierLevel}</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/tiers/{tierLevel}/{tierName}</URI>
+                <HTTPMethods>GET,PUT,DELETE</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/v0.10/tiers/update-permission</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+        </ETagSkipList>
     </RESTAPI>
     <ThrottlingConfigurations>
         <EnableAdvanceThrottling>true</EnableAdvanceThrottling>
         <DataPublisher>
             <Enabled>true</Enabled>
             <Type>Binary</Type>
-            <ReceiverUrlGroup>tcp://publisher-tm:9611</ReceiverUrlGroup>
-            <AuthUrlGroup>ssl://publisher-tm:9711</AuthUrlGroup>
+            <ReceiverUrlGroup>tcp://traffic-manager:9611</ReceiverUrlGroup>
+            <AuthUrlGroup>ssl://traffic-manager:9711</AuthUrlGroup>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <DataPublisherPool>
@@ -479,7 +601,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <ServiceURL>https://publisher-tm:9443/services/</ServiceURL>
+            <ServiceURL>https://traffic-manager:9443/services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
@@ -490,7 +612,7 @@
         </BlockCondition>
         <JMSConnectionDetails>
             <Enabled>true</Enabled>
-            <ServiceURL>tcp://publisher-tm:5672</ServiceURL>
+            <ServiceURL>tcp://traffic-manager:5672</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
             <Destination>throttleData</Destination>
@@ -539,5 +661,31 @@
         <EnableJWTClaimConditions>false</EnableJWTClaimConditions>
         <EnableQueryParamConditions>false</EnableQueryParamConditions>
     </ThrottlingConfigurations>
+
+
+    <WorkflowConfigurations>
+        <Enabled>false</Enabled>
+        <ServerUrl>https://localhost:9445/bpmn</ServerUrl>
+        <ServerUser>${admin.username}</ServerUser>
+        <ServerPassword>${admin.password}</ServerPassword>
+        <WorkflowCallbackAPI>https://localhost:${mgt.transport.https.port}/api/am/publisher/v0.10/workflows/update-workflow-status</WorkflowCallbackAPI>
+        <TokenEndPoint>https://localhost:${https.nio.port}/token</TokenEndPoint>
+        <DCREndPoint>https://localhost:${mgt.transport.https.port}/client-registration/v0.10/register</DCREndPoint>
+        <DCREndPointUser>${admin.username}</DCREndPointUser>
+        <DCREndPointPassword>${admin.password}</DCREndPointPassword>
+    </WorkflowConfigurations>
+
+    <SwaggerCodegen>
+        <ClientGeneration>
+            <GroupId>org.wso2</GroupId>
+            <ArtifactId>org.wso2.client.</ArtifactId>
+            <ModelPackage>org.wso2.client.model.</ModelPackage>
+            <ApiPackage>org.wso2.client.api.</ApiPackage>
+            <!-- Configure supported languages/Frameworks as comma separated values,
+             Supported Languages/Frameworks : android, java, scala, csharp, cpp, dart, flash, go, groovy, javascript, jmeter,
+             nodejs, perl, php, python, ruby, swift, clojure, aspNet5, asyncScala, spring, csharpDotNet2, haskell-->
+            <SupportedLanguages>java,android</SupportedLanguages>
+        </ClientGeneration>
+    </SwaggerCodegen>
 
 </APIManager>

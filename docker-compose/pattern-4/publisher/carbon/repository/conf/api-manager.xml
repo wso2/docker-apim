@@ -101,10 +101,10 @@
             <Environment type="dmz">
                 <Name>External Gateway</Name>
                 <Description>External Gateway Environment</Description>
-                <ServerURL>https://gateway-manager-lan2:9443/services/</ServerURL>
+                <ServerURL>https://gateway-manager-2:9443/services/</ServerURL>
                 <Username>admin</Username>
                 <Password>admin</Password>
-                <GatewayEndpoint>http://gateway-worker-lan2:8280,https://gateway-worker-lan2:8243</GatewayEndpoint>
+                <GatewayEndpoint>http://gateway-worker-2:8280,https://gateway-worker-2:8243</GatewayEndpoint>
             </Environment>
             <Environment type="internal">
                 <Name>Internal Gateway</Name>
@@ -303,7 +303,7 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://store:9446/store</URL>
+        <URL>https://store.apim.wso2.com:9446/store</URL>
 
         <!-- Server URL of the API Store. -->
         <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
@@ -477,6 +477,116 @@
                 <HTTPMethods>GET,HEAD</HTTPMethods>
             </WhiteListedURI>
         </WhiteListedURIs>
+        <ETagSkipList>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/apis</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/apis/generate-sdk</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/apis/{apiId}/documents</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/applications</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/applications/generate-keys</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/subscriptions</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/tags</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/tiers/{tierLevel}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/store/{version}/tiers/{tierLevel}/{tierName}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}</URI>
+                <HTTPMethods>GET,DELETE,PUT</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/swagger</URI>
+                <HTTPMethods>GET,PUT</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/thumbnail</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/change-lifecycle</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/copy-api</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/applications/{applicationId}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/documents</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/documents/{documentId}/content</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/apis/{apiId}/documents/{documentId}</URI>
+                <HTTPMethods>GET,PUT,DELETE</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/environments</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/subscriptions</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/subscriptions/block-subscription</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/subscriptions/{subscriptionId}</URI>
+                <HTTPMethods>GET</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/subscriptions/unblock-subscription</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/tiers/{tierLevel}</URI>
+                <HTTPMethods>GET,POST</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/tiers/{tierLevel}/{tierName}</URI>
+                <HTTPMethods>GET,PUT,DELETE</HTTPMethods>
+            </ETagSkipURI>
+            <ETagSkipURI>
+                <URI>/api/am/publisher/{version}/tiers/update-permission</URI>
+                <HTTPMethods>POST</HTTPMethods>
+            </ETagSkipURI>
+        </ETagSkipList>
     </RESTAPI>
     <ThrottlingConfigurations>
         <EnableAdvanceThrottling>true</EnableAdvanceThrottling>
@@ -558,5 +668,30 @@
         <EnableJWTClaimConditions>false</EnableJWTClaimConditions>
         <EnableQueryParamConditions>false</EnableQueryParamConditions>
     </ThrottlingConfigurations>
+    
+    <WorkflowConfigurations>
+        <Enabled>false</Enabled>
+    	<ServerUrl>https://localhost:9445/bpmn</ServerUrl>   		
+    	<ServerUser>${admin.username}</ServerUser>
+    	<ServerPassword>${admin.password}</ServerPassword>
+    	<WorkflowCallbackAPI>https://localhost:${mgt.transport.https.port}/api/am/publisher/v0.11/workflows/update-workflow-status</WorkflowCallbackAPI>
+        <TokenEndPoint>https://localhost:${https.nio.port}/token</TokenEndPoint>
+        <DCREndPoint>https://localhost:${mgt.transport.https.port}/client-registration/v0.11/register</DCREndPoint>
+        <DCREndPointUser>${admin.username}</DCREndPointUser>
+        <DCREndPointPassword>${admin.password}</DCREndPointPassword>
+    </WorkflowConfigurations>
+
+    <SwaggerCodegen>
+        <ClientGeneration>
+            <GroupId>org.wso2</GroupId>
+            <ArtifactId>org.wso2.client.</ArtifactId>
+            <ModelPackage>org.wso2.client.model.</ModelPackage>
+            <ApiPackage>org.wso2.client.api.</ApiPackage>
+            <!-- Configure supported languages/Frameworks as comma separated values,
+             Supported Languages/Frameworks : android, java, scala, csharp, cpp, dart, flash, go, groovy, javascript, jmeter,
+             nodejs, perl, php, python, ruby, swift, clojure, aspNet5, asyncScala, spring, csharpDotNet2, haskell-->
+            <SupportedLanguages>java,android</SupportedLanguages>
+        </ClientGeneration>
+    </SwaggerCodegen>
 
 </APIManager>

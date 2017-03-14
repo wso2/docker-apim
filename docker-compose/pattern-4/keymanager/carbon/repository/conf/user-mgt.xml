@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright WSO2, Inc. (http://wso2.com)
   ~
@@ -207,7 +208,6 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
         </ISUserStoreManager-->
-
         <AuthorizationManager class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager">
             <Property name="AdminRoleManagementPermissions">/permission</Property>
             <Property name="AuthorizationCacheEnabled">true</Property>
@@ -215,7 +215,6 @@
         </AuthorizationManager>
     </Realm>
 </UserManager>
-
 <!--
 
 ************* Description of some of the configuration properties used in user-mgt.xml *********************************

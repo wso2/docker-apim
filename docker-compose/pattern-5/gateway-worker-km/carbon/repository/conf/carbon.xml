@@ -36,7 +36,7 @@
     <!--
        Product Version
     -->
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
@@ -442,24 +442,14 @@
                 <!--Pattern></Pattern-->
             </Patterns>
         </XSSPreventionConfig>
-
-        <!-- Configurations to avoid Cross Site Request Forgery vulnerabilities -->
-        <CSRFPreventionConfig>
-            <!-- CSRFPreventionFilter configurations that adopts Synchronizer Token Pattern -->
-            <CSRFPreventionFilter>
-                <!-- Set below to true to enable the CSRFPreventionFilter -->
-                <Enabled>false</Enabled>
-                <!-- Url Pattern to skip application of CSRF protection-->
-                <SkipUrlPattern>(.*)(/images|/css|/js|/docs)(.*)</SkipUrlPattern>
-            </CSRFPreventionFilter>
-        </CSRFPreventionConfig>
-
-        <!-- Configuration to enable or disable CR and LF sanitization filter-->
-        <CRLFPreventionConfig>
-            <!--Set below to true to enable the CRLFPreventionFilter-->
-            <Enabled>true</Enabled>
-        </CRLFPreventionConfig>
     </Security>
+                                           
+    <!--Hide unnecessary menu Items-->                                           
+    <HideMenuItemIds>                                           
+        <HideMenuItemId>claim_mgt_menu</HideMenuItemId>                                           
+        <HideMenuItemId>identity_mgt_emailtemplate_menu</HideMenuItemId>                                           
+        <HideMenuItemId>identity_security_questions_menu</HideMenuItemId>                                           
+    </HideMenuItemIds>
 
     <!--
        The temporary work directory
@@ -581,14 +571,14 @@
 	and in  worker nodes set only AutoCheckout to true.
     -->
     <DeploymentSynchronizer>
-        <Enabled>true</Enabled>
+        <Enabled>false</Enabled>
         <AutoCommit>false</AutoCommit>
         <AutoCheckout>true</AutoCheckout>
         <RepositoryType>svn</RepositoryType>
-        <SvnUrl>http://svnrepo/repo</SvnUrl>
-        <SvnUser>user</SvnUser>
+        <SvnUrl>http://svnrepo.example.com/repos/</SvnUrl>
+        <SvnUser>username</SvnUser>
         <SvnPassword>password</SvnPassword>
-        <SvnUrlAppendTenantId>false</SvnUrlAppendTenantId>
+        <SvnUrlAppendTenantId>true</SvnUrlAppendTenantId>
     </DeploymentSynchronizer>
 
     <!-- Deployment Synchronizer Configuration. Uncomment the following section when running with "registry based" dep sync.

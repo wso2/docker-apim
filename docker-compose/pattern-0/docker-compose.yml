@@ -1,0 +1,12 @@
+version: '2'
+services:
+  api-manager:
+    image: docker.wso2.com/apim-pattern0-api-manager:2.1.0
+    build:
+      context: ../
+      dockerfile: pattern-0/api-manager/Dockerfile
+    ports:
+      - "443:9443"
+      - "80:9763"
+      - "8280:8280"
+      - "8243:8243"
