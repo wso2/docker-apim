@@ -26,6 +26,7 @@ services:
     ports:
     - "9447:9443"
   keymanager:
+    image: docker.wso2.com/apim-pattern6-keymanager:2.1.0
     build:
       context: ../
       dockerfile: pattern-6/keymanager/Dockerfile

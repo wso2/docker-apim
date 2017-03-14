@@ -303,7 +303,7 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://store:9446/store</URL>
+        <URL>https://store.apim.wso2.com:9446/store</URL>
 
         <!-- Server URL of the API Store. -->
         <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>

@@ -1,12 +1,14 @@
 version: '2'
 services:
   apim_rdbms:
+    image: docker.wso2.com/apim-pattern7-apim_rdbms:2.1.0
     build:
         context: ../
         dockerfile: pattern-7/database/Dockerfile
     environment:
         MYSQL_ROOT_PASSWORD: root
   api-manager:
+    image: docker.wso2.com/apim-pattern7-api-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-7/api-manager/Dockerfile
@@ -18,6 +20,7 @@ services:
       - "8280:8280"
       - "8243:8243"
   is-key-manager:
+    image: docker.wso2.com/apim-pattern7-is-key-manager:2.1.0
     build:
       context: ../
       dockerfile: pattern-7/is-key-manager/Dockerfile
