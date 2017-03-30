@@ -10,7 +10,7 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
     - Download the WSO2 API Manager 2.1.0 zip file (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILES_HOME>/common/provision/default/files`.
 
 * Build the docker image
-    - Navigate to `<DOCKERFILES_HOME>/wso2am`.
+    - Navigate to `<DOCKERFILES_HOME>/dockerfile`.
     - Execute `build.sh` script and provide the product version.
         +  `./build.sh `
         ```bash
@@ -35,7 +35,7 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
         ```
 
 * Docker run
-    - Navigate to `<DOCKERFILES_HOME>/wso2am`.
+    - Navigate to `<DOCKERFILES_HOME>/dockerfile`.
     - Execute `run.sh` script and provide the product version.
         + `./run.sh `
         ```bash 
