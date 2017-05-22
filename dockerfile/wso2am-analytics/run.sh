@@ -16,16 +16,13 @@
 # limitations under the License
 
 # ------------------------------------------------------------------------
-
 set -e
 
-product_name=wso2am
+product_name=wso2am-analytics
 product_version=2.1.0
-module_name=wso2am_runtime
-pattern=0
 
 prgdir=$(dirname "$0")
 script_path=$(cd "$prgdir"; pwd)
 common_folder=$(cd "${script_path}/common/scripts/"; pwd)
 
-bash ${common_folder}/docker-build.sh -n ${product_name} -d ${script_path} -v ${product_version} -m ${module_name} -p ${pattern} $*
+bash ${common_folder}/docker-run.sh -n ${product_name} -v ${product_version} -p 8280:8280 -p 8243:8243 -p 9763:9763 -p 9443:9443 $*
