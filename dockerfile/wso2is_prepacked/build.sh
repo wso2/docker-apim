@@ -1,7 +1,7 @@
 #!/bin/bash
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,16 @@
 # limitations under the License
 
 # ------------------------------------------------------------------------
+
 set -e
 
-product_name=wso2am
-product_version=2.1.0
+product_name=wso2is-km
+product_version=5.3.0
+module_name=wso2is_prepacked
+pattern=1
 
 prgdir=$(dirname "$0")
 script_path=$(cd "$prgdir"; pwd)
-common_folder=$(cd "${script_path}/common/scripts/"; pwd)
+common_folder=$(cd "${script_path}/../common/scripts/"; pwd)
 
-bash ${common_folder}/docker-run.sh -n ${product_name} -v ${product_version} -p 8280:8280 -p 8243:8243 -p 9763:9763 -p 9443:9443 $*
+bash ${common_folder}/docker-build.sh -n ${product_name} -d ${script_path} -v ${product_version} -m ${module_name} -p ${pattern} $*

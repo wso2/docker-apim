@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ ENV WSO2_SERVER=${WSO2_SERVER:-wso2am} \
     WSO2_SERVER_PROFILE=${WSO2_SERVER_PROFILE:-default} \
     WSO2_ENVIRONMENT=${WSO2_ENVIRONMENT:-dev} \
     WSO2_DEPLOYMENT_PATTERN=${WSO2_DEPLOYMENT_PATTERN:-1} \
-    MODULE_NAME=${MODULE_NAME:-wso2am_runtime} \
+    MODULE_NAME=${MODULE_NAME:-wso2am_analytics} \
     HTTP_PACK_SERVER=${HTTP_PACK_SERVER} \
     PLATFORM=${PLATFORM}
 
