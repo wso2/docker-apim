@@ -1,4 +1,4 @@
-# Dockerfile for WSO2 API Manager Analytics #
+# Dockerfile for WSO2 IS As Key Manager #
 The Dockerfile defines the resources and instructions to build the Docker images with the WSO2 products and runtime configurations.
 
 ## Try it out
@@ -7,10 +7,10 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
 
 * Add product packs and dependencies
     - Download and copy JDK 1.8 ([jdk-8u112-linux-x64.tar.gz](http://www.oracle.com/technetwork/java/javase/8u112-relnotes-3124973.html)) pack to `<DOCKERFILES_HOME>/common/provision/default/files`.
-    - Download the WSO2 API Manager Analytics 2.1.0 zip file (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILES_HOME>/common/provision/default/files`.
+    - Download the wso2is-km  5.3.0 zip file (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILES_HOME>/common/provision/default/files`.
 
 * Build the docker image
-    - Navigate to `<DOCKERFILES_HOME>/dockerfile`.
+    - Navigate to `<DOCKERFILES_HOME>/wso2am`.
     - Execute `build.sh` script and provide the product version.
         +  `./build.sh `
         ```bash
@@ -35,7 +35,7 @@ The cloned local copy of WSO2 Dockerfiles will be referred as `DOCKERFILES_HOME`
         ```
 
 * Docker run
-    - Navigate to `<DOCKERFILES_HOME>/dockerfile`.
+    - Navigate to `<DOCKERFILES_HOME>/wso2am`.
     - Execute `run.sh` script and provide the product version.
         + `./run.sh `
         ```bash 
