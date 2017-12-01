@@ -17,8 +17,8 @@ The Dockerfile defines the resources and instructions to build the Docker images
   ```mkdir <DOCKERFILES_HOME>/files```
 
 * Add product packs and dependencies to `<DOCKERFILES_HOME>/files`
-    - Download and copy JDK 1.8 [Java SE Development Kit 8 Downloads](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) pack to `<DOCKERFILES_HOME>/files`.
-    - Download the WSO2 API Manager 2.1.0 zip file (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILES_HOME>/files`.
+    - Download and copy [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) pack to `<DOCKERFILES_HOME>/files`.
+    - Download the [WSO2 API Manager 2.1.0](http://wso2.com/api-management/try-it/) zip file and copy it to `<DOCKERFILES_HOME>/files`.
 
 * Build the Docker image
     - Navigate to `<DOCKERFILES_HOME>/Dockerfile`.
