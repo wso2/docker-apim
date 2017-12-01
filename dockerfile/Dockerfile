@@ -40,14 +40,14 @@ RUN apt-get update \
 # copy the jdk and product packs
 COPY ${FILES}/${WSO2_SERVER_PACK} ${FILES}/${JDK_ARCHIVE} ${INSTALLATION_DIRECTORY}/
 
-# unzip the jdk and product packs and set the permissions
+# unzip the jdk and the product pack and set permissions
 RUN unzip -q ${INSTALLATION_DIRECTORY}/${WSO2_SERVER_PACK} -d ${INSTALLATION_DIRECTORY}/ \
         && mkdir -p ${JAVA_HOME} \
         && tar -xf ${INSTALLATION_DIRECTORY}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 \
         && rm ${INSTALLATION_DIRECTORY}/${WSO2_SERVER_PACK} \
         && rm ${INSTALLATION_DIRECTORY}/${JDK_ARCHIVE}
 
-# set the work directory
+# set the working directory
 WORKDIR ${INSTALLATION_DIRECTORY}
 
 # set java home and path variables
