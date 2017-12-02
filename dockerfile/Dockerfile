@@ -33,10 +33,10 @@ ARG JAVA_HOME=${USER_HOME}/java
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
-       	zip \
-        unzip \
-        telnet \
-        iproute2 \
+	zip \
+	unzip \
+	telnet \
+	iproute2 \
 	sudo && rm -rf /var/lib/apt/lists/*
 
 # creates the user
