@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,6 +55,6 @@ ENV HOME=${INSTALLATION_DIRECTORY} JAVA_HOME=${JAVA_HOME} PATH=$JAVA_HOME/bin:$P
         WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION}
 
 # expose ports
-EXPOSE 9763 9443
+EXPOSE 8280 8243 9763 9443 5672 9711 9611 7711 7611
 
 ENTRYPOINT exec ${HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}/bin/wso2server.sh
