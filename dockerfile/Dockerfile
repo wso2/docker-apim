@@ -21,13 +21,15 @@ MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 ENV DEBIAN_FRONTEND noninteractive
 
 # defined arguments and defaults
+ARG USER=wso2user
+
 ARG FILES=./files
-ARG INSTALLATION_DIRECTORY=/home
+ARG USER_HOME=/home/wso2user
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.1.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}.zip
 ARG JDK_ARCHIVE=jdk-8u*-linux-x64.tar.gz
-ARG JAVA_HOME=${INSTALLATION_DIRECTORY}/java
+ARG JAVA_HOME=${USER_HOME}/java
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
@@ -37,22 +39,29 @@ RUN apt-get update \
         iproute2 \
 	sudo && rm -rf /var/lib/apt/lists/*
 
+# creates the user
+RUN useradd --system --create-home --home-dir ${USER_HOME} --no-log-init ${USER}
+
 # copy the jdk and product packs
-COPY ${FILES}/${WSO2_SERVER_PACK} ${FILES}/${JDK_ARCHIVE} ${INSTALLATION_DIRECTORY}/
+COPY ${FILES}/${WSO2_SERVER_PACK} ${FILES}/${JDK_ARCHIVE} ${USER_HOME}/
 
-# unzip the jdk and the product pack and set permissions
-RUN unzip -q ${INSTALLATION_DIRECTORY}/${WSO2_SERVER_PACK} -d ${INSTALLATION_DIRECTORY}/ \
+# unzip the jdk and product packs and set the permissions
+RUN unzip -q ${USER_HOME}/${WSO2_SERVER_PACK} -d ${USER_HOME}/ \
         && mkdir -p ${JAVA_HOME} \
-        && tar -xf ${INSTALLATION_DIRECTORY}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 \
-        && rm ${INSTALLATION_DIRECTORY}/${WSO2_SERVER_PACK} \
-        && rm ${INSTALLATION_DIRECTORY}/${JDK_ARCHIVE}
+        && tar -xf ${USER_HOME}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 \
+        && rm ${USER_HOME}/${WSO2_SERVER_PACK} \
+        && rm ${USER_HOME}/${JDK_ARCHIVE} \
+	    && chgrp -R 0 ${USER_HOME} \
+	    && chown -R ${USER} ${USER_HOME} \
+	    && chmod -R 0774 ${USER_HOME}
 
-# set the working directory
-WORKDIR ${INSTALLATION_DIRECTORY}
+# set the user and work directory
+USER ${USER}
+WORKDIR ${USER_HOME}
 
 # set java home and path variables
-ENV HOME=${INSTALLATION_DIRECTORY} JAVA_HOME=${JAVA_HOME} PATH=$JAVA_HOME/bin:$PATH WSO2_SERVER=${WSO2_SERVER} \
-        WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION}
+ENV HOME=${USER_HOME} JAVA_HOME=${JAVA_HOME} PATH=$JAVA_HOME/bin:$PATH USER_HOME=${USER_HOME} \
+        WSO2_SERVER=${WSO2_SERVER} WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION} USER=${USER}
 
 # expose ports
 EXPOSE 8280 8243 9763 9443 5672 9711 9611 7711 7611
