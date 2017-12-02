@@ -51,9 +51,9 @@ RUN unzip -q ${USER_HOME}/${WSO2_SERVER_PACK} -d ${USER_HOME}/ \
         && tar -xf ${USER_HOME}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 \
         && rm ${USER_HOME}/${WSO2_SERVER_PACK} \
         && rm ${USER_HOME}/${JDK_ARCHIVE} \
-	    && chgrp -R 0 ${USER_HOME} \
-	    && chown -R ${USER} ${USER_HOME} \
-	    && chmod -R 0774 ${USER_HOME}
+	&& chgrp -R 0 ${USER_HOME} \
+	&& chown -R ${USER} ${USER_HOME} \
+	&& chmod -R 0774 ${USER_HOME}
 
 # set the user and work directory
 USER ${USER}

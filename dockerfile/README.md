@@ -18,7 +18,7 @@ The Dockerfile defines the resources and instructions to build the Docker image 
  * Build the Docker image
      - Navigate to `<DOCKERFILE_HOME>` directory.
      - Execute the `docker build` command as shown below;
-         + `docker build -t wso2am:2.1.0 files/`
+         + `docker build -t wso2am:2.1.0 .`
  
  * Docker run
      - Run the WSO2 API Manager 2.1.0 Docker container as follows;
