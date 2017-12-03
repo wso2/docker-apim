@@ -21,8 +21,11 @@ The Dockerfile defines the resources and instructions to build the Docker image 
          + `docker build -t wso2am:2.1.0 .`
  
  * Docker run
-     - Run the WSO2 API Manager 2.1.0 Docker container as follows;
-         + `docker run -it wso2am:2.1.0`
+     - Run the WSO2 API Manager 2.1.0 Docker container as follows:
+         + `docker run -it -p 9763:9763 -p 9443:9443 wso2am:2.1.0`
+         
+       **Note**: Here, only ports 9763 (HTTP servlet transport) and 9443 (HTTPS servlet transport) have been mapped to Docker host ports.
+       You may map other container service ports, which have been exposed to Docker host ports, as desired.
          
    ![Docker run output](quickstart/output.png)
  
