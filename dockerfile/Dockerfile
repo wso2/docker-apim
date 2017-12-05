@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,39 +16,59 @@
 
 # ------------------------------------------------------------------------
 
-FROM wso2/wso2base:latest
-MAINTAINER dev@wso2.org
-
+FROM ubuntu:16.04
+MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 ENV DEBIAN_FRONTEND noninteractive
 
-# Build time arguments
-ARG WSO2_SERVER
-ARG WSO2_SERVER_VERSION
-ARG WSO2_SERVER_PROFILE
-ARG WSO2_ENVIRONMENT
-ARG WSO2_DEPLOYMENT_PATTERN
-ARG HTTP_PACK_SERVER
-ARG PLATFORM
+# defined arguments and defaults
+ARG USER=wso2user
 
-# Carbon server information
-ENV WSO2_SERVER=${WSO2_SERVER:-wso2am} \
-    WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION:-2.1.0} \
-    WSO2_SERVER_PROFILE=${WSO2_SERVER_PROFILE:-default} \
-    WSO2_ENVIRONMENT=${WSO2_ENVIRONMENT:-dev} \
-    WSO2_DEPLOYMENT_PATTERN=${WSO2_DEPLOYMENT_PATTERN:-1} \
-    MODULE_NAME=${MODULE_NAME:-wso2am_runtime} \
-    HTTP_PACK_SERVER=${HTTP_PACK_SERVER} \
-    PLATFORM=${PLATFORM}
+ARG FILES=./files
+ARG USER_HOME=/home/wso2user
+ARG WSO2_SERVER=wso2am
+ARG WSO2_SERVER_VERSION=2.1.0
+ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}.zip
+ARG JDK_ARCHIVE=jdk-8u*-linux-x64.tar.gz
+ARG JAVA_HOME=${USER_HOME}/java
 
-COPY scripts/*.sh /usr/local/bin/
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends --no-install-suggests \
+	zip \
+	unzip \
+	telnet \
+	iproute2 \
+	sudo && rm -rf /var/lib/apt/lists/*
 
-# Execute configuration script
-RUN bash /usr/local/bin/image-config.sh
+# creates the user
+RUN useradd --system --create-home --home-dir ${USER_HOME} --no-log-init ${USER}
 
-USER wso2user
-WORKDIR /mnt
+# copy the jdk and product packs
+COPY ${FILES}/${WSO2_SERVER_PACK} ${FILES}/${JDK_ARCHIVE} ${USER_HOME}/
 
-# Expose transport ports
-EXPOSE 10397 8280 8243 9763 9443
+# unzip the jdk and product packs and set the permissions
+RUN unzip -q ${USER_HOME}/${WSO2_SERVER_PACK} -d ${USER_HOME}/ \
+        && mkdir -p ${JAVA_HOME} \
+        && tar -xf ${USER_HOME}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 \
+        && rm ${USER_HOME}/${WSO2_SERVER_PACK} \
+        && rm ${USER_HOME}/${JDK_ARCHIVE} \
+	&& chgrp -R 0 ${USER_HOME} \
+	&& chown -R ${USER} ${USER_HOME} \
+	&& chmod -R 0774 ${USER_HOME}
 
-CMD ["/usr/local/bin/init.sh"]
+# set the user and work directory
+USER ${USER}
+WORKDIR ${USER_HOME}
+
+# set java home and path variables
+ENV HOME=${USER_HOME} \
+    JAVA_HOME=${JAVA_HOME} \
+    PATH=$JAVA_HOME/bin:$PATH \
+    USER_HOME=${USER_HOME} \
+    WSO2_SERVER=${WSO2_SERVER} \
+    WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION} \
+    USER=${USER}
+
+# expose ports
+EXPOSE 8280 8243 9763 9443 5672 9711 9611 7711 7611
+
+ENTRYPOINT exec ${HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}/bin/wso2server.sh
