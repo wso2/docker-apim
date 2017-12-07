@@ -44,12 +44,12 @@
        This is will become part of the End Point Reference of the
        services deployed on this server instance.
     -->
-    <HostName>api-manager</HostName>
+    <!--HostName>www.wso2.org</HostName-->
 
     <!--
     Host name to be used for the Carbon management console
     -->
-    <MgtHostName>api-manager</MgtHostName>
+    <!--MgtHostName>mgt.wso2.org</MgtHostName-->
 
     <!--
         The URL of the back end server. This is where the admin services are hosted and
@@ -443,13 +443,6 @@
             </Patterns>
         </XSSPreventionConfig>
     </Security>
-                                           
-    <!--Hide unnecessary menu Items-->                                           
-    <HideMenuItemIds>                                           
-        <HideMenuItemId>claim_mgt_menu</HideMenuItemId>                                           
-        <HideMenuItemId>identity_mgt_emailtemplate_menu</HideMenuItemId>                                           
-        <HideMenuItemId>identity_security_questions_menu</HideMenuItemId>                                           
-    </HideMenuItemIds>
 
     <!--
        The temporary work directory
