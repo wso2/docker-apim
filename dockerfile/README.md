@@ -11,7 +11,7 @@ The Dockerfile defines the resources and instructions to build the Docker image 
  * Create a directory named `files` inside `DOCKERFILE_HOME`
      - This will result in a directory structure `<DOCKERFILE_HOME>/files`.
  
- * Add the JDK and WSO2 API Manager distributions
+ * Add the JDK and WSO2 API Manager distributions to `files` directory
      - Download JDK 1.8 (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and copy it to `<DOCKERFILE_HOME>/files`.
      - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILE_HOME>/files`.
  

@@ -13,62 +13,59 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License
-
+#
 # ------------------------------------------------------------------------
 
+# set to latest Ubuntu LTS
 FROM ubuntu:16.04
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
-ENV DEBIAN_FRONTEND noninteractive
 
-# defined arguments and defaults
-ARG USER=wso2user
-
+# set user configurations
+ARG USER=wso2carbon
+ARG USER_GROUP=wso2
+ARG USER_HOME=/home/${USER}
+# set dependant files directory
 ARG FILES=./files
-ARG USER_HOME=/home/wso2user
+# set jdk configurations
+ARG JDK_ARCHIVE=jdk-8u*-linux-x64.tar.gz
+ARG JAVA_HOME=${USER_HOME}/java
+# set wso2 product configurations
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.1.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}.zip
-ARG JDK_ARCHIVE=jdk-8u*-linux-x64.tar.gz
-ARG JAVA_HOME=${USER_HOME}/java
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 
-RUN apt-get update \
-	&& apt-get install -y --no-install-recommends --no-install-suggests \
-	zip \
-	unzip \
-	telnet \
-	iproute2 \
-	sudo && rm -rf /var/lib/apt/lists/*
+# install required packages
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests unzip curl telnet iproute2 && \
+    rm -rf /var/lib/apt/lists/*
 
-# creates the user
-RUN useradd --system --create-home --home-dir ${USER_HOME} --no-log-init ${USER}
+# create a user group and a user
+RUN groupadd --system ${USER_GROUP} && \
+    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP} ${USER}
 
-# copy the jdk and product packs
-COPY ${FILES}/${WSO2_SERVER_PACK} ${FILES}/${JDK_ARCHIVE} ${USER_HOME}/
+# copy the jdk and wso2 product distribution zip files to user's home directory
+COPY ${FILES}/${JDK_ARCHIVE} ${FILES}/${WSO2_SERVER_PACK} ${USER_HOME}/
 
-# unzip the jdk and product packs and set the permissions
-RUN unzip -q ${USER_HOME}/${WSO2_SERVER_PACK} -d ${USER_HOME}/ \
-        && mkdir -p ${JAVA_HOME} \
-        && tar -xf ${USER_HOME}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 \
-        && rm ${USER_HOME}/${WSO2_SERVER_PACK} \
-        && rm ${USER_HOME}/${JDK_ARCHIVE} \
-	&& chgrp -R 0 ${USER_HOME} \
-	&& chown -R ${USER} ${USER_HOME} \
-	&& chmod -R 0774 ${USER_HOME}
+# install the jdk, wso2 server, remove distributions and set folder permissions
+RUN mkdir -p ${JAVA_HOME} && \
+    tar -xf ${USER_HOME}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 && \
+    unzip -q ${USER_HOME}/${WSO2_SERVER_PACK} -d ${USER_HOME}/ && \
+    rm ${USER_HOME}/${JDK_ARCHIVE} && \
+    rm ${USER_HOME}/${WSO2_SERVER_PACK} && \
+    chown -R ${USER}:${USER_GROUP} ${USER_HOME} && \
+    chmod -R g=u ${USER_HOME}
 
 # set the user and work directory
 USER ${USER}
 WORKDIR ${USER_HOME}
 
-# set java home and path variables
-ENV HOME=${USER_HOME} \
-    JAVA_HOME=${JAVA_HOME} \
+# set environment variables
+ENV JAVA_HOME=${JAVA_HOME} \
     PATH=$JAVA_HOME/bin:$PATH \
-    USER_HOME=${USER_HOME} \
-    WSO2_SERVER=${WSO2_SERVER} \
-    WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION} \
-    USER=${USER}
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose ports
-EXPOSE 8280 8243 9763 9443 5672 9711 9611 7711 7611
+EXPOSE 8280 8243 9763 9443 5672 9711 9611 7711 7611 10397
 
-ENTRYPOINT exec ${HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}/bin/wso2server.sh
+ENTRYPOINT ${WSO2_SERVER_HOME}/bin/wso2server.sh
