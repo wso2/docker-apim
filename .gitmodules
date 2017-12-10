@@ -1,3 +1,0 @@
-[submodule "common"]
-	path = dockerfile/common
-	url = https://github.com/wso2/dockerfile-common.git

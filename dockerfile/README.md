@@ -2,18 +2,16 @@
 
 The Dockerfile defines the resources and instructions to build the Docker image for WSO2 API Manager 2.1.0.
 
-## Quickstart guide
+## Build and run
 
- Steps to build the WSO2 API Manager 2.1.0 Docker image and run in your local machine are as follows:
+ Steps to build the WSO2 API Manager 2.1.0 Docker image and run in your local machine.
  
  The local copy of the `Dockerfile` directory will be referred as, `DOCKERFILE_HOME`.
  
- * Create a directory named `files` inside `DOCKERFILE_HOME`
-     - This will result in a directory structure `<DOCKERFILE_HOME>/files`.
- 
  * Add the JDK and WSO2 API Manager distributions to `files` directory
      - Download JDK 1.8 (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and copy it to `<DOCKERFILE_HOME>/files`.
-     - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILE_HOME>/files`.
+     - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILE_HOME>/files`. Please refer [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products) to obtained the WSO2 API Manager 2.1.0
+   with latest bug fixes and updates.
  
  * Build the Docker image
      - Navigate to `<DOCKERFILE_HOME>` directory.
@@ -36,10 +34,25 @@ The Dockerfile defines the resources and instructions to build the Docker image 
          + `https://<DOCKER_HOST_IP>:9443/store`
          + `https://<DOCKER_HOST_IP>:9443/publisher`
 
-## Docker command usage references
+## Modify configurations of the WSO2 API Manager running in the container
 
-* [Docker build command reference] (https://docs.docker.com/engine/reference/commandline/build/)
+The configurations will be maintained on the Docker Host machine and volume mounted to the container.
 
-* [Dockerfile reference] (https://docs.docker.com/engine/reference/builder/)
+As an example, the steps required to change the port offset in `carbon.xml` is detailed.
 
-* [Docker run command reference] (https://docs.docker.com/engine/reference/run/)
+* Stop the API Manager container if it's already running.
+
+* Create the required config changes in the host machine
+    - Extract the `wso2am-2.1.0.zip` file located in `DOCKERFILE_HOME/files`.
+        + Navigate to `<DOCKERFILE_HOME>/files` directory
+        + `unzip -q wso2am-2.1.0.zip`
+    - Change the port offset in `carbon.xml` file located in `DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf/` directory.
+    - Grant write permission to the `DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf/` directory on the host machine to `other` users;
+        + `sudo chmod o+w -R DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf`
+
+* Run the Docker container by mounting the config directory (`DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf/`) of the host machine.
+    - Navigate to `<DOCKERFILE_HOME>` directory.
+    - `docker run -it --mount type=bind,source=${PWD}/files/wso2am-2.1.0/repository/conf,target=/home/wso2user/wso2am-2.1.0/repository/conf wso2am:2.1.0`
+
+* If the `conf` directory on the host machine is located on a different directory than shown above, when executing the `docker run`
+command the absolute path of the `conf` directory should be set as the `source`.
