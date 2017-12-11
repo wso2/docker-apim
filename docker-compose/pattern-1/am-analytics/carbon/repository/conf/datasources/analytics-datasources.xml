@@ -13,7 +13,7 @@
             <description>The datasource used for analytics record store</description>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://apim_rdbms:3306/stats_db?autoReconnect=true&amp;relaxAutoCommit=true</url>
+                    <url>jdbc:mysql://mysql:3306/stats_db?autoReconnect=true&amp;relaxAutoCommit=true</url>
                     <username>root</username>
                     <password>root</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -33,7 +33,7 @@
             <description>The datasource used for analytics record store</description>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://apim_rdbms:3306/stats_db?autoReconnect=true&amp;relaxAutoCommit=true</url>
+                    <url>jdbc:mysql://mysql:3306/stats_db?autoReconnect=true&amp;relaxAutoCommit=true</url>
                     <username>root</username>
                     <password>root</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>

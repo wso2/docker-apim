@@ -1,29 +1,53 @@
-version: '2'
+version: '2.1'
 services:
-  apim_rdbms:
-    image: docker.wso2.com/apim-pattern2-apim_rdbms:2.1.0
-    build:
-        context: ../
-        dockerfile: pattern-2/database/Dockerfile
-    environment:
-        MYSQL_ROOT_PASSWORD: root
-  am-analytics:
-    image: docker.wso2.com/apim-pattern2-am-analytics:2.1.0
-    build:
-      context: ../
-      dockerfile: pattern-2/am-analytics/Dockerfile
-    environment:
-      SLEEP: 100
+  mysql:
+    image: mysql:5.7.19
     ports:
-      - "9444:9444"
-      - "9764:9764"
-  api-manager:
-    image: docker.wso2.com/apim-pattern2-api-manager:2.1.0
-    build:
-      context: ../
-      dockerfile: pattern-2/api-manager/Dockerfile
+      - 3306
     environment:
-      SLEEP: 160
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+  am-analytics:
+    image: wso2am-analytics:2.1.0
+    ports:
+      - "9444:9443"
+      - "9764:9763"
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:9444/carbon/admin/login.jsp"]
+      interval: 10s
+      timeout: 120s
+      retries: 5
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar:/home/wso2user/wso2am-analytics-2.1.0/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+      - ./am-analytics/carbon/repository/conf/datasources/analytics-datasources.xml:/home/wso2user/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
+      - ./am-analytics/carbon/repository/conf/datasources/stats-datasources.xml:/home/wso2user/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
+    links:
+      - mysql
+  api-manager:
+    image: wso2am:2.1.0
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
+      interval: 10s
+      timeout: 120s
+      retries: 5
+    depends_on:
+      am-analytics:
+        condition: service_healthy
+    volumes:
+      - ./api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar:/home/wso2user/wso2am-2.1.0/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+      - ./api-manager/carbon/repository/conf/datasources/master-datasources.xml:/home/wso2user/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
+      - ./api-manager/carbon/repository/conf/api-manager.xml:/home/wso2user/wso2am-2.1.0/repository/conf/api-manager.xml
+      - ./api-manager/carbon/repository/conf/carbon.xml:/home/wso2user/wso2am-2.1.0/repository/conf/carbon.xml
+      - ./api-manager/carbon/repository/conf/tomcat/catalina-server.xml:/home/wso2user/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
     ports:
       - "80:9763"
       - "443:9443"
