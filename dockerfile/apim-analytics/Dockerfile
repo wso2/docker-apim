@@ -37,6 +37,7 @@ RUN apt-get update \
 	unzip \
 	telnet \
 	iproute2 \
+	curl \
 	sudo && rm -rf /var/lib/apt/lists/*
 
 # creates the user
