@@ -2,7 +2,7 @@
 
 The Dockerfile defines the resources and instructions to build the Docker image for WSO2 API Manager 2.1.0.
 
-## Build and run
+## How to build an image and run
 
  Follow below steps to build the WSO2 API Manager 2.1.0 Docker image and run in your local machine.
  
@@ -30,10 +30,10 @@ The Dockerfile defines the resources and instructions to build the Docker image 
  
  * Access management console:
      -  To access the management console, use the Docker host IP and port 9443.
-         + `https://<DOCKER_HOST_IP>:9443/carbon`
+         + `https://<DOCKER_HOST>:9443/carbon`
      -  To access the store and publisher, use the Docker host IP, port 9443 and store/publisher contexts.
-         + `https://<DOCKER_HOST_IP>:9443/store`
-         + `https://<DOCKER_HOST_IP>:9443/publisher`
+         + `https://<DOCKER_HOST>:9443/store`
+         + `https://<DOCKER_HOST>:9443/publisher`
 
 ## How to update configurations
 
