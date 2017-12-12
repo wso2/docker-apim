@@ -25,8 +25,6 @@ The Dockerfile defines the resources and instructions to build the Docker image 
          
        **Note**: Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
        You may map other container service ports, which have been exposed to Docker host ports, as desired.
-         
-   ![Docker run output](quickstart/output.png)
  
  * Access management console:
      -  To access the management console, use the Docker host IP and port 9443.
