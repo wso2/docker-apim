@@ -1,70 +1,52 @@
-### This repository contains API Manager 2.1.0 distributed deployment with Docker compose
+### WSO2 API Manager 2.1.0 Deployment Pattern 1
 
-![alt tag](https://github.com/wso2/docker-apim/blob/2.1.x/docker-compose/patterns/design/am-2.1.0-pattern-1.jpeg)
+![alt tag](am-2.1.0-pattern-1.png)
 
-## Pre-requisites
+## Prerequisites
 
- * Docker 
- * Docker compose
+ * [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose) are required for running this Docker Compose template.
 
-#### Docker installation for linux
-```
-wget -qO- https://get.docker.com/ | sh
-```
+## Quick Start Guide
 
-#### Docker installation for Mac
+1. Build the WSO2 API manager 2.1.0 and API Manager Analytics 2.1.0 Docker images:
 
-https://docs.docker.com/docker-for-mac/
-
-#### Docker installation for Windows
-
-https://docs.docker.com/docker-for-windows/
-
-#### Docker Compose Installation
-
-https://docs.docker.com/compose/install/
+  *  [WSO2 API Manager Dockerfile](../../dockerfile/apim/README.md)
+  *  [WSO2 API Manager Analytics Dockerfile](../../dockerfile/apim-analytics/README.md)
 
 
-#### How to run
+2. Pull MySQL Docker image:
+     ```
+     docker pull mysql:5.7.19
+     ```
 
-```docker login docker.wso2.com ```
+3. Switch to the docker-compose/pattern-1 folder:
+    ```
+    cd [docker-apim]/docker-compose/pattern-1
+    ```
 
-```docker-compose pull```
+4. Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j/) v5.1.35 and copy its JAR file to the following path:
+    ```
+    [docker-apim]/docker-compose/pattern-1/api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+    [docker-apim]/docker-compose/pattern-1/am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+    ```
 
-```docker-compose up --build -d ```
+6. Execute the following Docker Compose command to start the deployment:
+    ```
+    docker-compose up
+    ```
 
-This will deploy the following,
+7. Add the following entrie to the /etc/hosts.
+    ```
+    127.0.0.1 api-manager
+    ```
+8. Access the API Publisher and Store via the URLs given below.
 
-* Mysql server (container) with apimdb, userdb, regdb
-* APIM Container
-* Nginx Load Balancer container and points the APIM components through the load balancer.
+    * API Publisher
+    ```
+    https://api-manager/publisher
+    ```
 
-
-#### How to test
-
-Add the following entries to the /etc/hosts
-```
-127.0.0.1 api-manager apim_rdbms
-```
-If you are using docker machine, please use the docker machine IP instead of the local machine IP.
-
-#### How to access the environment
-
-Publisher
-
-```
-https://api-manager/publisher
-```
-
-Store
-
-```
-https://api-manager/store/
-```
-
-
-Gateway Manager
-
-```
-https://api-manager/carbon/
-```
+    * API Store
+    ```
+    https://api-manager/store/
+    ```
