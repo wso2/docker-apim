@@ -1,60 +1,61 @@
 # Dockerfile for WSO2 API Manager #
-
-The Dockerfile defines the resources and instructions to build the Docker image for WSO2 API Manager 2.1.0.
+The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.1.0.
 
 ## How to build an image and run
+##### 1. Checkout this repository into your local machine using the following git command.
+```
+git clone https://github.com/wso2/docker-apim.git
+```
 
- Follow below steps to build the WSO2 API Manager 2.1.0 Docker image and run in your local machine.
- 
- The local copy of the `Dockerfile` directory will be referred as, `DOCKERFILE_HOME`.
- 
- * Add the JDK and WSO2 API Manager distributions to `files` directory:
-     - Download JDK 1.8 (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and copy it to `<DOCKERFILE_HOME>/files`.
-     - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/) and copy it to `<DOCKERFILE_HOME>/files`.
-     Please refer [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products) to obtained the WSO2 API Manager 2.1.0
-   with latest bug fixes and updates.
- 
- * Build the Docker image:
-     - Navigate to `<DOCKERFILE_HOME>` directory.
-     - Execute the `docker build` command as shown below;
-         + `docker build -t wso2am:2.1.0 .`
- 
- * Docker run:
-     - Run the WSO2 API Manager 2.1.0 Docker container as follows:
-         + `docker run -it -p 9443:9443 wso2am:2.1.0`
-         
-       **Note**: Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
-       You may map other container service ports, which have been exposed to Docker host ports, as desired.
- 
- * Access management console:
-     -  To access the management console, use the Docker host IP and port 9443.
-         + `https://<DOCKER_HOST>:9443/carbon`
-     -  To access the store and publisher, use the Docker host IP, port 9443 and store/publisher contexts.
-         + `https://<DOCKER_HOST>:9443/store`
-         + `https://<DOCKER_HOST>:9443/publisher`
+>The local copy of the `dockerfile` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
+
+##### 2. Add JDK and WSO2 API Manager distributions to `<DOCKERFILE_HOME>/files`
+- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
+and copy that to `<DOCKERFILE_HOME>/files`.
+- Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/)
+and copy that to `<DOCKERFILE_HOME>/files`. <br>
+>Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
+in order to obtain latest bug fixes and updates for the product.
+
+##### 3. Build the Docker image.
+- Navigate to `<DOCKERFILE_HOME>` directory. <br>
+  Execute `docker build` command as shown below.
+    + `docker build -t wso2am:2.1.0 .`
+    
+##### 4. Running the Docker image.
+- `docker run -it -p 9443:9443 wso2am:2.1.0`
+
+##### 6. Accessing management console.
+- To access the management console, use the docker host IP and port 9443.
+    + `https:<DOCKER_HOST>:9443/carbon`
+    
+>In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
+
 
 ## How to update configurations
+Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
+As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
-The configurations will be maintained on the Docker Host machine and volume mounted to the container.
+##### 1. Stop the API Manager container if it's already running.
+In WSO2 API Manager 2.1.0 product distribution, `carbon.xml` configuration file <br>
+can be found at `<DISTRIBUTION_HOME>/conf`. Copy the file to some suitable location of the host machine, <br>
+referred to as `<SOURCE_CONFIGS>/carbon.xml` and change the offset value under ports to 1.
 
-As an example, the steps required to change the port offset in `carbon.xml` is detailed.
+##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.xml`
+```
+chmod o+r <SOURCE_CONFIGS>/carbon.xml
+```
 
-* Stop the API Manager container if it's already running.
+##### 3. Run the image by mounting the file to container as follows.
+```
+docker run 
+-p 9444:9444
+--volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml
+wso2am:2.1.0
+```
 
-* Create the required config changes in the host machine
-    - Extract the `wso2am-2.1.0.zip` file located in `DOCKERFILE_HOME/files`.
-        + Navigate to `<DOCKERFILE_HOME>/files` directory
-        + `unzip -q wso2am-2.1.0.zip`
-    - Change the port offset in `carbon.xml` file located in `DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf/` directory.
-    - Grant write permission to the `DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf/` directory on the host machine to `other` users.
-        + `sudo chmod o+w -R DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf`
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.1.0/conf folder of the container.
 
-* Run the Docker container by mounting the config directory (`DOCKERFILE_HOME/files/wso2am-2.1.0/repository/conf/`) of the host machine.
-    - Navigate to `<DOCKERFILE_HOME>` directory.
-    - `docker run -it --mount type=bind,source=${PWD}/files/wso2am-2.1.0/repository/conf,target=/home/wso2carbon/wso2am-2.1.0/repository/conf wso2am:2.1.0`
-
-* If the `conf` directory on the host machine is located on a different directory than shown above, when executing the `docker run`
-command the absolute path of the `conf` directory should be set as the `source`.
 
 ## Docker command usage references
 
