@@ -55,8 +55,8 @@ command the absolute path of the `conf` directory should be set as the `source`.
 
 ## Docker command usage references
 
-* [Docker build command reference] (https://docs.docker.com/engine/reference/commandline/build/)
+* [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
 
-* [Dockerfile reference] (https://docs.docker.com/engine/reference/builder/)
+* [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
 
-* [Docker run command reference] (https://docs.docker.com/engine/reference/run/)
+* [Docker run command reference](https://docs.docker.com/engine/reference/run/)
