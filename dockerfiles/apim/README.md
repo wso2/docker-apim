@@ -38,7 +38,7 @@ As an example, steps required to change the port offset using `carbon.xml` is as
 
 ##### 1. Stop the API Manager container if it's already running.
 In WSO2 API Manager 2.1.0 product distribution, `carbon.xml` configuration file <br>
-can be found at `<DISTRIBUTION_HOME>/conf`. Copy the file to some suitable location of the host machine, <br>
+can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/carbon.xml` and change the offset value under ports to 1.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.xml`
@@ -54,7 +54,7 @@ docker run
 wso2am:2.1.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.1.0/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.1.0/repository/conf folder of the container.
 
 
 ## Docker command usage references

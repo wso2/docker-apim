@@ -56,7 +56,7 @@ docker run
 wso2am-analytics:2.1.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.1.0/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.1.0/repository/conf folder of the container.
 
 
 ## Docker command usage references
