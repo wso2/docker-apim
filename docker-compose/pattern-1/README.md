@@ -10,8 +10,8 @@
 
 1. Build the WSO2 API manager 2.1.0 and API Manager Analytics 2.1.0 Docker images:
 
-  *  [WSO2 API Manager Dockerfile](../../dockerfile/apim/README.md)
-  *  [WSO2 API Manager Analytics Dockerfile](../../dockerfile/apim-analytics/README.md)
+  *  [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md)
+  *  [WSO2 API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md)
 
 
 2. Pull MySQL Docker image:
