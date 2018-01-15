@@ -20,10 +20,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `sudo docker build -t wso2am:2.1.0 .`
+    + `docker build -t wso2am:2.1.0 .`
     
 ##### 4. Running the Docker image.
-- `sudo docker run -it -p 9443:9443 wso2am:2.1.0`
+- `docker run -it -p 9443:9443 wso2am:2.1.0`
 
 ##### 6. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
@@ -48,7 +48,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 
 ##### 3. Run the image by mounting the file to container as follows.
 ```
-sudo docker run \
+docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2am:2.1.0
