@@ -36,7 +36,7 @@
     docker-compose up
     ```
 
-7. Add the following entrie to the /etc/hosts.
+7. Add the following host entry to the /etc/hosts file.
     ```
     127.0.0.1 api-manager
     ```
@@ -51,3 +51,5 @@
     ```
     https://api-manager/store/
     ```
+
+WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.
