@@ -19,7 +19,7 @@
      docker pull mysql:5.7.19
      ```
 
-3. Switch to the docker-compose/pattern-1 folder:
+3. Switch to the docker-compose/apim-is-as-km folder:
     ```
     cd [docker-apim]/docker-compose/apim-is-as-km
     ```
