@@ -8,6 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./mysql/scripts:/docker-entrypoint-initdb.d
+    command: [--ssl=0]
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
       interval: 10s
@@ -27,7 +28,7 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar:/home/wso2carbon/wso2am-analytics-2.1.0/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+      - ./am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-analytics-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
       - ./am-analytics/carbon/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
       - ./am-analytics/carbon/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
   is-as-km:
@@ -41,7 +42,7 @@ services:
       am-analytics:
         condition: service_healthy
     volumes:
-      - ./is-as-km/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar:/home/wso2carbon/wso2is-km-5.3.0/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+      - ./is-as-km/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2is-km-5.3.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
       - ./is-as-km/carbon/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/datasources/master-datasources.xml
       - ./is-as-km/carbon/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/user-mgt.xml
       - ./is-as-km/carbon/repository/conf/registry.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/registry.xml
@@ -59,7 +60,7 @@ services:
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar:/home/wso2carbon/wso2am-2.1.0/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+      - ./api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
       - ./api-manager/carbon/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
       - ./api-manager/carbon/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
       - ./api-manager/carbon/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/carbon.xml

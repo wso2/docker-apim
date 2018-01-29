@@ -24,11 +24,11 @@
     cd [docker-apim]/docker-compose/apim-is-as-km
     ```
 
-4. Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j/) v5.1.35 and copy its JAR file to the following path:
+4. Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and copy its JAR file to the following path:
     ```
-    [docker-apim]/docker-compose/apim-is-as-km/api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
-    [docker-apim]/docker-compose/apim-is-as-km/am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
-    [docker-apim]/docker-compose/apim-is-as-km/is-as-km/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+    [docker-apim]/docker-compose/apim-is-as-km/api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+    [docker-apim]/docker-compose/apim-is-as-km/am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+    [docker-apim]/docker-compose/apim-is-as-km/is-as-km/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
     ```
 
 6. Execute the following Docker Compose command to start the deployment:
