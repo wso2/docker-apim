@@ -10,7 +10,7 @@ git clone https://github.com/wso2/docker-apim.git
 >The local copy of the `dockerfile` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK and WSO2 API Manager distributions to `<DOCKERFILE_HOME>/files`
-- Download [JDK 1.8(jdk-8u*-linux-x64.tar.gz)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
+- Download [JDK 1.8 (jdk-8u*-linux-x64.tar.gz)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
 and copy that to `<DOCKERFILE_HOME>/files`.
 - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/)
 and copy that to `<DOCKERFILE_HOME>/files`. <br>
