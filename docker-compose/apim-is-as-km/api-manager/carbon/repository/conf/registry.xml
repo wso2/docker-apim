@@ -27,7 +27,7 @@
     <registryRoot>/</registryRoot>
 
     <dbConfig name="wso2registry">
-        <dataSource>jdbc/WSO2CarbonDB</dataSource>
+        <dataSource>jdbc/LocalRegistryDB</dataSource>
     </dbConfig>
 
     <dbConfig name="carbondb">

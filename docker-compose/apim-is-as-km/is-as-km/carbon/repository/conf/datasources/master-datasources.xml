@@ -7,10 +7,10 @@
     <datasources>
 
         <datasource>
-            <name>WSO2_CARBON_DB</name>
+            <name>LOCAL_REGISTRY_DB</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
-                <name>jdbc/WSO2CarbonDB</name>
+                <name>jdbc/LocalRegistryDB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
