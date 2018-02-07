@@ -14,7 +14,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://mysql:3306/carbon_db?autoReconnect=true</url>
+                    <url>jdbc:mysql://mysql:3306/carbon_db?autoReconnect=true&amp;useSSL=false</url>
                     <username>root</username>
                     <password>root</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -35,7 +35,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://mysql:3306/apimgt_db?autoReconnect=true</url>
+                    <url>jdbc:mysql://mysql:3306/apimgt_db?autoReconnect=true&amp;useSSL=false</url>
                     <username>root</username>
                     <password>root</password>
                     <defaultAutoCommit>false</defaultAutoCommit>
@@ -57,7 +57,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://mysql:3306/stats_db?autoReconnect=true&amp;relaxAutoCommit=true</url>
+                    <url>jdbc:mysql://mysql:3306/stats_db?autoReconnect=true&amp;relaxAutoCommit=true&amp;useSSL=false</url>
                     <username>root</username>
                     <password>root</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>

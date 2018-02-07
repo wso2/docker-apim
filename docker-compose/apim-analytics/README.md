@@ -1,4 +1,4 @@
-### WSO2 API Manager 2.1.0 Deployment Pattern 1
+### WSO2 API Manager deployment with WSO2 API Manager Analytics
 
 ![alt tag](am-2.1.0-pattern-1.png)
 
@@ -19,15 +19,15 @@
      docker pull mysql:5.7.19
      ```
 
-3. Switch to the docker-compose/pattern-1 folder:
+3. Switch to the docker-compose/apim-analytics folder:
     ```
-    cd [docker-apim]/docker-compose/pattern-1
+    cd [docker-apim]/docker-compose/apim-analytics
     ```
 
-4. Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j/) v5.1.35 and copy its JAR file to the following path:
+4. Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and copy its JAR file to the following path:
     ```
-    [docker-apim]/docker-compose/pattern-1/api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
-    [docker-apim]/docker-compose/pattern-1/am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.35-bin.jar
+    [docker-apim]/docker-compose/apim-analytics/api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+    [docker-apim]/docker-compose/apim-analytics/am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
     ```
 
 6. Execute the following Docker Compose command to start the deployment:
