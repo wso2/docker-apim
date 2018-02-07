@@ -67,8 +67,8 @@ services:
       - ./apim/repository/conf/user-mgt.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/user-mgt.xml
       - ./apim/repository/conf/registry.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/registry.xml
       - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
-      - ./apim/carbon/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/axis2/axis2.xml
-      - ./apim/carbon/bin/wso2server.sh:/home/wso2carbon/wso2am-2.1.0/bin/wso2server.sh
+      - ./apim/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/axis2/axis2.xml
+      - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.1.0/bin/wso2server.sh
     ports:
       - "80:9763"
       - "443:9443"
