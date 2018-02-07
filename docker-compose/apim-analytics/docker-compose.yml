@@ -28,9 +28,9 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./am-analytics/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-analytics-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
-      - ./am-analytics/carbon/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
-      - ./am-analytics/carbon/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
+      - ./apim-analytics/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-analytics-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+      - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
+      - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
     links:
       - mysql
   api-manager:
@@ -44,11 +44,11 @@ services:
       am-analytics:
         condition: service_healthy
     volumes:
-      - ./api-manager/carbon/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
-      - ./api-manager/carbon/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
-      - ./api-manager/carbon/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
-      - ./api-manager/carbon/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/carbon.xml
-      - ./api-manager/carbon/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
+      - ./apim/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+      - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
+      - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
+      - ./apim/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/carbon.xml
+      - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
     ports:
       - "80:9763"
       - "443:9443"
