@@ -22,7 +22,9 @@ MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
 ARG USER=wso2carbon
+ARG USER_ID=802
 ARG USER_GROUP=wso2
+ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
@@ -45,8 +47,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # create a user group and a user
-RUN groupadd --system ${USER_GROUP} && \
-    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP} ${USER}
+RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
+    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
 # copy the jdk and wso2 product distribution zip files to user's home directory
 COPY ${FILES}/${JDK_ARCHIVE} ${FILES}/${WSO2_SERVER_PACK} ${USER_HOME}/
@@ -61,7 +63,7 @@ RUN mkdir -p ${JAVA_HOME} && \
     chmod -R g=u ${USER_HOME}
 
 # set the user and work directory
-USER ${USER}
+USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
