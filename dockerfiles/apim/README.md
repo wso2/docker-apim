@@ -11,9 +11,17 @@ git clone https://github.com/wso2/docker-apim.git
 
 ##### 2. Add JDK and WSO2 API Manager distributions to `<DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and copy that to `<DOCKERFILE_HOME>/files`.
+and extract that in `<DOCKERFILE_HOME>/files` folder.
+- Update the JDK version number given in the ```JDK_DIST``` argument in the Dockerfile.
 - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/)
-and copy that to `<DOCKERFILE_HOME>/files`. <br>
+and extract that in `<DOCKERFILE_HOME>/files` folder.
+- Once both JDK and WSO2 API Manager distributions are extracted it may look as follows:
+
+  ```bash
+  dockerfiles/apim/files/jdk<version>/
+  dockerfiles/apim/files/wso2am-2.1.0/
+  ```
+
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
@@ -48,9 +56,9 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 
 ##### 3. Run the image by mounting the file to container as follows.
 ```
-docker run 
--p 9444:9444
---volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml
+docker run \
+-p 9444:9444 \
+--volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2am:2.1.0
 ```
 
