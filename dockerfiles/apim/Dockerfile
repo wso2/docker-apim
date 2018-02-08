@@ -22,17 +22,19 @@ MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
 ARG USER=wso2carbon
+ARG USER_ID=200
 ARG USER_GROUP=wso2
+ARG USER_GROUP_ID=200
 ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
 # set jdk configurations
-ARG JDK_ARCHIVE=jdk-8u*-linux-x64.tar.gz
-ARG JAVA_HOME=${USER_HOME}/java
+ARG JDK_DIST=jdk1.8.0_144
+ARG JAVA_HOME=${USER_HOME}/${JDK_DIST}
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.1.0
-ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}.zip
+ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 
 # install required packages
@@ -44,24 +46,16 @@ RUN apt-get update && \
     unzip && \
     rm -rf /var/lib/apt/lists/*
 
-# create a user group and a user
-RUN groupadd --system ${USER_GROUP} && \
-    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP} ${USER}
+# create wso2 user group and user
+RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
+    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
-# copy the jdk and wso2 product distribution zip files to user's home directory
-COPY ${FILES}/${JDK_ARCHIVE} ${FILES}/${WSO2_SERVER_PACK} ${USER_HOME}/
-
-# install the jdk, wso2 server, remove distributions and set folder permissions
-RUN mkdir -p ${JAVA_HOME} && \
-    tar -xf ${USER_HOME}/${JDK_ARCHIVE} -C ${JAVA_HOME} --strip-components=1 && \
-    unzip -q ${USER_HOME}/${WSO2_SERVER_PACK} -d ${USER_HOME}/ && \
-    rm ${USER_HOME}/${JDK_ARCHIVE} && \
-    rm ${USER_HOME}/${WSO2_SERVER_PACK} && \
-    chown -R ${USER}:${USER_GROUP} ${USER_HOME} && \
-    chmod -R g=u ${USER_HOME}
+# copy the jdk and wso2 product distributions to user's home directory
+COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${USER_HOME}/${JDK_DIST}}
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
 
 # set the user and work directory
-USER ${USER}
+USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
