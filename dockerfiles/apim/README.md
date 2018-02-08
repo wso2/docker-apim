@@ -1,32 +1,37 @@
 # Dockerfile for WSO2 API Manager #
 The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.1.0.
 
+## Prerequisites
+
+* [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+
+
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
 ```
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfile` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfile/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK and WSO2 API Manager distributions to `<DOCKERFILE_HOME>/files`
+##### 2. Add JDK and WSO2 API Manager distributions to `<AM_DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that in `<DOCKERFILE_HOME>/files` folder.
+and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
 - Update the JDK version number given in the ```JDK_DIST``` argument in the Dockerfile.
 - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/)
-and extract that in `<DOCKERFILE_HOME>/files` folder.
+and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
 - Once both JDK and WSO2 API Manager distributions are extracted it may look as follows:
 
   ```bash
-  dockerfiles/apim/files/jdk<version>/
-  dockerfiles/apim/files/wso2am-2.1.0/
+  <AM_DOCKERFILE_HOME>/files/jdk<version>/
+  <AM_DOCKERFILE_HOME>/files/wso2am-2.1.0/
   ```
 
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
-- Navigate to `<DOCKERFILE_HOME>` directory. <br>
+- Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2am:2.1.0 .`
     
