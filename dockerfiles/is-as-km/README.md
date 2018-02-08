@@ -1,5 +1,5 @@
-# Dockerfile for WSO2 API Manager #
-The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.1.0.
+# Dockerfile for WSO2 Identity Server deployed as the API Key Manager #
+The section defines the step-by-step instructions to build the Docker image for WSO2 IS deployed as API Key Manager.
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -7,33 +7,25 @@ The section defines the step-by-step instructions to build the Docker image for 
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfile` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/is-as-km` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK and WSO2 API Manager distributions to `<DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that in `<DOCKERFILE_HOME>/files` folder.
-- Update the JDK version number given in the ```JDK_DIST``` argument in the Dockerfile.
-- Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/)
-and extract that in `<DOCKERFILE_HOME>/files` folder.
-- Once both JDK and WSO2 API Manager distributions are extracted it may look as follows:
-
-  ```bash
-  dockerfiles/apim/files/jdk<version>/
-  dockerfiles/apim/files/wso2am-2.1.0/
-  ```
-
+and copy that to `<DOCKERFILE_HOME>/files`.
+- Download the WSO2 Identity Server as Key Manager 5.3.0 distribution (http://wso2.com/api-management/try-it/)
+and copy that to `<DOCKERFILE_HOME>/files`. <br>
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
 - Navigate to `<DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am:2.1.0 .`
+    + `docker build -t wso2is-km:5.3.0 .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9443:9443 wso2am:2.1.0`
+- `docker run -it -p 9443:9443 wso2is-km:5.3.0`
 
-##### 6. Accessing management console.
+##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
     + `https:<DOCKER_HOST>:9443/carbon`
     
@@ -59,10 +51,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2am:2.1.0
+wso2is-km:5.3.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.1.0/repository/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.3.0/repository/conf folder of the container.
 
 
 ## Docker command usage references

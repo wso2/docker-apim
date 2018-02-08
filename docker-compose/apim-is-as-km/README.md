@@ -1,6 +1,5 @@
-### WSO2 API Manager deployment with WSO2 API Manager Analytics
+### WSO2 API Manager with Identity Server as the Key Manager
 
-![alt tag](am-2.1.0-pattern-1.png)
 
 ## Prerequisites
 
@@ -8,10 +7,11 @@
 
 ## Quick Start Guide
 
-1. Build the WSO2 API manager 2.1.0 and API Manager Analytics 2.1.0 Docker images:
+1. Build the WSO2 API Manager 2.1.0 and API Manager Analytics 2.1.0 and WSO2 Identity Server as KM 5.3.0 docker images:
 
   *  [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md)
   *  [WSO2 API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md)
+  *  [WSO2 IS as KM](../../dockerfiles/is-as-km/README.md)
 
 
 2. Pull MySQL Docker image:
@@ -19,15 +19,16 @@
      docker pull mysql:5.7.19
      ```
 
-3. Switch to the docker-compose/apim-analytics folder:
+3. Switch to the docker-compose/apim-is-as-km folder:
     ```
-    cd [docker-apim]/docker-compose/apim-analytics
+    cd [docker-apim]/docker-compose/apim-is-as-km
     ```
 
 4. Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and copy its JAR file to the following path:
     ```
-    [docker-apim]/docker-compose/apim-analytics/apim/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
-    [docker-apim]/docker-compose/apim-analytics/apim-analytics/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+    [docker-apim]/docker-compose/apim-is-as-km/apim/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+    [docker-apim]/docker-compose/apim-is-as-km/apim-analytics/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
+    [docker-apim]/docker-compose/apim-is-as-km/is-as-km/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
     ```
 
 6. Execute the following Docker Compose command to start the deployment:
@@ -35,7 +36,7 @@
     docker-compose up
     ```
 
-7. Add the following entrie to the /etc/hosts.
+7. Add the following host entry to the /etc/hosts file.
     ```
     127.0.0.1 api-manager
     ```
@@ -50,3 +51,5 @@
     ```
     https://api-manager/store/
     ```
+
+WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.
