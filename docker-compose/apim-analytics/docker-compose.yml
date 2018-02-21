@@ -49,6 +49,6 @@ services:
       - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
     ports:
       - "80:9763"
-      - "443:9443"
+      - "9443:9443"
       - "8280:8280"
       - "8243:8243"
