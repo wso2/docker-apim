@@ -41,9 +41,7 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
     curl \
-    iproute2 \
-    telnet \
-    unzip && \
+    telnet && \
     rm -rf /var/lib/apt/lists/*
 
 # create a user group and a user
