@@ -67,7 +67,7 @@ services:
       - ./apim/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/axis2/axis2.xml
       - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.1.0/bin/wso2server.sh
     ports:
-      - "80:9763"
+      - "9763:9763"
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"

@@ -37,12 +37,12 @@
 
     * API Publisher
     ```
-    https://api-manager/publisher
+    https://api-manager:9443/publisher
     ```
 
     * API Store
     ```
-    https://api-manager/store/
+    https://api-manager:9443/store/
     ```
 
 WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.

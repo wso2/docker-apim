@@ -37,10 +37,10 @@
 
     * API Publisher
     ```
-    https://api-manager/publisher
+    https://api-manager:9443/publisher
     ```
 
     * API Store
     ```
-    https://api-manager/store/
+    https://api-manager:9443/store/
     ```
