@@ -40,8 +40,7 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 # install required packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
-    curl \
-    telnet && \
+    curl && \
     rm -rf /var/lib/apt/lists/*
 
 # create a user group and a user
