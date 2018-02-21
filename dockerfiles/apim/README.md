@@ -14,7 +14,7 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfile/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK and WSO2 API Manager distributions to `<AM_DOCKERFILE_HOME>/files`
+##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
 and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
 - Download the WSO2 API Manager 2.1.0 distribution (http://wso2.com/api-management/try-it/)
@@ -25,6 +25,8 @@ and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
   <AM_DOCKERFILE_HOME>/files/jdk<version>/
   <AM_DOCKERFILE_HOME>/files/wso2am-2.1.0/
   ```
+- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<AM_DOCKERFILE_HOME>/files` folder
+
 
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.

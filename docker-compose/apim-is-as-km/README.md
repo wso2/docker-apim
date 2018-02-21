@@ -24,23 +24,16 @@
     cd [docker-apim]/docker-compose/apim-is-as-km
     ```
 
-4. Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and copy its JAR file to the following path:
-    ```
-    [docker-apim]/docker-compose/apim-is-as-km/apim/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
-    [docker-apim]/docker-compose/apim-is-as-km/apim-analytics/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
-    [docker-apim]/docker-compose/apim-is-as-km/is-as-km/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
-    ```
-
-6. Execute the following Docker Compose command to start the deployment:
+4. Execute the following Docker Compose command to start the deployment:
     ```
     docker-compose up
     ```
 
-7. Add the following host entry to the /etc/hosts file.
+5. Add the following host entry to the /etc/hosts file.
     ```
     127.0.0.1 api-manager
     ```
-8. Access the API Publisher and Store via the URLs given below.
+6. Access the API Publisher and Store via the URLs given below.
 
     * API Publisher
     ```
