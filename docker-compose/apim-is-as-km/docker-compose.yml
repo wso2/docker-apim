@@ -28,7 +28,6 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-analytics-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
       - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
       - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
   is-as-km:
@@ -42,7 +41,6 @@ services:
       am-analytics:
         condition: service_healthy
     volumes:
-      - ./is-as-km/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2is-km-5.3.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
       - ./is-as-km/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/datasources/master-datasources.xml
       - ./is-as-km/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/user-mgt.xml
       - ./is-as-km/repository/conf/registry.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/registry.xml
@@ -60,7 +58,6 @@ services:
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./apim/repository/components/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2am-2.1.0/repository/components/lib/mysql-connector-java-5.1.45-bin.jar
       - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
       - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
       - ./apim/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/carbon.xml
@@ -70,7 +67,7 @@ services:
       - ./apim/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/axis2/axis2.xml
       - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.1.0/bin/wso2server.sh
     ports:
-      - "80:9763"
-      - "443:9443"
+      - "9763:9763"
+      - "9443:9443"
       - "8280:8280"
       - "8243:8243"
