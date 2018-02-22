@@ -12,8 +12,11 @@
   *  [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md)
   *  [WSO2 API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md)
   *  [WSO2 IS as KM](../../dockerfiles/is-as-km/README.md)
-
-
+ 
+  > In the `docker-compose.yml`, remove the `dockerhub.wso2.com/` prefix from the `image` name
+  
+  > For example, change the line `image: dockerhub.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0`
+  
 2. Pull MySQL Docker image:
      ```
      docker pull mysql:5.7.19
