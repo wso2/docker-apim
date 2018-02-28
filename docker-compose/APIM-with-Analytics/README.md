@@ -1,6 +1,6 @@
-### WSO2 API Manager deployment with WSO2 API Manager Analytics
+# WSO2 API Manager deployment with WSO2 API Manager Analytics
 
-![alt tag](am-2.1.0-pattern-1.png)
+![alt tag](deployment-diagram.png)
 
 ## Prerequisites
 
