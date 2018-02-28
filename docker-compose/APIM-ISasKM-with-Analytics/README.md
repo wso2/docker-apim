@@ -1,4 +1,4 @@
-### WSO2 API Manager with Identity Server as the Key Manager
+# WSO2 API Manager with Identity Server as Key Manager
 
 
 ## Prerequisites
