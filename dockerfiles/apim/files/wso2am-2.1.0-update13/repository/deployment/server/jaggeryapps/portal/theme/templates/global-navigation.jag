@@ -1,0 +1,64 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+%>
+<%
+var query = request.getQueryString();
+var dest = encodeURIComponent(originalURI + (query ? '?' + query : ''));
+%>
+<header class="header header-default">
+    <div class="container-fluid">
+        <div class="pull-left brand float-remove-xs text-center-xs">
+            <a href="<%=tenantedUrlPrefix%>./dashboards">
+                <img src="<%=urlPrefix%>libs/theme-wso2_1.0/images/logo-inverse.svg" alt="WSO2" title="WSO2" class="logo">
+                <h1><%=i18n.localize("dashboard.server.label")%></h1>
+            </a>
+        </div>
+        <div class="pull-right auth float-remove-xs text-center-xs">
+            <% if (user) { %>
+            <span class="hidden-xs">
+                <a href="#" class="dropdown" data-toggle="dropdown">
+                    <span class="add-margin-left-2x add-margin-right-1x"><%=user.username%></span>
+                    <span class="fw fw-user add-margin-right-1x"></span>
+                    <span class="caret add-margin-right-2x"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li class="dropdown-header visible-xs"><%=user.username%> <span class="caret"></span></li>
+                    <li><a href="<%=urlPrefix%>logout?destination=<%=dest%>"><%= i18n.localize("logout.label")%></a></li>
+                </ul>
+            </span>
+            <div class="visible-xs auth-xs">
+                <a href="#" class="collapsed" data-toggle="collapse" data-target="#auth-menu-items" aria-expanded="false">
+                    <span class="icon fw-stack fw">
+                        <i class="fw fw-user fw-stack-1x"></i>
+                    </span>
+                    <span class="caret"></span>
+                </a>
+                <div id="auth-menu-items" class="collapse">
+                    <ul >
+                        <li><%=user.username%></li>
+                        <li><a href="<%=urlPrefix%>logout?destination=<%=dest%>"><%= i18n.localize("logout.label")%></a></li>
+                    </ul>
+                </div>
+            </div>
+            <% } else { %>
+            <a href="<%=urlPrefix%>login?destination=<%=dest%>" class="dropdown" data-toggle="dropdown">
+                <%= i18n.localize("login.label")%>
+            </a>
+            <% } %>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,7 @@
+{
+    "blocks": [
+        { "id": "a", "x": 0, "y": 0, "width": 12, "height": 3 },
+        { "id": "b", "x": 0, "y": 3, "width": 12, "height": 3 },
+        { "id": "c", "x": 0, "y": 6, "width": 12, "height": 3 }
+    ]
+}

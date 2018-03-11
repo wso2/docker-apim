@@ -1,0 +1,8 @@
+{
+    "id": "banner",
+    "title": "Default Grid with Banner",
+    "description": "Default grid layout with banner",
+    "thumbnail": "layout/banner/index.png",
+    "url": "layout/banner/index.json"
+}
+

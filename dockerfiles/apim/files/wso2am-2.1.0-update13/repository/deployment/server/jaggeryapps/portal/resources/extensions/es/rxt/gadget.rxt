@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~      http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+-->
+
+<artifactType type="application/vnd.wso2-dsgadget+xml" shortName="dsgadget" singularLabel="DS Gadget" pluralLabel="DS Gadgets"
+              hasNamespace="false" iconSet="10">
+    <storagePath>/dsgadgets/@{overview_id}/@{overview_version}</storagePath>
+    <nameAttribute>overview_name</nameAttribute>
+    <ui>
+        <list>
+            <column name="Name">
+                <data type="path" value="overview_name" href="@{storagePath}"/>
+            </column>
+            <column name="Version">
+                <data type="path" value="overview_version" href="@{storagePath}"/>
+            </column>
+            <column name="Description">
+                <data type="path" value="overview_description" href="@{storagePath}"/>
+            </column>
+        </list>
+    </ui>
+    <content>
+        <table name="Gadget">
+            <field type="text">
+                <name label="Gadget ZIP">Gadgetarchive</name>
+            </field>
+        </table>
+        <table name="Overview">
+            <field type="text" required="true" readonly="true">
+                <name label="Gadget ID">ID</name>
+            </field>
+            <field type="text" required="true" readonly="true">
+                <name>Name</name>
+            </field>
+            <field type="text" required="true" readonly="true">
+                <name>Version</name>
+            </field>
+            <field type="text" required="true">
+                <name>Provider</name>
+            </field>
+            <field type="text">
+                <name>Createdtime</name>
+            </field>
+            <field type="options">
+                <name label="Type">Type</name>
+                <values>
+                    <value>Gadget</value>
+                    <value>Widget</value>
+                </values>
+            </field>
+            <field type="text-area">
+                <name>Description</name>
+            </field>
+            <field type="text">
+                <name label="Category">Gadgetcategory</name>
+            </field>
+            <field type="text">
+                <name label="Gadget Definition">Gadgetxmlurl</name>
+            </field>
+            <field type="text">
+                <name label="Thumbnail URL">Thumbnailurl</name>
+            </field>
+        </table>
+        <table name="Settings" columns="2" maxoccurs="unbounded">
+            <subheading>
+                <heading>Key</heading>
+                <heading>Value</heading>
+            </subheading>
+            <field type="text">
+                <name label="Key">Key</name>
+            </field>
+            <field type="text">
+                <name label="Value">Value</name>
+            </field>
+        </table>
+        <table name="Options" columns="3" maxoccurs="unbounded">
+            <subheading>
+                <heading>Key</heading>
+                <heading>Type</heading>
+            </subheading>
+            <field type="text">
+                <name label="Key">Key</name>
+            </field>
+            <field type="options">
+                <name label="Type">Type</name>
+                <values>
+                    <value>String</value>
+                    <value>Bool</value>
+                    <value>Enum</value>
+                    <value>List</value>
+                    <value>Text</value>
+                </values>
+            </field>
+        </table>
+        <table name="Styles" columns="2" maxoccurs="unbounded">
+            <subheading>
+                <heading>Key</heading>
+                <heading>Value</heading>
+            </subheading>
+            <field type="text">
+                <name label="Key">Key</name>
+            </field>
+            <field type="text">
+                <name label="Value">Value</name>
+            </field>
+        </table>
+        <table name="Notifiers" columns="3" maxoccurs="unbounded">
+            <subheading>
+                <heading>Event</heading>
+                <heading>Data Type</heading>
+                <heading>Description</heading>
+            </subheading>
+            <field type="text">
+                <name label="Event">Event</name>
+            </field>
+            <field type="text">
+                <name label="Data Type">DataType</name>
+            </field>
+            <field type="text-area">
+                <name label="Description">Description</name>
+            </field>
+        </table>
+        <table name="Listeners" columns="3" maxoccurs="unbounded">
+            <subheading>
+                <heading>Event</heading>
+                <heading>Data Type</heading>
+                <heading>Description</heading>
+            </subheading>
+            <field type="text">
+                <name label="Event">Event</name>
+            </field>
+            <field type="text">
+                <name label="Data Type">DataType</name>
+            </field>
+            <field type="text-area">
+                <name label="Description">Description</name>
+            </field>
+        </table>
+    </content>
+</artifactType>

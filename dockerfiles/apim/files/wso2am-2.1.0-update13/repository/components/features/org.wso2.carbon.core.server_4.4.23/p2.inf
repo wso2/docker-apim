@@ -1,0 +1,5 @@
+
+properties.0.name=org.wso2.carbon.p2.category.type
+properties.0.value=server
+properties.1.name=org.eclipse.equinox.p2.type.group
+properties.1.value=false

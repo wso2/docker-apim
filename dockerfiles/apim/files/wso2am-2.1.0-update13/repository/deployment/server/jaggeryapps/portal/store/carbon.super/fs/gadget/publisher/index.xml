@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Publisher" height="300" description="Publisher">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <style type="text/css">
+                
+                body {
+                    padding: 12px;
+                }
+
+                .log {
+                    width: 400px;
+                    height: 400px;
+                    background-color: #415b76;
+                    color: #fff;
+                }
+
+                #txtMessage {
+                    margin-right: 10px;
+                }
+
+                #btnSend, #btnAutoGen {
+                    margin-top: 10px;
+                }
+
+                #autoMessage {
+                    margin-top: 10px;
+                    margin-bottom: 0px;
+                }
+            </style>
+            <link rel="stylesheet" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css">
+        <head>
+        <body>
+            <p>Type a message and click on the Publish.</p>
+            <input id="txtMessage" class="form-control" type="text" placeholder="Message">
+            <p>
+            <button id="btnSend" type="button" class="btn btn-primary">Publish</button>
+
+            </p>
+            <p>Click Auto button to publish auto generated messages.</p>
+            <div id="autoMessage" class="well well-lg">No Messages...</div>
+            <button id="btnAutoGen" type="button" class="btn btn-primary">Auto</button>
+
+            <script language="javascript" type="text/javascript" src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+            <script language="javascript" type="text/javascript" src="/portal/libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+            <script>
+                var interval;
+
+                $("#btnSend").on("click",function(e){
+                    if(interval){
+                        clearInterval(interval);
+                    }
+
+                    // Object (or String) to be publish
+                    var message = {
+                        message: $("#txtMessage").val()? $("#txtMessage").val() : "No Message"
+                    };
+
+                    // Publish the user written message
+                    gadgets.Hub.publish('publisher', message);
+                });
+
+                $("#btnAutoGen").on("click",function(e){
+                    var id = 0;
+                    if(interval){
+                        clearInterval(interval);
+                    }
+
+                    interval = setInterval(function() {
+                        $('#autoMessage').text('publishing message from publisher, Message : ' + (++id));
+
+                        // Publish the auto generated ID
+                        gadgets.Hub.publish('publisher', id);
+                    }, 2000);
+                });
+
+            </script>
+        </body>
+        ]]>
+    </Content>
+</Module>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Subscriber" height="250" description="Subscriber">
+        <Require feature="pubsub-2">
+            <Param name="topics">
+                <![CDATA[
+                <Topic title="geodata"
+                    name="org.wso2.ues.samples.ch"
+                    description="sample channel to demonstrate intergadget communication"
+                    type="object"
+                    subscribe="true"/>
+               ]]>
+            </Param>
+        </Require>
+        <Require feature="dynamic-height"/>
+        <Require feature="wso2-gadgets-controls" />
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <style type="text/css">
+                .log {
+                    position: fixed;
+                    top: 0;
+                    right: 1px;
+                    bottom: 0;
+                    left: 0;
+                    background-color: #0E0E0E;
+                    color: #fff;
+                    overflow: auto;
+                    padding: 12px;
+                }
+
+                .log * { 
+                    font-family: monospace;
+                    line-height: 18px;
+                }
+
+                .message{
+                    color: #5FC715;
+                }
+            </style>
+            <script language="javascript" type="text/javascript" src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+            <script>
+                gadgets.HubSettings.onConnect = function() {
+                    gadgets.Hub.subscribe('subscriber', function(topic, data, subscriberData) {
+                        if(data.type === 'clear') {
+                            $('.log').empty();
+                            return;
+                        }
+                        wso2.gadgets.controls.showGadget();
+                        $('.log').append('<div>Message received, <span class="message">Message: ' + JSON.stringify(data) + '</span></div>');
+                    });
+                };
+            </script>
+        <head>
+        <body>
+            <div class="log"></div>
+        </body>
+        ]]>
+    </Content>
+</Module>

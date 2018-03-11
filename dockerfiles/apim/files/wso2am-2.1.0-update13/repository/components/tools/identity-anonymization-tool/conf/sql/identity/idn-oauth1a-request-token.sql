@@ -1,0 +1,4 @@
+UPDATE IDN_OAUTH1A_REQUEST_TOKEN
+SET AUTHZ_USER = `pseudonym`
+WHERE AUTHZ_USER =  `username`
+      AND TENANT_ID = `tenant_id`

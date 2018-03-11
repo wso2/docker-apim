@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<feature id="org.wso2.carbon.core" label="WSO2 Carbon - Carbon Feature" provider-name="%providerName" version="4.4.23">
+  <description>This feature contains the carbon core features</description>
+  <copyright>%copyright</copyright>
+  <license url="%licenseURL">%license</license>
+  <includes id="org.wso2.carbon.core.common" optional="false" version="4.4.23"/>
+  <includes id="org.wso2.carbon.core.server" optional="false" version="4.4.23"/>
+  <includes id="org.wso2.carbon.core.ui" optional="false" version="4.4.23"/>
+</feature>

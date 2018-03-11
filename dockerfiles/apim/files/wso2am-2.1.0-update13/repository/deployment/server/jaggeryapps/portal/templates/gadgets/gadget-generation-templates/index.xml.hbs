@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="{{gadget_title}}" description="This is a template gadget">
+        <Require feature="dynamic-height"/>
+        <Require feature="setprefs"/>
+    </ModulePrefs>
+    {{#if isPushMode}}
+    <UserPref name="windowSize"
+              display_name="Window Size"
+              default_value="10"/>
+    {{else}}
+    <UserPref name="refreshInterval"
+              display_name="Refresh Interval"
+              default_value="10"/>
+     {{/if}}
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <!-- jQuery -->
+            <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+
+            <!-- provider libs -->
+            {{#each provider-libs}}
+                <script src="js/provider-libs/{{this}}.js"></script>
+            {{/each}}
+            <!-- chart libs -->
+            {{#each chart-libs}}
+                <script src="js/chart-libs/{{this}}.js"></script>
+            {{/each}}
+
+            <!--scripts copied by framework -->
+            {{#if isPushMode}}
+            <script src="js/provider-client.js"></script>
+            {{/if}}
+            <script src="js/chart-api.js"></script>
+            <script src="js/gadget-core.js"></script>
+
+        {{#each common-libs}}
+            <script src="/portal/libs/common-chart-libs/{{this}}.js"></script>
+        {{/each}}
+        </head>
+        <body>
+            <div id="canvas"></div>
+        </body>
+        ]]>
+    </Content>
+</Module>

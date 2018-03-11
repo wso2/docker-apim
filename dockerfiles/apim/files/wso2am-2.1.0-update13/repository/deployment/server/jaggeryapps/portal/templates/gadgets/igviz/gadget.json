@@ -1,0 +1,9 @@
+{
+    "id": "igviz",
+    "title": "Bar chart generated using Igviz",
+    "type": "gadget",
+    "thumbnail": "local://images/gadgetIcon.png",
+    "data": {
+        "url": "local://store/gadget/igviz/index.xml"
+    }
+}

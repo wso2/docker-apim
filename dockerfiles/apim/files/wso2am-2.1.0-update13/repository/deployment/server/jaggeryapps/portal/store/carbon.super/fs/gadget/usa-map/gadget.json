@@ -1,0 +1,23 @@
+{
+    "id": "usa-map",
+    "title": "USA Map",
+    "type": "gadget",
+    "thumbnail": "gadget/usa-map/index.png",
+    "settings": {
+        "personalize": true
+    },
+    "data": {
+        "url": "gadget/usa-map/index.xml"
+    },
+    "description": "Allows to view and select US states",
+    "notify": {
+        "state": {
+            "type": "address",
+            "description": "This notifies selected state"
+        },
+        "cancel": {
+            "type": "boolean",
+            "description": "This notifies cancellation of state selection"
+        }
+    }
+}

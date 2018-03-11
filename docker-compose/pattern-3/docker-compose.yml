@@ -8,7 +8,7 @@ services:
     environment:
         MYSQL_ROOT_PASSWORD: root
   analytics:
-    image: docker.wso2.com/apim-pattern3-am-analytics:2.1.0-update18
+    image: docker.wso2.com/apim-pattern3-am-analytics:2.1.0-update8
     build:
       context: ../
       dockerfile: pattern-3/am-analytics/Dockerfile

@@ -1,0 +1,109 @@
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+.pagination {
+    margin: 10px 16px;
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+    float: left;
+    padding: 4px 12px;
+    line-height: 20px;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-left-width: 0;
+    color: rgba(0, 0, 0, 0.67);
+}
+
+.paginationContainer {
+    margin: -2px 0px;
+}
+
+.canvas {
+    height: 25px;
+}
+
+.vega {
+    margin-top: 2px;
+    margin-left: -21px;
+}
+
+.form-control {
+    width: 111px;
+}
+
+.col-sm-12 table {
+    margin-left: 14px;
+    margin-top: 9px;
+}
+
+.control-label {
+    font-weight: 400;
+    margin-right: 5px;
+    margin-top: -5px;
+}
+
+.legendText {
+    font-size: x-small;
+}
+
+.legend {
+    margin-left: -58px;
+    margin-top: -148px;
+    position: absolute;
+}
+
+.textContext {
+    margin-left: 5px;
+}
+
+a {
+    color: #3c3c3c;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link {
+    cursor: pointer;
+}
+
+.tooltip.bottom .tooltip-arrow {
+    border-bottom-color: rgb(229, 242, 255);
+
+}
+
+.tooltip-inner {
+    background-color: rgb(229, 242, 255);
+    color: black;
+    word-wrap: break-word;
+}
+
+.tooltip.in {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+ul.legendText {
+    margin-top: -6px;
+}

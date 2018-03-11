@@ -1,0 +1,7 @@
+{
+  "protocol": "https",
+  "host": "localhost",
+  "port": "9444",
+  "context": "portal",
+  "url": "https://localhost:9444/portal"
+}

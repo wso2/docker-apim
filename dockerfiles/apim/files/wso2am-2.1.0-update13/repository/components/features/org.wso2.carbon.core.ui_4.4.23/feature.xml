@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<feature id="org.wso2.carbon.core.ui" label="WSO2 Carbon - Carbon UI Feature" provider-name="%providerName" version="4.4.23">
+  <description>This feature contains the carbon core ui features</description>
+  <copyright>%copyright</copyright>
+  <license url="%licenseURL">%license</license>
+  <plugin id="org.wso2.carbon.feature.mgt.stub" unpack="false" version="4.4.23"/>
+  <plugin id="ajaxtags" unpack="false" version="1.3.0.beta-rc7-wso2v1"/>
+  <plugin id="org.wso2.carbon.ui" unpack="false" version="4.4.23"/>
+  <plugin id="csrfguard" unpack="false" version="3.1.0.wso2v3"/>
+  <plugin id="org.wso2.carbon.server.admin.ui" unpack="false" version="4.4.23"/>
+  <plugin id="jstl" unpack="false" version="1.2.1.wso2v2"/>
+  <plugin id="org.wso2.carbon.i18n" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.ui.menu.general" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.roles.mgt.ui" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.roles.mgt.stub" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.core.commons.stub" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.feature.mgt.ui" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.server.admin.stub" unpack="false" version="4.4.23"/>
+  <plugin id="encoder" unpack="false" version="1.2.0.wso2v1"/>
+  <plugin id="org.eclipse.equinox.jsp.jasper" unpack="false" version="1.0.400.v20120522-2049"/>
+</feature>

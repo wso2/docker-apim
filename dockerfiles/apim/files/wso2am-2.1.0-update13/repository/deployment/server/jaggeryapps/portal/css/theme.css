@@ -1,0 +1,41 @@
+
+#middle {
+    background: #ecf0f1;
+}
+
+#left .navbar a {
+    color: #ffffff;
+}
+
+#left .navbar {
+    background: #07bfac;
+}
+
+#left .navbar-nav > li.active > a {
+    background: #ffffff;
+    color: #07bfac;
+}
+
+#left .nav-tabs > li > a {
+    font-size: 18px;
+}
+
+#sandbox {
+    border: 1px solid #dddddd;
+}
+
+.ues-component-box {
+    border: 1px solid #ccc;
+}
+
+.ues-component {
+    border: 1px solid #ccc;
+}
+
+.preview-toggle {
+    background: #ccc;
+}
+
+.thumbnail {
+    background: #3498db;
+}

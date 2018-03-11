@@ -1,0 +1,39 @@
+<%
+/**
+ * Copyright 2016 WSO2, Inc. (http://wso2.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var log = new Log();
+var process = require('process');
+//TODO: fix carbon module and use it
+var httpPort = process.getProperty('mgt.transport.http.port');
+var httpsPort = process.getProperty('mgt.transport.https.port');
+if(!urlDomain && !userDomain){
+    urlDomain = 'carbon.super';
+}
+
+%>
+<script>
+ues.global.userDomain = <%=JSON.stringify(userDomain)%>;
+ues.global.urlDomain = <%=JSON.stringify(urlDomain)%>;
+ues.global.tenantPrefix = <%=JSON.stringify(tenantPrefix)%>;
+ues.global.type = 'default';
+ues.global.anon = false;
+ues.global.host = <%=require('/configs/designer.json').host%>;
+ues.global.context = <%=JSON.stringify(request.getContextPath())%>;
+ues.global.server = {
+    httpPort: <%=JSON.stringify(httpPort)%>,
+    httpsPort: <%=JSON.stringify(httpsPort)%>
+};
+</script>

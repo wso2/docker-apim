@@ -1,0 +1,54 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+(function () {
+    if (!user) {
+        response.sendError(401, 'unauthorized to access roles');
+        return;
+    }
+
+    var utils = require('/modules/utils.js');
+    var configs = require('/configs/designer.json');
+    var log = new Log();
+    if (!utils.allowed(user.roles, configs.designers)) {
+        response.sendError(401, 'roles access not authorized');
+        return;
+    }
+
+    var usr = require('/modules/user.js');
+    response.contentType = 'application/json';
+
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/roles/search')) {
+        var query = request.getParameter('query');
+        if (query === undefined) {
+            query = '';
+        }
+        var maxRolesLimit = request.getParameter('maxLimit');
+        if (maxRolesLimit === undefined) {
+            maxRolesLimit = 100;
+        }
+        print(usr.searchRoles(query + '*', maxRolesLimit));
+    } else if (matcher.match('/roles/maxLimit')) {
+        print(usr.maxRolesLimit());
+    } else {
+        print(usr.roles());
+    }
+}());
+%>

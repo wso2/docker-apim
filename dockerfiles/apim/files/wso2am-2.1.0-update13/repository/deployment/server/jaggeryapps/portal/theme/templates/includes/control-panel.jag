@@ -1,0 +1,29 @@
+<%
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+%>
+<% if (user) { %>
+    <% if (!isAnonView && (urlDomain == user.domain || (user.domain == superDomain && (!urlDomain || urlDomain == superDomain)))) { %>
+        <% if (user.isEditor) { %>
+            <li><a href="<%=dbRoot%>?editor=true"><i class="icon fw fw-settings ues-copy" title="<%= i18n.localize("edit.button")%>"></i>Dashboard Settings</a></li>
+        <% } else { %>
+            <li><a href="<%=dbRoot%>?custom=true"><i class="icon fw fw-settings ues-copy" title="<%= i18n.localize("personalize")%>"></i>Customize Dashboard</a></li>
+        <% } %>
+    <% } %>
+        <li><a href="<%=urlPrefix%>logout?destination=<%=dest%>"><i class="icon fw fw-sign-out"></i><%= i18n.localize("logout.label")%></a></li>
+    <% } else { %>
+        <li><a href="<%=urlPrefix%>login-controller?destination=<%=dest%>"><i class="icon fw fw-sign-in"></i><%= i18n.localize("login.label")%></a></li>
+<% } %>

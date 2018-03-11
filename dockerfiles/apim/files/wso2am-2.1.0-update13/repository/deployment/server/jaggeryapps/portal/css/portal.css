@@ -1,0 +1,100 @@
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ues-portal .ues-dashboard {
+    padding: 10px 15px;
+    position: relative;
+    height: 125px;
+    background: #11375b;
+    color: #fff;
+}
+
+#ues-portal .ues-dashboard .ues-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+#ues-portal .ues-dashboard .ues-actions a {
+    padding: 0 10px;
+}
+
+#ues-portal .ues-dashboard h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 400;
+    height: 20px;
+    width: calc(100% - 20px);
+}
+
+#ues-portal .ues-dashboard .ues-url-link {
+    font-size: 13px;
+}
+
+#ues-portal .ues-dashboard .ues-dashboard-url {
+    font-size: 13px;
+}
+
+#ues-portal .ues-dashboard .ues-dashboard-trash-handle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    font-size: 12px;
+    color: #fff;
+    text-align: right;
+}
+
+.thumbnail {
+    border: none;
+    border-radius: 0px;
+}
+
+.ues-description {
+    font-weight: 200;
+}
+
+.ues-actions a {
+    color: #B4C2D0;
+    text-decoration: none;
+}
+
+.ues-actions a:not(.no-hover):hover {
+    color: #fff;
+}
+
+.page-description {
+    font-weight: 100;
+    font-size: 14px;
+    color: #555;
+}
+
+.ues-trash-actions {
+    right: 8px;
+    bottom: 7px;
+    position: absolute;
+}
+
+.disable {
+    cursor: default !important; /*Important is added to remove the pointer cursor appear due to theme-wso2.css*/
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    color: #333;
+}

@@ -1,0 +1,165 @@
+<%
+/**
+ * Copyright 2016 WSO2, Inc. (http://wso2.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * All the requests that starts with /gadgets/ will be handled with this controller
+ */
+
+var fresh = false;
+var bgColor;
+var pageId;
+var dbRoot;
+var dest;
+var renderEngine = {};
+
+(function () {
+    var log = new Log();
+    var matcher = new URIMatcher(request.getRequestURI());
+    var uriElements;
+    var dashboardId;
+    var page;
+    var isStandAlone = true; //To check whether the request is for stand alone gadget/ pub-sub gadget
+    var i18n = require("i18n");
+    var gadgets;
+    var dashboards;
+    var anonymous;
+    var permissions;
+    var carbon = require('carbon');
+    var anonRole = String(carbon.user.anonRole);
+    i18n.init(request, utils.getLocaleResourcePath());
+    // To set the bgcolor according to client`s website template
+    bgColor = request.getParameter("bgcolor");
+
+    if (bgColor) {
+        bgColor = "#" + bgColor;
+        // Sanitizing the background colour parameter
+        if (!(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(bgColor))) {
+            bgColor = 'transparent';
+        }
+    }
+
+    // If background colour is not set, set it to transparent
+    if (bgColor === null)
+        bgColor = 'transparent';
+    if (log.isDebugEnabled()) {
+        log.debug("Session id provided from the client is " + session.getId() + "Client has successfully connected.")
+    }
+    if (matcher.match('/gadgets/{id}/{pid}')) {
+        uriElements = matcher.elements();
+        dashboardId = uriElements.id;
+        pageId = uriElements.pid;
+        isStandAlone = false
+    }
+    else if (matcher.match('/gadgets/{id}/{pid}/{gid}')) {
+        // Get the dashboard id, page id and gadget id from url
+        uriElements = matcher.elements();
+        dashboardId = uriElements.id;
+        pageId = uriElements.pid;
+        var gadgetId = uriElements.gid;
+    }
+    else {
+        response.sendError(400, i18n.localize("bad.request"));
+        return;
+    }
+
+    dashboards = require('/modules/dashboards.js');
+    utils.sandbox(context, function () {
+        dashboard = dashboards.getAsset(dashboardId);
+    });
+
+    // If the dashboard is not available, indicate error
+    if (!dashboard) {
+        response.sendError(404, i18n.localize("page.not.found"));
+        return;
+    }
+
+    // Verify the original dashboard when returning a custom dashboard
+    if (dashboard.isUserCustom) {
+        // Get the original dashboard
+        var originalDashboard;
+        utils.sandbox(context, function () {
+            originalDashboard = dashboards.getAsset(dashboardId, true);
+        });
+
+        // If the original dashboard is deleted, returns 404
+        if (!originalDashboard) {
+            response.sendError(404, i18n.localize("page.not.found"));
+            return;
+        }
+
+        // If the user doesn't have any permission on the original dashboard, returns 401
+        var authorized = false;
+        // To view personalized dashboard, the user should have logged in, in the same domain
+        // and should have either editor or viewer permissions
+        if (user && user.domain == (urlDomain || superDomain) &&
+                (utils.allowed(user.roles, originalDashboard.permissions.editors) || utils.allowed(user.roles, originalDashboard.permissions.viewers))) {
+            authorized = true;
+        }
+        if (!authorized) {
+            // If there is no anon view defined send the unauthorized error, else return the anon view
+            if (!originalDashboard.isanon) {
+                response.sendError(401, i18n.localize("request.not.authorized"));
+                return;
+            }
+            dashboard = originalDashboard;
+        }
+    }
+
+    permissions = dashboard.permissions;
+    anonymous = permissions.viewers.indexOf(anonRole) !== -1;
+    if (!anonymous) {
+        if (!user && !dashboard.isanon) {
+            response.sendError(401, i18n.localize("request.not.authorized"));
+            return;
+        }
+        if (userDomain !== (urlDomain || superDomain) && !dashboard.isanon) {
+            response.sendError(401, i18n.localize("request.not.authorized"));
+            return;
+        }
+        if (!dashboard.isanon && !utils.allowed(user.roles, permissions.editors) && !utils.allowed(user.roles,
+                        permissions.viewers)) {
+            response.sendError(401, i18n.localize("request.not.authorized"));
+            return;
+        }
+    }
+
+    //Check whether the there is page in the dashboard with given page id
+    page = dashboards.findPage(dashboard, pageId);
+    // If the page is not available indicate error
+    if (!page) {
+        response.sendError(404, i18n.localize("page.not.found"));
+        return;
+    }
+
+    // If it is a standalone gadget, check whether the required gadget exist
+    if (isStandAlone) {
+        // Check whether a gadget exist within the page
+        var isComponentExists = dashboards.findComponent(gadgetId, page);
+        // If there is no such gadget, send error.
+        if (!isComponentExists) {
+            response.sendError(404, i18n.localize("page.not.found"));
+            return;
+        }
+    }
+    else {
+        dbRoot = tenantedUrlPrefix + 'dashboards/' + dashboard.id + '/';
+        // global reference to getBootstrapLayout() function
+        renderEngine.getDashboardContent = dashboards.getBootstrapLayout;
+    }
+    // Based on the request (Whether it is stand alone or embedded) for the gadget,
+    // decide the template to render
+    isStandAlone ? include(utils.resolvePath('templates/gadget.jag')) :
+            include(utils.resolvePath('templates/dashboard.jag'));
+}()); %>

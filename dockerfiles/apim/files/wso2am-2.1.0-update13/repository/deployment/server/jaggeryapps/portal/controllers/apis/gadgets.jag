@@ -1,0 +1,89 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+
+(function () {
+    var log = new Log();
+    var GADGET_STORE_PATH = '/store/carbon.super/es/gadget';
+
+    // Create the respective directory structure if not available
+    (function (parent, childs) {
+        var path = parent;
+        childs.split('/').forEach(function (child) {
+            path += '/' + child;
+            var dir = new File(path);
+            if (!dir.isExists()) {
+                dir.mkdir();
+            }
+        });
+    })('/store/carbon.super', 'es/gadget');
+
+    var deleteGadget = function (id) {
+        // Remove the gadget zip file if exists (before getting deployed)
+        var zipFile = new File(GADGET_STORE_PATH + '/' + id + '.zip');
+        if (zipFile.isExists()) {
+            zipFile.del();
+        }
+        // Remove gadget deployed directory if exists
+        var gadgetDir = new File(GADGET_STORE_PATH + '/' + id);
+        if (gadgetDir.isExists()) {
+            gadgetDir.del();
+        }
+    };
+
+    var saveGadget = function (id) {
+        var gadget = request.getFile('gadget');
+        if (!gadget) {
+            response.sendError(400, 'no gadget uploaded for saving.');
+            return;
+        }
+
+        deleteGadget(id);
+
+        var file = new File(GADGET_STORE_PATH + '/' + id + '.zip');
+        file.open('w');
+        file.write(gadget.getStream());
+        file.close();
+        return true;
+    };
+
+    var method = request.getMethod();
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/gadgets')) {
+        if (method === 'POST') {
+            // Create the gadget
+            saveGadget(request.getParameter('id') + '$' + request.getParameter('version'));
+        }
+    }
+
+    if (matcher.match('/gadgets/{id}/{version}')) {
+        var id = matcher.elements().id;
+        var version = matcher.elements().version;
+        if (method === 'PUT') {
+            // Update the gadget
+            saveGadget(id + '$' + version);
+        }
+
+        if (method === 'DELETE') {
+            // Delete the gadget
+            deleteGadget(id + '$' + version);
+        }
+    }
+})();
+%>

@@ -1,0 +1,10 @@
+<MessageTracer>
+
+	<!-- message.tracer.ActivityInHandler is only engaged with non-admin service invocations by default. 
+	This 'MessageTracingEnabledAdminServices' section can be used to define set of admin services that need to engage with ActivityInHandler.
+        When there are multiple services to be defined, they should provide as <Service> elements.-->
+
+	<MessageTracingEnabledAdminServices>
+		<Service>APIKeyValidationService</Service>
+	</MessageTracingEnabledAdminServices>
+</MessageTracer>

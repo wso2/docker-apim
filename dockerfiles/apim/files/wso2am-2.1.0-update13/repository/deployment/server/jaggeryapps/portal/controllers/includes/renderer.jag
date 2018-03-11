@@ -1,0 +1,103 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var dbRoot;
+var dest;
+var renderEngine = {};
+
+(function () {
+    var log = new Log();
+
+    var carbon = require('carbon');
+    var anonRole = String(carbon.user.anonRole);
+    var permissions = dashboard.permissions;
+    var anonymous = permissions.viewers.indexOf(anonRole) !== -1;
+    var db = require('/modules/dashboards.js');
+
+    /**
+     * Unauthorized error message.
+     * @const
+     */
+    var UNAUTHORIZED_ERROR = 'Dashboard access not authorized';
+    if (user) {
+        //identify edit/view permission for the logged user
+        if (utils.allowed(user.roles, permissions.editors)) {
+            user.isEditor = true;
+        } else if (utils.allowed(user.roles, permissions.viewers)) {
+            user.isViewer = true;
+        } else {
+            user.isEditor = false;
+            user.isViewer = false;
+        }
+    }
+
+    if (!anonymous) {
+        if (!user && !dashboard.isanon) {
+            sendLogin();
+            return;
+        }
+
+
+        if (userDomain !== (urlDomain || superDomain) && !dashboard.isanon) {
+            response.sendError(401, UNAUTHORIZED_ERROR);
+            return;
+        }
+
+        if (!dashboard.isanon && !utils.allowed(user.roles, permissions.editors) && !utils.allowed(user.roles, permissions.viewers)) {
+            response.sendError(401, UNAUTHORIZED_ERROR);
+            return;
+        }
+    }
+
+    // check whether the requested page exists and the anonymous view for
+    // that page is defined
+    pageId = pageId || dashboard.landing;
+
+    var anonView;
+    var pageExists = false;
+    dashboard.pages.forEach(function (page) {
+        if (page.id == pageId) {
+            pageExists = true;
+            anonView = page.layout.content.anon;
+        }
+    });
+
+    var i18n = require("i18n");
+    //check whether the page doesn't exist, or the user hasn't logged in
+    // and the anonymous view is undefined
+    if (!pageExists || (!user && (anonView === undefined))) {
+        response.sendError(404, i18n.localize("page.label") + " '" + pageId + "' " + i18n.localize("page.not.found"));
+        return;
+    }
+
+    //check whether the user has no edit/view permission and the anonymous
+    // view is undefined
+    if (user) {
+        if (!(user.isEditor || user.isViewer) && (anonView === undefined)) {
+            response.sendError(404, i18n.localize("page.label") + " '" + pageId + "' " +
+                    i18n.localize("page.not.found"));
+            return;
+        }
+    }
+
+    dbRoot = tenantedUrlPrefix + 'dashboards/' + dashboard.id + '/';
+    var isCustomDB = dashboard.isUserCustom;
+
+    // global reference to getBootstrapLayout() function
+    renderEngine.getDashboardContent = db.getBootstrapLayout;
+
+    include(utils.resolvePath('templates/dashboard.jag'));
+}()); %>

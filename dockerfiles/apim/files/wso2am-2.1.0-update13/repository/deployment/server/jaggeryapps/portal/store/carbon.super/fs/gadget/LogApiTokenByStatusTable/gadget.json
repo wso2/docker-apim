@@ -1,0 +1,21 @@
+{
+  "id": "logApiTokenStatusTable",
+  "title": "APIM API Key Status table",
+  "type": "gadget",
+  "thumbnail": "store://gadget/LogApiTokenByStatusTable/img/thumbnail.png",
+  "data": {
+    "url": "store://gadget/LogApiTokenByStatusTable/index.xml"
+  },
+  "notify": {
+    "publisher": {
+      "type": "filter-range",
+      "description": "This notifies the log time range selected"
+    }
+  },
+  "listen": {
+    "api-keys-subscriber": {
+      "type": "api-key-filter",
+      "description": "Used to listen to any filters"
+    }
+  }
+}

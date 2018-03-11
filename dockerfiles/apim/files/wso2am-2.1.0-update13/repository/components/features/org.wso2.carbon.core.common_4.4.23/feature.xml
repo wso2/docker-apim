@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<feature id="org.wso2.carbon.core.common" label="WSO2 Carbon - Carbon Common Feature" provider-name="%providerName" version="4.4.23">
+  <description>This feature contains the carbon core common features</description>
+  <copyright>%copyright</copyright>
+  <license url="%licenseURL">%license</license>
+  <plugin id="commons-httpclient" unpack="false" version="3.1.0.wso2v6"/>
+  <plugin id="javasysmon" unpack="false" version="0.3.3.wso2v1"/>
+  <plugin id="org.wso2.carbon.registry.api" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.core" unpack="false" version="4.4.23"/>
+  <plugin id="org.eclipse.equinox.http.servlet" unpack="false" version="1.1.400.v20130418-1354"/>
+  <plugin id="org.wso2.securevault" unpack="false" version="1.0.0.wso2v2"/>
+  <plugin id="commons-fileupload" unpack="false" version="1.3.2.wso2v1"/>
+  <plugin id="poi-scratchpad" unpack="false" version="3.14.0.wso2v1"/>
+  <plugin id="org.wso2.carbon.tomcat" unpack="false" version="4.4.23"/>
+  <plugin id="poi" unpack="false" version="3.14.0.wso2v1"/>
+  <plugin id="javax.cache.wso2" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.core.bootup.validator" unpack="false" version="4.4.23"/>
+  <plugin id="tomcat" unpack="false" version="7.0.81.wso2v1"/>
+  <plugin id="com.google.gson" unpack="false" version="2.3.1"/>
+  <plugin id="org.wso2.carbon.queuing" unpack="false" version="4.4.23"/>
+  <plugin id="tomcat-el-api" unpack="false" version="7.0.81.wso2v1"/>
+  <plugin id="org.wso2.carbon.authenticator.stub" unpack="false" version="4.4.23"/>
+  <plugin id="tomcat-catalina-ha" unpack="false" version="7.0.81.wso2v1"/>
+  <plugin id="org.wso2.carbon.ndatasource.core" unpack="false" version="4.4.23"/>
+  <plugin id="backport-util-concurrent" unpack="false" version="3.1.0.wso2v1"/>
+  <plugin id="org.wso2.carbon.addressing" unpack="false" version="4.4.23"/>
+  <plugin id="ant" unpack="false" version="1.7.0.wso2v1"/>
+  <plugin id="h2" unpack="false" version="1.3.175.wso2v1"/>
+  <plugin id="commons-collections" unpack="false" version="3.2.2.wso2v1"/>
+  <plugin id="org.wso2.carbon.user.api" unpack="false" version="4.4.23"/>
+  <plugin id="jettison" unpack="false" version="1.3.4.wso2v1"/>
+  <plugin id="org.wso2.carbon.logging" unpack="false" version="4.4.23"/>
+  <plugin id="xmlbeans" unpack="false" version="2.3.0.wso2v1"/>
+  <plugin id="antlr" unpack="false" version="3.2.0.wso2v1"/>
+  <plugin id="wsdl4j" unpack="false" version="1.6.2.wso2v4"/>
+  <plugin id="org.wso2.carbon.framework.exporter" unpack="false" version="4.4.23"/>
+  <plugin id="axis2-json" unpack="false" version="1.6.1.wso2v22"/>
+  <plugin id="neethi" unpack="false" version="2.0.4.wso2v5"/>
+  <plugin id="commons-codec" unpack="false" version="1.4.0.wso2v1"/>
+  <plugin id="tomcat-jsp-api" unpack="false" version="7.0.81.wso2v1"/>
+  <plugin id="axiom" unpack="false" version="1.2.11.wso2v11"/>
+  <plugin id="jdbc-pool" unpack="false" version="7.0.81.wso2v2"/>
+  <plugin id="jaxb" unpack="false" version="2.2.5.wso2v1"/>
+  <plugin id="abdera" unpack="false" version="1.0.0.wso2v3"/>
+  <plugin id="org.wso2.carbon.ndatasource.common" unpack="false" version="4.4.23"/>
+  <plugin id="org.eclipse.equinox.http.helper" unpack="false" version="1.1.0.wso2v1"/>
+  <plugin id="org.wso2.carbon.application.deployer" unpack="false" version="4.4.23"/>
+  <plugin id="commons-dbcp" unpack="false" version="1.4.0.wso2v1"/>
+  <plugin id="org.wso2.carbon.authenticator.proxy" unpack="false" version="4.4.23"/>
+  <plugin id="compass" unpack="false" version="2.0.1.wso2v2"/>
+  <plugin id="XmlSchema" unpack="false" version="1.4.7.wso2v3"/>
+  <plugin id="org.wso2.carbon.feature.mgt.core" unpack="false" version="4.4.23"/>
+  <plugin id="geronimo-saaj_1.3_spec" unpack="false" version="1.0.1.wso2v2"/>
+  <plugin id="org.wso2.carbon.ndatasource.rdbms" unpack="false" version="4.4.23"/>
+  <plugin id="commons-lang" unpack="false" version="2.6.0.wso2v1"/>
+  <plugin id="hazelcast" unpack="false" version="3.5.4.wso2v2"/>
+  <plugin id="org.wso2.carbon.tomcat.ext" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.server.admin.common" unpack="false" version="4.4.23"/>
+  <plugin id="annogen" unpack="false" version="0.1.0.wso2v1"/>
+  <plugin id="tomcat-servlet-api" unpack="false" version="7.0.81.wso2v1"/>
+  <plugin id="org.wso2.carbon.core.common" unpack="false" version="4.4.23"/>
+  <plugin id="org.eclipse.jdt.core.compiler.batch" unpack="false" version="3.10.2.v20150120-1634"/>
+  <plugin id="woden" unpack="false" version="1.0.0.M9-wso2v1"/>
+  <plugin id="tiles-jsp" unpack="false" version="2.0.5.wso2v1"/>
+  <plugin id="opencsv" unpack="false" version="1.8.0.wso2v1"/>
+  <plugin id="commons-io" unpack="false" version="2.4.0.wso2v1"/>
+  <plugin id="axis2" unpack="false" version="1.6.1.wso2v22"/>
+  <plugin id="httpcore" unpack="false" version="4.3.3.wso2v1"/>
+  <plugin id="commons-pool" unpack="false" version="1.5.6.wso2v1"/>
+  <plugin id="org.wso2.carbon.registry.core" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.securevault" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.utils" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.base" unpack="false" version="4.4.23"/>
+</feature>

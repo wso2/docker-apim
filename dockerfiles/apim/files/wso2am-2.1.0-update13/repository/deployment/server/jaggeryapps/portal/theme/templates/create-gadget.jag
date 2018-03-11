@@ -1,0 +1,300 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+%>
+    <% include(utils.resolvePath('templates/includes/portal-header.jag')); %>
+    <link rel="stylesheet" href="<%=urlPrefix%>css/create.css">
+    <link rel="stylesheet" href="<%=urlPrefix%>css/igviz.css">
+    <link rel="stylesheet" href="<%=urlPrefix%>css/wizard.css">
+    <link rel="stylesheet" href="<%=urlPrefix%>css/d3.geomap.css">
+    <% include('/controllers/includes/theme-portal-styles.jag'); %>
+    <title><%= i18n.localize("create.gadget.label")%></title>
+</head>
+<body>
+<% include(utils.resolvePath('templates/global-navigation.jag')); %>
+ <!-- breadcrumb -->
+    <div class="breadcrumb-wrapper">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%=tenantedUrlPrefix%>/portal/dashboards">
+                    <i class="icon fw fw-home"></i> <%=i18n.localize("dashboards.label")%>
+                </a>
+            </li>
+            <li class="active">
+                <%=i18n.localize("create.gadget.label")%>
+            </li>
+        </ol>
+    </div>
+
+    <!-- navbar -->
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-default" data-spy="affix" data-offset-top="85" data-offset-bottom="40">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only"><%=i18n.localize("toggle.navigation")%></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="<%=tenantedUrlPrefix%>./dashboards">
+                                <span class="fw-stack">
+                                    <i class="fw fw-circle-outline fw-stack-2x"></i>
+                                    <i class="fw fw-cancel fw-stack-1x"></i>
+                                </span>
+                                <%= i18n.localize("cancel")%>
+                            </a>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+    </div>
+<div class="container-fluid">
+    <div class="row thumbnails ues-dashboard">
+        <div class="col-md-8 col-md-offset-2" id="top-rootwizard">
+            <h1 class="page-sub-title"><%= i18n.localize("create.a.gadget")%></h1>
+            <div class="wizard" id="rootwizard">
+                <div class="navbar">
+                  <div class="navbar-inner">
+                    <div class="container">
+                    <ul class = "nav navbar-nav">
+                        <li><a href="#tab1" data-toggle="tab"><h4><%= i18n.localize("select.provider")%></h4></a></li>
+                        <li><a href="#tab2" data-toggle="tab"><h4><%= i18n.localize("configure.provider")%></h4></a></li>
+                        <li id = "lastTab" class = "tab-link-disabled"><a href="#tab3" data-toggle="tab"><h4><%= i18n.localize("configure.chart")%></h4></a></li>
+                    </ul>
+                    </div>
+                  </div>
+                </div>
+                </br>
+                <div class="tab-content">
+                    <div class="tab-pane" id="tab1">
+                        <div id="tab1-validation-errors"></div>
+                        <form id="provider-list-form">
+                              <label for="datasource"><%= i18n.localize("select.provider")%> <span class="required">*</span></label>
+                              <div id = "provider-list">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane" id="tab2">
+                        <div id="tab2-validation-errors"></div>
+                        <form id="provider-config-form">
+                            <fieldset>
+                                <div class="form-group">
+                                  <div id = "provider-config"></div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <div class="form-group">
+                            <button type="button" id="show-data" class="btn btn-primary btn-bordered pull-left">
+                                <span class="fw-stack fw-lg">
+                                    <i class="fw fw-circle-outline fw-stack-2x"></i>
+                                    <i class="fw fw-database fw-stack-1x"></i>
+                                </span><%= i18n.localize("show.data")%>
+                            </button>
+                            <div class="col-md-9 "><br>
+                                <label id="sample-data-message" class="label-important" hidden>
+                                    <%= i18n.localize("only.sample.data")%></label>
+                            </div>
+                            <br><br>
+                        </div>
+                        <div class="form-group">
+                            <div id="data-preview"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                    <div id="tab3-validation-errors"></div>
+                        <div class="form-group">
+                        <label><%= i18n.localize("gadget.name")%> <span class="required">*</span></label>
+                        <input type="text" id="gadget-name" class="form-control" name="gadget-name" />
+                           <label id="gadget-name-error" class="required-error hide" for="title"><%=i18n.localize("required")%></label>
+                        </div>
+                        <div class="form-group">
+                        <div id="chart-list"></div></div>
+                        <form id="chart-config-form">
+
+                            <div class="form-group">
+                              <div id = "chart-config"></div>
+                            </div>
+
+                        </form>
+                        <div class="form-group">
+                            <button type="button" id="preview" class="btn btn-primary btn-bordered pull-left">
+                                <span class="fw-stack fw-lg">
+                                    <i class="fw fw-circle-outline fw-stack-2x"></i>
+                                    <i class="fw fw-view fw-stack-1x"></i>
+                                </span><%= i18n.localize("preview")%>
+                            </button>
+                            <br>
+                        </div>
+                        <br><br>
+                        <p></p>
+                        <input type="button" id="add.to.gadget.store" style="display:none;"
+                        value="<%= i18n.localize("add.to.gadget.store")%>"/>
+                        <div id="preview-pane"></div>
+                    </div>
+                    <div class="form-group">
+                        <ul class="pager wizard">
+                            <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                            <li class="previous"><a href="#">Previous</a></li>
+                            <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                            <li class="next"><a href="#">Next</a></li>
+                            <li class="next finish" style="display:none;"><a href="#">Add to Gadget Store</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="wizard-error-hbs" type="text/x-handlebars-template">
+    <br><br><br>
+    <div class="alert alert-danger" role="alert">
+        <i class="icon fw fw-error"></i>
+        <strong>Something went wrong while initiating Gadget generation wizard. Please see the detailed error message below.
+        </strong></br><br/> {{error}}
+    </div>
+</script>
+<script id="wizard-zerods-hbs" type="text/x-handlebars-template">
+    <div class="alert alert-danger" role="alert">
+       No datasources available to create a gadget. Please create a datasource to proceed.
+    </div>
+</script>
+<script id="datasource-providers-hbs" type="text/x-handlebars-template">
+     <section>
+        <select id="providers" class="form-control ues-title-position">
+           {{#each .}}
+             <option value="{{id}}">{{name}}</option>
+           {{/each}}
+        </select>
+     </section>
+</script>
+<script id="ui-config-hbs" type="text/x-handlebars-template">
+    {{#each .}}
+    <div class="form-group">
+       {{#equalsIgnoreCase fieldType "string"}}
+          <label>{{fieldLabel}} {{#if isRequired}}<span class="required">*</span>{{/if}}</label><input type="text" class="form-control" name="{{fieldName}}" value="{{defaultValue}}"
+          placeholder="{{placeholderText}}" {{#if isRequired}}required="true"{{/if}}/>
+          {{#if isRequired}} <label id="{{fieldName}}-error" class="required-error hide" for="title"><%=i18n.localize("required")%></label>{{/if}}
+       {{/equalsIgnoreCase}}
+       {{#equalsIgnoreCase fieldType "checkbox"}}
+          <label><input type="checkbox" name="{{fieldName}}"/>{{fieldLabel}}</label>
+       {{/equalsIgnoreCase}}
+       {{#equalsIgnoreCase fieldType "password"}}
+          <label>{{fieldLabel}} {{#if isRequired}}<span class="required">*</span>{{/if}}</label><input type="password" class="form-control" name="{{fieldName}}"
+          {{#if isRequired}}required="true"{{/if}}/>
+          {{#if isRequired}} <label id="{{fieldName}}-error" class="required-error hide" for="title"><%=i18n.localize("required")%></label>{{/if}}
+       {{/equalsIgnoreCase}}
+       {{#equalsIgnoreCase fieldType "dropdown"}}
+          <label>{{fieldLabel}}</label>
+          <select name="{{fieldName}}" class="form-control">
+           {{#each valueSet}}
+             <option value="{{this}}">{{this}}</option>
+           {{/each}}
+        </select>
+       {{/equalsIgnoreCase}}
+       {{#equalsIgnoreCase fieldType "advanced"}}
+            {{> (lookup . 'childPartial')}}
+       {{/equalsIgnoreCase}}
+       </div>
+    {{/each}}
+</script>
+
+<script id="data-preview-hbs" type="text/x-handlebars-template">
+<div class="form-group">
+    <table class="table table-striped table-hover table-bordered display data-table dataTable no-footer dtr-inline" cellspacing="0" role="grid" style="table-layout: fixed">
+        <thead>
+            <tr role="row">
+            {{#each tableHeaders}}
+                <th style="text-align:center"> <strong>{{this}}</strong></th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each tableRows}}
+            <tr role="row" align="center">
+                {{#each .}}
+                <td >{{this}}</td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+</script>
+
+<script id="chart-list-hbs" type="text/x-handlebars-template">
+     <label><%= i18n.localize("select.chart")%></label>
+      <select id="chart-type" class="form-control">
+      {{#each .}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+</script>
+
+<script id="preview-hbs" type="text/x-handlebars-template">
+     <iframe src= "theme/templates/preview.jag" width="100%" height="80%"  scrolling="no" ></iframe>
+</script>
+
+<script id="success-hbs" type="text/x-handlebars-template">
+    <br><br><br>
+    <div class="alert alert-success" role="alert">
+        <i class="icon fw fw-success"></i>
+        <strong><%= i18n.localize("success.label")%>!!</strong>
+        <%= i18n.localize("gadget.add.success")%>
+    </div>
+    <i><ins><a href="/portal"><font color="blue">Go to Portal</font></a></ins></i>
+</script>
+
+<script id="wizard-zeroevents-hbs" type="text/x-handlebars-template">
+    <div class="alert alert-warning" role="alert">
+       No events published. Publish events to see a preview of the selected chart.
+    </div>
+</script>
+
+<!-- Jquery JS -->
+<script src="<%=urlPrefix%>libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="<%=urlPrefix%>libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+<!-- Theme WSO2 JS -->
+<script src="<%=urlPrefix%>libs/theme-wso2_1.0/js/theme-wso2.js"></script>
+<!-- Handlebars -->
+<script src="<%=urlPrefix%>libs/handlebars-v4.0.2/handlebars.min.js"></script>
+<script src="<%=urlPrefix%>js/jquery.noty.packaged.min.js"></script>
+<script src="<%=urlPrefix%>js/ues.js"></script>
+<script src="<%=urlPrefix%>js/ues-store.js"></script>
+<script src="<%=urlPrefix%>js/create.js"></script>
+<script src="<%=urlPrefix%>js/ds-handlebar-helpers.js"></script>
+<script src="<%=urlPrefix%>js/jquery.bootstrap.wizard.min.js"></script>
+<script src="<%=urlPrefix%>js/select2.min.js"></script>
+<script src="<%=urlPrefix%>js/d3.min.js"></script>
+<script src="<%=urlPrefix%>js/topojson.js"></script>
+<script src="<%=urlPrefix%>js/vega.js"></script>
+<script src="<%=urlPrefix%>js/VizGrammar.min.js"></script>
+<script src="<%=urlPrefix%>js/charts.js"></script>
+<script src="<%=urlPrefix%>js/carbon-analytics.js"></script>
+<script src="<%=urlPrefix%>js/wizard.js"></script>
+<script src="<%=urlPrefix%>js/outputAdapterUiLibrary.js"></script>
+<% include('/controllers/includes/theme-portal-scripts.jag'); %>
+</body>
+</html>

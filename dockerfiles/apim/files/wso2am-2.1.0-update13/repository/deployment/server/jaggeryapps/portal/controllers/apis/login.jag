@@ -1,0 +1,89 @@
+<%
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function () {
+    var log = new Log();
+    var configs = require('/configs/portal.js').config();
+    var tokenUtil = require("/modules/tokenUtil.js").tokenUtil;
+    var constants = require("/modules/constants.js");
+    var dashboards = require('/modules/dashboards.js');
+    var i18n = require("i18n");
+    i18n.init(request, utils.getLocaleResourcePath());
+
+    if (request.getMethod() === 'POST') {
+        var dest = request.getParameter("destination");
+        if (dest) {
+            // Check whether the dest. URL starts with either http:// or https://. If so remove the authority and get
+            // the rest of the URL.
+            if (/^https?:\/\//i.test(dest)) {
+                var url = new Packages.java.net.URL(dest),
+                        authority = url.getAuthority();
+                dest = dest.substring(dest.indexOf(authority) + authority.length());
+            }
+            // Check whether the dest. URL starts with '/'. If not prepend the '/'.
+            if (!/^\//i.test(dest)) {
+                dest = '/' + dest;
+            }
+            // Check whether the dest. URL starts with '/portal'. if not set the url to '/portal'.
+            if (!/^\/portal/i.test(dest)) {
+                dest = '/portal';
+            }
+        }
+        var username = request.getParameter("username");
+        var password = request.getParameter("password");
+        var usr = require('/modules/user.js');
+        var api = require('/modules/api.js');
+        var carbon = require('carbon');
+        var user = carbon.server.tenantUser(username);
+        if (user.tenantId !== -1) {
+            if (usr.login(username, password)) {
+                session.put("Loged", "true");
+                var authToken = api.authenticate(username, password);
+                var properties = {username: username, password: password};
+                var idPServer = tokenUtil.getIdPServerURL();
+                if (tokenUtil.checkOAuthEnabled() && idPServer) {
+                    tokenUtil.setupAccessTokenPair(constants.GRANT_TYPE_PASSWORD, properties, idPServer, function (status) {
+                        if (!status) {
+                            log.error("Error while setting up access token and refresh token");
+                        }
+                    });
+                }
+                session.put('authToken', authToken);
+
+                if (log.isDebugEnabled()) {
+                    log.debug(session.get('user') + " is authorized.");
+                }
+                if (dest) {
+                    response.sendRedirect(dest);
+                }
+            }
+            else {
+                if (dest) {
+                    response.sendRedirect(dest + "login?loginAttempt=true");
+                }
+            }
+        }
+        else {
+            if (dest) {
+                response.sendRedirect(dest + "login?loginAttempt=true");
+            }
+        }
+    }
+    else {
+        response.sendError(403, i18n.localize("forbidden"));
+    }
+}()); %>

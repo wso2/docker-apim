@@ -1,0 +1,8 @@
+{
+    "id": "single-column",
+    "title": "Single Column",
+    "description": "Single column grid layout",
+    "thumbnail": "layout/single-column/index.png",
+    "url": "layout/single-column/index.json"
+}
+

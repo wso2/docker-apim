@@ -1,0 +1,132 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+(function () {
+    var log = new Log("/controllers/acs.jag");
+    var configs = require('/configs/portal.js').config();
+    var samlResponse = request.getParameter('SAMLResponse');
+    var sessionId = session.getId();
+    var samlRequest = request.getParameter('SAMLRequest');
+    var dashboards = require('/modules/dashboards.js');
+    //see https://wso2.org/jira/browse/IDENTITY-3454
+    var relayState = decodeURIComponent(request.getParameter('RelayState'));
+    var attr = configs.authentication.methods.sso.attributes;
+    var sso = require('sso');
+    var tokenUtil = require("/modules/tokenUtil.js").tokenUtil;
+    var constants = require("/modules/constants.js");
+    var samlRespObj;
+    var CarbonUtils = Packages.org.wso2.carbon.utils.CarbonUtils;
+    var keyStorePassword = CarbonUtils.getServerConfiguration().getFirstProperty("Security.TrustStore.Password");
+    var keyStoreName = CarbonUtils.getServerConfiguration().getFirstProperty("Security.TrustStore.Location");
+    var identityAlias = attr.identityAlias;
+    var keyStoreProps = {
+        KEY_STORE_NAME: keyStoreName,
+        KEY_STORE_PASSWORD: keyStorePassword,
+        IDP_ALIAS: identityAlias,
+        USE_ST_KEY: !attr.useTenantKey
+    };
+    var sso_sessions = application.get('sso_sessions');
+
+    var loadTenant = function (username) {
+        var carbon = require('carbon');
+        var MultitenantUtils = Packages.org.wso2.carbon.utils.multitenancy.MultitenantUtils;
+        var MultitenantConstants = Packages.org.wso2.carbon.base.MultitenantConstants;
+        var TenantAxisUtils = Packages.org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
+        var service;
+        var ctx;
+        var domain = MultitenantUtils.getTenantDomain(username);
+        if (domain != null && !MultitenantConstants.SUPER_TENANT_DOMAIN_NAME.equals(domain)) {
+            service = carbon.server.osgiService('org.wso2.carbon.utils.ConfigurationContextService');
+            ctx = service.getServerConfigContext();
+            TenantAxisUtils.setTenantAccessed(domain, ctx);
+        }
+    };
+
+    if (!sso_sessions) {
+        application.put('sso_sessions', {});
+        sso_sessions = application.get('sso_sessions');
+    }
+
+    if (samlResponse != null) {
+        samlRespObj = sso.client.getSamlObject(samlResponse);
+        if (!sso.client.isLogoutResponse(samlRespObj)) {
+
+            // validating the signature
+            if (attr.responseSigningEnabled) {
+
+                if (sso.client.validateSignature(samlRespObj, keyStoreProps)) {
+                    var sessionObj = sso.client.decodeSAMLLoginResponse(samlRespObj, samlResponse, sessionId);
+
+                    if (sessionObj.sessionIndex != null || sessionObj.sessionIndex != 'undefined') {
+                        loadTenant(sessionObj.loggedInUser);
+                        session.put("LOGGED_IN_USER", sessionObj.loggedInUser);
+                        session.put("Loged", "true");
+
+                        sso_sessions[sessionObj.sessionId] = sessionObj.sessionIndex;
+                        if (log.isDebugEnabled()) {
+                            log.debug("RELAYSTATE: " + relayState);
+                        }
+                        //var user = require('store').user;
+                        var username = sessionObj.loggedInUser;
+                        var carbon = require('carbon');
+                        var user = carbon.server.tenantUser(username);
+                        var utils = require('/modules/utils.js');
+                        var server = new carbon.server.Server();
+                        var um = new carbon.user.UserManager(server, user.tenantId);
+                        user.roles = um.getRoleListOfUser(user.username);
+                        session.put('user', user);
+                        session.put("samlResponse", samlResponse);
+                        var idPServer = tokenUtil.getIdPServerURL();
+                        if (tokenUtil.checkOAuthEnabled() && idPServer) {
+                            var properties = {samlToken: sessionObj.samlToken, user: username};
+                            tokenUtil.setupAccessTokenPair(constants.GRANT_TYPE_SAML, properties, idPServer,
+                                    function (status) {
+                                        if (!status) {
+                                            log.error("Error while setting up access token and refresh token");
+                                        }
+                                    });
+                            response.sendRedirect(relayState);
+                            return;
+                        } else {
+                            var saml2Cookie = require('/modules/saml-to-cookie.js');
+                            var authToken = saml2Cookie.exchangeSAMLTokenForCookie(samlResponse);
+                            session.put('authToken', authToken);
+                            response.sendRedirect(relayState);
+                        }
+                    }
+                }
+            }
+
+        } else {
+            session.invalidate();
+            response.sendRedirect(relayState);
+        }
+    }
+
+    // if saml request is a log out request, then invalidate session.
+    if (samlRequest != null) {
+        var index = sso.client.decodeSAMLLogoutRequest(sso.client.getSamlObject(samlRequest));
+        log.debug('BACKEND LOGOUT RECIEVED FROM STORE THE INDEX IS ######' + index);
+        var jSessionId = application.get('sso_sessions')[index];
+        delete application.get('sso_sessions')[index];
+        log.debug('store Session Id :::' + jSessionId);
+        session.invalidate();
+    }
+}());
+%>

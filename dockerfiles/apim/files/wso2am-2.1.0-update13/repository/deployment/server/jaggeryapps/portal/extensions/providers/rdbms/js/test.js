@@ -1,0 +1,1 @@
+$('input[name=control1]').val('test value');

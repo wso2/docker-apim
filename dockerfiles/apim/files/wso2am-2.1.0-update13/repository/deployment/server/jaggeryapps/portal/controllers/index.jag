@@ -1,0 +1,73 @@
+<%
+/**
+ * Copyright 2005-2015 WSO2, Inc. (http://wso2.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+(function () {
+    var utils = require('/modules/utils.js');
+    var configs = require('/configs/designer.json');
+    var store = utils.store();
+    var dashboardCountPerUser = 0;
+    var dashboardCountPerPortal = 0;
+    var assetsForUser = [];
+    var assetsForPortal = [];
+    /**
+     * Dashboards flag.
+     * @const
+     */
+    var DASHBOARDS = "dashboards";
+
+    if (!user) {
+        sendLogin();
+        return;
+    }
+
+    if (userDomain !== (urlDomain || superDomain)) {
+        response.sendRedirect(utils.tenantedPrefix(urlPrefix, userDomain));
+        return;
+    }
+
+    if (configs.defaultDashboardRedirect) {
+        // Check the number of dashboards available.
+        utils.sandbox(utils.context(user, urlDomain), function () {
+            assetsForUser = store.getAssets('dashboard', {
+                start: 0,
+                count: 10
+            }, 0, 10);
+
+            assetsForPortal = store.getDashboardsFromRegistry(0, 10);
+            dashboardCountPerUser += assetsForUser.length;
+            if (assetsForPortal) {
+                dashboardCountPerPortal += assetsForPortal.length;
+            }
+        });
+
+        if ((dashboardCountPerPortal > 0 && dashboardCountPerUser <= 0) || dashboardCountPerUser > 1) {
+            response.sendRedirect(DASHBOARDS + "/");
+            return;
+        }
+
+        if (dashboardCountPerUser == 1) {
+            response.sendRedirect(DASHBOARDS + "/" + assetsForUser[0].id);
+            return;
+        }
+
+        if (dashboardCountPerPortal <= 0) {
+            response.sendRedirect("create-dashboard");
+            return;
+        }
+    }
+
+    response.sendRedirect(DASHBOARDS + "/");
+}()); %>

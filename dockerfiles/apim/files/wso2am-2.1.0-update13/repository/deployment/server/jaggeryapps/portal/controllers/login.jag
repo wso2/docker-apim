@@ -1,0 +1,78 @@
+<%
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var message;
+var dest;
+(function () {
+    var log = new Log();
+
+    if (session.get('user')) {
+        var user = session.get('user');
+        if (dest) {
+            response.sendRedirect(dest);
+            return;
+        }
+        if (superDomain == user.domain) {
+            response.sendRedirect(urlPrefix);
+            return;
+        }
+        response.sendRedirect(utils.tenantedPrefix(urlPrefix, user.domain));
+        return;
+    }
+    else {
+        if (request.getParameter("loginAttempt")) {
+            message = 'incorrect.login.message';
+
+            if (log.isDebugEnabled()) {
+                log.debug("Login attempt failed.");
+            }
+        }
+        include(utils.resolvePath('templates/login.jag'));
+    }
+
+    function createDir(path) {
+        var file = new File(path);
+        if (file.isExists()) {
+            file.del();
+        }
+        file.mkdir();
+    }
+
+    function copyFile(src, dst) {
+        var stream = src.getStream();
+        dst = dst + '/' + src.getName();
+        var dstf = new File(dst);
+        dstf.open('w');
+        dstf.write(stream);
+        dstf.close();
+    }
+
+    function copyDir(source, destination) {
+        if (source.isDirectory()) {
+            createDir(destination + "/" + source.getName());
+            destination = destination + "/" + source.getName();
+            var sourceFiles = source.listFiles();
+            for (var i = 0; i < sourceFiles.length; i++) {
+                var inFile = sourceFiles[i];
+                log.info(inFile.getName());
+                copyDir(inFile, destination);
+            }
+        } else {
+            copyFile(source, destination);
+        }
+    }
+}()); %>

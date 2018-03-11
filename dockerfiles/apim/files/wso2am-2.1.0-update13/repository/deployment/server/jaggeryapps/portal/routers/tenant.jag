@@ -1,0 +1,69 @@
+<%
+var utils;
+var user;
+var context;
+var tenantPrefix;
+var superDomain;
+var urlDomain;
+var userDomain;
+var originalURI;
+
+(function () {
+    var vars;
+    var relativeURI;
+    var matcher;
+    var log = new Log();
+    var carbon = require('carbon');
+    var configs = require('/configs/designer.json');
+    var usr = require('/modules/user.js');
+
+    utils = require('/modules/utils.js');
+
+    superDomain = String(carbon.server.superTenant.domain);
+    user = usr.current();
+    tenantPrefix = configs.tenantPrefix;
+    userDomain = user ? user.domain : null;
+
+    originalURI = request.getRequestURI();
+    matcher = new URIMatcher(originalURI);
+
+    var tenantPattern = '/{context}' + tenantPrefix + '/{domain}';
+
+    if (matcher.match(tenantPattern) || matcher.match(tenantPattern + '/')) {
+        vars = matcher.elements();
+        urlDomain = vars.domain;
+        relativeURI = originalURI.match(/.*\/$/ig) ? '/' : '';
+    } else if (matcher.match(tenantPattern + '/{+any}')) {
+        vars = matcher.elements();
+        urlDomain = vars.domain;
+        relativeURI = '/' + vars.any;
+    } else if (matcher.match('/{context}') || matcher.match('/{context}/')) {
+        urlDomain = request.getParameter('domain');
+        relativeURI = originalURI.match(/.*\/$/ig) ? '/' : '';
+    } else if (matcher.match('/{context}/{+any}')) {
+        vars = matcher.elements();
+        urlDomain = request.getParameter('domain');
+        relativeURI = '/' + vars.any;
+    } else {
+        response.sendError(404, 'requested resource cannot be found');
+        return;
+    }
+
+    if (!utils.tenantExists(urlDomain)) {
+        response.sendError(404, 'requested tenant cannot be found');
+        return;
+    }
+
+    //TODO: fix should go here
+    context = utils.context(user, urlDomain);
+
+    var isAPI = relativeURI.match(/^\/apis\/.*/ig);
+    relativeURI = isAPI ? relativeURI.replace(/^\/apis/ig, '') : relativeURI;
+
+    request.getRequestURI = function () {
+        return relativeURI;
+    };
+
+    isAPI ? include('/routers/apis.jag') : include('/routers/pages.jag');
+}());
+%>

@@ -1,0 +1,93 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function () {
+    var log = new Log();
+    var carbon = require('carbon');
+    var usr = require('/modules/user.js');
+    var dashboards = require('/modules/dashboards.js');
+    var utils = require('/modules/utils.js');
+    /**
+     * Unauthorized error message.
+     * @const
+     */
+    var UNAUTHORIZED_ERROR = 'Unauthorized to access banners';
+    /**
+     * Base64 marker in Base64 stream.
+     * @const
+     */
+    var BASE64_MARKER = ';base64,';
+    // check whether the user is logged in
+    var user = usr.current();
+    if (!user) {
+        response.sendError(401, UNAUTHORIZED_ERROR);
+        return;
+    }
+    // match url for patterns to identify the intended action
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/banners/{id}')) {
+        var vars = matcher.elements();
+        var dashboardId = vars.id;
+        // fetch the dashboard
+        var dashboard = dashboards.getAsset(dashboardId);
+        if (dashboard == null) {
+            response.sendError(404, 'Unable to find the dashboard');
+            return;
+        }
+        // check whether the user has permissions to access the banner
+        if (!utils.allowed(user.roles, dashboard.permissions.editors) && !utils.allowed(user.roles, dashboard.permissions.viewers)) {
+            response.sendError(401, UNAUTHORIZED_ERROR);
+            return;
+        }
+        var method = request.getMethod();
+        var username = dashboard.isUserCustom ? user.username : null;
+        // add/edit banners
+        if (method === 'POST') {
+            try {
+                var dataUrl = request.getParameter('data');
+                if (dataUrl.length > 0) {
+                    // save the image
+                    // extract the base64 string out of the data url
+                    var base64Index = dataUrl.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+                    var encodedData = dataUrl.substring(base64Index);
+                    // decode the base64 string
+                    var decodedData = Packages.javax.xml.bind.DatatypeConverter.parseBase64Binary(encodedData);
+                    // save the buffer in the registry
+                    dashboards.saveBanner(dashboardId, username, 'banner', 'image/jpg', decodedData);
+                } else {
+                    // when a viewer removes the original banner which is available globally, a empty resource is saved 
+                    // as the personalized banner in order to suppress the original banner
+                    dashboards.saveBanner(dashboardId, username, 'banner', 'image/jpg', '');
+                }
+            } catch (e) {
+                log.error('Error occurred while saving the banner', e);
+                return;
+            }
+        }
+        // delete banners
+        if (method === 'DELETE') {
+            dashboards.deleteBanner(dashboardId, username);
+            // return the status of the banner (as JSON data)
+            var banner = dashboards.getBanner(dashboardId, username);
+            var bannerStatus = {
+                globalBannerExists: banner.globalBannerExists,
+                customBannerExists: banner.customBannerExists
+            };
+            print(bannerStatus);
+        }
+    }
+})(); %>

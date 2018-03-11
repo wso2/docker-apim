@@ -1,0 +1,174 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+%>
+    <% include(utils.resolvePath('templates/includes/portal-header.jag')); %>
+    <link rel="stylesheet" href="<%=urlPrefix%>css/common.css">
+    <% include('/controllers/includes/theme-portal-styles.jag'); %>
+    <title><%= i18n.localize("create.dashboard")%></title>
+</head>
+<body>
+<% include(utils.resolvePath('templates/global-navigation.jag')); %>
+
+    <!-- Modal -->
+    <div class="modal fade" id="designerModal" tabindex="-1" role="dialog" aria-labelledby="modalDemo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content clearfix">
+            </div>
+        </div>
+    </div>
+
+    <!-- breadcrumb -->
+    <div class="breadcrumb-wrapper">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%=tenantedUrlPrefix%>/portal/dashboards">
+                    <i class="icon fw fw-home"></i> <%=i18n.localize("dashboards.label")%>
+                </a>
+            </li>
+            <li class="active">
+                <%=i18n.localize("create.dashboard")%>
+            </li>
+        </ol>
+    </div>
+
+    <!-- navbar -->
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-default" data-spy="affix" data-offset-top="85" data-offset-bottom="40">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" 
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only"><%=i18n.localize("toggle.navigation")%></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="<%=tenantedUrlPrefix%>./dashboards">
+                                <span class="fw-stack">
+                                    <i class="fw fw-circle-outline fw-stack-2x"></i>
+                                    <i class="fw fw-cancel fw-stack-1x"></i>
+                                </span>
+                                <%= i18n.localize("cancel")%>
+                            </a>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row ues-dashboard">
+
+            <div class="col-md-8 col-md-offset-2">
+                <form action="" method="post" id="ues-dashboard-form" data-action="<%=tenantedUrlPrefix%>dashboards" 
+                      data-api-url="<%=tenantedUrlPrefix%>apis/dashboards">
+
+                    <h1 class="page-sub-title"><%= i18n.localize("create.a.dashboard")%></h1>
+
+                    <div class="form-group">
+                        <label for="dashboard-title">
+                            <%= i18n.localize("name.of.your.dashboard")%> <span class="required">*</span>
+                        </label>
+                        <input type="text" name="title" class="form-control" maxlength="250" id="ues-dashboard-title" 
+                               placeholder="<%=i18n.localize("e.g.sales.statistics")%>">
+                        <label id="title-error" class="required-error hide" for="title"><%=i18n.localize("required")%></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dashboard-id">
+                            <%=i18n.localize("url")%> <span class="required">*</span>
+                        </label>
+                        <input type="text" name="id" class="form-control" maxlength="100" id="ues-dashboard-id" 
+                               placeholder="<%=i18n.localize("e.g.sales-stats")%>">
+                        <label id="id-error" class="required-error hide" for="title"><%=i18n.localize("required")%></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dashboard-description"><%=i18n.localize("description")%></label>
+                        <textarea name="description" maxlength="500" class="form-control" id="ues-dashboard-description"
+                            placeholder="<%=i18n.localize("e.g.monthly.sales.statistics")%>" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ues-theme-list"><%=i18n.localize("theme.label")%></label>
+                        <select name="select-theme" class="form-control selectpicker dropdown" id="ues-theme-list"
+                            data-style="btn-default" data-width="100px">
+                            <option selected="selected"><%=i18n.localize("theme.default")%></option>
+                        <%
+                            var utils = require('/modules/utils.js');
+                            var path = utils.getCustomThemePath();
+                            var folder = new File('/' + path);
+                            var themeName = "";
+                            var fileList = folder.listFiles();
+                            fileList.forEach(function(file) {
+                                themeName =  file.getName();
+                        %>
+                            <option><%=themeName%></option>
+                        <%
+                            });
+                        %>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-default btn-bordered" id="ues-dashboard-create"><%=i18n.localize("next")%></button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <% include(utils.resolvePath('templates/includes/portal-footer.jag')); %>
+
+    <script id="ues-modal-info-hbs" type="text/x-handlebars-template">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fw fw-cancel"></i></button>
+            <h3 class="modal-title" id="infoModalLabel">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            {{message}}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="ues-modal-info-ok" data-dismiss="modal">Ok</button>
+        </div>
+    </script>
+
+    <!-- Jquery JS -->
+    <script src="<%=urlPrefix%>libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="<%=urlPrefix%>libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- Handlebars -->
+    <script src="<%=urlPrefix%>libs/handlebars-v4.0.2/handlebars.min.js"></script>
+
+    <!-- Theme WSO2 JS -->
+    <script src="<%=urlPrefix%>libs/theme-wso2_1.0/js/theme-wso2.js"></script>
+
+    <script src="<%=urlPrefix%>js/jquery.noty.packaged.min.js"></script>
+    <script src="<%=urlPrefix%>js/ues.js"></script>
+    <script src="<%=urlPrefix%>js/ues-store.js"></script>
+    <script src="<%=urlPrefix%>js/create.js"></script>
+    <% include('/controllers/includes/theme-portal-scripts.jag'); %>
+</body>
+</html>

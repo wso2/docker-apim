@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="USA Company Revenue" height="200" description="USA Company Revenue chart">
+        <Require feature="pubsub-2">
+            <Param name="topics"/>
+        </Require>
+        <Require feature="setprefs"/>
+    </ModulePrefs>
+    <UserPref name="gadget-status" default_value="not-wired" datatype="hidden" />
+    <Content type="html">
+        <![CDATA[
+<html>
+<head>
+<style>
+    #chart {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: brown;
+    }
+
+    .axis {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+</style>
+</head>
+<body>
+<p id="init-text" style="font-size: 12px;">This gadget is a subscriber gadget to the USA Map gadget. Based on the selected state on the US map, corresponding business revenue graph will be displayed. Hence please add the US Map gadget and wire with it.</p>
+<svg id="chart"></svg>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/revenue.js"></script>
+</body>
+</html>
+    ]]>
+    </Content>
+</Module>
