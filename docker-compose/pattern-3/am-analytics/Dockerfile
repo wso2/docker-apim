@@ -1,4 +1,4 @@
-FROM wso2am-analytics:2.1.0-update8
+FROM wso2am-analytics:2.2.0-SNAPSHOT
 
 COPY pattern-3/am-analytics/carbon/ /home/wso2carbon/wso2-artifacts
 
