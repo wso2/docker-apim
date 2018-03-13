@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml verrameter name="HostnameVerifier">AllowAll</parameter>sion="1.0" encoding="ISO-8859-1"?>
 <!--
   ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
   ~
@@ -551,6 +551,7 @@
             <filePath>repository/resources/security/sslprofiles.xml</filePath>
             <fileReadInterval>600000</fileReadInterval>
         </parameter>
+        <parameter name="HostnameVerifier">AllowAll</parameter>
         <!--<parameter name="HostnameVerifier">DefaultAndLocalhost</parameter>-->
             <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
     </transportSender>
