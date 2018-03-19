@@ -3,40 +3,36 @@
 
 ## Prerequisites
 
- * [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose) are required for running this Docker Compose template.
-
+ * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose) are required for running this Docker Compose template.
+ * In order to run the Docker Compose setup, you will need an active subscription from WSO2 since the Docker 
+   images hosted at docker.wso2.com contains the latest updates and fixes to WSO2 API Manager 2.1.0, API Manager 
+   Analytics 2.1.0 and WSO2 Identity Server as KM 5.3.0. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription).
+ * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md), [API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md) and 
+  [WSO2 Identity Server as KM Dockerfile](../../dockerfiles/is-as-km/README.md) and remove the `docker.wso2.com/` prefix 
+  from the `image` name In the `docker-compose.yml`. For example, change the line `image: docker.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0`  
 ## Quick Start Guide
 
-1. Build the WSO2 API Manager 2.1.0 and API Manager Analytics 2.1.0 and WSO2 Identity Server as KM 5.3.0 docker images:
+1. Clone WSO2 API Manager Docker git repository.
+    ```
+    git clone https://github.com/wso2/docker-apim
+    ```
+  > Note that the local copy of `docker-apim` repository will be referred to as `[docker-apim]` from this point onwards.
 
-  *  [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md)
-  *  [WSO2 API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md)
-  *  [WSO2 IS as KM](../../dockerfiles/is-as-km/README.md)
- 
-  > In the `docker-compose.yml`, remove the `dockerhub.wso2.com/` prefix from the `image` name
-  
-  > For example, change the line `image: dockerhub.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0`
-  
-2. Pull MySQL Docker image:
-     ```
-     docker pull mysql:5.7.19
-     ```
-
-3. Switch to the docker-compose/apim-is-as-km folder:
+2. Switch to the docker-compose/apim-is-as-km folder:
     ```
     cd [docker-apim]/docker-compose/apim-is-as-km
     ```
 
-4. Execute the following Docker Compose command to start the deployment:
+3. Execute the following Docker Compose command to start the deployment:
     ```
     docker-compose up
     ```
 
-5. Add the following host entry to the /etc/hosts file.
+4. Add the following host entry to the /etc/hosts file.
     ```
     127.0.0.1 api-manager
     ```
-6. Access the API Publisher and Store via the URLs given below.
+5. Access the API Publisher and Store via the URLs given below.
 
     * API Publisher
     ```
