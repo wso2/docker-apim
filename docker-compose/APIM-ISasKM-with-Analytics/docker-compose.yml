@@ -15,7 +15,7 @@ services:
       timeout: 60s
       retries: 5
   am-analytics:
-    image: dockerhub.wso2.com/wso2am-analytics:2.1.0
+    image: docker.wso2.com/wso2am-analytics:2.1.0
     ports:
       - "9444:9444"
       - "9764:9764"
@@ -31,7 +31,7 @@ services:
       - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
       - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
   is-as-km:
-    image: dockerhub.wso2.com/wso2is-km:5.3.0
+    image: docker.wso2.com/wso2is-km:5.3.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
@@ -48,7 +48,7 @@ services:
       - "9763:9763"
       - "9443:9443"
   api-manager:
-    image: dockerhub.wso2.com/wso2am:2.1.0
+    image: docker.wso2.com/wso2am:2.1.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
