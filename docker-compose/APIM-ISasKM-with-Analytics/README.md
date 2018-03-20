@@ -3,7 +3,8 @@
 
 ## Prerequisites
 
- * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose) are required for running this Docker Compose template.
+ * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
+   are required for steps described in following Quick start guide.
  * In order to run the Docker Compose setup, you will need an active subscription from WSO2 since the Docker 
    images hosted at docker.wso2.com contains the latest updates and fixes to WSO2 API Manager 2.1.0, API Manager 
    Analytics 2.1.0 and WSO2 Identity Server as KM 5.3.0. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription).
@@ -16,11 +17,10 @@
     ```
     git clone https://github.com/wso2/docker-apim
     ```
-  > Note that the local copy of `docker-apim` repository will be referred to as `[docker-apim]` from this point onwards.
 
-2. Switch to the docker-compose/apim-is-as-km folder:
+2. Switch to the docker-compose/APIM-ISasKM-with-Analytics folder:
     ```
-    cd [docker-apim]/docker-compose/apim-is-as-km
+    cd docker-apim/docker-compose/APIM-ISasKM-with-Analytics
     ```
 
 3. Execute the following Docker Compose command to start the deployment:
@@ -43,5 +43,20 @@
     ```
     https://api-manager:9443/store/
     ```
-
+    
+    * API Carbon Console
+    ```
+    https://api-manager:9443/carbon/
+    ```
+    
+    * API Admin
+    ```
+    https://api-manager:9443/admin/
+    ```
+    
+    Please note that WSO2 API Manager Gateway will be available on following ports.
+    ```
+     https://api-manager:8243
+     https://api-manager:8280
+    ```
 WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.
