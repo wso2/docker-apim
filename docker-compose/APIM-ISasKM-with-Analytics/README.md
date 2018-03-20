@@ -4,13 +4,13 @@
 ## Prerequisites
 
  * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
-   are required for steps described in following Quick start guide.
+   are required for steps described in following Quick start guide. <br><br>
  * In order to run this Docker Compose setup, you will need an active [Free Trial Subscription](https://wso2.com/free-trial-subscription) 
    from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 API Manager <br>and
    API Manager Analytics 2.1.0 and WSO2 Identity Server as KM 5.3.0. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md), [API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md) and 
   [WSO2 Identity Server as KM Dockerfile](../../dockerfiles/is-as-km/README.md) and remove the `docker.wso2.com/` prefix 
-  from the `image` name In the `docker-compose.yml`. For example, change the line `image: docker.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0`  
+  from the `image` name In the `docker-compose.yml`. For example, change the line `image: docker.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0` . <br><br>
 ## Quick Start Guide
 
 1. Clone WSO2 API Manager Docker git repository.
