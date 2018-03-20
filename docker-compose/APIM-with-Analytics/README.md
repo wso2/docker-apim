@@ -9,7 +9,7 @@
  * In order to run this Docker Compose setup, you will need an active [Free Trial Subscription](https://wso2.com/free-trial-subscription) 
    from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 API Manager <br>and 
    API Manager Analytics 2.1.0 products. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
- * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using <br> [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md) and [WSO2 API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md) and remove `docker.wso2.com/` prefix from the `image` name In `docker-compose.yml`.
+ * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using <br> [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md) and [WSO2 API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md) and remove `docker.wso2.com/` prefix from the `image` name in `docker-compose.yml`.
    For example, change the line <br> `image: docker.wso2.com/wso2am:2.1.0` <br>to `image: wso2am:2.1.0`. <br>
   
 <br>
