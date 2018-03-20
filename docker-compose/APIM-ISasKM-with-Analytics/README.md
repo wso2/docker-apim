@@ -18,12 +18,12 @@
     git clone https://github.com/wso2/docker-apim
     ```
 
-2. Switch to the docker-compose/APIM-ISasKM-with-Analytics folder:
+2. Switch to the docker-compose/APIM-ISasKM-with-Analytics folder.
     ```
     cd docker-apim/docker-compose/APIM-ISasKM-with-Analytics
     ```
 
-3. Execute the following Docker Compose command to start the deployment:
+3. Execute the following Docker Compose command to start the deployment.
     ```
     docker-compose up
     ```
@@ -48,4 +48,4 @@
    https://localhost:8280
    ```
 
-WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.
+   WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.
