@@ -18,7 +18,7 @@
     git clone https://github.com/wso2/docker-apim
     ```
 
-2. Switch to the docker-compose/APIM-ISasKM-with-Analytics folder.
+2. Switch to the `docker-compose/APIM-ISasKM-with-Analytics` folder.
     ```
     cd docker-apim/docker-compose/APIM-ISasKM-with-Analytics
     ```
