@@ -10,7 +10,7 @@
    API Manager Analytics 2.1.0 and WSO2 Identity Server as KM 5.3.0. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using [WSO2 API Manager Dockerfile](../../dockerfiles/apim/README.md), [API Manager Analytics Dockerfile](../../dockerfiles/apim-analytics/README.md) and 
   [WSO2 Identity Server as KM Dockerfile](../../dockerfiles/is-as-km/README.md) and remove the `docker.wso2.com/` prefix 
-  from the `image` name In the `docker-compose.yml`. For example, change the line `image: docker.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0` . <br><br>
+  from the `image` name In the `docker-compose.yml`. For example, change the line <br> `image: docker.wso2.com/wso2am:2.1.0` to `image: wso2am:2.1.0` . <br><br>
 ## Quick Start Guide
 
 1. Clone WSO2 API Manager Docker git repository.
