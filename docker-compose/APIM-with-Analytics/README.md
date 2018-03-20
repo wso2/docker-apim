@@ -19,8 +19,8 @@
 1. Clone WSO2 API Manager Docker git repository.
    ```
    git clone https://github.com/wso2/docker-apim
-   > If you are to try out an already released zip of this repo, please ignore this 1st step. 
    ```
+   > If you are to try out an already released zip of this repo, please ignore this 1st step. 
    
 2. Switch to `docker-compose/APIM-with-Analytics` folder.
    ```
