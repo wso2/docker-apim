@@ -54,4 +54,4 @@
    https://localhost:8280
    ```
 
-   WSO2 API Manager will use the WSO2 Identity Server to generate OAuth2 tokens and validate those token during API invocations.
+   WSO2 API Manager will use WSO2 Identity Server to generate OAuth2 tokens and validate those tokens <br> during API invocations.
