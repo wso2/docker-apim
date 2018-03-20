@@ -23,7 +23,7 @@ services:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9444/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
-      retries: 5
+      retries: 10
     depends_on:
       mysql:
         condition: service_healthy
@@ -38,7 +38,7 @@ services:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
-      retries: 5
+      retries: 10
     depends_on:
       am-analytics:
         condition: service_healthy
