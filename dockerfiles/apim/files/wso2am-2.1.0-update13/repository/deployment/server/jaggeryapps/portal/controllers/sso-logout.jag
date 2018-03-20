@@ -1,0 +1,61 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+(function () {
+    var user = session.get("LOGGED_IN_USER");
+    var relayState = request.getHeader('referer') ? request.getHeader('referer') : "portal";
+    var ignoreReferer = request.getParameter("ignoreReferer");
+    var context = 'portal';
+    relayState = (!ignoreReferer) ? relayState : context + '/login?ignoreReferer=true';
+    if (user === null) {
+        response.sendRedirect(relayState);
+    } else {
+        var config = require('/configs/portal.js').config();
+        var sso = require('sso');
+        var sso_sessions = application.get('sso_sessions');
+        var sessionId = session.getId();
+        var attr = config.authentication.methods.sso.attributes;
+        var encodedSAMLLogoutRequest = sso.client.getEncodedSAMLLogoutRequest(user, sso_sessions[session.getId()], attr.issuer);
+        var postUrl = attr.identityProviderURL;
+        var log = new Log();
+        if (log.isDebugEnabled()) {
+            log.debug("store session index : " + sso_sessions[session.getId()] + " postURL: " + postUrl);
+        }
+        session.invalidate();
+        %>
+        <div>
+           <p>You are now redirected to Identity Server. If the
+           redirection fails, please click the post button.</p>
+
+            <form id="logoutForm" method="post" action="<%=postUrl%>">
+                <p>
+                    <input type="hidden" name="SAMLRequest" value="<%=encodedSAMLLogoutRequest%>"/>
+                    <input type="hidden" name="RelayState" value="<%=relayState%>"/>
+                    <input type="hidden" name="SSOAuthSessionID" value="<%=sessionId%>"/>
+                    <button type="submit">POST</button>
+                </p>
+            </form>
+        </div>
+        <script type = "text/javascript" >
+            document.forms[0].submit();
+        </script>
+<%
+    }
+}());
+%>

@@ -1,0 +1,289 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+(function () {
+    var log = new Log();
+
+    if (!user) {
+        response.sendError(401, 'unauthorized to access assets');
+        return;
+    }
+    var utils = require('/modules/utils.js');
+    var configs = require('/configs/designer.json');
+    var fileUtils = require('/modules/file-utils.js');
+
+    var CONTEXT = '/portal';
+    var PROVIDERS_LOCATION = '/extensions/providers/';
+    var PARTIAL_LOCATION = '/partials/';
+    var CHART_LOCATION = '/extensions/chart-templates/';
+    var GADGETS_LOCATION = '/store/' + session.get('user').domain + '/fs/gadget/';
+    var GADGET_TEMPLATE_LOCATION = '/templates/gadgets/gadget-generation-templates/';
+    var TEMP_GADGET_LOCATION = '/temp/';
+
+    var VALUE_SET = 'valueSet';
+    var SCHEME_NOTIFIER = '$COLUMN_NAMES';
+    var PROVIDER_CONF = 'provider-conf';
+    var PROVIDER_NAME = 'provider-name';
+    var CHART_CONF = 'chart-conf';
+    var CHART_NAME = 'chart-name';
+    var GADGET_NAME = 'gadget-name';
+
+    response.contentType = 'application/json';
+
+    var action = request.getParameter("action");
+    var data = request.getContent();
+
+    if (action === 'getProviders') {
+        var providers = [];
+        var providerIgnoreList = configs.gadgetGeneration.ignoreProviders;
+        var allProviders = fileUtils.getFileNameList(PROVIDERS_LOCATION);
+
+        var requiredProviders = allProviders.filter(function (el) {
+            return providerIgnoreList.indexOf(el) < 0;
+        });
+
+        for (var i = 0; i < requiredProviders.length; i++) {
+            var configJson = require(PROVIDERS_LOCATION + requiredProviders[i] + '/config.json');
+            providers.push(configJson.info);
+        }
+        print(providers);
+        return;
+    } else if (action === 'getProviderConfig') {
+        var providerApi = require(PROVIDERS_LOCATION + data.provider + '/index.js');
+        print(providerApi.getConfig().config);
+        return;
+    } else if (action === 'getProviderAdvancedUI') {
+        try {
+            file = new File(PROVIDERS_LOCATION + data.provider + PARTIAL_LOCATION + data.partial + '.hbs');
+            if (!file.isExists()) {
+                return null;
+            }
+            file.open('r');
+            var customPartial = file.readAll();
+        } finally {
+            file.close();
+        }
+        print(customPartial);
+        return;
+    } else if (action === 'getData') {
+        var provider = data[PROVIDER_CONF][PROVIDER_NAME];
+        var providerApi = require(PROVIDERS_LOCATION + provider + '/index.js');
+        var validate = providerApi.validate(data[PROVIDER_CONF]);
+        if (!validate.error) {
+            var dataSet = providerApi.getData(data[PROVIDER_CONF], 10);
+            var output = {};
+
+            output.tableHeaders = Object.keys(dataSet[0]);
+            output.tableRows = [];
+
+            for (var i in dataSet) {
+                _obj = [];
+                for (var k in dataSet[i]) {
+                    _obj.push(dataSet[i][k])
+                }
+                output.tableRows.push(_obj);
+            }
+            print(output);
+            return;
+        }
+        else {
+            log.error("Data validation failed for Provider Configuration");
+            print(validate);
+            return;
+        }
+
+    } else if (action === 'getChartList') {
+        var chartList = [];
+        var chartDirList = fileUtils.getFileNameList(CHART_LOCATION);
+
+        for (var i = 0; i < chartDirList.length; i++) {
+            var chartConfigJson = require(CHART_LOCATION + chartDirList[i] + '/config.json');
+            chartList.push(chartConfigJson.info);
+        }
+        print(chartList);
+        return;
+    } else if (action === 'getChartConfig') {
+        var schema;
+        var provider = data[PROVIDER_CONF][PROVIDER_NAME];
+        var providerApi = require(PROVIDERS_LOCATION + provider + '/index.js');
+        var validate = providerApi.validate(data[PROVIDER_CONF]);
+        if (!validate.error) {
+            schema = providerApi.getSchema(data[PROVIDER_CONF]);
+        } else {
+            log.error("Data validation failed for Provider Configuration");
+            print(validate);
+            return;
+        }
+        var chartApi = require(CHART_LOCATION + data.chartType + '/index.js');
+        if (!schema.error) {
+            var modifiedChartConfig = chartApi.getConfig(schema);
+            for (var i in modifiedChartConfig) {
+                if (modifiedChartConfig[i][VALUE_SET] && SCHEME_NOTIFIER === modifiedChartConfig[i][VALUE_SET][0]) {
+                    modifiedChartConfig[i][VALUE_SET].splice(0);
+                    for (var j in schema) {
+                        modifiedChartConfig[i][VALUE_SET].push(schema[j]['fieldName']);
+                    }
+                }
+            }
+            print(modifiedChartConfig);
+            return;
+        } else {
+            log.error("Schema Retrieval Failed");
+            print(schema);
+            return;
+        }
+    } else if (action === 'getChartAdvancedUI') {
+        try {
+            file = new File(CHART_LOCATION + data.chartType + PARTIAL_LOCATION + data.partial + '.hbs');
+            if (!file.isExists()) {
+                return null;
+            }
+            file.open('r');
+            var customPartial = file.readAll();
+        } finally {
+            file.close();
+        }
+        print(customPartial);
+        return;
+    } else if (action === 'preview') {
+        var gadgetID = data[CHART_CONF]['gadget-name'].replace(/ /g,"_");
+        var gadgetStoreFile = new File(GADGETS_LOCATION + gadgetID);
+        if(gadgetStoreFile.isExists()){
+            print({
+                error: true,
+                message: "Gadget with the same name already exists"
+            });
+            return;
+        }
+
+        var tempDir = new File(TEMP_GADGET_LOCATION);
+        if(!tempDir.isExists()){
+            tempDir.mkdir();
+        }
+
+        var gadgetDir = new File(TEMP_GADGET_LOCATION + gadgetID);
+        if(gadgetDir.isExists()) {
+            gadgetDir.del();
+        }
+        var provider = data[PROVIDER_CONF][PROVIDER_NAME];
+        var providerApiLocation = PROVIDERS_LOCATION + provider + '/index.js';
+        var providerApi = require(providerApiLocation);
+        var isPushMode = false;
+        if(providerApi.getMode().toLowerCase() === 'push'){
+            isPushMode = true;
+        }
+
+        if(isPushMode){
+            var providerClient = new File(PROVIDERS_LOCATION + provider + '/client.js');
+            fileUtils.copyFile(providerClient, TEMP_GADGET_LOCATION + gadgetID + '/js/provider-client.js');
+        }
+
+        var gadgetJsonData = {};
+        gadgetJsonData['gadget_id'] = gadgetID;
+        gadgetJsonData['gadget_title'] = data[CHART_CONF][GADGET_NAME];
+        gadgetJsonData['gadget_url'] = 'gadget/'+ gadgetID + '/index.xml';
+        fileUtils.transformCopyFile(GADGET_TEMPLATE_LOCATION + 'gadget.json.hbs',
+                        TEMP_GADGET_LOCATION + gadgetID +'/gadget.json', gadgetJsonData );
+
+        var gadgetCoreData = {};
+        gadgetCoreData['gadget_location'] = CONTEXT + TEMP_GADGET_LOCATION + gadgetID;
+        gadgetCoreData['isPullMode'] = !isPushMode;
+        fileUtils.transformCopyFile(GADGET_TEMPLATE_LOCATION + 'js/gadget-core.js.hbs',
+                        TEMP_GADGET_LOCATION + gadgetID +'/js/gadget-core.js', gadgetCoreData);
+
+        var gadgetXmlData = {};
+        gadgetXmlData['gadget_title'] = data[CHART_CONF][GADGET_NAME];
+        gadgetXmlData['isPushMode'] = isPushMode;
+        var chart = data[CHART_CONF][CHART_NAME];
+        var chartConf = require(CHART_LOCATION + chart + '/config.json');
+        var commonLibs = chartConf['common-libs'];
+        gadgetXmlData['common-libs'] = commonLibs;
+        gadgetXmlData['chart-libs'] = chartConf['chart-libs'];
+
+        var providerConf = require(PROVIDERS_LOCATION + provider + '/config.json');
+        var providerLibs = providerConf['provider-libs'];
+        gadgetXmlData['provider-libs'] = providerLibs;
+        fileUtils.transformCopyFile(GADGET_TEMPLATE_LOCATION + 'index.xml.hbs',
+                        TEMP_GADGET_LOCATION + gadgetID +'/index.xml', gadgetXmlData);
+
+        var gadgetControllerFile = new File(GADGET_TEMPLATE_LOCATION + 'gadget-controller.jag');
+        fileUtils.copyFile(gadgetControllerFile, TEMP_GADGET_LOCATION + gadgetID + '/gadget-controller.jag');
+
+        var chartLibsDir = new File(CHART_LOCATION + chart + '/chart-libs/');
+        fileUtils.copyDir(chartLibsDir, TEMP_GADGET_LOCATION + gadgetID + '/js/');
+
+        var providerLibsDir = new File(PROVIDERS_LOCATION + provider + '/provider-libs/');
+        fileUtils.copyDir(providerLibsDir, TEMP_GADGET_LOCATION + gadgetID + '/js/');
+
+        var providerApiFile = new File(providerApiLocation);
+        fileUtils.copyFile(providerApiFile, TEMP_GADGET_LOCATION + gadgetID + '/js/provider-api.js');
+
+        var chartApiFile = new File(CHART_LOCATION + chart + '/index.js');
+        fileUtils.copyFile(chartApiFile, TEMP_GADGET_LOCATION + gadgetID + '/js/chart-api.js');
+
+        var previewData = {};
+        previewData['absolute_gadget_url'] = utils.getCarbonServerAddress('https') + CONTEXT + TEMP_GADGET_LOCATION +
+                gadgetID + '/index.xml';
+        fileUtils.transformCopyFile(GADGET_TEMPLATE_LOCATION + 'preview.jag.hbs',
+                        '/theme/templates/preview.jag', previewData);
+
+        var file = new File(TEMP_GADGET_LOCATION + gadgetID + '/conf.json');
+        file.open("w");
+        file.write(data);
+        file.close();
+        print({
+            error: false
+        });
+        return;
+    } else if(action === 'addGadgetToStore'){
+        var gadgetID = data[CHART_CONF]['gadget-name'].replace(/ /g,"_");
+        var providerApiLocation = PROVIDERS_LOCATION + data[PROVIDER_CONF][PROVIDER_NAME] + '/index.js';
+        var providerApi = require(providerApiLocation);
+        var isPushMode = false;
+        if(providerApi.getMode().toLowerCase() === 'push'){
+            isPushMode = true;
+        }
+
+        var gadgetCoreData = {};
+        gadgetCoreData['gadget_location'] = CONTEXT + GADGETS_LOCATION + gadgetID;
+        gadgetCoreData['isPullMode'] = !isPushMode;
+        fileUtils.transformCopyFile(GADGET_TEMPLATE_LOCATION + 'js/gadget-core.js.hbs',
+                        TEMP_GADGET_LOCATION + gadgetID +'/js/gadget-core.js', gadgetCoreData);
+
+        var gadget = new File(TEMP_GADGET_LOCATION + gadgetID);
+        fileUtils.copyDir(gadget, GADGETS_LOCATION);
+
+        var gadgetDir = new File(TEMP_GADGET_LOCATION + gadgetID);
+        if(gadgetDir.isExists()) {
+            gadgetDir.del();
+        }
+        print({
+            error: false
+        });
+        return;
+    }
+
+    response.sendError(404, JSON.stringify({
+        error: true
+    }));
+
+}());
+
+
+%>

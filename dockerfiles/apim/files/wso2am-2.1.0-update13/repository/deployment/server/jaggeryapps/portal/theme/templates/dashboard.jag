@@ -1,0 +1,613 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+    // i18n
+    var i18n = require("i18n");
+    var utils = require('/modules/utils.js');
+    i18n.init(request, utils.getLocaleResourcePath());
+
+    // If the pageId is null, render the landing page
+    pageId = pageId || dashboard.landing;
+
+    var usr = require('/modules/user.js'),
+        user = usr.current(),
+        isAnonView = request.getParameter('isAnonView');
+
+    // Get the anon view
+    if (!user) {
+        if (isAnonView) {
+            response.sendRedirect(request.getRequestURL());
+        }
+        isAnonView = true;
+    } else {
+        isAnonView = JSON.parse(isAnonView);
+
+        if((user.domain != urlDomain && urlDomain) ||
+            (dashboard.isanon && !utils.allowed(user.roles, dashboard.permissions.editors) &&
+                !utils.allowed(user.roles, dashboard.permissions.viewers))) {
+            isAnonView = true;
+        }
+    }
+
+    // Get the current page
+    var pages = dashboard.pages,
+        page;
+    pages.forEach(function(p) {
+        if (p.id == pageId) {
+            page = p;
+        }
+    });
+   
+    // Build the URL for the home page
+    var dashboardUrl = tenantedUrlPrefix + 'dashboards/' + dashboard.id;
+    if (request.getParameter('isAnonView') == 'true') {
+        dashboardUrl += '?isAnonView=true';
+    }
+   
+    // Show navigation menu (There should be more than one page to show the navigation menu)
+    var showNavigation = false;
+    if (isAnonView || !user) {
+        var anonPageCount = 0;
+        pages.forEach(function(p) {
+            if (p.isanon) {
+                anonPageCount++;
+            }
+        });
+        showNavigation = (anonPageCount > 1);
+    } else {
+        showNavigation = (pages.length > 1);
+    }
+%>
+<html lang="en">
+<head>
+    <% include(utils.getThemeTemplatePath('templates/includes/portal-header.jag')); %>
+    <title><%= i18n.localize("dashboard.server.label")%></title>
+
+    <!-- JQuery UI -->
+    <link rel="stylesheet" type="text/css" href="<%=urlPrefix%>libs/jquery-ui-1.11.4/jquery-ui.min.css" />
+    <!-- Gridstack -->
+    <link rel="stylesheet" type="text/css" href="<%=urlPrefix%>libs/gridstack.js-0.2.5/gridstack.min.css" />
+        
+    <link rel="stylesheet" href="<%=urlPrefix%>css/dashboard.css" />
+
+    <!-- Custom theme overrides -->
+    <%
+        var path = utils.getThemeStylesPath();
+        var folder = new File('/' + path);
+        var filePath = "";
+        var fileList = folder.listFiles();
+        fileList.forEach(function(file){
+            filePath = '/' + path +'/' + file.getName();
+    %>
+        <link rel="stylesheet" href="<%=urlPrefix%><%=filePath%>">
+    <%
+        });
+    %>
+
+</head>
+<body class="dashboard lang_<%=request.getLocale()%>">
+
+
+<body class="dashboard lang_<%=request.getLocale()%> dark">
+      <% if(typeof  bgColor === 'undefined'){ %>
+    <!-- .left-sidebar -->
+    <div class="sidebar-wrapper sidebar-nav toggled hidden-xs" id="left-sidebar" data-side="left" data-width="260" style="width:260px">
+        <div class="nano">
+            <div class="nano-content">
+                    
+                <div class="product-logo">
+                    <i class="icon fw fw-wso2-logo"></i>
+                </div>
+                <div class="product-name">
+                    <% include(utils.getThemeTemplatePath('templates/includes/project-title.jag')); %>
+                </div>
+                
+                <ul class="nav nav-pills nav-stacked pages">
+                    <div id="ues-pages">
+                    </div>
+                </ul>
+                
+                <hr>
+                
+                <% include(utils.getThemeTemplatePath('templates/includes/light-dark-switcher.jag')); %>
+                
+            </div>
+        </div>
+    </div>
+      <% } %>
+    <!-- #page-content-wrapper -->
+    <div class="page-content-wrapper remove-padding-xs" style="padding-left:260px;">
+          <% if(typeof  bgColor === 'undefined'){ %>
+        <div class="page-header">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <a class="sidebar-toggle-button hidden-xs" data-toggle="sidebar" data-target="#left-sidebar" data-container=".page-content-wrapper" data-container-divide="true" aria-expanded="true" rel="sub-nav">
+                        <span class="icon fw-stack">
+                            <i class="fw fw-menu fw-stack-1x toggle-icon-left"></i>
+                        </span>
+                    </a>
+                    <a class="sidebar-toggle-button visible-xs" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="icon fw-stack">
+                            <i class="fw fw-menu fw-stack-1x toggle-icon-up"></i>
+                        </span>
+                    </a>
+                    <div class="page-title pull-left text-center-xs display-inline-block-xs" id="product-logo" style="display:none;">
+                        <h1 class="text-center-xs"><i class="icon fw fw-wso2-logo"></i>
+                            <% include(utils.getThemeTemplatePath('templates/includes/project-title.jag')); %>
+                        </h1>
+                    </div>
+                    <ul class="nav navbar-right float-remove-xs hidden-xs">
+                        <li class="visible-inline-block">
+                            <a class="dropdown" data-toggle="dropdown">
+                                <span class="icon fw-stack fw-lg">
+                                   <i class="fw fw-circle fw-stack-2x"></i>
+                                   <i class="fw fw-user fw-stack-1x fw-inverse"></i>
+                                </span>
+                                <span><%= user ? user.username : "anon" %> <span class="caret"></span></span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right float-remove-xs position-static-xs text-center-xs remove-margin-xs slideInDown" role="menu">
+                                <% include(utils.getThemeTemplatePath('templates/includes/control-panel.jag')); %>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav collapse-nav-sub pull-right hidden">
+                        <li class="visible-inline-block">
+                            <a data-toggle="dropdown">
+                                <span class="icon fw-stack">
+                                    <i class="fw fw-notification fw-stack-1x"></i>
+                                </span>
+                                <span class="badge">4</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right arrow alerts arrow-top-right dark add-margin-top-2x" role="menu">
+                                <ul class="sidebar-messages">
+                                    <li class="message message-success">
+                                        <h4><i class="icon fw fw-success"></i>Minor Information Message</h4>
+                                        <p>Alerts don't have default classes, only base and modifier classes.</p>
+                                    </li>
+                                    <li class="message message-info">
+                                        <h4><i class="icon fw fw-info"></i>Minor Information Message</h4>
+                                        <p>Alerts don't have default classes, only base and modifier classes.</p>
+                                    </li>
+                                    <li class="message message-warning">
+                                        <h4><i class="icon fw fw-warning"></i>Major Information Message</h4>
+                                        <p>Alerts don't have default classes, only base and modifier classes.</p>
+                                    </li>
+                                    <li class="message message-danger">
+                                        <h4><i class="icon fw fw-error"></i>Critical Information Message</h4>
+                                        <p>Alerts don't have default classes, only base and modifier classes.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
+                    
+                    <div class="text-center add-margin-bottom-2x">
+                        <span class="icon fw-stack fw-lg text-center">
+                           <i class="fw fw-circle fw-stack-2x"></i>
+                           <i class="fw fw-user fw-stack-1x fw-inverse"></i>
+                        </span>
+                    </div>
+                    <div class="text-center add-margin-bottom-3x"><%= user ? user.username : "anon" %></div>
+                                    
+                    <ul class="nav navbar-nav pages">
+                        <div id="ues-pages-col"></div>
+                    </ul>
+
+                    <hr>
+
+                    <% include(utils.getThemeTemplatePath('templates/includes/light-dark-switcher.jag')); %>
+
+                    <ul class="nav nav-pills nav-stacked">
+                        <% include(utils.getThemeTemplatePath('templates/includes/control-panel.jag')); %>
+                    </ul>
+                </div><!--/.nav-collapse -->
+
+            </div>
+        </div>
+         <% } %>
+        <!-- page content -->
+        <!--div class="container-fluid body-wrapper" data-toggle="loading" data-loading-style="overlay">
+            <div class="nano">
+                <div class="nano-content">
+
+                    <div class="page-content">
+                        
+                        <div class="progress hidden">
+                            <div class="indeterminate"></div>
+                        </div>
+                        
+
+                        <div class="ues-components-grid gadgets-grid">
+                            <%=renderEngine.getDashboardContent(pageId || dashboard.landing, isAnonView)%>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div-->
+        <!-- #page-content-wrapper -->
+        <!--div class="page-content-wrapper"-->
+
+            <!-- page content -->
+            <div class="<%= page.layout.fluidLayout ? 'container-fluid' : 'container'%> body-wrapper">
+
+                <div class="nano">
+                    <div class="nano-content">
+
+                        <div class="page-content">
+                            <div class="progress hidden">
+                                    <div class="indeterminate"></div>
+                            </div>
+                            <!-- Components grid -->
+                                <div class="ues-components-grid gadgets-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--/div-->
+    </div><!-- /#page-content-wrapper -->
+
+
+ <% if(typeof  bgColor === 'undefined'){ %>
+    <!--Footer -->
+    <% include(utils.getThemeTemplatePath('templates/includes/portal-footer.jag')); %>
+    <% } %>
+
+    <!-- Handlebar templates -->
+    <script id="ues-component-box-content-hbs" type="text/x-handlebars-template">
+        <div class="ues-component gadget">
+            <div class="gadget-heading ues-component-heading">
+                <h1 class="gadget-title ues-component-title truncate">:::</h1>
+                <div class="gadget-actions ues-component-actions">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default ues-trash-handle" data-toggle="modal" 
+                                data-target="#modalDelete" title="<%=i18n.localize("remove")%>">
+                            <i class="icon fw fw-delete"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="gadget-body ues-component-body">
+            </div>
+        </div>
+    </script>
+
+    <script id="ues-component-box-list-hbs" type="text/x-handlebars-template">
+        {{#each blocks}}
+        <div class="grid-stack-item" data-id="{{id}}"  data-gs-x="{{x}}" data-gs-y="{{y}}" data-gs-width="{{width}}" 
+             data-gs-height="{{height}}" data-banner="{{banner}}"{{#if banner}} data-gs-no-resize="true"{{/if}}>
+            <div class="grid-stack-item-content ues-component-box gadget-wrapper" id="{{id}}">
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <!-- Component container -->
+    <script id="ues-component-box-content-hbs" type="text/x-handlebars-template">
+        <div class="gadget-wrapper">
+            <div class="ues-component gadget">
+                <div class="ues-component-heading gadget-heading">
+                    <h4 class="ues-component-title gadget-title truncate"></h4>
+
+                    <div class="ues-component-actions gadget-actions">
+
+                    </div>
+                </div>
+
+                <div class="ues-component-body gadget-body"></div>
+            </div>
+        </div>
+    </script>
+
+    <!-- Component toolbar actions -->
+    <script id="ues-component-actions-hbs" type="text/x-handlebars-template">
+        <div class="btn-group">
+            {{#if isDropdownView}}
+            <button class="btn btn-default dropdown-toggle" type="button" id="actionButtons" data-toggle="dropdown">
+                <i class="icon fw fw-ellipsis fw-rotate-90"></i>
+            </button>
+            <ul class="dropdown-menu more-actions-button" role="menu" aria-labelledby="actionButtons">
+                {{#each custom}}
+                <li role="presentation">
+                    <button class="btn btn-default ues-custom-action" data-action="{{action}}" type="button" title="{{toolTip}}">
+                        {{#if iconTypeCSS}}
+                        <i class="icon fw {{iconClass}}"></i>
+                        {{/if}}
+                        {{#if iconTypeImage}}
+                        <img src="{{resolveURI this.image}}"/>
+                        {{/if}}
+                    </button>
+                </li>
+                {{/each}}
+
+                {{#if default.configurations}}
+                <li role="presentation">
+                    <button type="button" class="btn btn-default ues-component-settings-handle" data-toggle="sidebar" data-target="#right-sidebar" data-container=".page-content" data-container-divide="true" aria-expanded="false" rel="show-options" title="<%=i18n.localize("gadget.configuration.label")%>">
+                        <i class="fw fw-configarations"></i>
+                    </button>
+                </li>
+                {{/if}}
+
+                {{#if defult.maximize}}
+                <li role="presentation">
+                    <button type="button" class="btn btn-default ues-component-full-handle" title="<%= i18n.localize("maximize.label") %>" data-maximize-title="<%= i18n.localize("maximize.label") %>" data-minimize-title="<%= i18n.localize("minimize.label") %>">
+                        <i class="icon fw fw-expand"></i>
+                    </button>
+                </li>
+                {{/if}}
+            </ul>
+            {{else}}
+            {{#each custom}}
+            <button class="btn btn-default ues-custom-action" data-action="{{action}}" type="button" title="{{toolTip}}">
+                {{#if iconTypeCSS}}
+                <i class="icon fw {{iconClass}}"></i>
+                {{/if}}
+                {{#if iconTypeImage}}
+                <img src="{{resolveURI this.image}}"/>
+                {{/if}}
+            </button>
+            {{/each}}
+
+            {{#if default.configurations}}
+            <button type="button" class="btn btn-default ues-component-settings-handle" data-toggle="sidebar" data-target="#right-sidebar" data-container=".page-content" data-container-divide="true" aria-expanded="false" rel="show-options" title="<%=i18n.localize("gadget.configuration.label")%>">
+                <i class="fw fw-configarations"></i>
+            </button>
+            {{/if}}
+
+            {{#if default.maximize}}
+            <button type="button" class="btn btn-default ues-component-full-handle" title="<%= i18n.localize("maximize.label") %>" data-maximize-title="<%= i18n.localize("maximize.label") %>" data-minimize-title="<%= i18n.localize("minimize.label") %>">
+                <i class="icon fw fw-expand"></i>
+            </button>
+            {{/if}}
+            {{/if}}
+        </div>
+    </script>
+
+    <!-- Gadget settings -->
+    <script id="ues-gadget-setting-hbs" type="text/x-handlebars-template">
+        <div class="ues-sandbox gadget-setting" data-component="{{id}}">
+            <form>
+                {{#has options}}
+                <div class="ues-options">
+                    <h4><%= i18n.localize("options") %></h4>
+                    {{#each options}}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{#equals type "STRING"}}
+                            <label>{{title}}
+                                <input type="text" class="form-control" name="{{@key}}" placeholder="{{title}}" value="{{value}}">
+                            </label>
+                            {{/equals}}
+                            {{#equals type "BOOL"}}
+                            <label>
+                                <input type="checkbox" name="{{title}}"{{#equals value true}} checked="checked"{{/equals}}> {{title}}
+                            </label>
+                            {{/equals}}
+                            {{#equals type "ENUM"}}
+                            <label>{{title}}
+                                <select id={{title}} name={{title}} class="form-control ues-title-position">
+                                     {{#each options}}
+                                        <option value={{value}}{{#equals value ../value}} selected="selected"{{/equals}}>{{displayValue}}</option>
+                                     {{/each}}
+                                </select>
+                            </label>
+                            {{/equals}}
+                            {{#equals type "LIST"}}
+                            <label>{{title}}
+                                <textarea name="{{@key}}" class="form-control" rows="4" 
+                                    placeholder='<%= i18n.localize("placeholder.item.list")%>'>{{value}}</textarea>
+                                <label><%= i18n.localize("enter.your.list.entries.label")%></label>
+                            </label>
+                            {{/equals}}
+                            {{#equals type "text"}}
+                            <label>{{title}}
+                                <textarea name="{{@key}}" class="form-control" rows="4">{{value}}</textarea>
+                            </label>
+                            {{/equals}}
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                {{else}}
+                <div class="alert alert-info">No properties to configure.</div>
+                {{/has}}
+            </form>
+        </div>
+    </script>
+
+    <script id="ues-menu-list-hbs" type="text/x-handlebars-template">
+        {{#traverseMenu menu false isAnonView user isHiddenMenu}}{{/traverseMenu}}
+    </script>
+
+    <!-- Jquery/Jquery UI JS -->
+    <script src="<%=urlPrefix%>libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+    <script src="<%=urlPrefix%>libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="<%=urlPrefix%>libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- Jquery Nanoscroller JS -->
+    <script src="<%=urlPrefix%>libs/nanoscroller_0.8.7/jquery.nanoscroller.min.js"></script>
+
+    <!-- Theme WSO2 JS -->
+    <script src="<%=urlPrefix%>libs/theme-wso2_1.0/js/theme-wso2.js"></script>
+
+    <script src="<%=urlPrefix%>libs/underscore-1.8.3/underscore-min.js"></script>
+
+    <!-- Gridstack -->
+    <script src="<%=urlPrefix%>libs/gridstack.js-0.2.5/gridstack.min.js"></script>
+
+    <!-- Handlebars JS -->
+    <script src="<%=urlPrefix%>libs/handlebars-v4.0.2/handlebars.min.js"></script>
+
+    <script src="/shindig/gadgets/js/container:open-views:opensearch:rpc:xmlutil:pubsub-2.js?c=1&debug=1&container=default"></script>
+
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('ues')%>"></script>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('ues-prefs')%>"></script>
+    <% include('/controllers/includes/common-scripts.jag'); %>
+    <% include('/controllers/includes/dashboard-scripts.jag'); %>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('ues-gadgets')%>"></script>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('ues-dashboards')%>"></script>
+    <script src="<%=urlPrefix%>extensions/components/gadget/index.js"></script>
+    <script src="<%=urlPrefix%>extensions/components/widget/index.js"></script>
+    <script src="<%=urlPrefix%>extensions/uris/local/index.js"></script>
+    <% include('/controllers/includes/pluggable-store-scripts.jag'); %>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('gadget-properties')%>"></script>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('ds-handlebar-helpers')%>"></script>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('dashboard')%>"></script>
+    <script src="<%=urlPrefix%><%=utils.getThemeScriptPath('ds-ajax-api')%>"></script>
+    <% include('/controllers/includes/theme-dashboard-scripts.jag'); %>
+
+    <script>
+        
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+        
+        $(document).ready(function() {
+            if((getCookie('dashboardTheme') == 'dark') || (getCookie('dashboardTheme') == '')){
+                $('[data-toggle="theme"]').attr('checked', 'checked');
+                $('body').addClass('dark');  
+            }
+            else{
+                $('[data-toggle="theme"]').removeAttr('checked');
+                $('body').removeClass('dark');
+            }
+
+            <% if(typeof  bgColor != 'undefined'){ %>
+                $('.dashboard').css({'background-color': '<%=bgColor%>'});
+           <% } %>
+
+        });
+                
+        $('[data-toggle="theme"]').change(function(){
+            if($(this).prop('checked') == true){
+                $('[data-toggle="theme"]').each(function(){
+                    $('[data-toggle="theme"]').attr('checked', 'checked');
+                });
+                $('body').addClass('dark');
+                $('iframe').contents().find('body').addClass('dark');
+                document.cookie = "dashboardTheme=dark";
+            }
+            else{
+                $('[data-toggle="theme"]').each(function(){
+                    $(this).removeAttr('checked');
+                });
+                $('body').removeClass('dark');
+                $('iframe').contents().find('body').removeClass('dark');
+                document.cookie = "dashboardTheme=light";
+            }
+        });
+
+        var nanoScrollerSelector = $(".nano");
+        nanoScrollerSelector.nanoScroller();
+
+        function updateSidebarNav(target) {
+            $(target).show();
+            $(target).siblings().hide();
+            nanoScrollerSelector[0].nanoscroller.reset();
+        }
+
+        if (!ues.global.renderFromExtension) {
+            ues.dashboards.render($('.ues-components-grid'), ues.global.dashboard, ues.global.page);
+        }
+        
+        var iframesReadyInterval = setInterval(function() {
+            var done = false;
+            
+            $('.gadget-body').each(function(i){
+                if($(this).hasClass('loading')){
+                    done = false;
+                }
+                else {
+                    if($('iframe').length == (i+1)){
+                        done = true;
+                    }
+                }
+            });
+            
+            if(done == true) {
+                clearInterval(iframesReadyInterval);
+                $('[data-toggle="loading"]').loading('hide');
+            }    
+        }, 200);
+
+        $(document).ready(function() {
+            $('[data-toggle="loading"]').loading('show');
+            $('.gadget-body').addClass('loading');
+            
+            if (ues.global.dashboard.banner.globalBannerExists || ues.global.dashboard.banner.customBannerExists) {
+                $('.grid-stack-item[data-banner=true]')
+                    .css("background-image", "url('<%=tenantedUrlPrefix%>banners/<%=dashboard.id%>')");
+            }
+
+            // Toggle component box heading
+            $('.ues-component').hover(function() {
+                toggleHeading($(this), true);
+            }, function() {
+                toggleHeading($(this), false);
+            });
+        });
+        
+        function toggleProductLogo(sidebarEventType){
+            var logo = $('#product-logo');
+            
+            if (sidebarEventType == 'hidden'){
+                logo.show();
+            }
+            else if (sidebarEventType == 'shown'){
+                logo.hide();
+            }
+        }
+
+        function toggleHeading(source, show) {
+            if (source.hasClass('ues-no-heading')) {
+                var heading = source.find('.ues-component-heading');
+                if (show) {
+                    heading.slideDown();
+                } else {
+                    heading.slideUp();
+                }
+            }
+        }
+
+        $('#left-sidebar').on('hidden.sidebar', function(e){
+            toggleProductLogo(e.type)
+        });
+        
+        $('#left-sidebar').on('shown.sidebar', function(e){
+            toggleProductLogo(e.type)
+        });
+
+        //usage : in traverseMenu helper
+        var user = <%= user %>,
+            isAnonView = <%= isAnonView %>;    
+    </script>
+</body>
+</html>

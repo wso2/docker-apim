@@ -1,0 +1,103 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+(function () {
+    var log = new Log();
+
+    if (!user) {
+        response.sendError(401, 'unauthorized to access assets');
+        return;
+    }
+
+    var DEFAULT_START = 0;
+    var DEFAULT_COUNT = -1;
+    var id;
+    var start;
+    var count;
+    var query;
+    var utils = require('/modules/utils.js');
+    var store = utils.store();
+    var assetType = request.getParameter('type');
+    var method = request.getMethod();
+
+    response.contentType = 'application/json';
+
+    var assets;
+
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/assets/{id}')) {
+        id = matcher.elements().id;
+        if (method === 'GET') {
+            utils.sandbox(utils.context(user, urlDomain), function () {
+                assets = store.getAsset(assetType, id);
+            });
+            if (!assets) {
+                response.sendError(404, JSON.stringify({
+                    error: true
+                }));
+                return;
+            }
+            print(assets);
+            return;
+        }
+        if (method === 'PUT') {
+            //TODO
+        }
+        response.sendError(405, JSON.stringify({
+            error: true
+        }));
+        return;
+    }
+
+    if (matcher.match('/assets')) {
+        id = matcher.elements().id;
+        if (method === 'GET') {
+            var startAsString = request.getParameter('start');
+            if (startAsString != null && startAsString != undefined) {
+                start = parseInt(startAsString, 10);
+            } else {
+                start = DEFAULT_START;
+            }
+            var countAsString = request.getParameter('count');
+            if (countAsString != null && countAsString != undefined) {
+                count = parseInt(countAsString, 10);
+            } else {
+                count = DEFAULT_COUNT;
+            }
+            query = request.getParameter('query');
+            utils.sandbox(utils.context(user, urlDomain), function () {
+                assets = store.getAssets(assetType, query, start, count);
+            });
+            print(assets);
+            return;
+        }
+        if (method === 'PUT') {
+            //TODO
+        }
+        response.sendError(405, JSON.stringify({
+            error: true
+        }));
+        return;
+    }
+
+    response.sendError(404, JSON.stringify({
+        error: true
+    }));
+}());
+%>

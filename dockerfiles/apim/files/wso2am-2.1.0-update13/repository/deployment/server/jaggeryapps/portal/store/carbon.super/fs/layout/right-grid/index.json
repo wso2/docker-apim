@@ -1,0 +1,12 @@
+{
+    "blocks": [        
+        { "id": "a", "x": 0, "y": 0, "width": 4, "height": 3 },
+        { "id": "b", "x": 4, "y": 0, "width": 4, "height": 3 },
+        { "id": "c", "x": 8, "y": 0, "width": 4, "height": 3 },
+        { "id": "d", "x": 0, "y": 3, "width": 8, "height": 3 },
+        { "id": "e", "x": 8, "y": 3, "width": 4, "height": 3 },
+        { "id": "f", "x": 0, "y": 6, "width": 4, "height": 3 },
+        { "id": "g", "x": 4, "y": 6, "width": 4, "height": 3 },
+        { "id": "h", "x": 8, "y": 6, "width": 4, "height": 3 }
+    ]
+}

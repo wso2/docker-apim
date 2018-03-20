@@ -1,0 +1,16 @@
+{
+    "id": "publisher",
+    "title": "Publisher",
+    "type": "gadget",
+    "thumbnail": "gadget/usa-business-revenue/index.png",
+    "category": "Publishers",
+    "data": {
+        "url": "gadget/publisher/index.xml"
+    },
+    "notify": {
+        "publisher": {
+            "type": "message",
+            "description": "This notifies message generated in publisher"
+        }
+    }
+}

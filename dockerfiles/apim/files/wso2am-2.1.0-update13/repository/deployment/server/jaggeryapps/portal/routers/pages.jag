@@ -1,0 +1,91 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var urlPrefix;
+var tenantedUrlPrefix;
+var sendLogin;
+var dest;
+var encodeHtml;
+var isMobileDevice = false;
+
+(function () {
+    var log = new Log();
+    // check whether the user agent is a mobile device
+    var deviceTokens = ['Android', 'Windows Phone', 'iPhone', 'iPad']; 
+    var userAgent = request.getHeader("User-Agent");
+    deviceTokens.forEach(function(token) {
+        if (userAgent.indexOf(token) > 0) {
+            isMobileDevice = true;
+        }
+    });
+
+    urlPrefix = utils.relativePrefix(originalURI);
+    tenantedUrlPrefix = utils.tenantedPrefix(urlPrefix, urlDomain);
+
+    /**
+     * Send the user to the login page
+     */
+    sendLogin = function () {
+        var query = request.getQueryString();
+        var dest = encodeURIComponent(originalURI + (query ? '?' + query : ''));
+        response.sendRedirect(urlPrefix + 'login-controller?destination=' + dest);
+    };
+
+    /**
+     * Encode HTML content
+     * @param {String} text Text to be encoded
+     * @return {String} Encoded text
+     */
+    encodeHtml = function(text) {
+        return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+
+    var page = request.getRequestURI();
+    var controller = '/controllers';
+    if (page === '') {
+        controller += '/index.jag';
+    } else if (page === '/') {
+        controller += '/index.jag';
+    } else {
+        controller += page + '.jag';
+    }
+
+    var path = utils.findJag(controller);
+    if (!path) {
+        response.sendError(404, 'Requested page cannot be found');
+        return;
+    }
+
+    // Check whether a request for login and whether it is from secured channel
+    if (controller.localeCompare("/controllers/login-controller.jag") == 0 && !request.isSecure()) {
+        var proc = require('process');
+
+        // If it is not secure redirect it to a secure channel
+        var newURL = request.getRequestURL().replace(request.getLocalPort(), proc.getProperty('mgt.transport.https.port'));
+        newURL = newURL.replace("http", "https");
+        response.sendRedirect(newURL);
+        if (log.isDebugEnabled()) {
+            log.debug("login request is re-directed to " + newURL);
+        }
+        return;
+    }
+    
+    var query = request.getQueryString();
+    dest = encodeURIComponent(originalURI + (query ? '?' + query : ''));
+    include(path);
+}());
+%>

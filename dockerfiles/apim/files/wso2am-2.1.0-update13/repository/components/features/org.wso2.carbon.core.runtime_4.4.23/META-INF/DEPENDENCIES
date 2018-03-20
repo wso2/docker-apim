@@ -1,0 +1,155 @@
+// ------------------------------------------------------------------
+// Transitive dependencies of this project determined from the
+// maven pom organized by organization.
+// ------------------------------------------------------------------
+
+WSO2 Carbon - Carbon Runtime Feature
+
+
+From: 'an unknown organization'
+  - org.apache.felix.gogo.command  org.apache.felix:org.apache.felix.gogo.command:jar:0.10.0.v201209301215
+
+  - org.apache.felix.gogo.runtime  org.apache.felix:org.apache.felix.gogo.runtime:jar:0.10.0.v201209301036
+
+  - org.apache.felix.gogo.shell  org.apache.felix:org.apache.felix.gogo.shell:jar:0.10.0.v201212101605
+
+  - org.sat4j.core  org.eclipse:org.sat4j.core:jar:2.3.5.v201308161310
+
+  - org.sat4j.pb  org.eclipse:org.sat4j.pb:jar:2.3.5.v201308161310
+
+  - org.eclipse.core.contenttype  org.eclipse.core:org.eclipse.core.contenttype:jar:3.4.200.v20130326-1255
+
+  - org.eclipse.core.expressions  org.eclipse.core:org.eclipse.core.expressions:jar:3.4.500.v20130515-1343
+
+  - org.eclipse.core.jobs  org.eclipse.core:org.eclipse.core.jobs:jar:3.5.300.v20130429-1813
+
+  - org.eclipse.core.runtime  org.eclipse.core:org.eclipse.core.runtime:jar:3.9.0.v20130326-1255
+
+  - org.eclipse.ecf  org.eclipse.ecf:org.eclipse.ecf:jar:3.2.0.v20130604-1622
+
+  - org.eclipse.ecf.filetransfer  org.eclipse.ecf:org.eclipse.ecf.filetransfer:jar:5.0.0.v20130604-1622
+
+  - org.eclipse.ecf.identity  org.eclipse.ecf:org.eclipse.ecf.identity:jar:3.2.0.v20130604-1622
+
+  - org.eclipse.ecf.provider.filetransfer  org.eclipse.ecf:org.eclipse.ecf.provider.filetransfer:jar:3.2.0.v20130604-1622
+
+  - httpclient  org.eclipse.ecf.provider.filetransfer:httpclient:jar:4.0.200.v20120319-0616
+
+  - javax.servlet  org.eclipse.equinox:javax.servlet:jar:3.0.0.v201112011016
+
+  - org.eclipse.equinox.app  org.eclipse.equinox:org.eclipse.equinox.app:jar:1.3.100.v20130327-1442
+
+  - org.eclipse.equinox.common  org.eclipse.equinox:org.eclipse.equinox.common:jar:3.6.200.v20130402-1505
+
+  - org.eclipse.equinox.concurrent  org.eclipse.equinox:org.eclipse.equinox.concurrent:jar:1.1.0.v20130327-1442
+
+  - org.eclipse.equinox.console  org.eclipse.equinox:org.eclipse.equinox.console:jar:1.0.100.v20130429-0953
+
+  - org.eclipse.equinox.ds  org.eclipse.equinox:org.eclipse.equinox.ds:jar:1.4.101.v20130813-1853
+
+  - org.eclipse.equinox.frameworkadmin  org.eclipse.equinox:org.eclipse.equinox.frameworkadmin:jar:2.0.100.v20130327-2119
+
+  - org.eclipse.equinox.frameworkadmin.equinox  org.eclipse.equinox:org.eclipse.equinox.frameworkadmin.equinox:jar:1.0.500.v20130327-2119
+
+  - org.eclipse.equinox.http.helper  org.eclipse.equinox:org.eclipse.equinox.http.helper:bundle:1.1.0.wso2v1
+
+  - org.eclipse.equinox.launcher  org.eclipse.equinox:org.eclipse.equinox.launcher:jar:1.3.0.v20130327-1440
+
+  - org.eclipse.equinox.launcher.gtk.linux.x86  org.eclipse.equinox:org.eclipse.equinox.launcher.gtk.linux.x86:jar:1.1.200.v20130807-1835
+
+  - org.eclipse.equinox.p2.artifact.repository  org.eclipse.equinox:org.eclipse.equinox.p2.artifact.repository:jar:1.1.100.v20110519
+
+  - org.eclipse.equinox.p2.console  org.eclipse.equinox:org.eclipse.equinox.p2.console:jar:1.0.300.v20130327-2119
+
+  - org.eclipse.equinox.p2.core  org.eclipse.equinox:org.eclipse.equinox.p2.core:jar:2.3.0.v20130327-2119
+
+  - org.eclipse.equinox.p2.director  org.eclipse.equinox:org.eclipse.equinox.p2.director:jar:2.3.0.v20130526-0335
+
+  - org.eclipse.equinox.p2.director.app  org.eclipse.equinox:org.eclipse.equinox.p2.director.app:jar:1.0.300.v20130819-1621
+
+  - org.eclipse.equinox.p2.directorywatcher  org.eclipse.equinox:org.eclipse.equinox.p2.directorywatcher:jar:1.0.300.v20130327-2119
+
+  - org.eclipse.equinox.p2.extensionlocation  org.eclipse.equinox:org.eclipse.equinox.p2.extensionlocation:jar:1.2.100.v20130327-2119
+
+  - org.eclipse.equinox.p2.garbagecollector  org.eclipse.equinox:org.eclipse.equinox.p2.garbagecollector:jar:1.0.200.v20130327-2119
+
+  - org.eclipse.equinox.p2.jarprocessor  org.eclipse.equinox:org.eclipse.equinox.p2.jarprocessor:jar:1.0.300.v20130327-2119
+
+  - org.eclipse.equinox.p2.metadata  org.eclipse.equinox:org.eclipse.equinox.p2.metadata:jar:2.2.0.v20130523-1557
+
+  - org.eclipse.equinox.p2.metadata.repository  org.eclipse.equinox:org.eclipse.equinox.p2.metadata.repository:jar:1.2.100.v20130327-2119
+
+  - org.eclipse.equinox.p2.publisher  org.eclipse.equinox:org.eclipse.equinox.p2.publisher:jar:1.2.0.v20110511
+
+  - org.eclipse.equinox.p2.publisher.eclipse  org.eclipse.equinox:org.eclipse.equinox.p2.publisher.eclipse:jar:1.0.0.v20110511
+
+  - org.eclipse.equinox.p2.publisher.pdepublishing  org.eclipse.equinox:org.eclipse.equinox.p2.publisher.pdepublishing:jar:1.0.0
+
+  - org.eclipse.equinox.p2.reconciler.dropins  org.eclipse.equinox:org.eclipse.equinox.p2.reconciler.dropins:jar:1.1.200.v20130419-1850
+
+  - org.eclipse.equinox.p2.repository  org.eclipse.equinox:org.eclipse.equinox.p2.repository:jar:2.3.0.v20130412-2032
+
+  - org.eclipse.equinox.p2.repository.tools  org.eclipse.equinox:org.eclipse.equinox.p2.repository.tools:jar:2.1.0.v20130327-2119
+
+  - Eclipse touchpoint bundle  org.eclipse.equinox:org.eclipse.equinox.p2.touchpoint.eclipse:jar:2.1.0.v20110511-wso2v1
+
+  - org.eclipse.equinox.p2.touchpoint.natives  org.eclipse.equinox:org.eclipse.equinox.p2.touchpoint.natives:jar:1.1.100.v20130327-2119
+
+  - org.eclipse.equinox.p2.updatechecker  org.eclipse.equinox:org.eclipse.equinox.p2.updatechecker:jar:1.1.200.v20130327-2119
+
+  - org.eclipse.equinox.p2.updatesite  org.eclipse.equinox:org.eclipse.equinox.p2.updatesite:jar:1.0.400.v20130515-2028
+
+  - org.eclipse.equinox.preferences  org.eclipse.equinox:org.eclipse.equinox.preferences:jar:3.5.100.v20130422-1538
+
+  - org.eclipse.equinox.registry  org.eclipse.equinox:org.eclipse.equinox.registry:jar:3.5.301.v20130717-1549
+
+  - org.eclipse.equinox.security  org.eclipse.equinox:org.eclipse.equinox.security:jar:1.2.0.v20130424-1801
+
+  - org.eclipse.equinox.simpleconfigurator  org.eclipse.equinox:org.eclipse.equinox.simpleconfigurator:jar:1.0.400.v20130327-2119
+
+  - org.eclipse.equinox.simpleconfigurator.manipulator  org.eclipse.equinox:org.eclipse.equinox.simpleconfigurator.manipulator:jar:2.0.0.v20130327-2119
+
+  - org.eclipse.equinox.util  org.eclipse.equinox:org.eclipse.equinox.util:jar:1.0.500.v20130404-1337
+
+  - org.eclipse.core.jobs  org.eclipse.osgi:org.eclipse.core.jobs:jar:3.5.200.v20110721-1714
+
+  - org.eclipse.ecf  org.eclipse.osgi:org.eclipse.ecf:jar:3.1.300.v20110531-2218
+
+  - org.eclipse.ecf.filetransfer  org.eclipse.osgi:org.eclipse.ecf.filetransfer:jar:5.0.0.v20110531-2218
+
+  - org.eclipse.ecf.identity  org.eclipse.osgi:org.eclipse.ecf.identity:jar:3.1.100.v20110531-2218
+
+  - org.eclipse.ecf.provider.filetransfer  org.eclipse.osgi:org.eclipse.ecf.provider.filetransfer:jar:3.2.0.v20110531-2218
+
+  - org.eclipse.equinox.common  org.eclipse.osgi:org.eclipse.equinox.common:jar:3.6.100.v20111010-1614
+
+  - org.eclipse.equinox.p2.core  org.eclipse.osgi:org.eclipse.equinox.p2.core:jar:2.1.0.v20110808-1657
+
+  - org.eclipse.equinox.p2.metadata  org.eclipse.osgi:org.eclipse.equinox.p2.metadata:jar:2.1.0.v20110808-1657
+
+  - org.eclipse.equinox.p2.repository  org.eclipse.osgi:org.eclipse.equinox.p2.repository:jar:2.1.0.v20110815-1744
+
+  - org.eclipse.equinox.p2.transport.ecf  org.eclipse.osgi:org.eclipse.equinox.p2.transport.ecf:jar:1.0.100.v20110902-0807
+
+  - org.eclipse.equinox.preferences  org.eclipse.osgi:org.eclipse.equinox.preferences:jar:3.4.100.v20111010-1614
+
+  - org.eclipse.equinox.registry  org.eclipse.osgi:org.eclipse.equinox.registry:jar:3.5.200.v20111010-1614
+
+  - org.eclipse.equinox.security  org.eclipse.osgi:org.eclipse.equinox.security:jar:1.1.100.v20111010-1614
+
+  - org.eclipse.osgi  org.eclipse.osgi:org.eclipse.osgi:jar:3.9.1.v20130814-1242
+
+  - org.eclipse.osgi.services  org.eclipse.osgi:org.eclipse.osgi.services:jar:3.3.100.v20130513-1956
+
+
+From: 'WSO2' (http://www.wso2.org/)
+  - Eclipse P2 engine (http://wso2.org/org.eclipse.equinox.p2.engine) org.eclipse.equinox:org.eclipse.equinox.p2.engine:jar:2.3.0.v20130526-2122-wso2v1
+    License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+From: 'WSO2 Inc' (http://wso2.com)
+  - WSO2 Carbon - OSGi Security (http://wso2.org) org.wso2.carbon:org.wso2.carbon.osgi.security:bundle:4.4.23
+    License: Apache License Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
+
+
+
+

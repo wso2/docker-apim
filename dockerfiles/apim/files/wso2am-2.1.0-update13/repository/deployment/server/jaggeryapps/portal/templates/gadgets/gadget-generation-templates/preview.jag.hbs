@@ -1,0 +1,15 @@
+<div id='my-placeholder'></div>
+
+<script src="/shindig/gadgets/js/container:open-views:opensearch:rpc:xmlutil:pubsub-2.js?c=1&debug=1&container=default"></script>
+<script src="/portal/js/ues.js"></script>
+<script src="/portal/js/ues-gadgets.js"></script>
+<script>
+var elem = document.getElementById("my-placeholder");
+var gadget = "{{absolute_gadget_url}}";
+var container = new osapi.container.Container();
+var site = container.newGadgetSite(elem);
+ var options = {};
+        options[osapi.container.RenderParam.WIDTH] = '100%';
+        options[osapi.container.RenderParam.HEIGHT] = '100%';
+container.navigateGadget(site, gadget, {}, options);
+</script>

@@ -1,0 +1,121 @@
+<%
+  var log = new Log();
+
+  (function() {
+
+    var config = request.getContent();
+//     var config = {
+//     "id": "ross",
+//     "title": "ross",
+//     "datasource": "WEATHERDATA",
+//     "type": "realtime",
+//     "filter": "",
+//     "columns": [
+//         {
+//             "name": "temperature",
+//             "type": "FLOAT"
+//         },
+//         {
+//             "name": "city",
+//             "type": "STRING"
+//         }
+//     ],
+//     "chartConfig": {
+//         "chartType": "bar",
+//         "xAxis": 1,
+//         "yAxis": 0
+//     }
+// };
+    // if(method != "POST") {
+    //   response.sendError(405, JSON.stringify({
+    //         error: false
+    //     }));
+    // }
+
+    // var fs = require("/extensions/stores/fs/index.js");
+    //create the asset defintion that will be saved in /store/gadget/my_gadget/gadget.json
+    var asset = {
+  		id: config.id,
+  		title: config.title,
+  		type : "gadget",
+  		thumbnail: "local://images/gadgetIcon.png",
+  		data: {
+  		    url: "local://store/" + session.get('user').domain + "/gadget/" + config.id +"/index.xml"
+  		}
+  	};
+
+    config.domain = session.get('user').domain;
+    
+    //copy required gadget template 
+    var tenantDir = "/store/" + session.get('user').domain;
+    var gadgetDir =  tenantDir + "/gadget/";
+    var templatePath = "/templates/gadgets/igviz";
+    var template = new File(templatePath);
+    new File(gadgetDir).mkdir();
+
+    copyDir(template,gadgetDir);
+
+    var gadgetPath = gadgetDir + asset.id;
+    //remove the old gadget directory if already exists
+    var gadget = new File(gadgetPath);
+    if (gadget.isExists()) {
+        gadget.del();
+    }
+    //rename the template into asset's name
+    var file = new File(gadgetDir + template.getName());
+    file.move(gadgetPath);
+
+    //TODO refactor these methods!!!
+    var gadgetDescriptor = new File(gadgetPath + "/" + "gadget.json");
+    gadgetDescriptor.open('w');
+    gadgetDescriptor.write(JSON.stringify(asset));
+    gadgetDescriptor.close();
+
+    //TODO refactor these methods!!!
+    var gadgetConf = new File(gadgetPath + "/js/" + "gadgetconf.js");
+    var confString = "var gadgetConfig =" + JSON.stringify(config) + ";";
+    gadgetConf.open('w');
+    gadgetConf.write(confString);
+    gadgetConf.close();
+
+  	print("Asset has been created.");
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function createDir(path) {
+        var file = new File(path);
+        if (file.isExists()) {
+            file.del();
+        }
+        file.mkdir();
+      };
+
+    function copyFile(src, dst) {
+        var stream = src.getStream();
+        dst = dst + '/' + src.getName();
+        var dstf = new File(dst);
+        dstf.open('w');
+        dstf.write(stream);
+        dstf.close();
+    };
+
+    function  copyDir(source,destination) {
+        if(source.isDirectory()) {
+            createDir(destination + "/" + source.getName());
+            destination = destination + "/" + source.getName();
+            var sourceFiles = source.listFiles();
+            for (var i = 0; i < sourceFiles.length; i++) {
+                var inFile = sourceFiles[i];
+                copyDir(inFile, destination);
+            }
+        } else {
+            copyFile(source,destination);
+        }
+    };
+
+
+  })();
+
+ 
+
+%>

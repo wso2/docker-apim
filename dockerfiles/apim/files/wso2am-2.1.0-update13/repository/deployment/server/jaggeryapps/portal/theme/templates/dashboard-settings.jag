@@ -1,0 +1,308 @@
+<%
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+%>
+    <% var utils = require('/modules/utils.js'); %>
+    <% include(utils.resolvePath('templates/includes/portal-header.jag')); %>
+    <link rel="stylesheet" type="text/css" href="<%=urlPrefix%>libs/jquery-ui-1.11.4/jquery-ui.min.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/common.css">
+    <link rel="stylesheet" href="<%=urlPrefix%>css/settings.css">
+    <% include('/controllers/includes/theme-portal-styles.jag'); %>
+    <title><%= i18n.localize("dashboard.settings")%></title>
+</head>
+<body>
+    <% include(utils.resolvePath('templates/global-navigation.jag')); %>
+
+    <!-- Modal -->
+    <div class="modal fade" id="designerModal" tabindex="-1" role="dialog" aria-labelledby="modalDemo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content clearfix">
+            </div>
+        </div>
+    </div>
+
+    <!-- breadcrumb -->
+    <div class="breadcrumb-wrapper">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%=tenantedUrlPrefix%>">
+                    <i class="icon fw fw-home"></i> <%=i18n.localize("dashboards.label")%>
+                </a>
+            </li>
+            <li class="dashboard-name truncate">
+                <a href="<%=tenantedUrlPrefix%>./dashboards/<%=dashboard.id%>?editor=true">
+                    <%=encodeHtml(dashboard.title)%>
+                </a>
+            </li>
+            <li class="active">
+                <%=i18n.localize("dashboard.settings")%>
+            </li>
+        </ol>
+    </div>
+
+    <!-- navbar -->
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-default" data-spy="affix" data-offset-top="85" data-offset-bottom="40">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" 
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only"><%=i18n.localize("toggle.navigation")%></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#" id="ues-dashboard-export">
+                                <span class="fw-stack">
+                                    <i class="fw fw-circle-outline fw-stack-2x"></i>
+                                    <i class="fw fw-up-arrow fw-stack-1x"></i>
+                                 </span>
+                                <%=i18n.localize("export")%>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+<div id="ues-dashboard-settings" class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-sub-title"><%= i18n.localize("dashboard.settings")%></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3><%= i18n.localize("basics")%></h3>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="ues-dashboard-url" class="col-sm-3 control-label"><%= i18n.localize("url")%></label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static truncate">
+                            <a href="<%=tenantedUrlPrefix%>dashboards/<%=dashboardId%>" id="ues-dashboard-url" 
+                               target="_blank">/dashboards/<%=dashboardId%></a>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="ues-dashboard-title" class="col-sm-3 control-label">
+                    <%= i18n.localize("title")%> <span class="required">*</span></label>
+                    <div class="col-sm-9">
+                        <input id="ues-dashboard-title" type="text" maxlength="250" class="form-control" 
+                               placeholder="<%= i18n.localize("title")%>" value="<%=dashboard.title%>">
+                        <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
+                        <label id="title-error" class="required-error hide" for="title"><%=i18n.localize("required")%></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ues-dashboard-description" class="col-sm-3 control-label">
+                            <%= i18n.localize("description")%></label>
+                    <div class="col-sm-9">
+                        <textarea id="ues-dashboard-description" maxlength="500" class="form-control" rows="4" 
+                            placeholder="<%= i18n.localize("description")%>"><%=dashboard.description%></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ues-dashboard-theme" class="col-sm-3 control-label">
+                        <%= i18n.localize("theme.label")%>
+                    </label>
+                    <div class="col-sm-3">
+                        <div class="input-group-btn select" id="ues-dashboard-theme">
+                            <button class="btn btn-default dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-expanded="false">
+                                <span class="selected"><%=utils.getDashboardTheme(dashboard.theme)%></span><span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu option" role="menu">
+                               <li><a href="#"><%=i18n.localize("theme.default")%></a></li>
+                               <%
+                                var path = utils.getCustomThemePath();
+                                var folder = new File('/' + path);
+                                var themeName = "";
+                                var list = folder.listFiles();
+                                list.forEach(function(file){
+                                    themeName =  file.getName();
+                               %>
+                                <li><a href="#"><%=themeName%></a></li>
+                               <%
+                                });
+                               %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3><%= i18n.localize("permissions")%></h3>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="ues-share-view" class="col-sm-3 control-label"><%= i18n.localize("viewers")%></label>
+                    <div class="col-sm-9">
+                        <input id="ues-share-view" type="text" class="form-control typeahead" placeholder="<%= i18n.localize("roles")%>">
+                        <div class="ues-shared-view"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ues-share-edit" class="col-sm-3 control-label"><%= i18n.localize("editors")%></label>
+                    <div class="col-sm-9">
+                        <input id="ues-share-edit" type="text" class="form-control typeahead"
+                        placeholder="<%= i18n.localize("roles")%>">
+                        <div class="ues-shared-edit"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3><%= i18n.localize("oauth.settings")%></h3>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="ues-enable-oauth" class="col-sm-3 control-label"><%= i18n.localize("enable")%></label>
+                    <div class="col-sm-9">
+
+                        <label class="switch">
+                            <input id="ues-enable-oauth" type="checkbox" value="enable" data-toggle="collapse" 
+                                data-target="#ues-oauth-settings-inputs" 
+                                aria-expanded="<% if (dashboard.enableOauth == true) { print("true"); } else { print("false"); } %>"
+                                aria-controls="ues-oauth-settings-inputs" <% if (dashboard.enableOauth == true) { print("checked"); } %>>
+                            <span class="helper"></span>
+                        </label>
+
+                    </div>
+                </div>
+                <div id="ues-oauth-settings-inputs" class="collapse <% if (dashboard.enableOauth == true) { print("in"); } %>" >
+                    <div class="form-group">
+                        <label for="ues-is-url" class="col-sm-3 control-label"><%= i18n.localize("identity.server.url")%></label>
+                        <div class="col-sm-6">
+                            <%
+                            function endsWith(str, suffix){
+                                return str.indexOf(suffix, str.length - suffix.length) != -1;
+                            }
+                            var idpURL = require('/configs/designer.json').authentication.methods.sso.attributes.identityProviderURL;
+                            var isURL = "";
+                            if (endsWith(idpURL, "samlsso/")) {
+                                isURL = idpURL.substr(0, idpURL.lastIndexOf("samlsso/"));
+                            } else if (endsWith(idpURL, "samlsso")) {
+                                isURL = idpURL.substr(0, idpURL.lastIndexOf("samlsso"));
+                            }
+                            isURL = endsWith(isURL, "/") ? isURL : isURL + "/";
+                            %>
+                            <p id="ues-is-url" class="form-control-static"><%=isURL%></p>
+                        </div>
+                        <div class="col-sm-3" style="text-align: right;">
+                            <button type="button" id="ues-oauth-refresh" class="btn btn-default btn-bordered" 
+                                title="<%=i18n.localize("refresh")%>"><i class="fw fw-refresh"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ues-access-token-url" class="col-sm-3 control-label"><%= i18n.localize("access.token.url")%></label>
+                        <div class="col-sm-9">
+                            <p id="ues-access-token-url" class="form-control-static"><%=encodeHtml(dashboard.accessTokenUrl)%></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ues-api-key" class="col-sm-3 control-label"><%= i18n.localize("api.key")%></label>
+                        <div class="col-sm-9">
+                            <p id="ues-api-key" class="form-control-static"><%=encodeHtml(dashboard.apiKey)%></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ues-api-secret" class="col-sm-3 control-label"><%= i18n.localize("api.secret")%></label>
+                        <div class="col-sm-9">
+                            <p id="ues-api-secret" class="form-control-static"><%=encodeHtml(dashboard.apiSecret)%></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-6">
+            <form class="form-horizontal">
+                <div class="form-group">
+                <label for="ues-share-view" class="col-sm-3 control-label"></label>
+                    <div class = "col-sm-3">
+                        <button type="button" id="ues-dashboard-saveBtn" class="btn btn-default btn-bordered btn-primary"><%= i18n.localize("settings.savebutton")%></button>
+                        <button type="button" id="ues-dashboard-cancelBtn" class="btn btn-default btn-bordered"><%= i18n.localize("settings.cancelbutton")%></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include(utils.resolvePath('templates/includes/portal-footer.jag')); %>
+
+<!-- Jquery JS/Jquery UI JS -->
+<script src="<%=urlPrefix%>libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+<script src="<%=urlPrefix%>libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="<%=urlPrefix%>libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+
+<!-- Theme WSO2 JS -->
+<script src="<%=urlPrefix%>libs/theme-wso2_1.0/js/theme-wso2.js"></script>
+
+<!-- Handlebars -->
+<script src="<%=urlPrefix%>libs/handlebars-v4.0.2/handlebars.min.js"></script>
+
+<script src="<%=urlPrefix%>js/typeahead.bundle.min.js"></script>
+<script src="<%=urlPrefix%>js/jquery.noty.packaged.min.js"></script>
+<script src="<%=urlPrefix%>js/spin.min.js"></script>
+<script src="<%=urlPrefix%>js/ladda.min.js"></script>
+<script src="<%=urlPrefix%>js/ues.js"></script>
+<% include('/controllers/includes/common-scripts.jag'); %>
+<% include('/controllers/includes/dashboard-scripts.jag'); %>
+<script src="<%=urlPrefix%>js/dashboard-settings.js"></script>
+<script src="<%=urlPrefix%>js/wso2-noty-theme.js"></script>
+<% include('/controllers/includes/theme-portal-scripts.jag'); %>
+
+<!-- Handlebar templates -->
+<script id="ues-shared-role-hbs" type="text/x-handlebars-template">
+    <div class="btn btn-default btn-bordered ues-shared-role" data-role="{{.}}">{{.}} <span class="fw fw-uncheck remove-button"></span></div>
+</script>
+
+<script id="permission-menu-hbs" type="text/x-handlebars-template">
+    <div class="permission-menu-content">
+        <span>{{name}}</span>
+        <hr class="permission-item"/>
+    </div>
+</script>
+
+<script id="ues-modal-confirm-hbs" type="text/x-handlebars-template">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fw fw-cancel"></i></button>
+        <h3 class="modal-title" id="deleteModalLabel">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        {{message}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="ues-modal-confirm-yes"><%= i18n.localize("ok")%></button>
+        <button type="button" class="btn btn-default" id="ues-modal-confirm-no" data-dismiss="modal"><%= i18n.localize("cancel")%></button>
+    </div>
+</script>
+
+</body>
+</html>

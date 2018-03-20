@@ -1,0 +1,125 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+
+/**
+ * This file provides RESTful APIs for instant gadget configuration loading when the gadget is uploaded via the UI.
+ */
+(function () {
+    var log = new Log();
+
+    /**
+     * Asset name.
+     * @const
+     * @private
+     */
+    var ASSET_NAME = 'dsgadget';
+
+    /**
+     * Absolute path to the asset extension directory from the application context.
+     * @const
+     * @private
+     */
+    var GADGET_EXT_PATH = '/extensions/assets/' + ASSET_NAME;
+
+    /**
+     * Get absolute path to the publisher directory.
+     * @returns {string} Directory path
+     * @private
+     */
+    var getPublisherDir = function () {
+        var process = require('process');
+        return process.getProperty('carbon.home') + '/repository/deployment/server/jaggeryapps/publisher';
+    };
+
+    /**
+     * Read gadget configurations from the gadget.json file.
+     * @param {String} id GUID
+     * @returns {*}
+     * @private
+     */
+    var readGadgetConfigs = function(id) {
+        var gadgetFile = request.getFile('gadget_gadgetarchive');
+        if (!gadgetFile) {
+            log.error("No gadget file uploaded.");
+            return false;
+        }
+
+        var gadgetDestPath = GADGET_EXT_PATH + '/gadgets/temp/' + id + '.gadget';
+
+        // Save the uploaded gadget file in the file system
+        var gadget = new File(gadgetDestPath);
+        gadget.open('w');
+        gadget.write(gadgetFile.getStream());
+        gadget.close();
+
+        // Extract the gadget zip file
+        var InputStreamReader = Packages.java.io.InputStreamReader;
+        var BufferedReader = Packages.java.io.BufferedReader;
+        var ZipFile = Packages.java.util.zip.ZipFile;
+        var StringBuilder = Packages.java.lang.StringBuilder;
+
+        var zipFilePath = getPublisherDir() + gadgetDestPath;
+        var conf;
+
+        try {
+            // Extract the zip file and read the content of the gadget.json file.
+            var zip = new ZipFile(zipFilePath);
+            for (var e = zip.entries(); e.hasMoreElements();) {
+                var entry = e.nextElement();
+                if (entry.getName().toLowerCase() == "gadget.json") {
+                    var inputStream = zip.getInputStream(entry);
+                    var bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    var sb = new StringBuilder();
+                    var line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                    conf = sb.toString();
+                    bufferedReader.close();
+                    inputStream.close();
+                }
+            }
+        } catch (e) {
+            log.error('Error occurred while extracting the zip file.', e);
+        }
+
+        // Delete the uploaded gadget file
+        gadget.del();
+        return conf;
+    }
+
+    /**
+     * Generate GUID.
+     * @returns {String} GUID
+     * @private
+     */
+    var guid = function () {
+        var s4 = function () {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        };
+        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
+    }
+
+    var method = request.getMethod();
+    if (method == 'POST') {
+        print (readGadgetConfigs(guid()) || '');
+    }
+})();
+%>

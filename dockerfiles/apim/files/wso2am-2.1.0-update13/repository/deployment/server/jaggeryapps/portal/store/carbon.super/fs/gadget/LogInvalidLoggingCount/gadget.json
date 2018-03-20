@@ -1,0 +1,21 @@
+{
+  "id": "invalidLoggingCount",
+  "title": "Invalid login count",
+  "type": "gadget",
+  "thumbnail": "store://gadget/LogInvalidLoggingCount/img/thumbnail.png",
+  "data": {
+    "url": "store://gadget/LogInvalidLoggingCount/index.xml"
+  },
+  "notify": {
+    "publisher": {
+      "type": "filter",
+      "description": "This notifies selected filter"
+    }
+  },
+  "listen": {
+    "subscriber": {
+      "type": "date-range",
+      "description": "Used to listen to any date range-selected"
+    }
+  }
+}

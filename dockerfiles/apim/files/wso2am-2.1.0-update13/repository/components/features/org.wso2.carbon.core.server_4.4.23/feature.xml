@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<feature id="org.wso2.carbon.core.server" label="WSO2 Carbon - Carbon Server Feature" provider-name="%providerName" version="4.4.23">
+  <description>This feature contains the carbon core server features</description>
+  <copyright>%copyright</copyright>
+  <license url="%licenseURL">%license</license>
+  <plugin id="org.wso2.carbon.registry.server" unpack="false" version="4.4.23"/>
+  <plugin id="poi-ooxml" unpack="false" version="3.14.0.wso2v1"/>
+  <plugin id="org.wso2.carbon.roles.mgt" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.cluster.mgt.core" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.core.services" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.user.core" unpack="false" version="4.4.23"/>
+  <plugin id="bcprov-jdk15on" unpack="false" version="1.52.0.wso2v1"/>
+  <plugin id="org.wso2.carbon.server.admin" unpack="false" version="4.4.23"/>
+  <plugin id="org.wso2.carbon.feature.mgt.services" unpack="false" version="4.4.23"/>
+</feature>

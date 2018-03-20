@@ -1,0 +1,23 @@
+{
+    "info": {
+        "id": "line-chart",
+        "name": "Line Chart"
+    },
+    "config": [
+        {
+            "fieldLabel": "X axis",
+            "fieldName": "x",
+            "fieldType": "dropdown",
+            "valueSet": ["$COLUMN_NAMES"]
+        },
+        {
+            "fieldLabel": "Y axis",
+            "fieldName": "y",
+            "fieldType": "dropdown",
+            "valueSet": ["$COLUMN_NAMES"]
+        }
+    ],
+    "common-libs" : ["wso2gadgets","chart-utils"],
+    "chart-libs" : ["d3.min","vega","VizGrammar.min"]
+}
+

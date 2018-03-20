@@ -1,0 +1,111 @@
+<%
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// i18n
+var i18n = require("i18n");
+i18n.init(request, utils.getLocaleResourcePath());
+%>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= i18n.localize("dashboard.server.label")%></title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<%=urlPrefix%>libs/theme-wso2_1.0/images/favicon.png" />
+
+    <!-- Font WSO2 CSS -->
+    <link href="<%=urlPrefix%>libs/font-wso2_1.0.0/css/font-wso2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Theme WSO2 CSS -->
+    <link href="<%=urlPrefix%>libs/theme-wso2_1.0/css/theme-wso2.css" rel="stylesheet" type="text/css" />
+
+   <!-- Custom CSS specific to embeddable gadget -->
+    <link href="<%=urlPrefix%>css/gadget-custom.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="<%=urlPrefix%>libs/html5shiv_3.7.2/html5shiv.min.js"></script>
+    <script src="<%=urlPrefix%>libs/respond_1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- JQuery UI -->
+    <link rel="stylesheet" type="text/css" href="<%=urlPrefix%>libs/jquery-ui-1.11.4/jquery-ui.min.css" />
+
+    <!-- Gridstack -->
+    <link rel="stylesheet" type="text/css" href="<%=urlPrefix%>libs/gridstack.js-0.2.5/gridstack.min.css" />
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" type="text/css" href="<%=urlPrefix%>css/common.css" />
+</head>
+<body class="embGadget lang_<%=request.getLocale()%>">
+<div class="<%= 'container'%> body-wrapper">
+<div class="page-content">
+    <div class = "ues-component-box emb-gadget"></div>
+</div>
+</div>
+    <!-- Component container -->
+    <script id="ues-component-box-content-hbs" type="text/x-handlebars-template">
+            <div class="ues-component gadget">
+                <div class="ues-component-heading gadget-heading">
+                    <h4 class="ues-component-title gadget-title truncate"></h4>
+                    <div class="ues-component-actions gadget-actions"></div>
+                </div>
+                <div class="ues-component-body gadget-body"></div>
+            </div>
+        </div>
+    </script>
+
+    <!-- Jquery/Jquery UI JS -->
+    <script src="<%=urlPrefix%>libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+    <script src="<%=urlPrefix%>libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="<%=urlPrefix%>libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- Theme WSO2 JS -->
+    <script src="<%=urlPrefix%>libs/theme-wso2_1.0/js/theme-wso2.js"></script>
+
+    <script src="<%=urlPrefix%>libs/underscore-1.8.3/underscore-min.js"></script>
+
+    <!-- Gridstack -->
+    <script src="<%=urlPrefix%>libs/gridstack.js-0.2.5/gridstack.min.js"></script>
+
+    <!-- Handlebars JS -->
+    <script src="<%=urlPrefix%>libs/handlebars-v4.0.2/handlebars.min.js"></script>
+
+    <script src="/shindig/gadgets/js/container:open-views:opensearch:rpc:xmlutil:pubsub-2.js?c=1&debug=1&container=default"></script>
+    <script src="<%=urlPrefix%>js/ues.js"></script>
+    <script src="<%=urlPrefix%>js/ues-prefs.js"></script>
+    <% include('/controllers/includes/common-scripts.jag'); %>
+    <% include('/controllers/includes/dashboard-scripts.jag'); %>
+    <script src="<%=urlPrefix%>js/ues-gadgets.js"></script>
+    <script src="<%=urlPrefix%>js/ues-dashboards.js"></script>
+    <script src="<%=urlPrefix%>extensions/components/gadget/index.js"></script>
+    <script src="<%=urlPrefix%>extensions/components/widget/index.js"></script>
+    <script src="<%=urlPrefix%>extensions/uris/local/index.js"></script>
+    <% include('/controllers/includes/pluggable-store-scripts.jag'); %>
+    <script src="<%=urlPrefix%>js/gadget-properties.js"></script>
+    <script src="<%=urlPrefix%>js/ds-handlebar-helpers.js"></script>
+    <script src="<%=urlPrefix%>js/gadget.js"></script>
+    <script src="<%=urlPrefix%>js/ds-ajax-api.js"></script>
+    <% include('/controllers/includes/theme-dashboard-scripts.jag'); %>
+
+</body>
+</html>

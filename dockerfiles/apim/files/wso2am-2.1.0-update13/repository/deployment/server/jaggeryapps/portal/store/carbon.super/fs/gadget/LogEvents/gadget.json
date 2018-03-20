@@ -1,0 +1,15 @@
+{
+  "id": "logEvents",
+  "title": "Log Event Chart",
+  "type": "gadget",
+  "thumbnail": "store://gadget/LogEvents/img/thumbnail.png",
+  "data": {
+    "url": "store://gadget/LogEvents/index.xml"
+  },
+  "listen": {
+    "subscriber": {
+      "type": "date-range",
+      "description": "Used to listen to any date range-selected"
+    }
+  }
+}

@@ -321,6 +321,8 @@ do
     -Dfile.encoding=UTF8 \
     -Djava.net.preferIPv4Stack=true \
     -Dcom.ibm.cacheLocalHost=true \
+    -Dorg.wso2.ignoreHostnameVerification=true \
+    -Dhttpclient.hostnameVerifier=AllowAll \
     $NODE_PARAMS \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?

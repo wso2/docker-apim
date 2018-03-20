@@ -1,0 +1,206 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+var log = new Log();
+var utils = require('/modules/utils.js');
+var carbon = require("carbon");
+var HTTPS_TRANSPORT = "https";
+var ANALYTICS_SERVICE = "/services/AnalyticsWebService";
+var EVENT_STREAM_SERVICE = "/services/EventStreamAdminService";
+var EVENT_PUBLISHER_SERVICE = "/services/EventPublisherAdminService";
+
+var HTTPConstants = Packages.org.apache.axis2.transport.http.HTTPConstants;
+var EventStreamAdminServiceStub = Packages.org.wso2.carbon.event.stream.stub.EventStreamAdminServiceStub;
+var EventPublisherAdminServiceStub = Packages.org.wso2.carbon.event.publisher.stub.EventPublisherAdminServiceStub
+
+var eventStreamAdminServiceWSUrl = utils.getCarbonServerAddress(HTTPS_TRANSPORT) + EVENT_STREAM_SERVICE;
+var eventPublisherAdminServiceWSUrl = utils.getCarbonServerAddress(HTTPS_TRANSPORT) + EVENT_PUBLISHER_SERVICE;
+var eventStreamStub = new EventStreamAdminServiceStub(eventStreamAdminServiceWSUrl);
+var eventpublisherStub = new EventPublisherAdminServiceStub(eventPublisherAdminServiceWSUrl);
+var eventsStreamServiceClient = eventStreamStub._getServiceClient();
+var eventsPublisherServiceClient = eventpublisherStub._getServiceClient();
+
+var eventStreamOption = eventsStreamServiceClient.getOptions();
+eventStreamOption.setManageSession(true);
+eventStreamOption.setProperty(HTTPConstants.COOKIE_STRING, session.get('authToken'));
+
+var eventPublisherOption = eventsPublisherServiceClient.getOptions();
+eventPublisherOption.setManageSession(true);
+eventPublisherOption.setProperty(HTTPConstants.COOKIE_STRING, session.get('authToken'));
+
+var analyticsStub;
+try {
+    var AnalyticsWebServiceConnector = Packages.org.wso2.carbon.analytics.jsservice.AnalyticsWebServiceConnector;
+    var AnalyticsWebServiceStub = Packages.org.wso2.carbon.analytics.webservice.stub.AnalyticsWebServiceStub;
+    var analyticsWSUrl = utils.getCarbonServerAddress(HTTPS_TRANSPORT) + ANALYTICS_SERVICE;
+    analyticsStub = new AnalyticsWebServiceStub(analyticsWSUrl);
+    var analyticsClient = analyticsStub._getServiceClient();
+    var options = analyticsClient.getOptions();
+    options.setManageSession(true);
+    options.setProperty(HTTPConstants.COOKIE_STRING, session.get('authToken'));
+} catch (e) {
+    //this might come when running on CEP. We silently fail on this
+}
+var action = request.getParameter("action");
+response.contentType = 'application/json';
+if (action === "getDatasources") {
+    var datasources = [];
+    //try to get a list of analytics tables first. If this is CEP, this will be simply ignored
+    if (analyticsStub) {
+        var tables = analyticsStub.listTables();
+        if (tables) {
+            for (var i = 0; i < tables.length; i++) {
+                datasources.push({name: tables[i], type: "batch"});
+            }
+        }
+    }
+
+    //get system properties for distributed mode profile
+    var process = require("process");
+    var profile = process.getProperty("profile");
+
+    if (profile === "worker") {
+        print("Creating gadgets in Worker node is prohibited. Please use Manager node to create gadgets.");
+    } else {
+        try {
+            var activeEventPublishers = eventpublisherStub.getAllActiveEventPublisherConfigurations();
+            if (activeEventPublishers) {
+                for (var i = 0; i < activeEventPublishers.length; i++) {
+                    var publisherName = activeEventPublishers[i].getEventPublisherName();
+                    var wso2EventMappingDto = eventpublisherStub.getActiveEventPublisherConfiguration(publisherName)
+                            .getWso2EventOutputMappingDto();
+                    var publisherType = eventpublisherStub.getActiveEventPublisherConfiguration(publisherName)
+                            .getToAdapterConfigurationDto().getEventAdapterType();
+
+                    if (wso2EventMappingDto && publisherType.trim() == "ui") {
+                        var streamName = wso2EventMappingDto.getOutputStreamName();
+                        var streamVersion = wso2EventMappingDto.getOutputStreamVersion();
+                        var StreamId = streamName + ":" + streamVersion;
+                        datasources.push({name: StreamId, type: "realtime"});
+                    }
+                }
+            }
+        } catch (e) {
+            if (e.javaException instanceof org.apache.axis2.AxisFault) {
+                //If Unauthorized Java exception occurred.
+                //User will be logged out and Unauthorized 401 HTTP code will be sent
+                if (e.message.split(":")[3].trim() == "Unauthorized") {
+                    log.error(e.message);
+                    var usr = require('/modules/user.js');
+                    usr.logout();
+                    response.sendError(401);
+                }
+            }
+        }
+
+        print(datasources);
+    }
+} else if (action === "publisherIsExist") {
+    var streamId = request.getParameter("streamId");
+    var activePublisher = eventpublisherStub.getAllStreamSpecificActiveEventPublisherConfigurations(streamId);
+    var publisherExist = false;
+    if (activePublisher != null && activePublisher.length > 0) {
+        publisherExist = true;
+    }
+    print(publisherExist);
+} else if (action === "getDatasourceMetaData") {
+    var datasource = request.getParameter("dataSource");
+    var type = request.getParameter("type");
+    var output = [];
+
+    if (type == "realtime") {
+        //String streamId = request.getParameter("streamId");
+        var correlationDataLength = 0;
+        var metaDataLength = 0;
+        var payloadDataLength = 0;
+        var counter = 0;
+
+        try {
+
+            var eventStreamDefinitionDto
+                    = eventStreamStub.getStreamDefinitionDto(datasource);
+
+            var metaData = eventStreamDefinitionDto.getMetaData();
+            var correlationData = eventStreamDefinitionDto.getCorrelationData();
+            var payloadData = eventStreamDefinitionDto.getPayloadData();
+
+            if (metaData != null) {
+                metaDataLength = metaData.length;
+            }
+            if (correlationData != null) {
+                correlationDataLength = correlationData.length;
+            }
+            if (payloadData != null) {
+                payloadDataLength = payloadData.length;
+            }
+
+            output.push({
+                name: "TIMESTAMP",
+                type: "time"
+            });
+
+            var allDataLength = metaDataLength + correlationDataLength + payloadDataLength;
+            for (var i = 0; i < metaDataLength; i++) {
+                output.push({
+                    name: metaData[i].getAttributeName(),
+                    type: metaData[i].getAttributeType()
+                });
+                counter++;
+            }
+            for (var i = 0; i < correlationDataLength; i++) {
+                output.push({
+                    name: correlationData[i].getAttributeName(),
+                    type: correlationData[i].getAttributeType()
+                });
+                counter++;
+            }
+            for (var i = 0; i < payloadDataLength; i++) {
+                output.push({
+                    name: payloadData[i].getAttributeName(),
+                    type: payloadData[i].getAttributeType()
+                });
+                counter++;
+            }
+        } catch (e) {
+            //If Unauthorized Java exception occurred.
+            //User will be logged out and Unauthorized 401 HTTP code will be sent
+            if (e.javaException instanceof org.apache.axis2.AxisFault) {
+                if (e.message.split(":")[3].trim() == "Unauthorized") {
+                    log.error(e.message);
+                    var usr = require('/modules/user.js');
+                    usr.logout();
+                    response.sendError(401);
+                }
+            }
+        }
+    } else {
+        var schema = analyticsStub.getTableSchema(tableName);
+        var columns = schema.getColumns();
+        for (var i = 0; i < columns.length; i++) {
+            var column = columns[i];
+            output.push({
+                name: column.getColumnName(),
+                type: column.getColumnType()
+            });
+        }
+    }
+    print(output);
+}
+
+%>

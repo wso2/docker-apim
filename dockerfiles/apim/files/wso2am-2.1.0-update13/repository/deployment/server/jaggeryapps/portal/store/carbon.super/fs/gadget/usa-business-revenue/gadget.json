@@ -1,0 +1,16 @@
+{
+    "id": "usa-business-revenue",
+    "title": "USA Business Revenue",
+    "type": "gadget",
+    "thumbnail": "gadget/usa-business-revenue/index.png",
+    "data": {
+        "url": "gadget/usa-business-revenue/index.xml"
+    },
+    "description": "Allows to view revenue by companies in US",
+    "listen": {
+        "state": {
+            "type": "address",
+            "description": "Used to filter based on state"
+        }
+    }
+}

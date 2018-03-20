@@ -1,0 +1,15 @@
+{
+  "id": "logViewer",
+  "title": "Log Viewer",
+  "type": "gadget",
+  "thumbnail": "store://gadget/LogViewer/index.png",
+  "data": {
+    "url": "store://gadget/LogViewer/index.xml"
+  },
+  "listen": {
+    "subscriber": {
+      "type": "filter-range",
+      "description": "Used to listen to any filters"
+    }
+  }
+}

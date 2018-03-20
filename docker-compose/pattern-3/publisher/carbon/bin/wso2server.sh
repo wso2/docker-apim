@@ -314,6 +314,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -Dorg.opensaml.httpclient.https.disableHostnameVerification=true \
     -Dorg.wso2.ignoreHostnameVerification=true \
+    -Dhttpclient.hostnameVerifier=AllowAll \
     -DworkerNode=false \
     -Dprofile=api-publisher \
     org.wso2.carbon.bootstrap.Bootstrap $*

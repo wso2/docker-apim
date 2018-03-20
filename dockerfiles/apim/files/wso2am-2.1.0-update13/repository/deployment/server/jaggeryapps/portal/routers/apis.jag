@@ -1,0 +1,24 @@
+<%
+var urlPrefix;
+
+(function () {
+    var log = new Log();
+    var utils = require('/modules/utils.js');
+
+    var resource = request.getRequestURI();
+    resource = resource.replace(/^\/apis/ig, '');
+    var controller = '/controllers/apis' + resource + '.jag';
+
+    var path = utils.findJag(controller);
+    if (!path) {
+        response.sendError(404, 'requested api cannot be found');
+        return;
+    }
+
+    request.getRequestURI = function () {
+        return resource;
+    };
+
+    include(path);
+}());
+%>

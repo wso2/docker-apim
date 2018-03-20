@@ -1,0 +1,42 @@
+<%
+/**
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+(function () {
+    if (!user) {
+        sendLogin();
+        return;
+    }
+
+    if (userDomain !== (urlDomain || superDomain)) {
+        response.sendError(401, 'Designer access not authorized for this tenant');
+        return;
+    }
+
+    var configs = require('/configs/designer.json');
+
+    if (!utils.allowed(user.roles, configs.designers) && !dashboard.isUserCustom) {
+        response.sendError(401, 'Designer access not authorized');
+        return;
+    }
+
+    var permissions = dashboard.permissions;
+    if (!utils.allowed(user.roles, permissions.editors) && !dashboard.isUserCustom) {
+        response.sendError(401, 'Dashboard editing not authorized');
+        return;
+    }
+
+    include(utils.resolvePath('templates/designer.jag'));
+}()); %>

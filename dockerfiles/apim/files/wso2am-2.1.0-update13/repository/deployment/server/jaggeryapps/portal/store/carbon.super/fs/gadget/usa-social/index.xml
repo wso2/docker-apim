@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2016,WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Licensed under the Apache License, Version 2.0 (the "License").
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0.
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+  ~ on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  -->
+<Module>
+    <ModulePrefs title="USA Social" description="USA Social Statistics">
+        <Require feature="dynamic-height"/>
+        <Require feature="setprefs"/>
+        <Require feature="pubsub-2">
+            <Param name="topics"/>
+        </Require>
+    </ModulePrefs>
+    <UserPref name="gadget-status" default_value="not-wired" datatype="hidden"/>
+    <Content type="html">
+        <![CDATA[
+<html>
+<head>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+#chart {
+    width: 100%;
+    height: 100%;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+</head>
+<body>
+<p id="init-text" style="font-size: 12px;">This gadget is a subscriber gadget to the USA Map gadget. Based on the selected state on the US map, corresponding social media usage will be displayed. Hence please add the US Map gadget and wire with it.</p>
+<svg id="chart"></svg>
+<script src="js/d3.v3.min.js"></script>
+<script>
+var prefs = new gadgets.Prefs();
+var initText = document.getElementById("init-text");
+
+var draw = function(data) {
+    var state = data.state.toLowerCase();
+    document.getElementById("chart").innerHTML = "";
+    
+    var margin = {top: 20, right: 50, bottom: 30, left: 40},
+        width = window.document.body.scrollWidth - margin.left - margin.right - 20,
+        height = window.document.body.scrollHeight - margin.top - margin.bottom - 60;
+
+    var parseDate = d3.time.format("%Y%m%d").parse;
+
+    var x = d3.time.scale()
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.temperature); });
+
+    var svg = d3.select("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.tsv("../../portal/store/carbon.super/fs/gadget/usa-social/data/" + state + ".tsv", function(error, data) {
+      color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+      data.forEach(function(d) {
+        d.date = parseDate(d.date);
+      });
+
+      var cities = color.domain().map(function(name) {
+        return {
+          name: name,
+          values: data.map(function(d) {
+            return {date: d.date, temperature: +d[name]};
+          })
+        };
+      });
+
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+
+      y.domain([
+        d3.min(cities, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
+        d3.max(cities, function(c) { return d3.max(c.values, function(v) { return v.temperature; }); })
+      ]);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Users");
+
+      var city = svg.selectAll(".city")
+          .data(cities)
+        .enter().append("g")
+          .attr("class", "city");
+
+      city.append("path")
+          .attr("class", "line")
+          .attr("d", function(d) { return line(d.values); })
+          .style("stroke", function(d) { return color(d.name); });
+
+      city.append("text")
+          .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+          .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
+          .attr("x", 3)
+          .attr("dy", ".35em")
+          .text(function(d) { return d.name; });
+    });
+};
+
+gadgets.HubSettings.onConnect = function() {
+    gadgets.Hub.subscribe('state-selected', function(topic, data, subscriberData) {
+        initText.style.display = 'none';
+        draw(data);
+        prefs.set("gadget-status", "wired");
+    });
+};
+
+(function () {
+    var currentStatus = prefs.getString("gadget-status").toLowerCase();
+    if (currentStatus == "not-wired") {
+        initText.style.display = 'block';
+    } else {
+        initText.style.display = 'none';
+    }
+    draw({"country": "US", "state": "CA"});
+}());
+
+</script>
+
+</body>
+</html>
+    ]]>
+    </Content>
+</Module>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Text Box" description="Text Box Gadget">
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <UserPref name="content"
+              display_name="Content"
+              default_value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <meta charset="utf-8">
+            <title>Text Box</title>
+            <link rel="stylesheet" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css">
+            <style>
+                .textbox {
+                    padding: 12px;
+                }
+            </style>
+            <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+            <script src="/portal/libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+            <script>
+                gadgets.util.registerOnLoadHandler(function() {
+                    var prefs = new gadgets.Prefs();
+                    var content = prefs.getString('content');
+                    $('.textbox').html(gadgets.util.unescapeString(content));
+                });
+            </script>
+        </head>
+        <body>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 textbox"></div>
+                </div>
+            </div>
+        </body>
+        ]]>
+    </Content>
+</Module>

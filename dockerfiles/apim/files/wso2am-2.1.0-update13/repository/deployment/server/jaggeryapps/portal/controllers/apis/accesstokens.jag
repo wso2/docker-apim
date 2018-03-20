@@ -1,0 +1,87 @@
+<%
+/**
+ *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  WSO2 Inc. licenses this file to you under the Apache License,
+ *  Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ *
+ */
+function getSamlAccessToken() {
+    var dashboards = require('/modules/dashboards.js');
+    var usr = require('/modules/user.js');
+    var oauth = require("oauth");
+
+    // check whether the user is logged in
+    var user = usr.current();
+    if (!user) {
+        return "UNAUTHORIZED_ERROR";
+    }
+
+    // match url for patterns
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/accesstokens/{id}')) {
+        var vars = matcher.elements();
+        var dashboardId = vars.id;
+        var dashboard = dashboards.getAsset(dashboardId);
+
+        if (dashboard == null) {
+            return "unable to find the dashboard";
+        }
+        var oauthEnabled = dashboard.enableOauth ? true : false;
+
+        if (oauthEnabled) {
+            var provider = {
+                "oauth_version": "2",
+                "authorization_url": "",
+                "access_token_url": dashboard.accessTokenUrl,
+                "request_token_url": "",
+                "callback_url": "",
+                "api_key": dashboard.apiKey,
+                "api_secret": dashboard.apiSecret
+            };
+
+            var wso2is = new oauth.OAuthProvider(provider);
+            var samlResp = session.get("samlResponse");
+            var accessTokenArr = session.get("accessTokenArr");
+            if (accessTokenArr == null) {
+                accessTokenArr = [];
+            }
+            var accessToken;
+            for (var i = 0; i < accessTokenArr.length; i++) {
+                if (accessTokenArr[i].did == dashboardId) {
+                    accessToken = accessTokenArr[i].accessToken;
+                    break;
+                }
+            }
+
+            if (accessToken == null || accessToken == "") {
+                try {
+                    var accessTokenResponse = wso2is.getTokenResponse(samlResp);
+                    accessToken = accessTokenResponse.getAccessToken();
+                    accessTokenArr.push({"did": dashboardId, "accessToken": accessToken});
+                    session.put("accessTokenArr", accessTokenArr);
+                    return {"accessToken": accessToken};
+                } catch (err) {
+                    return {"accessToken": "Access token not available. " + err.message};
+                }
+            } else {
+                return {"accessToken": accessToken};
+            }
+        } else {
+            return {"accessToken": ""};
+        }
+    }
+}
+print(getSamlAccessToken());
+%>

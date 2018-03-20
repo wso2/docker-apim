@@ -1,9 +1,12 @@
-FROM docker.wso2.com/wso2am:2.1.0
+FROM wso2am:2.2.0-SNAPSHOT
 
-COPY pattern-3/keymanager/carbon/ /mnt/wso2-artifacts
+COPY pattern-3/keymanager/carbon /home/wso2carbon/wso2am-2.2.0-SNAPSHOT/
 
-COPY artifacts/mysql-connector-java-5.1.34-bin.jar /mnt/wso2-artifacts/repository/components/lib/
+COPY artifacts/mysql-connector-java-5.1.34-bin.jar /home/wso2carbon/wso2am-2.2.0-SNAPSHOT/repository/components/lib/
 
 USER root
 
-RUN rm -r /mnt/wso2am-2.1.0/repository/deployment/server/synapse-configs/default/inbound-endpoints/WebSocketInboundEndpoint.xml
+RUN chown -R wso2carbon:wso2 /home/wso2carbon/wso2am-2.2.0-SNAPSHOT/
+RUN chown -R wso2carbon:wso2 /home/wso2carbon/wso2am-2.2.0-SNAPSHOT/repository/components/lib/
+
+RUN rm -r /home/wso2carbon/wso2am-2.2.0-SNAPSHOT/repository/deployment/server/synapse-configs/default/inbound-endpoints/WebSocketInboundEndpoint.xml

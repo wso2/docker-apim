@@ -1,0 +1,53 @@
+{
+    "info": {
+        "id": "rdbms",
+        "name": "Relational Database Source",
+        "image": ""
+    },
+    "config" : [
+        {
+            "fieldLabel" : "Database URL",
+            "fieldName" :"db_url",
+            "fieldType" : "string",
+            "defaultValue" : "",
+            "isRequired" : true,
+            "hint": "This is a sample hint",
+            "placeholderText" : "jdbc:mysql://localhost:3306/dbname"
+        },
+        {
+            "fieldLabel" : "Database Name",
+            "fieldName" :"db_name",
+            "fieldType" : "string",
+            "defaultValue" : "",
+            "isRequired" : true
+        },
+        {
+            "fieldLabel" : "Table Name",
+            "fieldName" :"table_name",
+            "fieldType" : "string",
+            "defaultValue" : "",
+            "isRequired" : true
+        },
+        {
+            "fieldLabel" : "Username",
+            "fieldName" :"username",
+            "fieldType" : "string",
+            "defaultValue" : "",
+            "isRequired" : true
+        },
+        {
+            "fieldLabel" : "Password",
+            "fieldName" :"password",
+            "fieldType" : "password",
+            "defaultValue" : "",
+            "isRequired" : true
+        },
+        {
+            "fieldLabel" : " SQL Query",
+            "fieldName" :"query",
+            "fieldType" : "string",
+            "isRequired" : true
+        }
+    ],
+    "provider-libs" : ["test"]
+}

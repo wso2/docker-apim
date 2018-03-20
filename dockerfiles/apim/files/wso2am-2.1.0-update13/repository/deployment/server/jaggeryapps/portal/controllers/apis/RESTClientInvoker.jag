@@ -1,0 +1,316 @@
+<%
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/**
+ * This RESTClientInvoker is the where actual backed call is made. It may be a pure HTTP request or XMLHTTP request.
+ */
+var RESTClientInvoker = function () {
+    var log = new Log("/controllers/api/RESTClientInvoker.jag");
+    var publicXMLHTTPInvokers = {};
+    var publicHTTPInvokers = {};
+    var privateMethods = {};
+    var TOKEN_EXPIRED = "Access token expired";
+    var TOKEN_INVALID = "Invalid input. Access token validation failed";
+    var constants = require("/modules/constants.js");
+    var tokenUtil = require("/modules/tokenUtil.js").tokenUtil;
+
+    /**
+     * This method add OAuth authentication header to outgoing XML HTTP Requests if OAuth authentication is enabled.
+     * @param method             HTTP request type.
+     * @param url                target url.
+     * @param payload            payload/data which need to be send.
+     * @param successCallback    a function to be called if the respond if successful.
+     * @param errorCallback      a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    privateMethods.XMLHTTPRequest = function (method, url, payload, successCallback, errorCallback, contentType,
+                                              acceptType) {
+        var execute = function (count) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open(method, url);
+            xmlHttpRequest.setRequestHeader(constants.CONTENT_TYPE_IDENTIFIER, contentType);
+            xmlHttpRequest.setRequestHeader(constants.ACCEPT_IDENTIFIER, acceptType);
+            if (tokenUtil.checkOAuthEnabled()) {
+                tokenUtil.setAccessToken(xmlHttpRequest, function (modifiedXHR) {
+                    xmlHttpRequest = modifiedXHR;
+                    if (xmlHttpRequest === null) {
+                        log.error("Your login session is expired. Please login again");
+                    }
+                });
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("OAuth hasn't been enabled yet. This will cause problems if backed is secured with" +
+                            "OAuth");
+                }
+            }
+            xmlHttpRequest.send(payload);
+            if ((xmlHttpRequest.status >= 200 && xmlHttpRequest.status < 300) || xmlHttpRequest.status == 302) {
+                return successCallback(xmlHttpRequest);
+            } else if (xmlHttpRequest.status == 401 && (xmlHttpRequest.responseText == TOKEN_EXPIRED ||
+                    xmlHttpRequest.responseText == TOKEN_INVALID ) && count < 3) {
+                tokenUtil.refreshAccessToken(function (status) {
+                    if (status) {
+                        return execute(count + 1);
+                    } else {
+                        return errorCallback(xmlHttpRequest);
+                    }
+                });
+            } else {
+                return errorCallback(xmlHttpRequest);
+            }
+        };
+        return execute(0);
+    }
+
+    /**
+     * This method invokes return XMLHTTPRequest for get calls
+     * @param url              target url.
+     * @param successCallback  a function to be called if the respond if successful.
+     * @param errorCallback    a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    publicXMLHTTPInvokers.GET = function (url, successCallback, errorCallback, contentType, acceptType) {
+        var payload = null;
+        return privateMethods.XMLHTTPRequest(constants.HTTP_GET, url, payload, successCallback, errorCallback,
+                contentType, acceptType);
+    };
+
+    /**
+     * This method invokes return XMLHTTPRequest for post calls
+     * @param url              target url.
+     * @param payload          payload/data which need to be send.
+     * @param successCallback  a function to be called if the respond if successful.
+     * @param errorCallback    a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    publicXMLHTTPInvokers.POST = function (url, payload, successCallback, errorCallback, contentType, acceptType) {
+        return privateMethods.XMLHTTPRequest(constants.HTTP_POST, url, payload, successCallback, errorCallback,
+                contentType, acceptType);
+    };
+
+    /**
+     * This method invokes return XMLHTTPRequest for put calls
+     * @param url               target url.
+     * @param payload           payload/data which need to be send.
+     * @param successCallback   a function to be called if the respond if successful.
+     * @param errorCallback     a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    publicXMLHTTPInvokers.PUT = function (url, payload, successCallback, errorCallback, contentType, acceptType) {
+        return privateMethods.XMLHTTPRequest(constants.HTTP_PUT, url, payload, successCallback, errorCallback,
+                contentType, acceptType);
+    };
+
+    /**
+     * This method invokes return XMLHTTPRequest for delete calls
+     * @param url                target url.
+     * @param successCallback    a function to be called if the respond if successful.
+     * @param errorCallback      a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    publicXMLHTTPInvokers.DELETE = function (url, successCallback, errorCallback, contentType, acceptType) {
+        var payload = null;
+        return privateMethods.XMLHTTPRequest(constants.HTTP_DELETE, url, payload, successCallback, errorCallback,
+                contentType, acceptType);
+    };
+
+    /**
+     * This method add Oauth authentication header to outgoing HTTPClient Requests if Oauth authentication is enabled.
+     * @param method          HTTP request type.
+     * @param url             target url.
+     * @param payload         payload/data which need to be send.
+     * @param successCallback a function to be called if the respond if successful.
+     * @param errorCallback   a function to be called if en error is reserved.
+     * @param contentType     requested endpoint should be supported this media type
+     * @param acceptType      this is the media type which is accepted
+     */
+    privateMethods.HTTPRequest = function (method, url, payload, successCallback, errorCallback, contentType,
+                                           acceptType) {
+        var HttpClient = Packages.org.apache.commons.httpclient.HttpClient;
+        var httpMethodObject;
+        switch (method) {
+            case constants.HTTP_POST:
+                var PostMethod = Packages.org.apache.commons.httpclient.methods.PostMethod;
+                httpMethodObject = new PostMethod(url);
+                break;
+            case constants.HTTP_PUT:
+                var PutMethod = Packages.org.apache.commons.httpclient.methods.PutMethod;
+                httpMethodObject = new PutMethod(url);
+                break;
+            case constants.HTTP_GET:
+                var GetMethod = Packages.org.apache.commons.httpclient.methods.GetMethod;
+                httpMethodObject = new GetMethod(url);
+                break;
+            case constants.HTTP_DELETE:
+                var DeleteMethod = Packages.org.apache.commons.httpclient.methods.DeleteMethod;
+                httpMethodObject = new DeleteMethod(url);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid HTTP request type: " + method);
+        }
+        var execute = function (count) {
+            var Header = Packages.org.apache.commons.httpclient.Header;
+            var header = new Header();
+            header.setName(constants.CONTENT_TYPE_IDENTIFIER);
+            header.setValue(contentType);
+            httpMethodObject.addRequestHeader(header);
+            header = new Header();
+            header.setName(constants.ACCEPT_IDENTIFIER);
+            header.setValue(acceptType);
+            httpMethodObject.addRequestHeader(header);
+            if (tokenUtil.checkOAuthEnabled()) {
+                tokenUtil.getAccessToken(function (accessToken) {
+                    if (accessToken !== null) {
+                        header = new Header();
+                        header.setName(constants.AUTHORIZATION_HEADER);
+                        header.setValue(constants.BEARER_PREFIX + accessToken);
+                        httpMethodObject.addRequestHeader(header);
+                    } else {
+                        log.error("Your login session is expired. Please login again");
+                    }
+                });
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("OAuth is hasn't been enabled yet. This will cause problems if backed is secured" +
+                            "with OAuth");
+                }
+            }
+            if (payload !== null) {
+                var StringRequestEntity = Packages.org.apache.commons.httpclient.methods.StringRequestEntity;
+                var stringRequestEntity = new StringRequestEntity(stringify(payload));
+                httpMethodObject.setRequestEntity(stringRequestEntity);
+            }
+
+            var client = new HttpClient();
+            var responsePayload = {};
+            try {
+                client.executeMethod(httpMethodObject);
+                var status = httpMethodObject.getStatusCode();
+                responsePayload.status = status;
+                responsePayload.responseText = httpMethodObject.getResponseBodyAsString();
+                if (responsePayload.responseText == "") {
+                    responsePayload.responseText = sendMessage("response is empty");
+                }
+                if (status >= 200 && status < 400) {
+                    var responseContentTypeHeader = httpMethodObject.getResponseHeader(constants.CONTENT_TYPE_IDENTIFIER);
+                    if (responseContentTypeHeader && responseContentTypeHeader.getValue() == constants.APPLICATION_ZIP) {
+                        responsePayload.responseText = httpMethodObject.getResponseBodyAsStream();
+                        responsePayload.header = httpMethodObject.getResponseHeaders();
+                    }
+                    successCallback(responsePayload);
+
+                } else if (status == 401 && (responsePayload.responseText == TOKEN_EXPIRED ||
+                        responsePayload.responseText == TOKEN_INVALID ) && count < 3) {
+                    tokenUtil.refreshAccessToken(function (status) {
+                        if (status) {
+                            return execute(count + 1);
+                        } else {
+                            return errorCallback(responsePayload);
+                        }
+                    });
+                } else {
+                    errorCallback(responsePayload);
+                }
+            } catch (e) {
+                var errorMessage = "Error while sending http request to backend, " + e;
+                throw errorMessage;
+                responsePayload.responseText = errorMessage;
+                errorCallback(responsePayload);
+            } finally {
+                httpMethodObject.releaseConnection();
+            }
+        }
+        return execute(0);
+    };
+
+    /**
+     * This method invokes return HTTPRequest for get calls
+     * @param url             target url.
+     * @param successCallback a function to be called if the respond if successful.
+     * @param errorCallback   a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    publicHTTPInvokers.GET = function (url, successCallback, errorCallback, contentType, acceptType) {
+        return privateMethods.HTTPRequest(constants.HTTP_GET, url, null, successCallback, errorCallback, contentType,
+                acceptType);
+    };
+
+    /**
+     * This method invokes return HTTPRequest for post calls
+     * @param url             target url.
+     * @param payload         payload/data which need to be send.
+     * @param successCallback a function to be called if the respond if successful.
+     * @param errorCallback   a function to be called if en error is reserved.
+     * @param contentType     requested endpoint should be supported this media type
+     * @param acceptType      this is the media type which is accepted
+     */
+    publicHTTPInvokers.POST = function (url, payload, successCallback, errorCallback, contentType, acceptType) {
+        return privateMethods
+                .HTTPRequest(constants.HTTP_POST, url, payload, successCallback, errorCallback, contentType, acceptType);
+    };
+
+    /**
+     * This method invokes return HTTPRequest for put calls
+     * @param url             target url.
+     * @param payload         payload/data which need to be send.
+     * @param successCallback a function to be called if the respond if successful.
+     * @param errorCallback   a function to be called if en error is reserved.
+     * @param contentType     requested endpoint should be supported this media type
+     * @param acceptType      this is the media type which is accepted
+     */
+    publicHTTPInvokers.PUT = function (url, payload, successCallback, errorCallback, contentType, acceptType) {
+        return privateMethods
+                .HTTPRequest(constants.HTTP_PUT, url, payload, successCallback, errorCallback, contentType, acceptType);
+    };
+
+    /**
+     * This method invokes return HTTPRequest for delete calls
+     * @param url              target url.
+     * @param successCallback  a function to be called if the respond if successful.
+     * @param errorCallback    a function to be called if en error is reserved.
+     * @param contentType        requested endpoint should be supported this media type
+     * @param acceptType         this is the media type which is accepted
+     */
+    publicHTTPInvokers.DELETE = function (url, successCallback, errorCallback, contentType, acceptType) {
+        return privateMethods
+                .HTTPRequest(constants.HTTP_DELETE, url, null, successCallback, errorCallback, contentType, acceptType);
+    };
+
+    /**
+     * Send error message when something went wrong
+     * @param message   error message
+     * @returns {{message: *}}
+     */
+    function sendMessage(message) {
+        return {"message": message};
+    }
+
+    var publicInvokers = {};
+    publicInvokers.XMLHTTPClient = publicXMLHTTPInvokers;
+    publicInvokers.HTTPClient = publicHTTPInvokers;
+    return publicInvokers;
+
+}();
+%>

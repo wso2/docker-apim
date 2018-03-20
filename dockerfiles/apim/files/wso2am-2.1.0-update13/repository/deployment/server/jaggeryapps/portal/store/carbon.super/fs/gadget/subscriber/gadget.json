@@ -1,0 +1,16 @@
+{
+    "id": "subscriber",
+    "title": "Subscriber",
+    "type": "gadget",
+    "category": "Subscribers",
+    "thumbnail": "gadget/usa-business-revenue/index.png",
+    "data": {
+        "url": "gadget/subscriber/index.xml"
+    },
+    "listen": {
+        "subscriber": {
+            "type": "message",
+            "description": "Used to listen to Any message of type address"
+        }
+    }
+}

@@ -1,0 +1,3 @@
+UPDATE AM_API
+SET CREATED_BY = `pseudonym`
+WHERE CREATED_BY = `username`

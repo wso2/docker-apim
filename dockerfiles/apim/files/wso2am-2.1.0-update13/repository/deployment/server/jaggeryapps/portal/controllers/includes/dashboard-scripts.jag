@@ -1,0 +1,46 @@
+<%
+/**
+ * Copyright 2016 WSO2, Inc. (http://wso2.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+(function() {
+    var carbon = require('carbon'),
+            anonRole = String(carbon.user.anonRole),
+            isAnonView,
+            viewType;
+%>
+<script>
+    <%
+        isAnonView = JSON.parse(request.getParameter('isAnonView'));
+
+        if(isAnonView || !user) {
+            viewType = 'anon';
+        } else {
+            if(user && ((user.domain != superDomain && user.domain != urlDomain) ||
+                    (urlDomain && user.domain == superDomain && urlDomain != superDomain) ||
+                    (dashboard.isanon && !utils.allowed(user.roles, dashboard.permissions.editors)
+                    && !utils.allowed(user.roles, dashboard.permissions.viewers)))) {
+                viewType = 'anon';
+            } else {
+                viewType = 'default';
+            }
+        }
+    %>
+    ues.global.fresh = <%=fresh%>;
+    ues.global.dashboard = <%=dashboard%>;
+    ues.global.page = <%=JSON.stringify(pageId)%>;
+    ues.global.anonRole = <%=JSON.stringify(anonRole)%>;
+    ues.global.dbType = <%=JSON.stringify(viewType)%>;
+</script>
+<% }()); %>

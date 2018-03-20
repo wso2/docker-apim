@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ~  Copyright (c) 2018, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+
+-->
+<patterns xmlns="patterns.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="patterns.xsd">
+
+      <!-- For Access Logs -->
+      <pattern key="pattern1">
+          <detectPattern>(.)*(GET|POST|PUT|DELETE|PATCH|OPTIONS|TRACE)(.)*(provider|parentId)=${username}</detectPattern>
+          <replacePattern>(provider|parentId)=${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern2">
+          <detectPattern>(.)*(GET|POST|PUT|DELETE|PATCH|OPTIONS|TRACE)(.)*(/)(${username}|${username}-AT-${tenantDomain})(/)</detectPattern>
+          <replacePattern>(/)(${username}| ${username}-AT-${tenantDomain})(/)</replacePattern>
+      </pattern>
+
+      <!-- For Audit Logs -->
+      <pattern key="pattern3">
+          <detectPattern>(.)*(Initiator : )(${username}|(.)*(Target : )${username})</detectPattern>
+          <replacePattern>(${username}|(Target : )${username})</replacePattern>
+      </pattern>
+
+      <pattern key="pattern4">
+          <detectPattern>(.)*(\{"performedBy":")${username}(")(.)*(|(\\"provider\\":\\")${username}(\\")|(\\"provider\\":\\")${username}(-AT-)${tenantDomain}(\\"))</detectPattern>
+          <replacePattern>(("performedBy":")${username}(")|(\\"provider\\":\\")${username}(\\")|(\\"provider\\":\\")${username}(-AT-)${tenantDomain}(\\"))</replacePattern>
+      </pattern>
+
+      <pattern key="pattern5">
+          <detectPattern>(.)*${username}@${tenantDomain}(\s)*\[${tenantId}\](')(\s)*(logged in at)</detectPattern>
+          <replacePattern>(${username}@${tenantDomain}|(from IP address)(.)*)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern6">
+        <detectPattern>(.)*(${username}@${tenantDomain}(\s)*(\[)${tenantId}(\])|)(.)*(Failed Administrator login attempt ')${username}(\[)${tenantId}(\]' at)</detectPattern>
+        <replacePattern>(${username}(\[)${tenantId}(\])(.)*|${username}@${tenantDomain})</replacePattern>
+      </pattern>
+
+      <!-- For Carbon Logs -->
+
+      <pattern key="pattern7">
+          <detectPattern>(TID: )\[${tenantId}\](.)*(API : )(${username}|${username}(-AT-)${tenantDomain})(--)(.)*(the Synapse configuration successfully)</detectPattern>
+          <replacePattern>(${username}|${username}(-AT-)${tenantDomain})(--)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern8">
+          <detectPattern>(TID: )\[${tenantId}\](.)*(Initializing API: )(${username}|${username}(-AT-)${tenantDomain})(--)</detectPattern>
+          <replacePattern>(${username}|${username}(-AT-)${tenantDomain})(--)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern9">
+        <detectPattern>(TID: )\[${tenantId}\](.)*${username}@${tenantDomain}(\s)*(\[${tenantId}\](')|)(.)*(logged out)</detectPattern>
+        <replacePattern>${username}@${tenantDomain}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern10">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(user :|user=|user|user:|User|User:|Username :)(\s)*${username}(\s)*</detectPattern>
+        <replacePattern>(user :|user=|user|user:|User|User:|Username :)(\s)*${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern11">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(\[)(\s)*${username}(\s)*(\])</detectPattern>
+        <replacePattern>(\[)(\s)*${username}(\s)*(\])</replacePattern>
+      </pattern>
+
+      <pattern key="pattern12">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(user ')${username}(')</detectPattern>
+        <replacePattern>(user ')${username}(')</replacePattern>
+      </pattern>
+
+      <pattern key="pattern13">
+        <detectPattern>(TID: )\[${tenantId}\](.)*${username}@${tenantDomain}(\s)\[${tenantId}\](\s)\[AM\]</detectPattern>
+        <replacePattern>${username}@${tenantDomain}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern14">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(\()${username}(\))</detectPattern>
+        <replacePattern>(\()${username}(\))</replacePattern>
+      </pattern>
+
+      <pattern key="pattern15">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(subscriber|subscriber:|provider|provider:|login name :|subscribe by)(\s)*${username}</detectPattern>
+        <replacePattern>(Subscriber|subscriber|subscriber:|provider|provider:|login name :|subscribe by)(\s)*${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern16">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(/)(${username}|${username}-AT-${tenantDomain})(/)</detectPattern>
+        <replacePattern>(/)(${username}|${username}-AT-${tenantDomain})(/)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern17">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(userName=)${username}</detectPattern>
+        <replacePattern>(userName=)${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern18">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(${username}|${username}-AT-${tenantDomain})(-)</detectPattern>
+        <replacePattern>(${username}|${username}-AT-${tenantDomain})(-)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern19">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(get)(.)*( for :)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern20">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Application|Application:)(\s)*${username}(_)</detectPattern>
+        <replacePattern>${username}(_)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern21">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Service Provider)(.)*(name :|to :)(\s)*${username}(_)</detectPattern>
+        <replacePattern>(name :|to :)(\s)*${username}</replacePattern>
+      </pattern>
+
+<!-- Specific Logs -->
+      <pattern key="pattern22">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Error while checking user existence for)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern23">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Cannot access user profile of :)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern24">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Error while retrieving APIs by)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern25">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Could not load Subscriber records for:)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern26">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(User name taken from user info endpoint :)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern27">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Adding roles to )${username}(in )${tenantDomain}(\s)(Domain)</detectPattern>
+        <replacePattern>(to )${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern28">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Adding Subscriber role to)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern29">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(No claim values for user :)(\s)*${userstoreDomain}(/)${username}</detectPattern>
+        <replacePattern>${userstoreDomain}(/)${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern30">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Avoided removing the default app :)(\s)*${username}(_)</detectPattern>
+        <replacePattern>${username}(_)</replacePattern>
+      </pattern>
+
+      <pattern key="pattern31">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Logged in user is)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern32">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(API Name: )(.)*(API Version)(.)*(subscription removed from app)(.)*(by)${username}</detectPattern>
+        <replacePattern>(by)${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern33">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(session check for)${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern34">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Scope retrieval request received from the)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+      <pattern key="pattern35">
+        <detectPattern>(TID: )\[${tenantId}\](.)*(Name of authenticated user from SAML response)(\s)*${username}</detectPattern>
+        <replacePattern>${username}</replacePattern>
+      </pattern>
+
+</patterns>

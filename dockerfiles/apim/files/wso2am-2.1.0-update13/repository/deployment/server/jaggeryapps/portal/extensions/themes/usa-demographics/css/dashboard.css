@@ -1,0 +1,32 @@
+#navigation {
+    background-color: #2f5778;
+    border-color: #2f5778;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #DAD3D3;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #DAD3D3;
+}
+
+.ues-component-box {
+    box-sizing: border-box;
+}
+
+#wrapper {
+    background-color: #F4F4F4;
+}
+
+.panel-default > .panel-heading {
+    background: #FFFFFF;
+    /*overflow: hidden;*/
+    padding: 0;
+    border-radius: 0px;
+    border: none;
+}
+
+.panel {
+    border-radius: 0px;
+}

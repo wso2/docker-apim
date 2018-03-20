@@ -1,0 +1,11 @@
+{
+    "authenticationApi": "https://localhost:9443/store/apis/authenticate",
+    "publishedAssetApi": "https://localhost:9443/store/apis/assets?type=gadget&lcState=published",
+    "authConfiguration": {
+        "isSecureVaultEnabled" : false,
+        "username": "admin",
+        "password": "admin"
+    },
+    "dirNameDelimiter": "$"
+}
+

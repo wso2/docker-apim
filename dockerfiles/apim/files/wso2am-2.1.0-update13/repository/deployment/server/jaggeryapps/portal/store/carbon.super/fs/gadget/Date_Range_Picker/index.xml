@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<Module>
+    <ModulePrefs title="Date Range Picker" description="g1" height="250">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+          <meta charset="utf-8"/>
+          <title>Date Range Picker</title>
+
+          <!-- Custom Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../gadget-commons/css/gadget.css" />
+          
+          <!-- jQuery -->
+          <script src="../gadget-commons/js/jquery-1.10.2.js"></script>
+           
+          <!-- Include Date Range Picker -->
+          <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+          <link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
+          <script type="text/javascript" src="js/moment.min.js"></script>
+          <script type="text/javascript" src="js/daterangepicker.js"></script>
+
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
+          <script src="../gadget-commons/js/gadget-utils.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body>
+            
+            <div class="clearfix">
+                <div class="btn-group pull-right" id="date-select">
+                    <div id="reportrange" class="btn-group" role="group">
+                        <span class="btn-label">CUSTOM:</span>
+                        <!--<button id="btnLastHour" type="button" class="btn btn-filteringByFielddefault">Last Hour</button>-->
+                        <button id="btnLastDay"  type="button" class="btn btn-default">Yesterday</button>
+                        <button id="btnLastMonth" type="button" class="btn btn-default">Last 30 Days</button>
+                        <button id="btnLastYear" type="button" class="btn btn-default">Last Year</button>
+                        <button id="btnCustomRange" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i> Custom
+                            <b class="caret"></b>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+        ]]>
+    </Content>
+</Module>

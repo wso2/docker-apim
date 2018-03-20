@@ -1,0 +1,21 @@
+{
+  "id": "filteredLogMessages",
+  "title": "Filtered Messages",
+  "type": "gadget",
+  "thumbnail": "store://gadget/LogErrorFilteredMessage/img/thumbnail.png",
+  "data": {
+    "url": "store://gadget/LogErrorFilteredMessage/index.xml"
+  },
+  "notify": {
+    "publisher": {
+      "type": "filter-range",
+      "description": "This notifies selected filter"
+    }
+  },
+  "listen": {
+    "subscriber": {
+      "type": "filter",
+      "description": "Used to listen to any filters"
+    }
+  }
+}

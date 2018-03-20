@@ -1,0 +1,366 @@
+body {
+    padding-top: 136px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+a, a:focus {
+    outline: 0;
+}
+
+.ues-hidden {
+    display: none;
+}
+
+/**
+ * global menu styles
+ */
+.ues-global-navigation {
+    background: #11375B;
+    z-index: 1200;
+}
+
+.ues-global-navigation .navbar-brand {
+    color: #fff;
+}
+
+.ues-global-navigation .nav li a {
+    color: #fff;
+}
+
+.ues-global-navigation .nav .active a {
+    color: #fff;
+}
+
+.ues-global-navigation .nav li a:hover {
+    color: #fff;
+    background: #132D45;
+}
+
+.ues-global-navigation .nav .active a:hover {
+    color: #fff;
+    background: #132D45;
+}
+
+.ues-global-navigation .dropdown-menu li a {
+    color: #132D45;
+}
+
+/**
+ * context menu styles
+ */
+.ues-context-menu {
+    top: 50px;
+    background: #526A84;
+    border: none;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.ues-context-menu .navbar-brand {
+    color: #fff;
+}
+
+.ues-context-menu .navbar-brand:hover {
+    color: #fff;
+    background: #132D45;
+}
+
+.ues-context-menu .nav li a {
+    color: #fff;
+}
+
+.ues-context-menu .nav .active a {
+    background: #262933;
+    color: #fff;
+}
+
+.ues-context-menu .nav .active a:focus {
+    background: #262933;
+    color: #fff;
+}
+
+.ues-context-menu .nav li a:focus {
+    color: #fff;
+}
+
+.ues-context-menu .nav li a:hover {
+    color: #fff;
+    background: #132D45;
+}
+
+.ues-context-menu .nav .active a:hover {
+    background: #262933;
+    color: #fff;
+}
+
+.ues-context-menu .ues-tiles-menu-toggle {
+    background: #F47415;
+}
+
+.ues-context-menu .ues-tiles-menu-toggle:hover {
+    background: #D56613;
+}
+
+.ues-context-menu .ues-tiles-menu-toggle.active {
+    background: #132D45;
+}
+
+.ues-context-menu .ues-context-menu-actions .ues-hidden {
+    display: none;
+}
+
+.ues-context-menu .ues-context-menu-actions {
+    border: none;
+}
+
+/**
+ * tiles menu styles
+ */
+.ues-context-menu .ues-tiles-menu {
+    margin-bottom: 0;
+    background: #132D45;
+    display: none;
+}
+
+.ues-context-menu .ues-tiles-menu .nav a .fw {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.ues-context-menu .ues-tiles-menu .nav a {
+    padding: 13px;
+    text-align: center;
+    margin: 17px;
+}
+
+.ues-context-menu .ues-tiles-menu .nav a:hover {
+    background: #526A84;
+}
+
+.ues-wizard-steps {
+    padding-bottom: 20px;
+    margin: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ues-wizard-steps .ues-wizard-step .ues-step-no {
+    width: 50px;
+    height: 50px;
+    font-size: 33px;
+    font-weight: 100;
+    border-radius: 80px;
+    background: #ccc;
+    text-align: center;
+    color: #fff;
+    display: inline-block;
+}
+
+.ues-wizard-steps .ues-wizard-step.ues-active .ues-step-no {
+    background: #444;
+}
+
+.ues-wizard-steps .ues-wizard-step .ues-title {
+    display: inline-block;
+}
+
+.ues-wizard-body {
+    margin-bottom: 20px;
+}
+
+/**
+ *  typeahead styles
+ */
+.twitter-typeahead {
+    width: 100%;
+}
+
+.tt-input,
+.tt-hint {
+    height: 34px;
+    padding: 8px 11px;
+    line-height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.tt-input {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999
+}
+
+.tt-menu {
+    width: 100%;
+    padding: 4px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.ues-shared-role {
+    padding: 1px 11px;
+}
+
+.tt-suggestion {
+    padding: 3px 11px;
+    line-height: 24px;
+}
+
+.tt-suggestion:hover {
+    background-color: rgb(229, 229, 229);
+}
+
+.tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
+
+.app-logo {
+    display: block;
+    padding-top: 10px;
+    white-space: nowrap;
+}
+
+.app-logo h2, .app-logo img {
+    float: left;
+}
+
+.app-logo h2 {
+    text-indent: 10px;
+    overflow: hidden;
+}
+
+.logged-in i {
+    display: none
+}
+
+@media all and (max-width: 430px) {
+    div.app-logo h2.app-title {
+        font-size: 10px
+    }
+
+    .navbar-nav > li > a.logged-in {
+        font-size: 10px;
+        padding-right: 0;
+        padding-top: 0;
+        text-align: right;
+    }
+
+    .logged-in i {
+        display: inline-block;
+    }
+
+    .logged-in span.logged-in-username {
+        display: none;
+    }
+}
+
+@media all and (min-width: 767px) {
+    .close-db-settings {
+        display: none;
+    }
+}
+
+#ues-store-menu .navbar-toggle {
+    margin-right: 0px;
+}
+
+.close-db-settings {
+    margin-top: -8px;
+}
+
+#ues-properties .ues-title {
+    margin-top: 10px;
+}
+
+h2.app-title {
+    font-weight: 500;
+    font-size: 17px;
+    margin: 0;
+    padding: 3px 0 0 0;
+    color: #fafafa;
+    text-transform: uppercase;
+}
+
+.form-control {
+    border-radius: 0px;
+}
+
+.app-logo a {
+    text-decoration: none;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.navbar {
+    border: none;
+}
+
+.page-sub-title {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+.fw-stack {
+    height: 1.4em;
+    margin-top: -6px;
+}
+
+/** 
+ * breadcrumb
+ */
+.ues-designer-breadcrumb {
+    background-color: #041440;
+    margin: 0;
+    border-radius: 0;
+}
+
+.ues-designer-breadcrumb li a {
+    color: #fff;
+}
+
+.ues-designer-breadcrumb li a:hover {
+    color: rgb(228, 228, 228);
+}
+
+.breadcrumb > .active {
+    color: #ccc;
+}
+
+.ues-context-menu > .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+@media all and (max-width: 768px) {
+    .ues-context-menu .ues-context-menu-actions li {
+        padding-left: 10px;
+    }
+}

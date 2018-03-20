@@ -1,0 +1,15 @@
+{
+  "id": "logAPIMMessageProcessing",
+  "title": "Errors in API Message Processing",
+  "type": "gadget",
+  "thumbnail": "store://gadget/LogAPIMMessageProcessing/img/thumbnail.png",
+  "data": {
+    "url": "store://gadget/LogAPIMMessageProcessing/index.xml"
+  },
+  "listen": {
+    "subscriber": {
+      "type": "date-range",
+      "description": "Used to listen to any date range-selected"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<%
+
+var config = require('/configs/designer.json');
+var storeTypes = config.store.types;
+for (var i = 0; i < storeTypes.length; i++) {
+    var extensionPath = 'extensions/uris/' + storeTypes[i] + '/index.js';
+%>
+<script src="<%=urlPrefix%><%=extensionPath%>"></script>
+<%
+}
+%>

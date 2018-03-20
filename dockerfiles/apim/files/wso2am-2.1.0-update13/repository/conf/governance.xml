@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+<GovernanceConfiguration xmlns="http://wso2.org/projects/carbon/governance.xml">
+    <DiscoveryAgents>
+        <!--  Example Configuration -->
+        <!--<DiscoveryAgent>-->
+        <!--<ServerTypeId>WSO2ESB</ServerTypeId>-->
+        <!--<AgentClass>org.wso2.carbon.examples.esb.DiscoveryAgents</AgentClass>-->
+        <!--</DiscoveryAgent>-->
+    </DiscoveryAgents>
+    <Comparators>
+        <Comparator class="org.wso2.carbon.governance.comparator.text.TextComparator"/>
+        <Comparator class="org.wso2.carbon.governance.comparator.wsdl.WSDLComparator"/>
+    </Comparators>
+
+    <!-- Possible values, enabled|disable-->|
+    <EndpointStateManagement>disable</EndpointStateManagement>
+    <!-- Duration in seconds             -->|
+    <DefaultEndpointActiveDuration>90</DefaultEndpointActiveDuration>
+    <AssociationConfig>
+
+        <Association type="default">
+            <security reverseAssociation ="secures" iconClass="fw-security">policy</security>
+            <ownedBy reverseAssociation ="owns" iconClass="fw-user">soapservice,restservice,wsdl</ownedBy>
+            <usedBy reverseAssociation ="depends" iconClass="fw-globe">soapservice,restservice,wsdl</usedBy>
+            <depends reverseAssociation ="usedBy" iconClass="fw-store">soapservice,restservice,wsdl</depends>
+        </Association>
+
+        <Association type="restservice">
+            <security reverseAssociation ="secures" iconClass="fw-security">policy</security>
+            <ownedBy reverseAssociation ="owns" iconClass="fw-user">restservice,soapservice,wsdl</ownedBy>
+            <usedBy reverseAssociation ="depends" iconClass="fw-globe">restservice,soapservice,wsdl</usedBy>
+            <depends reverseAssociation ="usedBy" iconClass="fw-store">restservice,soapservice,wsdl,endpoint</depends>
+        </Association>
+
+        <Association type="soapservice">
+            <security reverseAssociation ="secures" iconClass="fw-security">policy</security>
+            <ownedBy reverseAssociation ="owns" iconClass="fw-user">soapservice,restservice,wsdl</ownedBy>
+            <usedBy reverseAssociation ="depends" iconClass="fw-globe">soapservice,restservice,wsdl</usedBy>
+            <depends reverseAssociation ="usedBy" iconClass="fw-store">soapservice,restservice,wsdl,endpoint</depends>
+        </Association>
+
+    </AssociationConfig>
+</GovernanceConfiguration>
+
