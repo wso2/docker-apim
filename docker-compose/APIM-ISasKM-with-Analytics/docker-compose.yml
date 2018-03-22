@@ -45,8 +45,8 @@ services:
       - ./is-as-km/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/user-mgt.xml
       - ./is-as-km/repository/conf/registry.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/registry.xml
     ports:
-      - "9763:9763"
-      - "9443:9443"
+      - "9765:9763"
+      - "9445:9443"
   api-manager:
     image: docker.wso2.com/wso2am:2.1.0
     healthcheck:
