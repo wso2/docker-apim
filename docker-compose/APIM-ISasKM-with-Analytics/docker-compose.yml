@@ -19,6 +19,7 @@ services:
     ports:
       - "9444:9444"
       - "9764:9764"
+      - "4041:4041"
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9444/carbon/admin/login.jsp"]
       interval: 10s
