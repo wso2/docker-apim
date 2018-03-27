@@ -57,4 +57,5 @@ services:
       - "8243:8243"
     links:
       - mysql
+      - am-analytics
 
