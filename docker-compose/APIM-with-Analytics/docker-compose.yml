@@ -43,6 +43,8 @@ services:
     depends_on:
       am-analytics:
         condition: service_healthy
+      mysql:
+        condition: service_healthy
     volumes:
       - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
       - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
@@ -53,3 +55,6 @@ services:
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
+    links:
+      - mysql
+

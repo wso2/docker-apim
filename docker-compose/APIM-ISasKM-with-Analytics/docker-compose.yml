@@ -31,6 +31,8 @@ services:
     volumes:
       - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
       - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
+    links:
+      - mysql
   is-as-km:
     image: docker.wso2.com/wso2is-km:5.3.0
     healthcheck:
@@ -41,6 +43,8 @@ services:
     depends_on:
       am-analytics:
         condition: service_healthy
+      mysql:
+        condition: service_healthy
     volumes:
       - ./is-as-km/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/datasources/master-datasources.xml
       - ./is-as-km/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/user-mgt.xml
@@ -48,6 +52,8 @@ services:
     ports:
       - "9765:9763"
       - "9445:9443"
+    links:
+      - mysql
   api-manager:
     image: docker.wso2.com/wso2am:2.1.0
     healthcheck:
@@ -57,6 +63,10 @@ services:
       retries: 5
     depends_on:
       is-as-km:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+      am-analytics:
         condition: service_healthy
     volumes:
       - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
@@ -72,3 +82,5 @@ services:
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
+    links:
+      - mysql
