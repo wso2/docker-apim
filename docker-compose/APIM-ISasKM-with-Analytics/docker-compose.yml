@@ -54,6 +54,7 @@ services:
       - "9445:9443"
     links:
       - mysql
+      - am-analytics
   api-manager:
     image: docker.wso2.com/wso2am:2.1.0
     healthcheck:
@@ -64,9 +65,9 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-      is-as-km:
-        condition: service_healthy
       am-analytics:
+        condition: service_healthy
+      is-as-km:
         condition: service_healthy
     volumes:
       - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
@@ -84,6 +85,7 @@ services:
       - "8243:8243"
     links:
       - mysql
-      - is-as-km
       - am-analytics
+      - is-as-km
+
 
