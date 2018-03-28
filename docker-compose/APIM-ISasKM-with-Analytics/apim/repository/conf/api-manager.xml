@@ -93,7 +93,7 @@
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://api-manager:${http.nio.port},https://api-manager:${https.nio.port}</GatewayEndpoint>
+                <GatewayEndpoint>http://localhost:${http.nio.port},https://localhost:${https.nio.port}</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -284,10 +284,10 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://api-manager/store</URL>
+        <URL>https://localhost:${mgt.transport.https.port}/store</URL>
 
         <!-- Server URL of the API Store. -->
-        <ServerURL>https://api-manager:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
         <!-- Admin username for API Store. -->
         <Username>${admin.username}</Username>
 
@@ -317,7 +317,7 @@
 
     <APIPublisher>
         <DisplayURL>false</DisplayURL>
-        <URL>https://api-manager/publisher</URL>
+        <URL>https://localhost/publisher</URL>
         <!-- This parameter specifies enabling the capability of setting API documentation level granular visibility levels.
              By default any document associate with an API will have the same permissions set as the API.With enabling below
              property,it will show two additional permission levels as visible only to all registered users in a particular
@@ -651,12 +651,12 @@
     </ThrottlingConfigurations>
     <WorkflowConfigurations>
         <Enabled>false</Enabled>
-        <ServerUrl>https://localhost:9445/bpmn</ServerUrl>
-        <ServerUser>${admin.username}</ServerUser>
-        <ServerPassword>${admin.password}</ServerPassword>
-        <WorkflowCallbackAPI>https://localhost:${mgt.transport.https.port}/api/am/publisher/v0.10/workflows/update-workflow-status</WorkflowCallbackAPI>
+    	<ServerUrl>https://localhost:9445/bpmn</ServerUrl>   		
+    	<ServerUser>${admin.username}</ServerUser>
+    	<ServerPassword>${admin.password}</ServerPassword>
+    	<WorkflowCallbackAPI>https://localhost:${mgt.transport.https.port}/api/am/publisher/v0.11/workflows/update-workflow-status</WorkflowCallbackAPI>
         <TokenEndPoint>https://localhost:${https.nio.port}/token</TokenEndPoint>
-        <DCREndPoint>https://localhost:${mgt.transport.https.port}/client-registration/v0.10/register</DCREndPoint>
+        <DCREndPoint>https://localhost:${mgt.transport.https.port}/client-registration/v0.11/register</DCREndPoint>
         <DCREndPointUser>${admin.username}</DCREndPointUser>
         <DCREndPointPassword>${admin.password}</DCREndPointPassword>
     </WorkflowConfigurations>
