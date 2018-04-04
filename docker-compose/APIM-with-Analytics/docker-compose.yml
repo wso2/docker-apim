@@ -50,6 +50,9 @@ services:
       - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
       - ./apim/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/carbon.xml
       - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
+      - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.1.0/bin/wso2server.sh
+      - ./apim/repository/deployment/server/jaggeryapps/portal/configs/designer.json:/home/wso2carbon/wso2am-2.1.0/repository/deployment/server/jaggeryapps/portal/configs/designer.json
+      - ./apim/repository/conf/log4j.properties:/home/wso2carbon/wso2am-2.1.0/repository/conf/log4j.properties
     ports:
       - "9763:9763"
       - "9443:9443"
