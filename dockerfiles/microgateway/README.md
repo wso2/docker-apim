@@ -1,9 +1,10 @@
-# Dockerfile for WSO2 Identity Server deployed as the API Key Manager #
-The section defines the step-by-step instructions to build the Docker image for WSO2 IS deployed as API Key Manager.
+# Dockerfile for WSO2 API Manager #
+The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.2.0.
 
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -11,33 +12,34 @@ The section defines the step-by-step instructions to build the Docker image for 
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfiles/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfile/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`
+##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that to `<IS_KM_DOCKERFILE_HOME>/files`.
-- Download the WSO2 Identity Server as Key Manager 5.5.0 distribution (http://wso2.com/api-management/try-it/)
-and extract that to `<IS_KM_DOCKERFILE_HOME>/files`. <br>
+and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
+- Download the WSO2 API Manager 2.2.0 distribution (https://wso2.com/api-management/api-microgateway/#download-micro-api-gateway)
+and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
 - Once both JDK and WSO2 API Manager distributions are extracted the folder structure should be as follows;
 
-    ```bash
-    <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
-    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.5.0/
-    ```
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<IS_KM_DOCKERFILE_HOME>/files` folder
+  ```bash
+  <AM_DOCKERFILE_HOME>/files/jdk<version>/
+  <AM_DOCKERFILE_HOME>/files/wso2am-2.2.0/
+  ```
+- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<AM_DOCKERFILE_HOME>/files` folder
+
 
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
-- Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
+- Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2is-km:5.5.0 .`
+    + `docker build -t wso2am:2.2.0 .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9443:9443 wso2is-km:5.5.0`
+- `docker run -it -p 8243:8243 wso2am:2.2.0`
 
-##### 5. Accessing management console.
+##### 6. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
     + `https:<DOCKER_HOST>:9443/carbon`
     
@@ -61,12 +63,12 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9444:9444 \
+-p 8244:8244 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2is-km:5.5.0
+wso2am:2.2.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.5.0/repository/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.2.0/repository/conf folder of the container.
 
 
 ## Docker command usage references
@@ -74,3 +76,4 @@ wso2is-km:5.5.0
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
 * [Docker run command reference](https://docs.docker.com/engine/reference/run/)
 * [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+#TODO fix READme

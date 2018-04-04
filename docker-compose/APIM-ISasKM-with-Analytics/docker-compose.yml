@@ -15,7 +15,7 @@ services:
       timeout: 60s
       retries: 5
   am-analytics:
-    image: docker.wso2.com/wso2am-analytics:2.1.0
+    image: wso2am-analytics:2.2.0
     ports:
       - "9444:9444"
       - "9764:9764"
@@ -29,12 +29,12 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/analytics-datasources.xml
-      - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.1.0/repository/conf/datasources/stats-datasources.xml
+      - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.2.0/repository/conf/datasources/analytics-datasources.xml
+      - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.2.0/repository/conf/datasources/stats-datasources.xml
     links:
       - mysql
   is-as-km:
-    image: docker.wso2.com/wso2is-km:5.3.0
+    image: wso2is-km:5.5.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
@@ -46,9 +46,11 @@ services:
       am-analytics:
         condition: service_healthy  
     volumes:
-      - ./is-as-km/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/datasources/master-datasources.xml
-      - ./is-as-km/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/user-mgt.xml
-      - ./is-as-km/repository/conf/registry.xml:/home/wso2carbon/wso2is-km-5.3.0/repository/conf/registry.xml
+      - ./is-as-km/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/datasources/master-datasources.xml
+      - ./is-as-km/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/user-mgt.xml
+      - ./is-as-km/repository/conf/registry.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/registry.xml
+      - ./is-as-km/repository/conf/identity/identity.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/identity/identity.xml
+      - ./is-as-km/repository/conf/consent-mgt-config.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/consent-mgt-config.xml
     ports:
       - "9765:9763"
       - "9445:9443"
@@ -56,7 +58,7 @@ services:
       - mysql
       - am-analytics
   api-manager:
-    image: docker.wso2.com/wso2am:2.1.0
+    image: wso2am:2.2.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
@@ -70,16 +72,15 @@ services:
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/datasources/master-datasources.xml
-      - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/api-manager.xml
-      - ./apim/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/carbon.xml
-      - ./apim/repository/conf/user-mgt.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/user-mgt.xml
-      - ./apim/repository/conf/registry.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/registry.xml
-      - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/tomcat/catalina-server.xml
-      - ./apim/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.1.0/repository/conf/axis2/axis2.xml
-      - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.1.0/bin/wso2server.sh
-      - ./apim/repository/deployment/server/jaggeryapps/portal/configs/designer.json:/home/wso2carbon/wso2am-2.1.0/repository/deployment/server/jaggeryapps/portal/configs/designer.json
-      - ./apim/repository/conf/log4j.properties:/home/wso2carbon/wso2am-2.1.0/repository/conf/log4j.properties
+      - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/datasources/master-datasources.xml
+      - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/api-manager.xml
+      - ./apim/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/carbon.xml
+      - ./apim/repository/conf/user-mgt.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/user-mgt.xml
+      - ./apim/repository/conf/registry.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/registry.xml
+      - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/tomcat/catalina-server.xml
+      - ./apim/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/axis2/axis2.xml
+      - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.2.0/bin/wso2server.sh
+      - ./apim/repository/deployment/server/jaggeryapps/portal/configs/designer.json:/home/wso2carbon/wso2am-2.2.0/repository/deployment/server/jaggeryapps/portal/configs/designer.json
     ports:
       - "9763:9763"
       - "9443:9443"
