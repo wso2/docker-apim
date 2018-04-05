@@ -556,7 +556,7 @@
             <filePath>repository/resources/security/sslprofiles.xml</filePath>
             <fileReadInterval>600000</fileReadInterval>
         </parameter>
-        <!--<parameter name="HostnameVerifier">AllowAll</parameter>-->
+        <parameter name="HostnameVerifier">AllowAll</parameter>
             <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
     </transportSender>
 
