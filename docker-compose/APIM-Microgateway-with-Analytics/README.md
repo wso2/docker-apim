@@ -53,6 +53,7 @@
 
    Please note that API Gateway will be available on following ports.
    ```
+   https://localhost:8244
    https://localhost:8243
    https://localhost:8280
    ```
