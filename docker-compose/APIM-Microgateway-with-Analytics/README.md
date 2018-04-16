@@ -22,12 +22,12 @@
    ```
    > If you are to try out an already released zip of this repo, please ignore this 1st step. 
    
-2. Switch to `docker-compose/APIM-with-Analytics` folder.
+2. Switch to `docker-compose/APIM-Microgateway-with-Analytics` folder.
    ```
-   cd docker-apim/docker-compose/APIM-with-Analytics
+   cd docker-apim/docker-compose/APIM-Microgateway-with-Analytics
    ```
    > If you are to try out an already released zip of this repo, please ignore this 2nd step also. 
-    Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>docker-compose/APIM-with-Analytics` folder. 
+    Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>docker-compose/APIM-Microgateway-with-Analytics` folder. 
      
    > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
     i.e. for example: git checkout tags/v2.2.0.4 and continue below steps.
@@ -37,7 +37,12 @@
    docker-compose up
    ```
 
-4. Once the deployment is started, try to access the web UIs via following URLs and default credentials <br> 
+4. If you make any changes to the APIs or throttling policies after starting, restart the Microgateway server to make sure the changes are synced 
+   ```
+   docker-compose restart api-manager-gateway
+   ```
+   
+5. Once the deployment is started, try to access the web UIs via following URLs and default credentials <br> 
    on your favorite web browser.
 
    ```
