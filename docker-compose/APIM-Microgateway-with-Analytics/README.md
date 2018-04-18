@@ -16,7 +16,7 @@
 
 ## Quick Start Guide
 
-1. Clone WSO2 API Microgateway Docker git repository.
+1. Clone WSO2 APIM Docker git repository.
    ```
    git clone https://github.com/wso2/docker-apim
    ```
