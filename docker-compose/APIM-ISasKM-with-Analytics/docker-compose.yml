@@ -29,8 +29,7 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics/repository/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2am-analytics-2.2.0/repository/conf/datasources/analytics-datasources.xml
-      - ./apim-analytics/repository/conf/datasources/stats-datasources.xml:/home/wso2carbon/wso2am-analytics-2.2.0/repository/conf/datasources/stats-datasources.xml
+      - ./apim-analytics:/home/wso2carbon/volumes
     links:
       - mysql
   is-as-km:
@@ -46,11 +45,7 @@ services:
       am-analytics:
         condition: service_healthy  
     volumes:
-      - ./is-as-km/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/datasources/master-datasources.xml
-      - ./is-as-km/repository/conf/user-mgt.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/user-mgt.xml
-      - ./is-as-km/repository/conf/registry.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/registry.xml
-      - ./is-as-km/repository/conf/identity/identity.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/identity/identity.xml
-      - ./is-as-km/repository/conf/consent-mgt-config.xml:/home/wso2carbon/wso2is-km-5.5.0/repository/conf/consent-mgt-config.xml
+      - ./is-as-km:/home/wso2carbon/volumes
     ports:
       - "9765:9763"
       - "9445:9443"
@@ -72,14 +67,7 @@ services:
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./apim/repository/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/datasources/master-datasources.xml
-      - ./apim/repository/conf/api-manager.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/api-manager.xml
-      - ./apim/repository/conf/carbon.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/carbon.xml
-      - ./apim/repository/conf/user-mgt.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/user-mgt.xml
-      - ./apim/repository/conf/registry.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/registry.xml
-      - ./apim/repository/conf/tomcat/catalina-server.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/tomcat/catalina-server.xml
-      - ./apim/repository/conf/axis2/axis2.xml:/home/wso2carbon/wso2am-2.2.0/repository/conf/axis2/axis2.xml
-      - ./apim/bin/wso2server.sh:/home/wso2carbon/wso2am-2.2.0/bin/wso2server.sh
+      - ./apim:/home/wso2carbon/volumes
     ports:
       - "9763:9763"
       - "9443:9443"

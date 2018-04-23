@@ -1,4 +1,4 @@
-# WSO2 API Manager Docker Resources
+# Docker Resources for WSO2 API Manager 
 
 This repository contains following Docker resources:
 

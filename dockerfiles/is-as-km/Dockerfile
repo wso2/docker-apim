@@ -41,7 +41,15 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
     curl && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
+    >> /etc/bash.bashrc \
+    ; echo "\
+    Welcome to WSO2 Docker resources.\n\
+    The Docker container contains the WSO2 product with its latest updates, which are under the End User License Agreement (EULA) 2.0.\n\
+    \n\
+    Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"\
+    > /etc/motd
 
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
@@ -51,6 +59,8 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
+COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
+
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
@@ -58,9 +68,10 @@ WORKDIR ${USER_HOME}
 # set environment variables
 ENV JAVA_HOME=${JAVA_HOME} \
     PATH=$JAVA_HOME/bin:$PATH \
-    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+    WORKING_DIRECTORY=${USER_HOME}
 
 # expose ports
 EXPOSE 9763 9443
 
-ENTRYPOINT ${WSO2_SERVER_HOME}/bin/wso2server.sh
+ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
