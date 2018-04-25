@@ -1,5 +1,6 @@
 # WSO2 API Manager & API Micro Gateway deployment with WSO2 API Manager Analytics
 
+![alt tag](deployment-diagram.png)
 
 ## Prerequisites
 
