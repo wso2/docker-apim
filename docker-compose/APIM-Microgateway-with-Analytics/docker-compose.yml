@@ -24,7 +24,7 @@ services:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9444/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
-      retries: 5
+      retries: 10
     depends_on:
       mysql:
         condition: service_healthy
@@ -32,39 +32,17 @@ services:
       - ./apim-analytics:/home/wso2carbon/volumes
     links:
       - mysql
-  is-as-km:
-    image: docker.wso2.com/wso2is-km:5.5.0
-    healthcheck:
-      test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
-      interval: 10s
-      timeout: 120s
-      retries: 15
-    depends_on:
-      mysql:
-        condition: service_healthy
-      am-analytics:
-        condition: service_healthy  
-    volumes:
-      - ./is-as-km:/home/wso2carbon/volumes
-    ports:
-      - "9765:9763"
-      - "9445:9443"
-    links:
-      - mysql
-      - am-analytics
   api-manager:
     image: docker.wso2.com/wso2am:2.2.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
-      retries: 5
+      retries: 10
     depends_on:
-      mysql:
-        condition: service_healthy
       am-analytics:
         condition: service_healthy
-      is-as-km:
+      mysql:
         condition: service_healthy
     volumes:
       - ./apim:/home/wso2carbon/volumes
@@ -76,5 +54,19 @@ services:
     links:
       - mysql
       - am-analytics
-      - is-as-km
+  api-manager-gateway:
+    image: docker.wso2.com/wso2am-micro-gw:2.2.0
+    depends_on:
+      api-manager:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./micro-gw:/home/wso2carbon/volumes
+    ports:
+      - "5673:5673"
+      - "8244:8244"
+    links:
+      - mysql
+      - am-analytics
 

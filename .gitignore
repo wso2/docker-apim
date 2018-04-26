@@ -26,3 +26,4 @@ wso2*/scripts
 
 notes.txt
 **/files/*
+!**/files/init.sh
