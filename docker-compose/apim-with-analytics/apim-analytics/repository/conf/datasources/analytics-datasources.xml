@@ -23,6 +23,9 @@
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
                     <defaultAutoCommit>false</defaultAutoCommit>
+                    <!--<initialSize>0</initialSize>-->
+                    <!--<testWhileIdle>true</testWhileIdle>-->
+                    <!--<minEvictableIdleTimeMillis>4000</minEvictableIdleTimeMillis>-->
                     <defaultTransactionIsolation>READ_COMMITTED</defaultTransactionIsolation>
                 </configuration>
             </definition>
@@ -43,6 +46,9 @@
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
                     <defaultAutoCommit>false</defaultAutoCommit>
+                    <!--<initialSize>0</initialSize>-->
+                    <!--<testWhileIdle>true</testWhileIdle>-->
+                    <!--<minEvictableIdleTimeMillis>4000</minEvictableIdleTimeMillis>-->
                     <defaultTransactionIsolation>READ_COMMITTED</defaultTransactionIsolation>
                 </configuration>
             </definition>
