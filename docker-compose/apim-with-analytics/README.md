@@ -30,7 +30,7 @@
     Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>docker-compose/APIM-with-Analytics` folder. 
      
    > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: git checkout tags/v2.1.0.4 and continue below steps.
+    i.e. for example: git checkout tags/v2.5.0.1 and continue below steps.
 
 3. Execute following Docker command to start the deployment.
    ```

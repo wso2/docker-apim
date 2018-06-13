@@ -15,7 +15,7 @@ services:
       timeout: 60s
       retries: 5
   am-analytics:
-    image: docker.wso2.com/wso2am-analytics:2.2.0
+    image: docker.wso2.com/wso2am-analytics:2.5.0
     ports:
       - "9444:9444"
       - "9764:9764"
@@ -33,7 +33,7 @@ services:
     links:
       - mysql
   is-as-km:
-    image: docker.wso2.com/wso2is-km:5.5.0
+    image: docker.wso2.com/wso2is-km:5.6.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
@@ -53,7 +53,7 @@ services:
       - mysql
       - am-analytics
   api-manager:
-    image: docker.wso2.com/wso2am:2.2.0
+    image: docker.wso2.com/wso2am:2.5.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s

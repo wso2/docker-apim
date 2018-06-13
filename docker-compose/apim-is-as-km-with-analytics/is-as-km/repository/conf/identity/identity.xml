@@ -251,7 +251,7 @@
 
             Default grant types that filter user claims based on user consent are 'authorization_code' and 'implicit'.
 
-            Supported versions: IS 5.5.0 onwards.
+            Supported versions: IS 5.6.0 onwards.
         -->
         <UserConsentEnabledGrantTypes>
             <UserConsentEnabledGrantType>
@@ -342,7 +342,7 @@
             <!-- Default symmetric encryption algorithm that used to encrypt JWT claims set. -->
             <IDTokenEncryptionMethod>A128GCM</IDTokenEncryptionMethod>
 
-            <!-- Supported versions: IS 5.5.0 onwards. -->
+            <!-- Supported versions: IS 5.6.0 onwards. -->
             <SupportedIDTokenEncryptionAlgorithms>
                 <SupportedIDTokenEncryptionAlgorithm>RSA1_5</SupportedIDTokenEncryptionAlgorithm>
                 <SupportedIDTokenEncryptionAlgorithm>RSA-OAEP</SupportedIDTokenEncryptionAlgorithm>
@@ -378,7 +378,7 @@
             <SignJWTWithSPKey>false</SignJWTWithSPKey>
             <!--
                 Expiry period of the logout token used in OIDC Back Channel Logout in seconds.
-                Supported versions: IS 5.5.0 onwards
+                Supported versions: IS 5.6.0 onwards
             -->
             <LogoutTokenExpiration>120</LogoutTokenExpiration>
 
@@ -516,7 +516,7 @@
 
             <!-- Flag to indicate advanced complex multiValued attributes support enabled or not.
             Default value : false
-            Supported versions: IS 5.5.0 beta onwards
+            Supported versions: IS 5.6.0 beta onwards
             -->
             <!--<ComplexMultiValuedAttributeSupportEnabled>true</ComplexMultiValuedAttributeSupportEnabled>-->
         </SCIMAuthenticators>
