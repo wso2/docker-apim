@@ -16,27 +16,38 @@
 # ------------------------------------------------------------------------
 set -e
 
+# product profile variable
+wso2_server_profile=am-analytics
+
 # custom WSO2 non-root user and group variables
 user=wso2carbon
 group=wso2
 
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
+k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
 
 # capture the Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
-
-# check if the WSO2 non-root user has been created
-! getent passwd ${user} >/dev/null 2>&1 && echo "WSO2 Docker non-root user does not exist" && exit 1
-
-# check if the WSO2 non-root group has been created
-! getent group ${group} >/dev/null 2>&1 && echo "WSO2 Docker non-root group does not exist" && exit 1
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
 
 # check if the WSO2 product home exists
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
+
+# check if any changed configuration files have been mounted, using K8s ConfigMap volumes
+
+# since, K8s does not support building ConfigMaps recursively from a directory, each folder has been separately
+# mounted in the form of a K8s ConfigMap volume
+# copy the mounted configuration files (through ConfigMaps) to the product pack
+if test -d ${k8s_volumes}/${wso2_server_profile}/conf; then
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf/* ${WSO2_SERVER_HOME}/repository/conf
+fi
+
+if test -d ${k8s_volumes}/${wso2_server_profile}/conf-datasources; then
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf-datasources/* ${WSO2_SERVER_HOME}/repository/conf/datasources
+fi
 
 # copy configuration changes and external libraries
 
