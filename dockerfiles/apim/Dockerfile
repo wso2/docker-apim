@@ -40,7 +40,8 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 # install required packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl && \
+    curl \
+    netcat && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
     >> /etc/bash.bashrc \
@@ -58,8 +59,12 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 # copy the jdk and wso2 product distributions to user's home directory and copy the mysql connector jar to server distribution
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
-COPY --chown=wso2carbon:wso2 ${FILES}/init.sh ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
+COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
+COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/dropins/
+# set temporary location for shared artifacts
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/repository/deployment/server ${USER_HOME}/wso2-tmp/server
 
 # set the user and work directory
 USER ${USER_ID}
