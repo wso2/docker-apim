@@ -1,31 +1,18 @@
-# WSO2 API Manager Docker Artifacts
+# Docker Resources for WSO2 API Manager 
 
 This repository contains following Docker artifacts, for trying out WSO2 API Manager on plain Docker:
 - WSO2 API Manager Dockerfile
-- WSO2 API Manager Docker Compose File
+- WSO2 API Manager Analytics Dockerfile
+- WSO2 API Manager Docker Compose Templates
 
-## Getting Started
+The WSO2 API Manager and API Manager Analytics Dockerfiles build generic Docker images <br>
+for deploying API Manager and API Manager Analytics in containerized environments. They<br>
+include the JDK, product distributions and a collection of utility libraries. Configurations, JDBC<br>
+driver, extensions and other deployable artifacts are designed to be provided via volume mounts.
 
-Execute following command to clone the repository:
+The Docker Compose templates have been created according to standard API Manager deployment patterns
+for allowing users to evaluate the product and understand the deployment architecture in depth.
 
-```bash
-git clone https://github.com/wso2/docker-apim.git
-```
-
-Checkout required product version branch:
-
-```bash
-git branch
-git checkout <product-version>
-```
-
-The bash files in dockerfile folder make use of scripts in [wso2/docker-common](https://github.com/wso2/docker-common) repository
-and it has been imported into dockerfile/common folder as a sub-module. Once the clone process is completed execute following 
-commands to pull the sub-module content:
-
-```bash
-git submodule init
-git submodule update
-```
 ## Note
-For running a containerized WSO2 API Manager deployment in production, its recommended to use a container cluster manager such as Kubernetes/Openshift. Please refer [APIM Kubernetes Artifacts](https://github.com/wso2/kubernetes-apim/) repository.
+For running a containerized WSO2 API Manager deployment in production, its recommended to use a<br>
+container cluster manager such as Kubernetes/Openshift. Please refer [APIM Kubernetes Artifacts](https://github.com/wso2/kubernetes-apim/) repository.

@@ -1,0 +1,72 @@
+version: '2.3'
+services:
+  mysql:
+    image: mysql:5.7.19
+    ports:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql/scripts:/docker-entrypoint-initdb.d
+    command: [--ssl=0]
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+  am-analytics:
+    image: docker.wso2.com/wso2am-analytics:2.2.0
+    ports:
+      - "9444:9444"
+      - "9764:9764"
+      - "4041:4041"
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:9444/carbon/admin/login.jsp"]
+      interval: 10s
+      timeout: 120s
+      retries: 10
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./apim-analytics:/home/wso2carbon/volumes
+    links:
+      - mysql
+  api-manager:
+    image: docker.wso2.com/wso2am:2.2.0
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
+      interval: 10s
+      timeout: 120s
+      retries: 10
+    depends_on:
+      am-analytics:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./apim:/home/wso2carbon/volumes
+    ports:
+      - "9763:9763"
+      - "9443:9443"
+      - "8280:8280"
+      - "8243:8243"
+    links:
+      - mysql
+      - am-analytics
+  api-manager-gateway:
+    image: docker.wso2.com/wso2am-micro-gw:2.2.0
+    depends_on:
+      api-manager:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./micro-gw:/home/wso2carbon/volumes
+    ports:
+      - "5673:5673"
+      - "8244:8244"
+    links:
+      - mysql
+      - am-analytics
+
