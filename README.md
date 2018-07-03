@@ -1,6 +1,6 @@
 # WSO2 API Manager Docker Artifacts
 
-This repository contains following Docker artifacts:
+This repository contains following Docker artifacts, for trying out WSO2 API Manager on plain Docker:
 - WSO2 API Manager Dockerfile
 - WSO2 API Manager Docker Compose File
 
@@ -27,3 +27,5 @@ commands to pull the sub-module content:
 git submodule init
 git submodule update
 ```
+## Note
+For running a containerized WSO2 API Manager deployment in production, its recommended to use a container cluster manager such as Kubernetes/Openshift. Please refer [APIM Kubernetes Artifacts](https://github.com/wso2/kubernetes-apim/) repository.
