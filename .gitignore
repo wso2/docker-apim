@@ -1,3 +1,4 @@
+
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -21,9 +22,5 @@ hs_err_pid*
 *.iml
 
 rat.txt
-target/
-wso2*/scripts
-
-notes.txt
 **/files/*
-!**/files/init.sh
+
