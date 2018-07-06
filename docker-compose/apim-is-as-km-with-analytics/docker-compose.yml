@@ -35,7 +35,7 @@ services:
   is-as-km:
     image: docker.wso2.com/wso2is-km:5.6.0
     healthcheck:
-      test: ["CMD", "curl", "-k", "-f", "https://localhost:9`443/carbon/admin/login.jsp"]
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
       retries: 15
