@@ -59,7 +59,7 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/init.sh ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 
 # set the user and work directory
 USER ${USER_ID}

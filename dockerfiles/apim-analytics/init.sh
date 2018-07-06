@@ -24,7 +24,7 @@ user=wso2carbon
 group=wso2
 
 # file path variables
-volumes=${WORKING_DIRECTORY}/volumes
+volumes=${WORKING_DIRECTORY}/wso2-server-volume
 k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
 temp_persisted_artifacts=${WORKING_DIRECTORY}/wso2-tmp/analytics
 original_persisted_artifacts=${WSO2_SERVER_HOME}/repository/conf/analytics
