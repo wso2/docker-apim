@@ -22,5 +22,5 @@ hs_err_pid*
 *.iml
 
 rat.txt
-#**/files/*
+**/files/*
 
