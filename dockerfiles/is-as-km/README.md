@@ -16,13 +16,13 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
 and extract that to `<IS_KM_DOCKERFILE_HOME>/files`.
-- Download the WSO2 Identity Server as Key Manager 5.5.0 distribution (http://wso2.com/api-management/try-it/)
+- Download the WSO2 Identity Server as Key Manager 5.6.0 distribution (http://wso2.com/api-management/try-it/)
 and extract that to `<IS_KM_DOCKERFILE_HOME>/files`. <br>
 - Once both JDK and WSO2 API Manager distributions are extracted the folder structure should be as follows;
 
     ```bash
     <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
-    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.5.0/
+    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.6.0/
     ```
 - Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<IS_KM_DOCKERFILE_HOME>/files` folder
 
@@ -32,10 +32,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2is-km:5.5.0 .`
+    + `docker build -t wso2is-km:5.6.0 .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9443:9443 wso2is-km:5.5.0`
+- `docker run -it -p 9443:9443 wso2is-km:5.6.0`
 
 ##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
@@ -49,7 +49,7 @@ Configurations would lie on the Docker host machine and they can be volume mount
 As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
 ##### 1. Stop the API Manager container if it's already running.
-In WSO2 API Manager 2.2.0 product distribution, `carbon.xml` configuration file <br>
+In WSO2 API Manager 2.5.0 product distribution, `carbon.xml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/carbon.xml` and change the offset value under ports to 1.
 
@@ -63,10 +63,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2is-km:5.5.0
+wso2is-km:5.6.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.5.0/repository/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.6.0/repository/conf folder of the container.
 
 
 ## Docker command usage references
