@@ -33,7 +33,7 @@ ARG JDK=jdk1.8.0*
 ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2is-km
-ARG WSO2_SERVER_VERSION=5.5.0
+ARG WSO2_SERVER_VERSION=5.6.0
 ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 
@@ -59,7 +59,7 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/init.sh ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 
 # set the user and work directory
 USER ${USER_ID}
