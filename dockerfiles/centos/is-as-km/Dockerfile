@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2017 WSO2, Inc. (http://wso2.com)
+# Copyright 2018 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Ubuntu LTS
-FROM ubuntu:16.04
+# set to latest Centos
+FROM centos:7
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
@@ -32,17 +32,16 @@ ARG FILES=./files
 ARG JDK=jdk1.8.0*
 ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
-ARG WSO2_SERVER=wso2am-analytics
-ARG WSO2_SERVER_VERSION=2.5.0
+ARG WSO2_SERVER=wso2is-km
+ARG WSO2_SERVER_VERSION=5.6.0
 ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 
 # install required packages
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl \
-    netcat && \
-    rm -rf /var/lib/apt/lists/* && \
+RUN yum check-update && \
+    DEBIAN_FRONTEND=noninteractive yum install --downloadonly \
+    nc && \
+    rm -rf /var/cache/yum/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
     >> /etc/bash.bashrc \
     ; echo "\
@@ -58,11 +57,9 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 
 # copy the jdk and wso2 product distributions to user's home directory and copy the mysql connector jar to server distribution
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/ ${USER_HOME}/${WSO2_SERVER_DIST}/
-COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-# set temporary location for artifacts to be persisted
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/repository/conf/analytics ${USER_HOME}/wso2-tmp/analytics
+COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 
 # set the user and work directory
 USER ${USER_ID}
@@ -75,6 +72,7 @@ ENV JAVA_HOME=${JAVA_HOME} \
     WORKING_DIRECTORY=${USER_HOME}
 
 # expose ports
-EXPOSE 9764 9444 7712 7612 4041
+EXPOSE 9763 9443
 
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
+# start the WSO2 Carbon server
+ENTRYPOINT ${WSO2_SERVER_HOME}/bin/wso2server.sh

@@ -32,7 +32,7 @@ ARG FILES=./files
 ARG JDK=jdk1.8.0*
 ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
-ARG WSO2_SERVER=wso2am
+ARG WSO2_SERVER=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.5.0
 ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
@@ -58,13 +58,11 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 
 # copy the jdk and wso2 product distributions to user's home directory and copy the mysql connector jar to server distribution
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/ ${USER_HOME}/${WSO2_SERVER_DIST}/
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/dropins/
-# set temporary location for shared artifacts
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/repository/deployment/server ${USER_HOME}/wso2-tmp/server
+# set temporary location for artifacts to be persisted
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/repository/conf/analytics ${USER_HOME}/wso2-tmp/analytics
 
 # set the user and work directory
 USER ${USER_ID}
@@ -77,6 +75,7 @@ ENV JAVA_HOME=${JAVA_HOME} \
     WORKING_DIRECTORY=${USER_HOME}
 
 # expose ports
-EXPOSE 8280 8243 9763 9443 9099 5672 9711 9611 7711 7611 10397
+EXPOSE 9764 9444 7712 7612 4041
 
+# start the WSO2 Carbon server
 ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
