@@ -16,9 +16,9 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Centos
-FROM centos:7
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
+# set to latest Alpine
+FROM openjdk:8u171-jdk-alpine3.8
+MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
 
 # set user configurations
 ARG USER=wso2carbon
@@ -28,9 +28,6 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
-# set jdk configurations
-ARG JDK=jdk1.8.0*
-ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.5.0
@@ -38,26 +35,33 @@ ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 
 # install required packages
-RUN yum check-update && \
-    yum install -y nc && \
-    rm -rf /var/cache/yum/* && \
-    echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
-    >> /etc/bash.bashrc \
-    ; echo "\n\
-    Welcome to WSO2 Docker Resources \n\
-    --------------------------------- \n\
-    This Docker container comprises of a WSO2 product, running with its latest updates \n\
-    which are under the End User License Agreement (EULA) 2.0. \n\
-    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
-    > /etc/motd
+RUN  apk add --update --no-cache \
+     curl \
+     netcat-openbsd && \
+     rm -rf /var/cache/apk/* && \
+     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
+     >> /etc/bash.bashrc \
+     ; echo "\n\
+     Welcome to WSO2 Docker Resources \n\
+     --------------------------------- \n\
+     This Docker container comprises of a WSO2 product, running with its latest updates \n\
+     which are under the End User License Agreement (EULA) 2.0. \n\
+     Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
+     > /etc/motd
 
 # create a user group and a user
-RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
-    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
+RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
+     adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
 
-# copy the jdk and wso2 product distributions to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${USER_HOME}/${WSO2_SERVER_PACK}
+# create java prefs dir
+# this is to avoid warning logs printed by FileSystemPreferences class
+RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
+    mkdir -p ${USER_HOME}/.java/.userPrefs  && \
+    chmod -R 755 ${USER_HOME}/.java && \
+    chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
+
+# copy wso2 product distribution zip files to user's home directory and set ownership
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${USER_HOME}/${WSO2_SERVER_PACK}/
 # copy shared artifacts to a temporary location
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
 # copy init script to user home
@@ -68,18 +72,20 @@ COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/lib/
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/dropins/
 
+# set environment variables
+ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
+
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=$JAVA_HOME/bin:$PATH \
-    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
     WORKING_DIRECTORY=${USER_HOME}
 
 # expose ports
 EXPOSE 8280 8243 9763 9443 9099 5672 9711 9611 7711 7611 10397
 
-# initiate container and start WSO2 Carbon Server
+# start WSO2 Carbon server
 ENTRYPOINT ${WSO2_SERVER_HOME}/bin/wso2server.sh
