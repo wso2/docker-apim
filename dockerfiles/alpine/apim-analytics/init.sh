@@ -73,5 +73,5 @@ sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\
 # replace host name entries (hard-coded with `wso2is-with-analytics-is-analytics`), with the Docker container IP in event-processor.xml file
 sed -i "s#<hostName>wso2is-with-analytics-is-analytics</hostName>#<hostName>${docker_container_ip}</hostName>#" ${WSO2_SERVER_HOME}/repository/conf/event-processor.xml
 
-# start the WSO2 Carbon server
+# start WSO2 Carbon server
 sh ${WSO2_SERVER_HOME}/bin/wso2server.sh
