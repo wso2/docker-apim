@@ -32,10 +32,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2is-km:5.6.0-centos .`
+    + `docker build -t wso2is-km:5.6.0-alpine .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9443:9443 wso2is-km:5.6.0-centos`
+- `docker run -it -p 9443:9443 wso2is-km:5.6.0-alpine`
 
 ##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
@@ -63,7 +63,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2is-km:5.6.0-centos
+wso2is-km:5.6.0-alpine
 ```
 
 >In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.6.0/repository/conf folder of the container.
