@@ -1,7 +1,8 @@
 # Dockerfile for WSO2 API Manager Analytics #
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) based Docker image for WSO2 API Manager Analytics 2.5.0.
+This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) based Docker image for WSO2 API Manager Analytics 2.6.0.
 
 ## Prerequisites
+
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
 
 ## How to build an image and run
@@ -15,14 +16,15 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 2. Add JDK, WSO2 API Manager Analytics distributions and MySQL Connector to `<ANALYTICS_DOCKERFILE_HOME>/files`
 - Download [JDK v1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
 and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
-- Download the WSO2 API Manager Analytics 2.5.0 distribution (http://wso2.com/api-management/try-it/) 
-- Download [MySQL Connector/J v5.1.45](https://downloads.mysql.com/archives/c-j) and then copy that to `<ANALYTICS_DOCKERFILE_HOME>/files`.<br>
+- Download the WSO2 API Manager Analytics 2.6.0 distribution (http://wso2.com/api-management/try-it/)
+and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
+- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<ANALYTICS_DOCKERFILE_HOME>/files` folder <br>
 - Once all of these are in place, it should look as follows:
 
   ```bash
   <ANALYTICS_DOCKERFILE_HOME>/files/jdk<version>/
   <ANALYTICS_DOCKERFILE_HOME>/files/mysql-connector-java-5.1.45-bin.jar
-  <ANALYTICS_DOCKERFILE_HOME>/files/wso2am-analytics-2.5.0/
+  <ANALYTICS_DOCKERFILE_HOME>/files/wso2am-analytics-2.6.0/
   ```
 
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
@@ -31,10 +33,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics:2.5.0 .`
+    + `docker build -t wso2am-analytics:2.6.0 .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9444:9444 wso2am-analytics:2.5.0`
+- `docker run -it -p 9444:9444 wso2am-analytics:2.6.0`
 >Here, only port 9444 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
@@ -66,7 +68,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run 
 -p 9445:9445
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml
-wso2am-analytics:2.5.0
+wso2am-analytics:2.6.0
 ```
 
 >In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.5.0/repository/conf folder of the container.

@@ -1,8 +1,10 @@
 # Dockerfile for WSO2 API Manager #
-The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.5.0.
+The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.6.0.
 
 ## Prerequisites
+
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -15,7 +17,7 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) `.tar.gz` for Linux x64
 and extract it to `<AM_DOCKERFILE_HOME>/files`.
-- Download the WSO2 API Manager 2.5.0 distribution (http://wso2.com/api-management/try-it/)
+- Download the WSO2 API Manager 2.6.0 distribution (http://wso2.com/api-management/try-it/)
 and extract it to `<AM_DOCKERFILE_HOME>/files` folder.
 - Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45, extract it, and copy the `*-bin.jar` to `<AM_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
@@ -23,21 +25,20 @@ and extract it to `<AM_DOCKERFILE_HOME>/files` folder.
   ```bash
   <AM_DOCKERFILE_HOME>/files/jdk<version>/
   <AM_DOCKERFILE_HOME>/files/mysql-connector-java-5.1.45-bin.jar
-  <Am_DOCKERFILE_HOME>/files/wso2am-2.5.0/
+  <Am_DOCKERFILE_HOME>/files/wso2am-2.6.0/
   ```
-
->Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
+>Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am:2.5.0 .`
+    + `docker build -t wso2am:2.6.0 .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9443:9443 wso2am:2.5.0`
+- `docker run -it -p 9443:9443 wso2am:2.6.0`
 
-##### 6. Accessing management console.
+##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
     + `https:<DOCKER_HOST>:9443/carbon`
     
@@ -49,7 +50,7 @@ Configurations would lie on the Docker host machine and they can be volume mount
 As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
 ##### 1. Stop the API Manager container if it's already running.
-In WSO2 API Manager 2.5.0 product distribution, `carbon.xml` configuration file <br>
+In WSO2 API Manager 2.6.0 product distribution, `carbon.xml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/carbon.xml` and change the offset value under ports to 1.
 
@@ -63,10 +64,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2am:2.5.0
+wso2am:2.6.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.5.0/repository/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-2.6.0/repository/conf folder of the container.
 
 
 ## Docker command usage references
