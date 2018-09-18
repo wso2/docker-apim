@@ -1,5 +1,5 @@
 # Dockerfile for WSO2 API Manager #
-The section defines the step-by-step instructions to build the Docker image for WSO2 API Manager 2.2.0.
+This section defines the step-by-step instructions to build an Ubuntu Linux based Docker image for WSO2 API Manager 2.2.0.
 
 ## Prerequisites
 
@@ -12,23 +12,24 @@ The section defines the step-by-step instructions to build the Docker image for 
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfile/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`
-- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
-- Download the WSO2 API Manager 2.2.0 distribution (http://wso2.com/api-management/try-it/)
-and extract that in `<AM_DOCKERFILE_HOME>/files` folder.
-- Once both JDK and WSO2 API Manager distributions are extracted the folder structure should be as follows;
+##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`.
+
+- Download [JDK v1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+and extract it to `<IS_DOCKERFILE_HOME>/files`.
+- Download [WSO2 API Manager v2.2.0](https://wso2.com/api-management/previous-releases/)
+distribution and extract it to `<AM_DOCKERFILE_HOME>/files`.
+- Download [MySQL Connector JAR v5.1.45](https://downloads.mysql.com/archives/c-j)
+and copy that to `<AM_DOCKERFILE_HOME>/files`.
+- Once all of these are in place, it should look as follows:
 
   ```bash
   <AM_DOCKERFILE_HOME>/files/jdk<version>/
   <AM_DOCKERFILE_HOME>/files/wso2am-2.2.0/
   ```
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<AM_DOCKERFILE_HOME>/files` folder
-
-
->Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
+  
+>Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
@@ -38,10 +39,12 @@ in order to obtain latest bug fixes and updates for the product.
     
 ##### 4. Running the Docker image.
 - `docker run -it -p 9443:9443 wso2am:2.2.0`
+>Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
+You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
-##### 6. Accessing management console.
+##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
-    + `https:<DOCKER_HOST>:9443/carbon`
+    + `https://<DOCKER_HOST>:9443/carbon`
     
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
