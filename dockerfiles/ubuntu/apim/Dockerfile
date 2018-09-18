@@ -34,8 +34,8 @@ ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.2.0
-ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 
 # install required packages
 RUN apt-get update && \
@@ -45,26 +45,30 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
     >> /etc/bash.bashrc \
-    ; echo "\
-    Welcome to WSO2 Docker resources.\n\
-    The Docker container contains the WSO2 product with its latest updates, which are under the End User License Agreement (EULA) 2.0.\n\
-    \n\
-    Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"\
+    ; echo "\n\
+    Welcome to WSO2 Docker Resources \n\
+    --------------------------------- \n\
+    This Docker container comprises of a WSO2 product, running with its latest updates \n\
+    which are under the End User License Agreement (EULA) 2.0. \n\
+    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
     > /etc/motd
 
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
-# copy the jdk and wso2 product distributions to user's home directory and copy the mysql connector jar to server distribution
+# copy the jdk and wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
+# copy shared artifacts to a temporary location
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server ${USER_HOME}/wso2-tmp/server
+# copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${USER_HOME}/${WSO2_SERVER_DIST}/repository/components/dropins/
-# set temporary location for shared artifacts
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/repository/deployment/server ${USER_HOME}/wso2-tmp/server
+# copy mysql connector jar to the server as a third party library
+COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/repository/components/lib/
+# add libraries for Kubernetes membership scheme based clustering
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/repository/components/lib/
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
 
 # set the user and work directory
 USER ${USER_ID}
@@ -79,4 +83,5 @@ ENV JAVA_HOME=${JAVA_HOME} \
 # expose ports
 EXPOSE 8280 8243 9763 9443 9099 5672 9711 9611 7711 7611 10397
 
+# initiate container and start WSO2 Carbon Server
 ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
