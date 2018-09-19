@@ -17,14 +17,14 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 2. Add JDK, WSO2 API Microgateway distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`.
 
 - Download [JDK v1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
+and extract it to `<AM_MICRO_GW_DOCKERFILE_HOME/files`.
 - Download [WSO2 API Microgateway v2.2.0](https://wso2.com/api-management/api-microgateway/)
-distribution and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
+distribution and extract it to `<AM_MICRO_GW_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
     ```bash
-    <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
-    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.5.0/
+    <AM_MICRO_GW_DOCKERFILE_HOME>/files/jdk<version>/
+    <AM_MICRO_GW_DOCKERFILE_HOME>/files/wso2is-km-5.5.0/
     ```
     
 >Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
