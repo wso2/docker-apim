@@ -3,7 +3,7 @@ All notable changes to this project 2.2.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v2.2.0.4] - 2018-09-18
+## [v2.2.0.4] - 2018-09-19
 
 ### Changed
 - Changed the folders to which configuration files with new changes to be copied are mounted.

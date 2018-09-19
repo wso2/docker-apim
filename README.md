@@ -18,4 +18,4 @@ Docker Compose files have been created according to the most common API Manager 
 product features along side their co-operate API management requirements. The Compose files make use of
 Docker images of WSO2 API Manager, WSO2 API Manager Analytics, WSO2 API Manager Identity Server as Key Manager and WSO2 API Microgateway and MySQL.
 
-**Change log** from previous v2.2.0.4 release: [View Here](CHANGELOG.md)
+**Change log** from previous v2.2.0.3 release: [View Here](CHANGELOG.md)
