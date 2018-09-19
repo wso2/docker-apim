@@ -1,18 +1,21 @@
-# Docker Resources for WSO2 API Manager 
+# Docker Resources for WSO2 API Management
 
-This repository contains following Docker artifacts, for trying out WSO2 API Manager on plain Docker:
-- WSO2 API Manager Dockerfile
-- WSO2 API Manager Analytics Dockerfile
-- WSO2 API Manager Docker Compose Templates
+This repository contains following Docker resources:
 
-The WSO2 API Manager and API Manager Analytics Dockerfiles build generic Docker images <br>
-for deploying API Manager and API Manager Analytics in containerized environments. They<br>
-include the JDK, product distributions and a collection of utility libraries. Configurations, JDBC<br>
-driver, extensions and other deployable artifacts are designed to be provided via volume mounts.
+- WSO2 API Manager Dockerfile for Ubuntu
+- WSO2 API Manager Analytics Dockerfile for Ubuntu
+- WSO2 API Manager Identity Server as Key Manager Dockerfile for Ubuntu
+- WSO2 API Microgateway Dockerfile for Ubuntu
+- Docker Compose files to evaluate most common deployment profiles
 
-The Docker Compose templates have been created according to standard API Manager deployment patterns
-for allowing users to evaluate the product and understand the deployment architecture in depth.
+Docker resources for WSO2 API Manager, WSO2 API Manager Analytics, WSO2 API Manager Identity Server as Key Manager and
+WSO2 API Microgateway help you build generic Docker images for deploying the corresponding product servers in containerized environments.
+Each Docker image includes the JDK, the relevant product distribution and a collection of utility libraries.Configurations, custom JDBC
+drivers other than the default MySQL JDBC driver provided, extensions and other deployable artifacts are designed to be
+provided via volume mounts to the containers spawned.
 
-## Note
-For running a containerized WSO2 API Manager deployment in production, its recommended to use a<br>
-container cluster manager such as Kubernetes/Openshift. Please refer [APIM Kubernetes Artifacts](https://github.com/wso2/kubernetes-apim/) repository.
+Docker Compose files have been created according to the most common API Manager deployment profiles available for allowing users to quickly evaluate
+product features along side their co-operate API management requirements. The Compose files make use of
+Docker images of WSO2 API Manager, WSO2 API Manager Analytics, WSO2 API Manager Identity Server as Key Manager and WSO2 API Microgateway and MySQL.
+
+**Change log** from previous v2.2.0.3 release: [View Here](CHANGELOG.md)

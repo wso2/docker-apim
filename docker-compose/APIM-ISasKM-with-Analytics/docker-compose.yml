@@ -29,7 +29,7 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics:/home/wso2carbon/volumes
+      - ./apim-analytics:/home/wso2carbon/wso2-config-volume
     links:
       - mysql
   is-as-km:
@@ -45,7 +45,7 @@ services:
       am-analytics:
         condition: service_healthy  
     volumes:
-      - ./is-as-km:/home/wso2carbon/volumes
+      - ./is-as-km:/home/wso2carbon/wso2-config-volume
     ports:
       - "9765:9763"
       - "9445:9443"
@@ -67,7 +67,7 @@ services:
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./apim:/home/wso2carbon/volumes
+      - ./apim:/home/wso2carbon/wso2-config-volume
     ports:
       - "9763:9763"
       - "9443:9443"

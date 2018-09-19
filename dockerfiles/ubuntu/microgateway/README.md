@@ -1,5 +1,5 @@
 # Dockerfile for WSO2 API Microgateway #
-The section defines the step-by-step instructions to build the Docker image for WSO2 API Microgateway 2.2.0.
+This section defines the step-by-step instructions to build an Ubuntu Linux based Docker image for WSO2 API Microgateway 2.2.0.
 
 ## Prerequisites
 
@@ -12,28 +12,29 @@ The section defines the step-by-step instructions to build the Docker image for 
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfile/microgateway` directory will be referred to as `AM_MICRO_GW_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfile/ubuntu/microgateway` directory will be referred to as `AM_MICRO_GW_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 API Microgateway distributions and MySQL connector to `<AM_MICRO_GW_DOCKERFILE_HOME>/files`
-- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that in `<AM_MICRO_GW_DOCKERFILE_HOME>/files` folder.
-- Download the WSO2 API Microgateway 2.2.0 distribution (https://wso2.com/api-management/api-microgateway/#download-micro-api-gateway)
-and extract that in `<AM_MICRO_GW_DOCKERFILE_HOME>/files` folder.
-- Once both JDK and WSO2 API Microgateway distributions are extracted the folder structure should be as follows;
+##### 2. Add JDK, WSO2 API Microgateway distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`.
 
-  ```bash
-  <AM_MICRO_GW_DOCKERFILE_HOME>/files/jdk<version>/
-  <AM_MICRO_GW_DOCKERFILE_HOME>/files/wso2am-micro-gw-2.2.0/
-  ```
+- Download [JDK v1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+and extract it to `<AM_MICRO_GW_DOCKERFILE_HOME/files`.
+- Download [WSO2 API Microgateway v2.2.0](https://wso2.com/api-management/api-microgateway/)
+distribution and extract it to `<AM_MICRO_GW_DOCKERFILE_HOME>/files`.
+- Once all of these are in place, it should look as follows:
 
->Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
+    ```bash
+    <AM_MICRO_GW_DOCKERFILE_HOME>/files/jdk<version>/
+    <AM_MICRO_GW_DOCKERFILE_HOME>/files/wso2is-km-5.5.0/
+    ```
+    
+>Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
 - Navigate to `<AM_MICRO_GW_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2am-micro-gw:2.2.0 .`
-    
+
 ##### 4. Running the Docker image.
 - `docker run -it -p 8243:8243 wso2am-micro-gw:2.2.0`
 
