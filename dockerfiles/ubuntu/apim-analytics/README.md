@@ -21,7 +21,7 @@ and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
 - Download [WSO2 API Manager Analytics v2.2.0](https://wso2.com/api-management/install/analytics/)
 distribution and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
 - Download [MySQL Connector JAR v5.1.45](https://downloads.mysql.com/archives/c-j)
-and copy that to `<AM_DOCKERFILE_HOME>/files`.
+and copy that to `<ANALYTICS_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
