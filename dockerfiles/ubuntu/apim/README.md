@@ -17,7 +17,7 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`.
 
 - Download [JDK v1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-and extract it to `<IS_DOCKERFILE_HOME>/files`.
+and extract it to `<AM_DOCKERFILE_HOME>/files`.
 - Download [WSO2 API Manager v2.2.0](https://wso2.com/api-management/previous-releases/)
 distribution and extract it to `<AM_DOCKERFILE_HOME>/files`.
 - Download [MySQL Connector JAR v5.1.45](https://downloads.mysql.com/archives/c-j)
