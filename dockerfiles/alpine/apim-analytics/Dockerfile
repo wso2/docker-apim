@@ -68,8 +68,6 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 
 # copy wso2 product distribution zip files to user's home directory and set ownership
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
-# copy shared artifacts to a temporary location
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy mysql connector jar to the server as a third party library
@@ -81,17 +79,15 @@ ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kuber
 
 # set environment variables
 ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \
+    WORKING_DIRECTORY=${USER_HOME} \
     JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
-# set environment variables
-ENV WORKING_DIRECTORY=${USER_HOME}
-
 # expose ports
-EXPOSE 9764 9444 7712 7612 4041
+EXPOSE 9091 9444 7712 7612 9613 9713
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
