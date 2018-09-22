@@ -57,9 +57,7 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 
 # copy the jdk and wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${USER_HOME}/${WSO2_SERVER_PACK}/
-# copy shared artifacts to a temporary location
-#COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy mysql connector jar to the server as a third party library
@@ -79,7 +77,7 @@ ENV JAVA_HOME=${JAVA_HOME} \
     WORKING_DIRECTORY=${USER_HOME}
 
 # expose ports
-EXPOSE 9764 9444 7712 7612 4041
+EXPOSE 9091 9444 7712 7612 9612 9712
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ${WORKING_DIRECTORY}/init.sh

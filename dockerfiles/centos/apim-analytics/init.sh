@@ -20,6 +20,39 @@ set -e
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
 
+# a grace period for mounts to be setup
+echo "Waiting for all volumes to be mounted..."
+sleep 5
+
+verification_count=0
+verifyMountBeforeStart()
+{
+  if [ ${verification_count} -eq 5 ]
+  then
+    echo "Mount verification timed out"
+    return
+  fi
+
+  # increment the number of times the verification had occurred
+  verification_count=$((verification_count+1))
+
+  if [ ! -e $1 ]
+  then
+    echo "Directory $1 does not exist"
+    echo "Waiting for the volume to be mounted..."
+    sleep 5
+
+    echo "Retrying..."
+    verifyMountBeforeStart $1
+  else
+    echo "Directory $1 exists"
+  fi
+}
+
+verifyMountBeforeStart ${config_volume}
+verification_count=0
+verifyMountBeforeStart ${artifact_volume}
+
 # capture Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
 
@@ -33,12 +66,6 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
 test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
-
-# make any node specific configuration changes
-# set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-#sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/repository/conf/axis2/axis2.xml
-# replace host name entries (hard-coded with `wso2is-with-analytics-is-analytics`), with the Docker container IP in event-processor.xml file
-#sed -i "s#<hostName>wso2is-with-analytics-is-analytics</hostName>#<hostName>${docker_container_ip}</hostName>#" ${WSO2_SERVER_HOME}/repository/conf/event-processor.xml
 
 # start WSO2 Carbon server
 sh ${WSO2_SERVER_HOME}/bin/worker.sh
