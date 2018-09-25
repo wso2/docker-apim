@@ -16,13 +16,13 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
 and extract that to `<IS_KM_DOCKERFILE_HOME>/files`.
-- Download the WSO2 Identity Server as Key Manager 5.6.0 distribution (http://wso2.com/api-management/try-it/)
+- Download the WSO2 Identity Server as Key Manager 5.7.0 distribution (http://wso2.com/api-management/try-it/)
 and extract that to `<IS_KM_DOCKERFILE_HOME>/files`. <br>
 - Once both JDK and WSO2 API Manager distributions are extracted the folder structure should be as follows;
 
     ```bash
     <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
-    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.6.0/
+    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.7.0/
     ```
 - Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<IS_KM_DOCKERFILE_HOME>/files` folder
 
@@ -32,10 +32,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2is-km:5.6.0-alpine .`
+    + `docker build -t wso2is-km:5.7.0-alpine .`
     
 ##### 4. Running the Docker image.
-- `docker run -it -p 9443:9443 wso2is-km:5.6.0-alpine`
+- `docker run -it -p 9443:9443 wso2is-km:5.7.0-alpine`
 
 ##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
@@ -63,10 +63,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2is-km:5.6.0-alpine
+wso2is-km:5.7.0-alpine
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.6.0/repository/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.7.0/repository/conf folder of the container.
 
 
 ## Docker command usage references

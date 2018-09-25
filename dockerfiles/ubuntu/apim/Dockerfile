@@ -48,9 +48,8 @@ RUN apt-get update && \
     ; echo "\n\
     Welcome to WSO2 Docker Resources \n\
     --------------------------------- \n\
-    This Docker container comprises of a WSO2 product, running with its latest updates \n\
-    which are under the End User License Agreement (EULA) 2.0. \n\
-    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
+    This image contains a WSO2 product released under Apache 2.0 license.\n\
+    For more information, visit @ https://wso2.com \n" \
     > /etc/motd
 
 # create a user group and a user

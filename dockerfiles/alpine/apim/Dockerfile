@@ -1,3 +1,4 @@
+
 # ------------------------------------------------------------------------
 #
 # Copyright 2018 WSO2, Inc. (http://wso2.com)
@@ -32,26 +33,24 @@ ARG FILES=./files
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.6.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ENV ENV=${USER_HOME}"/.ashrc"
 
 # install required packages
 RUN  apk add --update --no-cache \
      curl \
      netcat-openbsd && \
-     rm -rf /var/cache/apk/* && \
-     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
-     >> /etc/bash.bashrc \
-     ; echo "\n\
-     Welcome to WSO2 Docker Resources \n\
-     --------------------------------- \n\
-     This Docker container comprises of a WSO2 product, running with its latest updates \n\
-     which are under the End User License Agreement (EULA) 2.0. \n\
-     Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
-     > /etc/motd
+     rm -rf /var/cache/apk/*
 
 # create a user group and a user
 RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
      adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
+
+RUN echo 'printf "\n\
+          Welcome to WSO2 Docker Resources \n\
+          --------------------------------- \n\
+          This image contains a WSO2 product released under Apache 2.0 license.\n\
+          For more information, visit @ https://wso2.com \n"' > "$ENV"
 
 # create java prefs dir
 # this is to avoid warning logs printed by FileSystemPreferences class
@@ -63,14 +62,14 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 # copy wso2 product distribution zip files to user's home directory and set ownership
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${USER_HOME}/${WSO2_SERVER_PACK}/
 # copy shared artifacts to a temporary location
-#COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/repository/components/lib/
+COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/lib/
 # add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/repository/components/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/lib/
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/dropins/
 
 # set environment variables
 ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
