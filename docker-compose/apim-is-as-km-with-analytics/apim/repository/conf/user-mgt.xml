@@ -27,7 +27,7 @@
             <!-- By default users in this role sees the registry root -->
             <Property name="isCascadeDeleteEnabled">true</Property>
             <Property name="initializeNewClaimManager">true</Property>
-            <Property name="dataSource">jdbc/CarbonDB</Property>
+            <Property name="dataSource">jdbc/WSO2CommonDB</Property>
         </Configuration>
         <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
 	         In case if application needs to manage passwords externally set property

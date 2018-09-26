@@ -28,11 +28,11 @@
     <registryRoot>/</registryRoot>
 
     <dbConfig name="wso2registry">
-        <dataSource>jdbc/LocalRegistryDB</dataSource>
+        <dataSource>jdbc/WSO2CarbonDB</dataSource>
     </dbConfig>
 
     <dbConfig name="carbondb">
-        <dataSource>jdbc/CarbonDB</dataSource>
+        <dataSource>jdbc/WSO2CommonDB</dataSource>
     </dbConfig>
 
     <remoteInstance url="https://localhost">
@@ -51,7 +51,7 @@
 
     <mount path="/_system/config" overwrite="true">
         <instanceId>gov</instanceId>
-        <targetPath>/_system/config</targetPath>
+        <targetPath>/_system/is-as-km/config</targetPath>
     </mount>
 
    <handler class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyHandler">
