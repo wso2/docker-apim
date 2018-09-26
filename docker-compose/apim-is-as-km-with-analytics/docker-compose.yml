@@ -20,6 +20,7 @@ services:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
+      start_period: 100s
       retries: 15
     depends_on:
       mysql:
@@ -38,6 +39,7 @@ services:
       test: ["CMD", "nc", "-z","localhost", "9091"]
       interval: 10s
       timeout: 120s
+      start_period: 100s
       retries: 10
     depends_on:
       mysql:
@@ -52,6 +54,7 @@ services:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
       timeout: 120s
+      start_period: 100s
       retries: 5
     depends_on:
       mysql:
