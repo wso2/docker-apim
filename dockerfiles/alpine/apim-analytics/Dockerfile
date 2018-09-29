@@ -33,24 +33,25 @@ ARG WSO2_SERVER=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
-ENV ENV=${USER_HOME}"/.ashrc"
 
 # install required packages
 RUN  apk add --update --no-cache \
      curl \
      netcat-openbsd && \
-     rm -rf /var/cache/apk/*
+     rm -rf /var/cache/apk/* && \
+     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
+     >> /etc/bash.bashrc \
+     ; echo "\n\
+     Welcome to WSO2 Docker Resources \n\
+     --------------------------------- \n\
+     This Docker container comprises of a WSO2 product, running with its latest updates \n\
+     which are under the End User License Agreement (EULA) 2.0. \n\
+     Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
+     > /etc/motd
 
 # create a user group and a user
 RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
      adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
-
-RUN echo 'printf "\n\
-          Welcome to WSO2 Docker Resources \n\
-          --------------------------------- \n\
-          This image contains a WSO2 product released under Apache 2.0 license.\n\
-          For more information, visit @ https://wso2.com \n"' > "$ENV"
-
 
 # install Alpine Linux package to run binaries linked against glibc
 RUN apk --no-cache add ca-certificates wget; \
@@ -58,7 +59,7 @@ RUN apk --no-cache add ca-certificates wget; \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.27-r0/glibc-2.27-r0.apk; \
     apk add glibc-2.27-r0.apk;
 
-# create java prefs dir
+# create Java prefs dir
 # this is to avoid warning logs printed by FileSystemPreferences class
 RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     mkdir -p ${USER_HOME}/.java/.userPrefs  && \
@@ -70,14 +71,11 @@ COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/repository/components/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.1.7/snappy-java-1.1.1.7.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/lib/
-# add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/dropins/
+COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.1.7/snappy-java-1.1.1.7.jar ${WSO2_SERVER_HOME}/lib/
 
 # set environment variables
-ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \
     WORKING_DIRECTORY=${USER_HOME} \
     JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
 
@@ -86,7 +84,7 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # expose ports
-EXPOSE 9764 9444 7712 7612 4041
+EXPOSE 9091 9444 7712 7612 9613 9713 7444 7071
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ${WORKING_DIRECTORY}/init.sh

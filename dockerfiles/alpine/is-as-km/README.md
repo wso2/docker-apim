@@ -1,9 +1,10 @@
 # Dockerfile for WSO2 Identity Server deployed as the API Key Manager #
-The section defines the step-by-step instructions to build the Docker image for WSO2 IS deployed as API Key Manager.
+This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 IS deployed as API Key Manager.
 
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -11,22 +12,23 @@ The section defines the step-by-step instructions to build the Docker image for 
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfiles/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/alpine/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`
-- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that to `<IS_KM_DOCKERFILE_HOME>/files`.
-- Download the WSO2 Identity Server as Key Manager 5.7.0 distribution (http://wso2.com/api-management/try-it/)
-and extract that to `<IS_KM_DOCKERFILE_HOME>/files`. <br>
-- Once both JDK and WSO2 API Manager distributions are extracted the folder structure should be as follows;
+
+##### 2. Add WSO2 Identity Server as Key Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`.
+
+- Download [WSO2 Identity Server as Key Manager v5.7.0](https://wso2.com/api-management/install/key-manager/)
+distribution and extract it to `<IS_KM_DOCKERFILE_HOME>/files`.
+- Download [MySQL Connector JAR v5.1.45](https://downloads.mysql.com/archives/c-j)
+and copy that to `<IS_KM_DOCKERFILE_HOME>/files`.
+- Once all of these are in place, it should look as follows:
 
     ```bash
     <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
     <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.7.0/
     ```
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<IS_KM_DOCKERFILE_HOME>/files` folder
-
->Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
+    
+>Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 3. Build the Docker image.
@@ -48,8 +50,8 @@ in order to obtain latest bug fixes and updates for the product.
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
 As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
-##### 1. Stop the API Manager container if it's already running.
-In WSO2 API Manager 2.5.0 product distribution, `carbon.xml` configuration file <br>
+##### 1. Stop the Identity Server as Key Manager container if it's already running.
+In WSO2 Identity Server as Key Manager 5.7.0 product distribution, `carbon.xml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/carbon.xml` and change the offset value under ports to 1.
 
