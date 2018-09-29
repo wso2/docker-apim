@@ -67,11 +67,5 @@ test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
 test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
-# make any node specific configuration changes
-# set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/repository/conf/axis2/axis2.xml
-# replace host name entries (hard-coded with `wso2is-with-analytics-is-analytics`), with the Docker container IP in event-processor.xml file
-sed -i "s#<hostName>wso2is-with-analytics-is-analytics</hostName>#<hostName>${docker_container_ip}</hostName>#" ${WSO2_SERVER_HOME}/repository/conf/event-processor.xml
-
-# start the WSO2 Carbon server
-sh ${WSO2_SERVER_HOME}/bin/wso2server.sh
+# start WSO2 Carbon server
+sh ${WSO2_SERVER_HOME}/bin/worker.sh

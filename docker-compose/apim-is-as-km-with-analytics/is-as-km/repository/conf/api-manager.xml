@@ -5,7 +5,7 @@
     <DataSourceName>jdbc/WSO2AM_DB</DataSourceName>
 
     <!-- This parameter is used when adding api management capability to other products like GReg, AS, DSS etc.-->
-    <GatewayType>Synapse</GatewayType>
+    <GatewayType>None</GatewayType>
 
     <!-- This parameter is used to enable the securevault support when try to publish endpoint secured APIs. Values should be "true" or "false".
     By default secure vault is disabled.-->
@@ -16,11 +16,11 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://is-as-km:9443/services/</ServerURL>
+        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
-        <Username>admin</Username>
+        <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
-        <Password>admin</Password>
+        <Password>${admin.password}</Password>
         <!-- Indicates whether the permissions checking of the user (on the Publisher and Store) should be done
            via a remote service. The check will be done on the local server when false. -->
         <CheckPermissionsRemotely>false</CheckPermissionsRemotely>
@@ -37,16 +37,16 @@
              to be appended to the JWT. If not specified no claims will be appended.If user wants to add all user claims in the
              jwt token, he needs to enable this parameter.
              The DefaultClaimsRetriever class adds user claims from the default carbon user store. -->
-        <!--ClaimsRetrieverImplClass>org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever</ClaimsRetrieverImplClass-->
+        <ClaimsRetrieverImplClass>org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever</ClaimsRetrieverImplClass>
 
         <!-- The dialectURI under which the claimURIs that need to be appended to the
              JWT are defined. Not used with custom ClaimsRetriever implementations. The
              same value is used in the keys for appending the default properties to the
              JWT. -->
-        <!--ConsumerDialectURI>http://wso2.org/claims</ConsumerDialectURI-->
+        <ConsumerDialectURI>http://wso2.org/claims</ConsumerDialectURI>
 
         <!-- Signature algorithm. Accepts "SHA256withRSA" or "NONE". To disable signing explicitly specify "NONE". -->
-        <!--SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm-->
+        <SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm>
 
         <!-- This parameter specifies which implementation should be used for generating the Token. JWTGenerator is the
 	     default implementation provided. -->
@@ -139,7 +139,7 @@
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
-        <Enabled>true</Enabled>
+        <Enabled>false</Enabled>
 
         <!-- Server URL of the remote StreamProcessor server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
@@ -151,20 +151,20 @@
 
              Ex - Multiple Receiver Groups with two receivers each
              {tcp://localhost:7612/,tcp://localhost:7613},{tcp://localhost:7712/,tcp://localhost:7713/} -->
-        <StreamProcessorServerURL>tcp://am-analytics:7612</StreamProcessorServerURL>
-        <StreamProcessorAuthServerURL>ssl://am-analytics:7712</StreamProcessorAuthServerURL>
+        <StreamProcessorServerURL>{tcp://localhost:7612}</StreamProcessorServerURL>
+        <!--StreamProcessorAuthServerURL>{ssl://localhost:7712}</StreamProcessorAuthServerURL-->
         <!-- Administrator username to login to the remote StreamProcessor server. -->
-        <StreamProcessorUsername>admin</StreamProcessorUsername>
+        <StreamProcessorUsername>${admin.username}</StreamProcessorUsername>
         <!-- Administrator password to login to the remote StreamProcessor server. -->
-        <StreamProcessorPassword>admin</StreamProcessorPassword>
+        <StreamProcessorPassword>${admin.password}</StreamProcessorPassword>
 
         <!-- For APIM implemented Statistic client for RDBMS -->
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRestClientImpl</StatsProviderImpl>
 
         <!-- StreamProcessor REST API configuration -->
-        <StreamProcessorRestApiURL>https://am-analytics:7444</StreamProcessorRestApiURL>
-        <StreamProcessorRestApiUsername>admin</StreamProcessorRestApiUsername>
-        <StreamProcessorRestApiPassword>admin</StreamProcessorRestApiPassword>
+        <StreamProcessorRestApiURL>https://localhost:7444</StreamProcessorRestApiURL>
+        <StreamProcessorRestApiUsername>${admin.username}</StreamProcessorRestApiUsername>
+        <StreamProcessorRestApiPassword>${admin.password}</StreamProcessorRestApiPassword>
 
         <!-- Below property is used to skip trying to connect to event receiver nodes when publishing events even if
             the stats enabled flag is set to true. -->
@@ -212,12 +212,12 @@
     -->
     <APIKeyValidator>
         <!-- Server URL of the API key manager -->
-        <ServerURL>https://is-as-km:9443/services/</ServerURL>
+        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
 
         <!-- Admin username for API key manager. -->
-        <Username>admin</Username>
+        <Username>${admin.username}</Username>
         <!-- Admin password for API key manager. -->
-        <Password>admin</Password>
+        <Password>${admin.password}</Password>
 
         <!-- Configurations related to enable thrift support for key-management related communication.
              If you want to switch back to Web Service Client, change the value of "KeyValidatorClientType" to "WSClient".
@@ -226,11 +226,11 @@
              -If you need to start two API Manager instances in the same machine, you need to give different ports to "ThriftServerPort" value in two nodes.
              -ThriftServerHost - Allows to configure a hostname for the thrift server. It uses the carbon hostname by default.
 	         -The Gateway uses this parameter to connect to the key validation thrift service. -->
-        <KeyValidatorClientType>WSClient</KeyValidatorClientType>
+        <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <!--ThriftClientPort>10397</ThriftClientPort-->
 
-        <EnableThriftServer>false</EnableThriftServer>
+        <EnableThriftServer>true</EnableThriftServer>
         <ThriftServerHost>localhost</ThriftServerHost>
         <!--ThriftServerPort>10397</ThriftServerPort-->
 
@@ -564,7 +564,7 @@
             <Password>${admin.password}</Password>
         </TrafficManager>
         <DataPublisher>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <DataPublisherPool>
                 <MaxIdle>1000</MaxIdle>
                 <InitIdleCapacity>200</InitIdleCapacity>
@@ -576,18 +576,18 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
         <BlockCondition>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <!--InitDelay>300000</InitDelay>
             <Period>3600000</Period-->
         </BlockCondition>
         <JMSConnectionDetails>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <Destination>throttleData</Destination>
             <!--InitDelay>300000</InitDelay-->
             <JMSConnectionParameters>

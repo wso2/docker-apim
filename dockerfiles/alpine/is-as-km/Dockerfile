@@ -30,7 +30,7 @@ ARG USER_HOME=/home/${USER}
 ARG FILES=./files
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2is-km
-ARG WSO2_SERVER_VERSION=5.6.0
+ARG WSO2_SERVER_VERSION=5.7.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 
@@ -52,7 +52,6 @@ RUN  apk add --update --no-cache \
 # create a user group and a user
 RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
      adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
-
 
 # copy wso2 product distribution zip files to user's home directory and set ownership
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}/

@@ -33,7 +33,7 @@ ARG JDK=jdk1.8.0*
 ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2is-km
-ARG WSO2_SERVER_VERSION=5.6.0
+ARG WSO2_SERVER_VERSION=5.7.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 
@@ -57,7 +57,7 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 
 # copy the jdk and wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}/
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy shared artifacts to a temporary location
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
 # copy init script to user home
