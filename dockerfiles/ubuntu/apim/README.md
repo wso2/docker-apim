@@ -5,6 +5,7 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
 
+
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
 ```

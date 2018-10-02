@@ -20,6 +20,39 @@ set -e
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
 
+# a grace period for mounts to be setup
+echo "Waiting for all volumes to be mounted..."
+sleep 5
+
+verification_count=0
+verifyMountBeforeStart()
+{
+  if [ ${verification_count} -eq 5 ]
+  then
+    echo "Mount verification timed out"
+    return
+  fi
+
+  # increment the number of times the verification had occurred
+  verification_count=$((verification_count+1))
+
+  if [ ! -e $1 ]
+  then
+    echo "Directory $1 does not exist"
+    echo "Waiting for the volume to be mounted..."
+    sleep 5
+
+    echo "Retrying..."
+    verifyMountBeforeStart $1
+  else
+    echo "Directory $1 exists"
+  fi
+}
+
+verifyMountBeforeStart ${config_volume}
+verification_count=0
+verifyMountBeforeStart ${artifact_volume}
+
 # capture Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
 
