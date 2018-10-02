@@ -11,9 +11,26 @@ services:
     command: [--ssl=0]
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
-      interval: 10s
+      interval: 30s
       timeout: 60s
       retries: 5
+      start_period: 80s
+  am-analytics:
+    image: docker.wso2.com/wso2am-analytics:2.6.0
+    ports:
+      - "9091:9091"
+      - "9444:9444"
+    healthcheck:
+      test: ["CMD", "nc", "-z","localhost", "9091"]
+      interval: 10s
+      timeout: 120s
+      start_period: 80s
+      retries: 10
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./apim-analytics:/home/wso2carbon/wso2-config-volume
   is-as-km:
     image: docker.wso2.com/wso2is-km:5.7.0
     healthcheck:
@@ -25,29 +42,13 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      am-analytics:
+        condition: service_healthy
     volumes:
       - ./is-as-km:/home/wso2carbon/wso2-config-volume
     ports:
       - "9765:9763"
       - "9445:9443"
-  am-analytics:
-    image: docker.wso2.com/wso2am-analytics:2.6.0
-    ports:
-      - "9091:9091"
-      - "9444:9444"
-    healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9091"]
-      interval: 10s
-      timeout: 120s
-      start_period: 100s
-      retries: 10
-    depends_on:
-      mysql:
-        condition: service_healthy
-      is-as-km:
-        condition: service_healthy
-    volumes:
-      - ./apim-analytics:/home/wso2carbon/wso2-config-volume
   api-manager:
     image: docker.wso2.com/wso2am:2.6.0
     healthcheck:
