@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2017 WSO2, Inc. (http://wso2.com)
+# Copyright 2018 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Ubuntu LTS
-FROM ubuntu:16.04
+# set to latest Centos
+FROM centos:7
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
@@ -38,20 +38,15 @@ ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 
 # install required packages
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl \
-    netcat && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
-    >> /etc/bash.bashrc \
-    ; echo "\n\
+RUN yum update -y && \
+    yum install -y nc && \
+    rm -rf /var/cache/yum/* && \
+    echo 'printf "\n\
     Welcome to WSO2 Docker Resources \n\
     --------------------------------- \n\
     This Docker container comprises of a WSO2 product, running with its latest updates \n\
     which are under the End User License Agreement (EULA) 2.0. \n\
-    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
-    > /etc/motd
+    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"' > /etc/profile.d/motd.sh
 
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
@@ -60,8 +55,6 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 # copy the jdk and wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
-# copy init script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy mysql connector jar to the server as a third party library
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
 
@@ -77,6 +70,3 @@ ENV JAVA_HOME=${JAVA_HOME} \
 
 # expose ports
 EXPOSE 9091 9444 7712 7612 9613 9713 7444 7071
-
-# initiate container and start WSO2 Carbon server
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
