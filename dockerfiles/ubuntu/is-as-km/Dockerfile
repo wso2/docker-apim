@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to latest Ubuntu LTS
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
