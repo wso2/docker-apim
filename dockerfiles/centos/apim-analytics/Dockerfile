@@ -36,17 +36,18 @@ ARG WSO2_SERVER=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
-
+# set WSO2 EULA
+ARG MOTD='printf "\n\
+ Welcome to WSO2 Docker Resources \n\
+ --------------------------------- \n\
+ This Docker container comprises of a WSO2 product, running with its latest updates \n\
+ which are under the End User License Agreement (EULA) 2.0. \n\
+ Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"'
 # install required packages
 RUN yum update -y && \
     yum install -y nc && \
     rm -rf /var/cache/yum/* && \
-    echo 'printf "\n\
-    Welcome to WSO2 Docker Resources \n\
-    --------------------------------- \n\
-    This Docker container comprises of a WSO2 product, running with its latest updates \n\
-    which are under the End User License Agreement (EULA) 2.0. \n\
-    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"' > /etc/profile.d/motd.sh
+    echo $MOTD > /etc/profile.d/motd.sh
 
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
