@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to latest Ubuntu LTS
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
@@ -36,6 +36,13 @@ ARG WSO2_SERVER=wso2is-km
 ARG WSO2_SERVER_VERSION=5.7.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+# set WSO2 EULA
+ARG MOTD="\
+Welcome to WSO2 Docker resources.\n\
+------------------------------------ \n\
+The Docker container contains the WSO2 product with its latest updates, which are under the End User License Agreement (EULA) 2.0.\n\
+\n\
+Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"
 
 # install required packages
 RUN apt-get update && \
@@ -45,13 +52,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
     >> /etc/bash.bashrc \
-    ; echo "\n\
-    Welcome to WSO2 Docker Resources \n\
-    --------------------------------- \n\
-    This Docker container comprises of a WSO2 product, running with its latest updates \n\
-    which are under the End User License Agreement (EULA) 2.0. \n\
-    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
-    > /etc/motd
+    ; echo "$MOTD" > /etc/motd
 
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
