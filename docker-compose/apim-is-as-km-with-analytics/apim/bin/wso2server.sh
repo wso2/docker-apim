@@ -156,6 +156,17 @@ do
           CMD="restart"
     elif [ "$c" = "--test" ] || [ "$c" = "-test" ] || [ "$c" = "test" ]; then
           CMD="test"
+    elif [ "$c" = "--optimize" ] || [ "$c" = "-optimize" ] || [ "$c" = "optimize" ]; then
+          for profile in $*
+          do
+            case "$profile" in
+              *Dprofile=*)
+                cd $(dirname "$0")
+                sh profileSetup.sh $profile
+                echo "Starting the server..."
+                ;;
+            esac
+          done
     else
         args="$args $c"
     fi
@@ -314,7 +325,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -Dorg.opensaml.httpclient.https.disableHostnameVerification=true \
     -Dorg.wso2.ignoreHostnameVerification=true \
-    -Dhttpclient.hostnameVerifier="AllowAll" \
+    -Dhttpclient.hostnameVerifier=AllowAll \
     -DworkerNode=false \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?

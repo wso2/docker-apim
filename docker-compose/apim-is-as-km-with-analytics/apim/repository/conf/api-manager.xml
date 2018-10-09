@@ -91,7 +91,9 @@
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://localhost:${http.nio.port},https://localhost:${https.nio.port}</GatewayEndpoint>
+                <GatewayEndpoint>http://${carbon.local.ip}:${http.nio.port},https://${carbon.local.ip}:${https.nio.port}</GatewayEndpoint>
+                <!-- Endpoint of the Websocket APIs hosted in this API Gateway -->
+                <GatewayWSEndpoint>ws://${carbon.local.ip}:9099</GatewayWSEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
@@ -123,17 +125,23 @@
              only be created when this element is uncommented. When the specified
              time duration gets elapsed ,tag cache will get re-generated. -->
         <!--TagCacheDuration>120000</TagCacheDuration-->
+        <!-- JWT Claim cache can be disabled only if below config <EnableJWTClaimCache> is set as 'false'. The default
+          value is 'true'.
+          Other than this config, also <EnableGatewayTokenCache> and <EnableKeyManagerTokenCache> should have been set
+          as 'false' to completely disable JWTClaimCache.
+         -->
+        <EnableJWTClaimCache>true</EnableJWTClaimCache>
     </CacheConfigurations>
 
     <!--
-        API usage tracker configuration used by the DAS data publisher and
+        API usage tracker configuration used by the StreamProcessor data publisher and
         Google Analytics publisher in API gateway.
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
         <Enabled>true</Enabled>
 
-        <!-- Server URL of the remote DAS/CEP server used to collect statistics. Must
+        <!-- Server URL of the remote StreamProcessor server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
 
              An event can also be published to multiple Receiver Groups each having 1 or more receivers. Receiver
@@ -143,24 +151,27 @@
 
              Ex - Multiple Receiver Groups with two receivers each
              {tcp://localhost:7612/,tcp://localhost:7613},{tcp://localhost:7712/,tcp://localhost:7713/} -->
-        <DASServerURL>tcp://am-analytics:7612</DASServerURL>
-        <DASAuthServerURL>ssl://am-analytics:7712</DASAuthServerURL>
-        <!-- Administrator username to login to the remote DAS server. -->
-        <DASUsername>admin</DASUsername>
-        <!-- Administrator password to login to the remote DAS server. -->
-        <DASPassword>admin</DASPassword>
+        <StreamProcessorServerURL>tcp://am-analytics:7612</StreamProcessorServerURL>
+        <StreamProcessorAuthServerURL>ssl://am-analytics:7712</StreamProcessorAuthServerURL>
+        <!-- Administrator username to login to the remote StreamProcessor server. -->
+        <StreamProcessorUsername>admin</StreamProcessorUsername>
+        <!-- Administrator password to login to the remote StreamProcessor server. -->
+        <StreamProcessorPassword>admin</StreamProcessorPassword>
 
         <!-- For APIM implemented Statistic client for RDBMS -->
-        <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRdbmsClientImpl</StatsProviderImpl>
+        <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRestClientImpl</StatsProviderImpl>
 
-        <!-- DAS REST API configuration -->
-        <DASRestApiURL>https://am-analytics:9444</DASRestApiURL>
-        <DASRestApiUsername>admin</DASRestApiUsername>
-        <DASRestApiPassword>admin</DASRestApiPassword>
+        <!-- StreamProcessor REST API configuration -->
+        <StreamProcessorRestApiURL>https://am-analytics:7444</StreamProcessorRestApiURL>
+        <StreamProcessorRestApiUsername>admin</StreamProcessorRestApiUsername>
+        <StreamProcessorRestApiPassword>admin</StreamProcessorRestApiPassword>
 
         <!-- Below property is used to skip trying to connect to event receiver nodes when publishing events even if
             the stats enabled flag is set to true. -->
         <SkipEventReceiverConnection>false</SkipEventReceiverConnection>
+
+        <!--Skip workflow data publisher initiation and even publishing-->
+        <SkipWorkflowEventPublisher>false</SkipWorkflowEventPublisher>
 
         <!-- API Usage Data Publisher. -->
         <PublisherClass>org.wso2.carbon.apimgt.usage.publisher.APIMgtUsageDataBridgeDataPublisher</PublisherClass>
@@ -173,29 +184,21 @@
         <Streams>
             <Request>
                 <Name>org.wso2.apimgt.statistics.request</Name>
-                <Version>1.1.0</Version>
+                <Version>3.0.0</Version>
             </Request>
-            <Response>
-                <Name>org.wso2.apimgt.statistics.response</Name>
-                <Version>1.1.0</Version>
-            </Response>
             <Fault>
                 <Name>org.wso2.apimgt.statistics.fault</Name>
-                <Version>1.0.0</Version>
+                <Version>3.0.0</Version>
             </Fault>
             <Throttle>
                 <Name>org.wso2.apimgt.statistics.throttle</Name>
-                <Version>1.0.0</Version>
+                <Version>3.0.0</Version>
             </Throttle>
             <Workflow>
                 <Name>org.wso2.apimgt.statistics.workflow</Name>
                 <Version>1.0.0</Version>
             </Workflow>
-            <ExecutionTime>
-                <Name>org.wso2.apimgt.statistics.execution.time</Name>
-                <Version>1.0.0</Version>
-            </ExecutionTime>
-	    <AlertTypes>
+	        <AlertTypes>
                 <Name>org.wso2.analytics.apim.alertStakeholderInfo</Name>
                 <Version>1.0.1</Version>
             </AlertTypes>
@@ -278,6 +281,11 @@
         Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to
         org.wso2.carbon.identity.oauth.tokenprocessor.EncryptionDecryptionPersistenceProcessor in the identity.xml -->
         <EncryptPersistedTokens>false</EncryptPersistedTokens>
+        <!-- Whether to hash the tokens when storing in the Database
+        Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to
+        org.wso2.carbon.identity.oauth.tokenprocessor.HashingPersistenceProcessor and change the value of
+        <EnableClientSecretHash> to true in the identity.xml -->
+        <EnableTokenHashMode>false</EnableTokenHashMode>
     </OAuthConfigurations>
 
     <!-- Settings related to managing API access tiers. -->
@@ -289,7 +297,6 @@
 
     <!-- API Store Related Configurations -->
     <APIStore>
-        <EnableMultipleGroupId>false</EnableMultipleGroupId>
         <!--GroupingExtractor>org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl</GroupingExtractor-->
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
@@ -323,6 +330,12 @@
 
         <!--set isStoreForumEnabled to false for disable forum in store-->
         <!--isStoreForumEnabled>false</isStoreForumEnabled-->
+
+        <!--
+        This is an optional parameter. If this parameter has a value, it will be shown in the token generation
+        cURL command under subscriptions section in API Store.
+        -->
+        <!--StoreTokenDisplayURL>https://${carbon.local.ip}:${https.nio.port}</StoreTokenDisplayURL-->
     </APIStore>
 
     <APIPublisher>
@@ -614,9 +627,9 @@
     	<ServerUrl>https://localhost:9445/bpmn</ServerUrl>   		
     	<ServerUser>${admin.username}</ServerUser>
     	<ServerPassword>${admin.password}</ServerPassword>
-    	<WorkflowCallbackAPI>https://localhost:${mgt.transport.https.port}/api/am/publisher/v0.12/workflows/update-workflow-status</WorkflowCallbackAPI>
+    	<WorkflowCallbackAPI>https://localhost:${mgt.transport.https.port}/api/am/publisher/v0.14/workflows/update-workflow-status</WorkflowCallbackAPI>
         <TokenEndPoint>https://localhost:${https.nio.port}/token</TokenEndPoint>
-        <DCREndPoint>https://localhost:${mgt.transport.https.port}/client-registration/v0.12/register</DCREndPoint>
+        <DCREndPoint>https://localhost:${mgt.transport.https.port}/client-registration/v0.14/register</DCREndPoint>
         <DCREndPointUser>${admin.username}</DCREndPointUser>
         <DCREndPointPassword>${admin.password}</DCREndPointPassword>
     </WorkflowConfigurations>
