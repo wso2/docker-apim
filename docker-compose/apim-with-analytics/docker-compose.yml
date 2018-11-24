@@ -1,20 +1,20 @@
-version: '2.3'
+version: '3.7'
 services:
   mysql:
-    image: mysql:5.7.19
+    image: mysql:5.7.24
     ports:
-      - 3306
+      - "3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./mysql/scripts:/docker-entrypoint-initdb.d
+      - "./mysql/scripts:/docker-entrypoint-initdb.d"
     command: [--ssl=0]
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
-      interval: 30s
-      timeout: 60s
+      interval: 10s
+      timeout: 10s
       retries: 5
-      start_period: 80s
+      start_period: 30s
   am-analytics:
     image: docker.wso2.com/wso2am-analytics-worker:2.6.0
     ports:
@@ -23,31 +23,44 @@ services:
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9091"]
       interval: 10s
-      timeout: 120s
-      start_period: 120s
-      retries: 10
+      timeout: 10s
+      start_period: 20s
+      retries: 5
     depends_on:
-      mysql:
-        condition: service_healthy
+      - "mysql"
     volumes:
-      - ./apim-analytics:/home/wso2carbon/wso2-config-volume
+      - "./apim-analytics:/home/wso2carbon/wso2-config-volume"
+      - "./wait-for-it.sh:/home/wso2carbon/wait-for-it.sh"
+    entrypoint:
+      - "/home/wso2carbon/wait-for-it.sh"
+      - "mysql:3306"
+      - "-t"
+      - "30"
+      - "--"
+      - "./init.sh"
   api-manager:
     image: docker.wso2.com/wso2am:2.6.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
-      timeout: 120s
+      timeout: 10s
       start_period: 100s
-      retries: 10
+      retries: 5
     depends_on:
-      mysql:
-        condition: service_healthy
-      am-analytics:
-        condition: service_healthy
+      - "mysql"
+      - "am-analytics"
     volumes:
-      - ./apim:/home/wso2carbon/wso2-config-volume
+      - "./apim:/home/wso2carbon/wso2-config-volume"
+      - "./wait-for-it.sh:/home/wso2carbon/wait-for-it.sh"
     ports:
       - "9763:9763"
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
+    entrypoint:
+      - "/home/wso2carbon/wait-for-it.sh"
+      - "am-analytics:9091"
+      - "-t"
+      - "60"
+      - "--"
+      - "./init.sh"
