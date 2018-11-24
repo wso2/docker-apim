@@ -29,8 +29,7 @@ ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
 # set jdk configurations
-ARG JDK=jdk1.8.0*
-ARG JAVA_HOME=${USER_HOME}/java
+ARG JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2is-km
 ARG WSO2_SERVER_VERSION=5.7.0
@@ -47,6 +46,7 @@ Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"
 # install required packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    openjdk-8-jdk \
     curl \
     netcat && \
     rm -rf /var/lib/apt/lists/* && \
@@ -58,8 +58,7 @@ RUN apt-get update && \
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
-# copy the jdk and wso2 product distributions to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
+# copy the wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy shared artifacts to a temporary location
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
