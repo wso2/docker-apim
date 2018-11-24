@@ -10,8 +10,6 @@
    from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 API Manager and 
    API Manager Analytics 2.6.0 products. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`. <br><br>
-  
-<br>
 
 ## Quick Start Guide
 
@@ -57,4 +55,10 @@
    https://localhost:8243
    https://localhost:8280
    ```
-   
+
+
+## References
+
+ * Docker Compose file version 3 does not support condition form of `depends_on` (refer official [documentation](https://docs.docker.com/compose/compose-file/#depends_on)).
+   Hence, the current implementation of WSO2 product Docker Compose resources use sh-compatible [wait-for](https://github.com/eficode/wait-for/blob/master/wait-for) script
+   to control the startup order of services, as suggested in Docker Compose official [documentation](https://docs.docker.com/compose/startup-order/).

@@ -55,4 +55,12 @@
     https://localhost:8280
  ```
 
- WSO2 API Manager will use WSO2 Identity Server to generate OAuth2 tokens and validate those tokens <br> during API invocations.
+ WSO2 API Manager will use WSO2 Identity Server to generate OAuth2 tokens and validate those tokens during API invocations.
+
+
+
+## References
+
+ * Docker Compose file version 3 does not support condition form of `depends_on` (refer official [documentation](https://docs.docker.com/compose/compose-file/#depends_on)).
+   Hence, the current implementation of WSO2 product Docker Compose resources use sh-compatible [wait-for](https://github.com/eficode/wait-for/blob/master/wait-for) script
+   to control the startup order of services, as suggested in Docker Compose official [documentation](https://docs.docker.com/compose/startup-order/).
