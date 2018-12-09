@@ -48,6 +48,7 @@ Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     curl \
+    libxml2-utils \
     netcat && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
