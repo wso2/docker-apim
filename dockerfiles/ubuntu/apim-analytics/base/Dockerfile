@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Ubuntu LTS
-FROM ubuntu:18.04
+# set base Docker image to AdoptOpenJDK Ubuntu Docker image
+FROM adoptopenjdk/openjdk8:jdk8u192-b12
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
 
 # set user configurations
@@ -29,7 +29,7 @@ ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
 # set jdk configurations
-ARG JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ARG JAVA_HOME=/opt/java/openjdk
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
@@ -46,7 +46,6 @@ Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"
 # install required packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    openjdk-8-jdk \
     curl \
     netcat && \
     rm -rf /var/lib/apt/lists/* && \
@@ -58,6 +57,13 @@ RUN apt-get update && \
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
+# create java prefs dir
+# this is to avoid warning logs printed by FileSystemPreferences class
+RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
+    mkdir -p ${USER_HOME}/.java/.userPrefs  && \
+    chmod -R 755 ${USER_HOME}/.java && \
+    chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
+
 # copy the wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy mysql connector jar to the server as a third party library
@@ -68,7 +74,6 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=$JAVA_HOME/bin:$PATH \
-    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
-    WORKING_DIRECTORY=${USER_HOME}
+ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+    WORKING_DIRECTORY=${USER_HOME} \
+    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"

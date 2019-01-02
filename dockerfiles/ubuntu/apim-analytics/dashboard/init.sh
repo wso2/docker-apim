@@ -35,4 +35,4 @@ test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 Carbon server
-sh ${WSO2_SERVER_HOME}/bin/dashboard.sh
+sh ${WSO2_SERVER_HOME}/bin/dashboard.sh "$@"
