@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Alpine
-FROM openjdk:8u171-jdk-alpine3.8
+# set base Docker image to AdoptOpenJDK Alpine Docker image
+FROM adoptopenjdk/openjdk8:alpine
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
 
 # set user configurations
@@ -88,4 +88,4 @@ WORKDIR ${USER_HOME}
 EXPOSE 9763 9443
 
 # initiate container and start WSO2 Carbon server
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
+ENTRYPOINT ["/home/wso2carbon/init.sh"]
