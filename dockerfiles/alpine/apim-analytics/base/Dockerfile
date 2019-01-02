@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Alpine
-FROM openjdk:8u171-jdk-alpine3.8
+# set base Docker image to AdoptOpenJDK Alpine Docker image
+FROM adoptopenjdk/openjdk8:alpine
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
 
 # set user configurations
@@ -73,7 +73,6 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy mysql connector jar to the server as a third party library
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.1.7/snappy-java-1.1.1.7.jar ${WSO2_SERVER_HOME}/lib/
 
 # set environment variables
 ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \

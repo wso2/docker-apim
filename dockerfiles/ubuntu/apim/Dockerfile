@@ -28,8 +28,6 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
-# set jdk configurations
-ARG JAVA_HOME=/opt/java/openjdk
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2am
 ARG WSO2_SERVER_VERSION=2.6.0
