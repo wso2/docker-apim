@@ -27,8 +27,8 @@ and extract it to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-5.1.45-bin.jar
   <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2am-analytics-2.6.0/
+  <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-5.1.45-bin.jar
   ```
 
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)

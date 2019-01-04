@@ -23,7 +23,7 @@ and copy that to `<AM_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <AM_DOCKERFILE_HOME>/files/jdk<version>/
+  <AM_DOCKERFILE_HOME>/files/mysql-connector-java-5.1.45-bin.jar
   <AM_DOCKERFILE_HOME>/files/wso2am-2.6.0/
   ```
   

@@ -7,7 +7,7 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 
 
 ## How to build an image and run
-##### 1. Checkout this repository into your local machine using the following git command.
+##### 1. Checkout this repository into your local machine using the following Git command.
 ```
 git clone https://github.com/wso2/docker-apim.git
 ```
@@ -24,6 +24,7 @@ and copy that to `<AM_DOCKERFILE_HOME>/files`.
 
   ```bash
   <AM_DOCKERFILE_HOME>/files/wso2am-2.6.0/
+  <AM_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
   ```
   
 >Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)

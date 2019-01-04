@@ -25,6 +25,7 @@ and copy that to `<IS_KM_DOCKERFILE_HOME>/files`.
 
     ```bash
     <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.7.0/
+    <IS_KM_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
     ```
     
 >Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)

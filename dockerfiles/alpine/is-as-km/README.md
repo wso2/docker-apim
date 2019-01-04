@@ -24,7 +24,7 @@ and copy that to `<IS_KM_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
     ```bash
-    <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
+    <IS_KM_DOCKERFILE_HOME>/files/mysql-connector-java-5.1.45-bin.jar
     <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.7.0/
     ```
     
