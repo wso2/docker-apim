@@ -63,7 +63,7 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     chmod -R 755 ${USER_HOME}/.java && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
-# copy wso2 product distribution zip file to user's home directory and set ownership
+# copy wso2 product distribution to user's home directory and set ownership
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy shared artifacts to a temporary location
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
