@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Alpine
-FROM openjdk:8u171-jdk-alpine3.8
+# set base Docker image to AdoptOpenJDK Alpine Docker image
+FROM adoptopenjdk/openjdk8:jdk8u192-b12-alpine
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
 
 # set user configurations
@@ -56,7 +56,7 @@ RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
 # MOTD login message
 RUN echo $MOTD > "$ENV"
 
-# copy wso2 product distribution zip files to user's home directory and set ownership
+# copy wso2 product distribution to user's home directory and set ownership
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}/
 # copy shared artifacts to a temporary location
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
@@ -88,4 +88,4 @@ WORKDIR ${USER_HOME}
 EXPOSE 9763 9443
 
 # initiate container and start WSO2 Carbon server
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
+ENTRYPOINT ["/home/wso2carbon/init.sh"]

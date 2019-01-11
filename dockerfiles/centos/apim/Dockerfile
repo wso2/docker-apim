@@ -29,7 +29,7 @@ ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
 # set jdk configurations
-ARG JDK=jdk1.8.0*
+ARG JDK=jdk8u*
 ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2am
@@ -43,6 +43,7 @@ ARG MOTD='printf "\n\
  This Docker container comprises of a WSO2 product, running with its latest updates \n\
  which are under the End User License Agreement (EULA) 2.0. \n\
  Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"'
+
 # install required packages
 RUN yum -y update && \
     yum install -y nc && \
@@ -80,4 +81,4 @@ ENV JAVA_HOME=${JAVA_HOME} \
 EXPOSE 8280 8243 9763 9443 9099 5672 9711 9611 7711 7611 10397
 
 # initiate container and start WSO2 Carbon server
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
+ENTRYPOINT ["/home/wso2carbon/init.sh"]

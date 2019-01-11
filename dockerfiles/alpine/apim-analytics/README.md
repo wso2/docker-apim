@@ -19,15 +19,15 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfile/alpine/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add WSO2 API Manager Analytics distributions and MySQL Connector to `<ANALYTICS_DOCKERFILE_HOME>`.
+##### 2. Add WSO2 API Manager Analytics distribution and MySQL Connector to `<ANALYTICS_DOCKERFILE_HOME>`.
 
 - Download the [WSO2 API Manager Analytics 2.6.0](https://wso2.com/api-management/install/analytics/)
 and extract it to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<ANALYTICS_DOCKERFILE_HOME>/base/files` folder <br>
+- Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j) and then copy that to `<ANALYTICS_DOCKERFILE_HOME>/base/files` folder <br>
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-5.1.45-bin.jar
+  <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-<version>-bin.jar
   <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2am-analytics-2.6.0/
   ```
 

@@ -17,16 +17,16 @@ git clone https://github.com/wso2/docker-apim.git
 
 ##### 2. Add JDK, WSO2 Identity Server as Key Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`.
 
-- Download [JDK v1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-and extract it to `<IS_KM_DOCKERFILE_HOME>/files`.
+- Download [AdoptOpenJDK 8](https://adoptopenjdk.net/) and extract it to `<IS_KM_DOCKERFILE_HOME>/files`.
 - Download [WSO2 Identity Server as Key Manager v5.7.0](https://wso2.com/api-management/install/key-manager/)
 distribution and extract it to `<IS_KM_DOCKERFILE_HOME>/files`.
-- Download [MySQL Connector JAR v5.1.45](https://downloads.mysql.com/archives/c-j)
+- Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
 and copy that to `<IS_KM_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
     ```bash
-    <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
+    <IS_KM_DOCKERFILE_HOME>/files/jdk8u<version>/
+    <IS_KM_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
     <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.7.0/
     ```
     
