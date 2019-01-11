@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Alpine
-FROM openjdk:8u171-jdk-alpine3.8
+# set base Docker image to AdoptOpenJDK Alpine Docker image
+FROM adoptopenjdk/openjdk8:jdk8u192-b12-alpine
 MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
 
 # set user configurations
@@ -44,9 +44,7 @@ ARG MOTD='printf "\n\
  Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"'
 
 # install required packages
-RUN  apk add --update --no-cache \
-     curl \
-     netcat-openbsd && \
+RUN  apk add --update --no-cache netcat-openbsd && \
      rm -rf /var/cache/apk/*
 
 # create a user group and a user
@@ -69,11 +67,10 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     chmod -R 755 ${USER_HOME}/.java && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
-# copy wso2 product distribution zip files to user's home directory and set ownership
+# copy wso2 product distribution to user's home directory and set ownership
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
 # copy mysql connector jar to the server as a third party library
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.1.7/snappy-java-1.1.1.7.jar ${WSO2_SERVER_HOME}/lib/
 
 # set environment variables
 ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \

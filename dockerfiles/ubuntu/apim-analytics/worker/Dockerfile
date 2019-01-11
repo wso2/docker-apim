@@ -26,4 +26,4 @@ COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 EXPOSE 9091 9444 7712 7612 9613 9713 7444 7071
 
 # start WSO2 Carbon server
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
+ENTRYPOINT ["/home/wso2carbon/init.sh"]
