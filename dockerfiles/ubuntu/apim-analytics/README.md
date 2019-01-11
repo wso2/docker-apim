@@ -19,7 +19,7 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfile/ubuntu/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add WSO2 API Manager Analytics distributions and MySQL Connector to `<ANALYTICS_DOCKERFILE_HOME>`.
+##### 2. Add WSO2 API Manager Analytics distribution and MySQL Connector to `<ANALYTICS_DOCKERFILE_HOME>`.
 
 - Download the [WSO2 API Manager Analytics 2.6.0](https://wso2.com/api-management/install/analytics/)
 and extract it to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.

@@ -14,7 +14,7 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfiles/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add WSO2 API Manager distributions and MySQL connector to `<AM_DOCKERFILE_HOME>/files`.
+##### 2. Add WSO2 API Manager distribution and MySQL connector to `<AM_DOCKERFILE_HOME>/files`.
 
 - Download [WSO2 API Manager v2.6.0](https://wso2.com/api-management/)
 distribution and extract it to `<AM_DOCKERFILE_HOME>/files`.
