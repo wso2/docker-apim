@@ -33,17 +33,12 @@
    > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
     i.e. for example: git checkout tags/v2.6.0.3 and continue below steps.
 
-3. [Optional] If you are using WSO2 product Docker images with WSO2 updates, replace the WSO2 product Docker image names
-   (relevant `image` attribute under each WSO2 product profile service) in the Docker Compose deployment definition.
-    
-  **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
+3. Execute the `deploy.sh` script to start the deployment.
+     ```
+     ./deploy.sh
+     ```
 
-4. Execute following Docker Compose command to start the deployment.
-   ```
-   docker-compose up
-   ```
-
-5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+4. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
    ```
    https://localhost:9443/publisher
