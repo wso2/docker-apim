@@ -5,8 +5,9 @@
 
  * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
    in order to run the steps provided in following Quick start guide. <br><br>
- * In order to run this Docker Compose setup, you will need an active subscription from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 API Manager and
-   API Manager Analytics 2.6.0 and WSO2 Identity Server as KM 5.7.0. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
+ * In order to use Docker images with WSO2 updates, you need an active WSO2 subscription. If you do not possess an active WSO2
+   subscription, you can sign up for a WSO2 Free Trial Subscription from [here](https://wso2.com/free-trial-subscription).
+   Otherwise, you can proceed with Docker images which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`. <br><br>
     
 ## Quick Start Guide
@@ -27,15 +28,19 @@
      Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>docker-compose/apim-is-as-km-with-analytics` folder. 
      
     > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-     i.e. for example: git checkout tags/v2.6.0.1 and continue below steps.
+     i.e. for example: git checkout tags/v2.6.0.3 and continue below steps.
 
-3. Execute the following Docker Compose command to start the deployment.
+3. [Optional] If you are using WSO2 product Docker images with WSO2 updates, replace the WSO2 product Docker image names
+   (relevant `image` attribute under each WSO2 product profile service) in the Docker Compose deployment definition.
+    
+  **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
 
-    ```
-    docker-compose up
-    ```
+4. Execute following Docker Compose command to start the deployment.
+   ```
+   docker-compose up
+   ```
 
-4. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
  ```
    https://localhost:9443/publisher

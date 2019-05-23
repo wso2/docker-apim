@@ -16,7 +16,7 @@ services:
       retries: 5
       start_period: 80s
   am-analytics:
-    image: docker.wso2.com/wso2am-analytics-worker:2.6.0
+    image: wso2/wso2am-analytics-worker:2.6.0
     ports:
       - "9091:9091"
       - "9444:9444"
@@ -32,7 +32,7 @@ services:
     volumes:
       - ./apim-analytics:/home/wso2carbon/wso2-config-volume
   api-manager:
-    image: docker.wso2.com/wso2am:2.6.0
+    image: wso2/wso2am:2.6.0
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
       interval: 10s
