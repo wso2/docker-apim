@@ -38,10 +38,10 @@
     
   **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
 
-4. Execute following Docker Compose command to start the deployment.
-   ```
-   docker-compose up
-   ```
+4. Execute the `deploy.sh` script to start the deployment.
+     ```
+     ./deploy.sh
+     ```
 
 5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
