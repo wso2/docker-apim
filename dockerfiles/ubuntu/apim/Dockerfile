@@ -66,8 +66,6 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 
 # copy the wso2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
-# copy shared artifacts to a temporary location
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # add mysql jdbc connector to server home as a third party library
