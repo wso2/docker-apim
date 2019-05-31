@@ -36,13 +36,13 @@ ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 # build arguments for external artifacts
 ARG SQL_CONNECTOR_VERSION=5.1.47
-# set WSO2 EULA
-ARG MOTD="\
+# build argument for MOTD
+ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
 ------------------------------------ \n\
-The Docker container contains the WSO2 product with its latest updates, which are under the End User License Agreement (EULA) 2.0.\n\
-\n\
-Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"
+This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+which is under the Apache License, Version 2.0. \n\
+Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
 
 # install required packages
 RUN apt-get update && \
