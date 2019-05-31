@@ -34,6 +34,8 @@ ARG WSO2_SERVER_NAME=wso2am
 ARG WSO2_SERVER_VERSION=2.6.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
+# build arguments for external artifacts
+ARG SQL_CONNECTOR_VERSION=5.1.47
 # set WSO2 EULA
 ARG MOTD="\
 Welcome to WSO2 Docker resources.\n\
@@ -69,8 +71,8 @@ COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
-# copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/repository/components/lib/
+# add mysql jdbc connector to server home as a third party library
+ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${SQL_CONNECTOR_VERSION}/mysql-connector-java-${SQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
