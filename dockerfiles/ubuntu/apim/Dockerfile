@@ -66,25 +66,24 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 
 # copy the wso2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
+
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
+
 # add mysql jdbc connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${SQL_CONNECTOR_VERSION}/mysql-connector-java-${SQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
-# add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/repository/components/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+ENV JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs" \
     WORKING_DIRECTORY=${USER_HOME} \
-    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose ports
-EXPOSE 8280 8243 9763 9443 9099 5672 9711 9611 7711 7611 10397
+EXPOSE 9763 9443 9999 11111 8280 8243 5672 9711 9611 7711 7611 10397 9099
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
