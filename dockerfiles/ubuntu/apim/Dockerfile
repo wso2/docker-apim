@@ -20,19 +20,20 @@
 FROM adoptopenjdk/openjdk8:jdk8u212-b03
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
-# set user configurations
+# set Docker image build arguments
+# build arguments for user/group configurations
 ARG USER=wso2carbon
 ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set dependant files directory
+# set build context dependency directory
 ARG FILES=./files
-# set wso2 product configurations
-ARG WSO2_SERVER=wso2am
+# build arguments for wso2 product installation
+ARG WSO2_SERVER_NAME=wso2am
 ARG WSO2_SERVER_VERSION=2.6.0
-ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 # set WSO2 EULA
 ARG MOTD="\
 Welcome to WSO2 Docker resources.\n\
@@ -63,9 +64,9 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
 # copy the wso2 product distribution to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 # copy shared artifacts to a temporary location
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy mysql connector jar to the server as a third party library
