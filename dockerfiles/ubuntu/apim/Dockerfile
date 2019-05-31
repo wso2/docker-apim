@@ -18,7 +18,7 @@
 
 # set base Docker image to AdoptOpenJDK Ubuntu Docker image
 FROM adoptopenjdk/openjdk8:jdk8u212-b03
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
 # set user configurations
 ARG USER=wso2carbon
