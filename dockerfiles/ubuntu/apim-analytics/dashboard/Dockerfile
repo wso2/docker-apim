@@ -20,10 +20,10 @@
 FROM wso2am-analytics-base:2.6.0
 
 # copy init script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
+COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${WORKING_DIRECTORY}/
 
 # expose ports
 EXPOSE 9713 9643 9613 7713 7613
 
-# start WSO2 Carbon server
-ENTRYPOINT ["/home/wso2carbon/init.sh"]
+# initiate container and start WSO2 Carbon server
+ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
