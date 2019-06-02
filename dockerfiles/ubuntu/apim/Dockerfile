@@ -68,7 +68,7 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 
 # copy init script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 
 # add mysql jdbc connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${SQL_CONNECTOR_VERSION}/mysql-connector-java-${SQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
@@ -86,4 +86,4 @@ ENV JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs
 EXPOSE 9763 9443 9999 11111 8280 8243 5672 9711 9611 7711 7611 10397 9099
 
 # initiate container and start WSO2 Carbon server
-ENTRYPOINT ["/home/wso2carbon/init.sh"]
+ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
