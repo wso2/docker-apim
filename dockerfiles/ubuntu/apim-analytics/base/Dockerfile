@@ -65,6 +65,5 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs" \
-    WORKING_DIRECTORY=${USER_HOME} \
+ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
