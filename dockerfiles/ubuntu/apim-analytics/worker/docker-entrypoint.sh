@@ -14,14 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 # ------------------------------------------------------------------------
+
 set -e
 
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-
-# capture Docker container IP from the container's /etc/hosts file
-docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
@@ -30,9 +28,9 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
 
 # copy any configuration changes mounted to config_volume
-test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
+test -e ${config_volume}/* && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
-test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
+test -e ${artifact_volume}/* && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 Carbon server
 sh ${WSO2_SERVER_HOME}/bin/worker.sh "$@"
