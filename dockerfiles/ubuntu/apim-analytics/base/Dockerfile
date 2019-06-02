@@ -49,13 +49,6 @@ RUN \
     groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
     && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
-# create java prefs dir
-# this is to avoid warning logs printed by FileSystemPreferences class
-RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
-    mkdir -p ${USER_HOME}/.java/.userPrefs && \
-    chmod -R 755 ${USER_HOME}/.java && \
-    chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
-
 # copy the wso2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 # install required packages
