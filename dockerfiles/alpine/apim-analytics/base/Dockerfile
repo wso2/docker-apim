@@ -18,65 +18,50 @@
 
 # set base Docker image to AdoptOpenJDK Alpine Docker image
 FROM adoptopenjdk/openjdk8:jdk8u212-b03-alpine
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
-# set user configurations
+# set Docker image build arguments
+# build arguments for user/group configurations
 ARG USER=wso2carbon
 ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set dependant files directory
+# set build context dependency directory
 ARG FILES=./files
-# set wso2 product configurations
-ARG WSO2_SERVER=wso2am-analytics
+# build arguments for wso2 product installation
+ARG WSO2_SERVER_NAME=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
-ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
-ENV ENV=${USER_HOME}"/.ashrc"
-
-# set WSO2 EULA
+ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
+# build arguments for external artifacts
+ARG SQL_CONNECTOR_VERSION=5.1.47
+# build argument for MOTD
 ARG MOTD='printf "\n\
  Welcome to WSO2 Docker Resources \n\
  --------------------------------- \n\
- This Docker container comprises of a WSO2 product, running with its latest updates \n\
- which are under the End User License Agreement (EULA) 2.0. \n\
- Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"'
+ This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+ which is under the Apache License, Version 2.0. \n\
+ Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
+ENV ENV=${USER_HOME}"/.ashrc"
 
+# create the non-root user and group and set MOTD login message
+RUN \
+    addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
+    && echo ${MOTD} > "${ENV}"
+
+# copy the wso2 product distribution to user's home directory
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 # install required packages
-RUN  apk add --update --no-cache netcat-openbsd && \
-     rm -rf /var/cache/apk/*
-
-# create a user group and a user
-RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
-     adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
-
-# MOTD login message
-RUN echo $MOTD > "$ENV"
-
-# install Alpine Linux package to run binaries linked against glibc
-RUN apk --no-cache add ca-certificates wget; \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub; \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.27-r0/glibc-2.27-r0.apk; \
-    apk add glibc-2.27-r0.apk;
-
-# create Java prefs dir
-# this is to avoid warning logs printed by FileSystemPreferences class
-RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
-    mkdir -p ${USER_HOME}/.java/.userPrefs  && \
-    chmod -R 755 ${USER_HOME}/.java && \
-    chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
-
-# copy wso2 product distribution to user's home directory and set ownership
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
-# copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
-
-# set environment variables
-ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \
-    WORKING_DIRECTORY=${USER_HOME} \
-    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
+RUN apk add --no-cache netcat-openbsd
+# add mysql jdbc connector to server home as a third party library
+ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${SQL_CONNECTOR_VERSION}/mysql-connector-java-${SQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/lib/
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
+
+# set environment variables
+ENV WORKING_DIRECTORY=${USER_HOME} \
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
