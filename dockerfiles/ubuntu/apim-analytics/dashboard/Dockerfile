@@ -16,7 +16,7 @@
 #
 # ------------------------------------------------------------------------
 
-# set to product base image
+# set base Docker image to Ubuntu based API Manager Analytics base Docker image
 FROM wso2am-analytics-base:2.6.0
 
 # copy init script to user home
