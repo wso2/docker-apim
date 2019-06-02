@@ -60,16 +60,14 @@ RUN \
 # create java prefs dir
 # this is to avoid warning logs printed by FileSystemPreferences class
 RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
-    mkdir -p ${USER_HOME}/.java/.userPrefs  && \
+    mkdir -p ${USER_HOME}/.java/.userPrefs && \
     chmod -R 755 ${USER_HOME}/.java && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
 # copy the wso2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
-
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
-
 # add mysql jdbc connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${SQL_CONNECTOR_VERSION}/mysql-connector-java-${SQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 
