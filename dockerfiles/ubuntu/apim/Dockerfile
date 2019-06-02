@@ -44,17 +44,19 @@ This Docker container comprises of a WSO2 product, running with its latest GA re
 which is under the Apache License, Version 2.0. \n\
 Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
 
-# create the non-root user and group
+# create the non-root user and group and set MOTD login message
 RUN \
     groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
-    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
+    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
+    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
 
 # create java prefs dir
 # this is to avoid warning logs printed by FileSystemPreferences class
-RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
-    mkdir -p ${USER_HOME}/.java/.userPrefs && \
-    chmod -R 755 ${USER_HOME}/.java && \
-    chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
+RUN \
+    mkdir -p ${USER_HOME}/.java/.systemPrefs \
+    && mkdir -p ${USER_HOME}/.java/.userPrefs \
+    && chmod -R 755 ${USER_HOME}/.java \
+    && chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
 # copy the wso2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
@@ -63,10 +65,8 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
     apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        netcat \
-    && rm -rf /var/lib/apt/lists/* \
-    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends netcat \
+    && rm -rf /var/lib/apt/lists/*
 # add mysql jdbc connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${SQL_CONNECTOR_VERSION}/mysql-connector-java-${SQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 
