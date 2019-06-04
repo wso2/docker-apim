@@ -9,9 +9,11 @@ provided by WSO2 API Manager Analytics 2.6.0, namely:<br>
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
 
 ## How to build an image and run
-##### 1. Checkout this repository into your local machine using the following Git command.
+
+##### 1. Checkout this repository into your local machine using the following Git client command.
 
 ```
 git clone https://github.com/wso2/docker-apim.git
@@ -19,17 +21,15 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfile/centos/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 API Manager Analytics distributions and MySQL Connector to `<ANALYTICS_DOCKERFILE_HOME>`.
+##### 2. Add JDK and WSO2 API Manager Analytics distributions to `<ANALYTICS_DOCKERFILE_HOME>`.
 
 - Download [AdoptOpenJDK 8](https://adoptopenjdk.net/) and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
 - Download the [WSO2 API Manager Analytics 2.6.0](https://wso2.com/api-management/install/analytics/)
 and extract it to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
-- Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j) and then copy that to `<ANALYTICS_DOCKERFILE_HOME>/base/files` folder <br>
 - Once all of these are in place, it should look as follows:
 
   ```bash
   <ANALYTICS_DOCKERFILE_HOME>/base/files/jdk8u<version>/
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-<version>-bin.jar
   <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2am-analytics-2.6.0/
   ```
 
@@ -66,20 +66,24 @@ in order to obtain latest bug fixes and updates for the product.
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
 ## How to update configurations
+
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
-As an example, steps required to change the port offset using `deployment.yaml` is as follows.
+As an example, steps required to change the port offset using `deployment.yaml` is as follows:
 
 ##### 1. Stop the Identity Server Analytics container if it's already running.
+
 In WSO2 API Manager Analytics 2.6.0 product distribution, `deployment.yaml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/conf/worker`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the offset value under ports to 2.
 
-##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`
+##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`.
+
 ```
 chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 ```
 
-##### 3. Run the image by mounting the file to container as follows.
+##### 3. Run the image by mounting the file to container as follows:
+
 ```
 docker run 
 -p 7713:7713
@@ -88,7 +92,6 @@ wso2am-analytics-worker:2.6.0-centos
 ```
 
 >In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.6.0/conf/worker folder of the container.
-
 
 ## Docker command usage references
 
