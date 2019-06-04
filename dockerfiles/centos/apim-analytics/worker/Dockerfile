@@ -16,14 +16,14 @@
 #
 # ------------------------------------------------------------------------
 
-# set to product base image
+# set base Docker image to CentOS based API Manager Analytics base Docker image
 FROM wso2am-analytics-base:2.6.0-centos
 
 # copy init script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
+COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${WORKING_DIRECTORY}/
 
 # expose ports
 EXPOSE 9091 9444 7712 7612 9613 9713 7444 7071
 
-# start WSO2 Carbon server
-ENTRYPOINT ["/home/wso2carbon/init.sh"]
+# initiate container and start WSO2 Carbon server
+ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
