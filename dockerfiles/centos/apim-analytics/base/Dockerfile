@@ -16,48 +16,54 @@
 #
 # ------------------------------------------------------------------------
 
-# set to latest Centos
+# set base Docker image to latest CentOS Docker image
 FROM centos:7
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
-# set user configurations
+# set Docker image build arguments
+# build arguments for user/group configurations
 ARG USER=wso2carbon
 ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set dependant files directory
+# set build context dependency directory
 ARG FILES=./files
 # set jdk configurations
 ARG JDK=jdk8u*
 ARG JAVA_HOME=${USER_HOME}/java
-# set wso2 product configurations
-ARG WSO2_SERVER=wso2am-analytics
+# build arguments for wso2 product installation
+ARG WSO2_SERVER_NAME=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
-ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
-# set WSO2 EULA
+ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
+# build arguments for external artifacts
+ARG MYSQL_CONNECTOR_VERSION=5.1.47
+# build argument for MOTD
 ARG MOTD='printf "\n\
- Welcome to WSO2 Docker Resources \n\
- --------------------------------- \n\
- This Docker container comprises of a WSO2 product, running with its latest updates \n\
- which are under the End User License Agreement (EULA) 2.0. \n\
- Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"'
+Welcome to WSO2 Docker resources.\n\
+------------------------------------ \n\
+This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+which is under the Apache License, Version 2.0. \n\
+Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n\n"'
+
+# create the non-root user and group and set MOTD login message
+RUN \
+    groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
+    && echo ${MOTD} > /etc/profile.d/motd.sh
+
+# copy the adoptopenjdk distribution to user's home directory
+COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${JAVA_HOME}/
+# copy the wso2 product distribution to user's home directory
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 # install required packages
-RUN yum update -y && \
-    yum install -y nc && \
-    rm -rf /var/cache/yum/* && \
-    echo $MOTD > /etc/profile.d/motd.sh
-
-# create a user group and a user
-RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
-    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
-
-# copy the jdk and wso2 product distributions to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${USER_HOME}/java/
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
-# copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
+RUN \
+    yum -y update \
+    && yum install -y nc \
+    && rm -rf /var/cache/yum/*
+# add mysql jdbc connector to server home as a third party library
+ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/lib/
 
 # set the user and work directory
 USER ${USER_ID}
@@ -65,9 +71,6 @@ WORKDIR ${USER_HOME}
 
 # set environment variables
 ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=$JAVA_HOME/bin:$PATH \
-    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
-    WORKING_DIRECTORY=${USER_HOME}
-
-# expose ports
-EXPOSE 9091 9444 7712 7612 9613 9713 7444 7071
+    PATH=${JAVA_HOME}/bin:${PATH} \
+    WORKING_DIRECTORY=${USER_HOME} \
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
