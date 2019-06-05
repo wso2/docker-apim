@@ -43,4 +43,4 @@ For detailed information on the tasks carried out during this release, please se
 - WSO2 API Manager Identity Server as Key Manager v5.7.x Docker resources for Alpine, CentOS and Ubuntu
 - Docker Compose resources for WSO2 API Management
 
-[v2.6.0.3]: https://github.com/wso2/docker-apim/compare/v2.6.0.2...v2.6.0.3
+[v2.6.0.4]: https://github.com/wso2/docker-apim/compare/v2.6.0.3...v2.6.0.4
