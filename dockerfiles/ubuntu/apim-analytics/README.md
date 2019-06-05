@@ -19,28 +19,17 @@ provided by WSO2 API Manager Analytics 2.6.0, namely:<br>
 git clone https://github.com/wso2/docker-apim.git
 ```
 
->The local copy of the `dockerfile/ubuntu/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfile/ubuntu/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add WSO2 API Manager Analytics distribution to `<ANALYTICS_DOCKERFILE_HOME>`.
-
-- Download the [WSO2 API Manager Analytics 2.6.0](https://wso2.com/api-management/install/analytics/)
-and extract it to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
-- Once all of these are in place, it should look as follows:
-
-  ```bash
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2am-analytics-2.6.0/
-  ```
-
->Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
-in order to obtain latest bug fixes and updates for the product.
-
-##### 3. Build the base Docker image.
+##### 2. Build the base Docker image.
 
 - For base, navigate to `<ANALYTICS_DOCKERFILE_HOME>/base` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2am-analytics-base:2.6.0 .`
-    
-##### 4. Build Docker images specific to each profile.
+
+> By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
+
+##### 3. Build Docker images specific to each profile.
 
 - For dashboard, navigate to `<ANALYTICS_DOCKERFILE_HOME>/dashboard` directory. <br>
   Execute `docker build` command as shown below.
@@ -49,19 +38,19 @@ in order to obtain latest bug fixes and updates for the product.
   Execute `docker build` command as shown below.
     + `docker build -t wso2am-analytics-worker:2.6.0 .`
     
-##### 5. Running Docker images specific to each profile.
+##### 4. Running Docker images specific to each profile.
 
 - For dashboard,
     + `docker run -p 9643:9643 wso2am-analytics-dashboard:2.6.0`
 - For worker,
     + `docker run -p 9090:9090 -p 9091:9091 wso2am-analytics-worker:2.6.0`
     
-##### 6. Accessing the Dashboard portal.
+##### 5. Accessing the Dashboard portal.
 
 - For dashboard,
     + `https:<DOCKER_HOST>:9643/portal`
     
->In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
+> In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
 ## How to update configurations
 
@@ -89,7 +78,7 @@ docker run
 wso2am-analytics-worker:2.6.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.6.0/conf/worker folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.6.0/conf/worker folder of the container.
 
 ## Docker command usage references
 
