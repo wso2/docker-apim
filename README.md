@@ -1,4 +1,4 @@
-# Docker Resources for WSO2 API Management
+# Docker and Docker Compose Resources for WSO2 API Management
 
 This repository contains following Docker resources:
 
@@ -18,3 +18,15 @@ product features along side their co-operate API management requirements. The Co
 Docker images of WSO2 API Manager, WSO2 API Manager Analytics, WSO2 API Manager Identity Server as Key Manager and MySQL.
 
 **Change log** from previous v2.6.0.2 release: [View Here](CHANGELOG.md)
+
+## Reporting issues
+
+We encourage you to report any issues and documentation faults regarding Docker and Docker Compose resources for WSO2 API Management.
+Please report your issues [here](https://github.com/wso2/docker-apim/issues).
+
+## Contact us
+
+WSO2 developers can be contacted via the following mailing lists:
+
+* WSO2 Developers Mailing List : [dev@wso2.org](mailto:dev@wso2.org)
+* WSO2 Architecture Mailing List : [architecture@wso2.org](mailto:architecture@wso2.org)
