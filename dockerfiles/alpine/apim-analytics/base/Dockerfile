@@ -29,7 +29,7 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set build context dependency directory
 ARG FILES=./files
-# build arguments for wso2 product installation
+# build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
@@ -51,11 +51,11 @@ RUN \
     && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
     && echo ${MOTD} > "${ENV}"
 
-# copy the wso2 product distribution to user's home directory
+# copy the WSO2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 # install required packages
 RUN apk add --no-cache netcat-openbsd
-# add mysql jdbc connector to server home as a third party library
+# add MySQL JDBC connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/lib/
 
 # set the user and work directory
