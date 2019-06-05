@@ -29,10 +29,9 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set build context dependency directory
 ARG FILES=./files
-# set jdk configurations
-ARG JDK=jdk8u*
+# set JDK configurations
 ARG JAVA_HOME=${USER_HOME}/java
-# build arguments for wso2 product installation
+# build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2is-km
 ARG WSO2_SERVER_VERSION=5.7.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
@@ -53,18 +52,26 @@ RUN \
     && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
     && echo ${MOTD} > /etc/profile.d/motd.sh
 
-# copy the adoptopenjdk distribution to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${JAVA_HOME}/
-# copy the wso2 product distribution to user's home directory
+# copy the WSO2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER}/ ${WSO2_SERVER_HOME}/
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
     yum -y update \
-    && yum install -y nc \
+    && yum install -y \
+        nc \
+        wget \
     && rm -rf /var/cache/yum/*
-# add mysql jdbc connector to server home as a third party library
+# install AdoptOpenJDK HotSpot
+RUN \
+    mkdir -p ${JAVA_HOME} \
+    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_linux_hotspot_8u212b03.tar.gz \
+    && echo "dd28d6d2cde2b931caf94ac2422a2ad082ea62f0beee3bf7057317c53093de93  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
+    && tar -xf OpenJDK8U-jdk_x64_linux_hotspot.tar.gz -C ${JAVA_HOME} --strip-components=1 \
+    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
+    && rm -f OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
+# add MySQL JDBC connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 
 # set the user and work directory
