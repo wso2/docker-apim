@@ -23,13 +23,11 @@ git clone https://github.com/wso2/docker-apim.git
 
 ##### 2. Add JDK and WSO2 API Manager Analytics distributions to `<ANALYTICS_DOCKERFILE_HOME>`.
 
-- Download [AdoptOpenJDK 8](https://adoptopenjdk.net/) and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
 - Download the [WSO2 API Manager Analytics 2.6.0](https://wso2.com/api-management/install/analytics/)
 and extract it to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/jdk8u<version>/
   <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2am-analytics-2.6.0/
   ```
 
