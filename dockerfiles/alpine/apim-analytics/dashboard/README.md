@@ -1,10 +1,7 @@
-# Dockerfile for WSO2 API Manager Analytics #
+# Dockerfile for Dashboard Profile of WSO2 API Manager Analytics #
 
-This section defines the step-by-step instructions to build [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker images for multiple profiles
-provided by WSO2 API Manager Analytics 2.6.0, namely:<br>
-
-1. Dashboard
-2. Worker
+This section defines the step-by-step instructions to build [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for Dashboard profile of
+WSO2 API Manager Analytics 2.6.0.
 
 ## Prerequisites
 
@@ -19,33 +16,23 @@ provided by WSO2 API Manager Analytics 2.6.0, namely:<br>
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfile/alpine/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfile/alpine/apim-analytics/dasboard` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Build the base Docker image.
+##### 2. Build the Docker image.
 
-- For base, navigate to `<ANALYTICS_DOCKERFILE_HOME>/base` directory. <br>
-  Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics-base:2.6.0-alpine .`
-
-> By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
-
-##### 3. Build Docker images specific to each profile.
-
-- For dashboard, navigate to `<ANALYTICS_DOCKERFILE_HOME>/dashboard` directory. <br>
+- Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2am-analytics-dashboard:2.6.0-alpine .`
-- For worker, navigate to `<ANALYTICS_DOCKERFILE_HOME>/worker` directory. <br>
-  Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics-worker:2.6.0-alpine .`
     
-##### 4. Running Docker images specific to each profile.
+> By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
+    
+##### 3. Running Docker images specific to each profile.
 
-- For dashboard,
-    + `docker run -p 9643:9643 wso2am-analytics-dashboard:2.6.0-alpine`
-- For worker,
-    + `docker run -p 9090:9090 -p 9091:9091 wso2am-analytics-worker:2.6.0-alpine`
-    
-##### 5. Accessing the Dashboard portal.
+- `docker run -p 9643:9643 wso2am-analytics-dashboard:2.6.0-alpine`
+> Here, only port 9643 has been mapped to a Docker host port.
+You may map other container service ports, which have been exposed to Docker host ports, as desired.
+
+##### 4. Accessing the Dashboard portal.
 
 - For dashboard,
     + `https:<DOCKER_HOST>:9643/portal`
