@@ -3,6 +3,11 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.5] - 2019-06-07
+
+### Changed
+- Remove WSO2 API Manager Analytics base image
+
 ## [v2.6.0.4] - 2019-06-06
 
 ### Added
@@ -43,4 +48,4 @@ For detailed information on the tasks carried out during this release, please se
 - WSO2 API Manager Identity Server as Key Manager v5.7.x Docker resources for Alpine, CentOS and Ubuntu
 - Docker Compose resources for WSO2 API Management
 
-[v2.6.0.4]: https://github.com/wso2/docker-apim/compare/v2.6.0.3...v2.6.0.4
+[v2.6.0.5]: https://github.com/wso2/docker-apim/compare/v2.6.0.4...v2.6.0.5
