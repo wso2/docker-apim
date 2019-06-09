@@ -61,7 +61,10 @@ RUN \
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
-RUN apk add --no-cache netcat-openbsd
+RUN \
+    apk add --no-cache \
+        libxml2-utils \
+        netcat-openbsd
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
