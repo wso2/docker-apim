@@ -3,6 +3,20 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.6] - Unreleased
+
+### Added
+- Introduce support for artifact synchronization between API Manager nodes
+- Add `libxml2-utils` Debian package for executing the `<PRODUCT_HOME>/bin/profileSetup.sh` script in
+  Alpine and Ubuntu based WSO2 API Manager Docker resources.
+- Package the Kubernetes Membership Scheme in WSO2 Identity Server as KM Docker images.
+
+### Changed
+- Use WSO2 product pack downloadable links to binaries available at JFrog Bintray.
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v2.6.0.6](https://github.com/wso2/docker-apim/milestone/5).
+
 ## [v2.6.0.5] - 2019-06-07
 
 ### Changed
