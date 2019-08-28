@@ -3,6 +3,11 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.7] - 2019-08-28
+
+### Changed
+- Use AdoptOpenJDK version `jdk8u222-b10` in Alpine, CentOS, Ubuntu based Docker resources
+
 ## [v2.6.0.6] - 2018-08-28
 
 ### Added
@@ -62,4 +67,4 @@ For detailed information on the tasks carried out during this release, please se
 - WSO2 API Manager Identity Server as Key Manager v5.7.x Docker resources for Alpine, CentOS and Ubuntu
 - Docker Compose resources for WSO2 API Management
 
-[v2.6.0.5]: https://github.com/wso2/docker-apim/compare/v2.6.0.4...v2.6.0.5
+[v2.6.0.7]: https://github.com/wso2/docker-apim/compare/v2.6.0.6...v2.6.0.7
