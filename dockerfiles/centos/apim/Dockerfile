@@ -64,8 +64,8 @@ RUN \
 # install AdoptOpenJDK HotSpot
 RUN \
     mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_linux_hotspot_8u212b03.tar.gz \
-    && echo "dd28d6d2cde2b931caf94ac2422a2ad082ea62f0beee3bf7057317c53093de93  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
+    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u222b10.tar.gz \
+    && echo "37356281345b93feb4212e6267109b4409b55b06f107619dde4960e402bafa77  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
     && tar -xf OpenJDK8U-jdk_x64_linux_hotspot.tar.gz -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
     && rm -f OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
