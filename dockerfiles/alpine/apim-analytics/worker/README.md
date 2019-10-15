@@ -1,7 +1,7 @@
 # Dockerfile for Worker Profile of WSO2 API Manager Analytics #
 
 This section defines the step-by-step instructions to build [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for Worker profile of
-WSO2 API Manager Analytics 2.6.0.
+WSO2 API Manager Analytics 3.0.0.
 
 ## Prerequisites
 
@@ -22,13 +22,13 @@ git clone https://github.com/wso2/docker-apim.git
 
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics-worker:2.6.0-alpine .`
+    + `docker build -t wso2am-analytics-worker:3.0.0-alpine .`
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9091:9091 wso2am-analytics-worker:2.6.0-alpine`
+- `docker run -p 9091:9091 wso2am-analytics-worker:3.0.0-alpine`
 > Here, only port 9091 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
@@ -39,7 +39,7 @@ As an example, steps required to change the port offset using `deployment.yaml` 
 
 ##### 1. Stop the Identity Server Analytics container if it's already running.
 
-In WSO2 API Manager Analytics 2.6.0 product distribution, `deployment.yaml` configuration file <br>
+In WSO2 API Manager Analytics 3.0.0 product distribution, `deployment.yaml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/conf/worker`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the offset value under ports to 2.
 
@@ -55,10 +55,10 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 docker run 
 -p 7713:7713
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
-wso2am-analytics-worker:2.6.0-alpine
+wso2am-analytics-worker:3.0.0-alpine
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-2.6.0/conf/worker folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-3.0.0/conf/worker folder of the container.
 
 ## Docker command usage references
 
