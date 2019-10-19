@@ -1,13 +1,18 @@
 version: '2.3'
 services:
   mysql:
-    image: mysql:5.7.19
+    image: mysql:5.7.28
     ports:
       - 3306
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./mysql/scripts:/docker-entrypoint-initdb.d
+      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
     command: [--ssl=0]
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
