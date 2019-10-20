@@ -302,7 +302,7 @@ state.persistence:
   enabled: false
   intervalInMin: 1
   revisionsToKeep: 2
-  persistenceStore: org.wso2.carbon.stream.processor.core.persistence.FileSystemPersistenceStore
+  persistenceStore: org.wso2.carbon.streaming.integrator.core.persistence.FileSystemPersistenceStore
   config:
     location: siddhi-app-persistence
 
@@ -322,22 +322,6 @@ wso2.securevault:
   # Datasource Configurations
 wso2.datasources:
   dataSources:
-    -
-      definition:
-        configuration:
-          connectionTestQuery: "SELECT 1"
-          driverClassName: org.h2.Driver
-          idleTimeout: 60000
-          isAutoCommit: false
-          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
-          maxPoolSize: 10
-          password: wso2carbon
-          username: wso2carbon
-          validationTimeout: 30000
-        type: RDBMS
-      description: "The datasource used for registry and user manager"
-      name: WSO2_CARBON_DB
-
     # carbon metrics data source
     - name: WSO2_METRICS_DB
       description: The datasource used for dashboard feature
@@ -364,28 +348,11 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
+          jdbcUrl: 'jdbc:mysql://mysql:3306/WSO2AM_PERMISSIONS_DB?useSSL=false'
           username: wso2carbon
           password: wso2carbon
-          driverClassName: org.h2.Driver
+          driverClassName: com.mysql.cj.jdbc.Driver
           maxPoolSize: 10
-          idleTimeout: 60000
-          connectionTestQuery: SELECT 1
-          validationTimeout: 30000
-          isAutoCommit: false
-
-    - name: Message_Tracing_DB
-      description: "The datasource used for message tracer to store span information."
-      jndiConfig:
-        name: jdbc/Message_Tracing_DB
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
-          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -414,10 +381,10 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:mysql://mysql:3306/stats_db?useSSL=false'
-          username: root
-          password: root
-          driverClassName: com.mysql.jdbc.Driver
+          jdbcUrl: 'jdbc:mysql://mysql:3306/WSO2AM_STATS_DB?useSSL=false'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: com.mysql.cj.jdbc.Driver
           maxPoolSize: 50
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
@@ -440,6 +407,21 @@ wso2.datasources:
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
           isAutoCommit: false
+    -
+      name: WSO2_CLUSTER_DB
+      description: "The datasource used by cluster coordinators in HA deployment"
+      definition:
+        type: RDBMS
+        configuration:
+          connectionTestQuery: "SELECT 1"
+          driverClassName: org.h2.Driver
+          idleTimeout: 60000
+          isAutoCommit: false
+          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CLUSTER_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE"
+          maxPoolSize: 10
+          password: wso2carbon
+          username: wso2carbon
+          validationTimeout: 30000
 
 siddhi:
   extensions:
@@ -470,10 +452,33 @@ cluster.config:
   groupId:  sp
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
-    datasource: WSO2_CARBON_DB
+    datasource: WSO2_CLUSTER_DB
     heartbeatInterval: 1000
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
+
+# Authentication configuration
+auth.configs:
+  type: 'local'        # Type of the IdP client used
+  userManager:
+    adminRole: admin   # Admin role which is granted all permissions
+    userStore:         # User store
+      users:
+       -
+         user:
+           username: admin
+           password: YWRtaW4=
+           roles: 1
+      roles:
+       -
+         role:
+           id: 1
+           displayName: admin
+
+  # Configuration to enable apim alerts
+#analytics.solutions:
+#  APIM-alerts.enabled: true
+
 
   # Sample of deployment.config for Two node HA
 #deployment.config:
