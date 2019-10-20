@@ -28,9 +28,10 @@
      Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>docker-compose/apim-is-as-km-with-analytics` folder. 
      
     > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-     i.e. for example: git checkout tags/v2.6.0.3 and continue below steps.
+     i.e. for example: git checkout tags/v3.0.0.1 and continue below steps.
 
 3. Execute the `deploy.sh` script to start the deployment.
+
      ```
      ./deploy.sh
      ```
@@ -50,6 +51,7 @@
  * Password: admin
  
  Please note that API Gateway will be available on following ports.
+ 
  ```
     https://localhost:8243
     https://localhost:8280
