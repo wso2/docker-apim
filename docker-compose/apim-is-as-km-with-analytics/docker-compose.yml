@@ -20,24 +20,24 @@ services:
       timeout: 60s
       retries: 5
       start_period: 80s
-  am-analytics:
-    image: wso2/wso2am-analytics-worker:2.6.0
+  am-analytics-worker:
+    image: wso2/wso2am-analytics-worker:3.0.0
     ports:
       - "9091:9091"
       - "9444:9444"
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9091"]
+      test: ["CMD", "nc", "-z","localhost", "9444"]
       interval: 10s
       timeout: 120s
-      start_period: 80s
+      start_period: 120s
       retries: 10
     depends_on:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics:/home/wso2carbon/wso2-config-volume
+      - ./apim-analytics-worker:/home/wso2carbon/wso2-config-volume
   is-as-km:
-    image: wso2/wso2is-km:5.7.0
+    image: wso2/wso2is-km:5.9.0
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
@@ -47,32 +47,50 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-      am-analytics:
-        condition: service_healthy
     volumes:
-      - ./is-as-km:/home/wso2carbon/wso2-config-volume
+      - ./is-as-km/config:/home/wso2carbon/wso2-config-volume
+      - ./is-as-km/artifact:/home/wso2carbon/wso2-artifact-volume
     ports:
       - "9765:9763"
       - "9445:9443"
   api-manager:
-    image: wso2/wso2am:2.6.0
+    image: wso2/wso2am:3.0.0
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
       timeout: 120s
       start_period: 100s
-      retries: 5
+      retries: 10
     depends_on:
       mysql:
         condition: service_healthy
-      am-analytics:
+      am-analytics-worker:
         condition: service_healthy
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./apim:/home/wso2carbon/wso2-config-volume
+      - ./apim/config:/home/wso2carbon/wso2-config-volume
+      - ./apim/artifact:/home/wso2carbon/wso2-artifact-volume
     ports:
       - "9763:9763"
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
+  am-analytics-dashboard:
+    image: wso2/wso2am-analytics-dashboard:3.0.0
+    ports:
+      - "9643:9643"
+    healthcheck:
+      test: ["CMD", "nc", "-z","localhost", "9643"]
+      interval: 10s
+      timeout: 120s
+      retries: 5
+      start_period: 100s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      api-manager:
+        condition: service_healthy
+    volumes:
+      - ./apim-analytics-dashboard/config:/home/wso2carbon/wso2-config-volume
+      - ./apim-analytics-dashboard/artifact:/home/wso2carbon/wso2-artifact-volume
