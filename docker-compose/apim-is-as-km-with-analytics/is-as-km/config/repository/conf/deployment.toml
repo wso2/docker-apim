@@ -89,6 +89,8 @@ enable_data_publishing = false
 enable_policy_deploy = false
 enable_blacklist_condition = false
 enable_decision_connection = false
+receiver_url = "tcp://localhost:9611"
+receiver_auth_url = "ssl://localhost:9711"
 
 [config_data]
 path = "/_system/is_as_km/config"
