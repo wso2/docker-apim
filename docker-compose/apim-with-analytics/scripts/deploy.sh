@@ -30,7 +30,7 @@ function echoBold () {
     ${ECHO} -e $'\e[1m'"${1}"$'\e[0m'
 }
 
-read -p "Do you have a WSO2 Subscription? (Y/N)" -n 1 -r
+read -p "Do you have a WSO2 Subscription? (y/N)" -n 1 -r
 ${ECHO}
 
 if [[ ${REPLY} =~ ^[Yy]$ ]]; then
