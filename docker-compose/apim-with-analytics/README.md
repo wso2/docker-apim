@@ -1,7 +1,5 @@
 # WSO2 API Manager deployment with WSO2 API Manager Analytics
 
-![alt tag](deployment-diagram.png)
-
 ## Prerequisites
 
  * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
