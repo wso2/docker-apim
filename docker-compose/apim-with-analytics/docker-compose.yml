@@ -28,9 +28,8 @@ services:
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9444"]
       interval: 10s
-      timeout: 120s
-      start_period: 120s
-      retries: 10
+      start_period: 20s
+      retries: 5
     depends_on:
       mysql:
         condition: service_healthy
@@ -41,7 +40,6 @@ services:
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
-      timeout: 120s
       start_period: 100s
       retries: 10
     depends_on:
@@ -64,9 +62,8 @@ services:
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9643"]
       interval: 10s
-      timeout: 120s
       retries: 5
-      start_period: 100s
+      start_period: 20s
     depends_on:
       mysql:
         condition: service_healthy
