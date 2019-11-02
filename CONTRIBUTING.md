@@ -1,4 +1,3 @@
-
 # Contributing to docker-apim
 
 Docker and Docker Compose resources for WSO2 API Management platform are open source and we encourage contributions from our community.

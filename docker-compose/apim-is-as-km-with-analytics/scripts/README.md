@@ -1,6 +1,5 @@
 # WSO2 API Manager with Identity Server as Key Manager
 
-
 ## Prerequisites
 
  * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
@@ -17,6 +16,7 @@
     ```
     git clone https://github.com/wso2/docker-apim
     ```
+    
     > If you are to try out an already released zip of this repo, please ignore this 1st step. 
 
 2. Switch to the `docker-compose/apim-is-as-km-with-analytics` folder.
@@ -24,13 +24,15 @@
     ```
     cd docker-apim/docker-compose/apim-is-as-km-with-analytics
     ```
+    
     > If you are to try out an already released zip of this repo, please ignore this 2nd step also. 
-     Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>docker-compose/apim-is-as-km-with-analytics` folder. 
+     Instead, extract the zip file and directly browse to `docker-apim-<released-version-here>/docker-compose/apim-is-as-km-with-analytics` folder. 
      
     > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-     i.e. for example: git checkout tags/v2.6.0.3 and continue below steps.
+     i.e. for example: git checkout tags/v2.6.0.8 and continue below steps.
 
 3. Execute the `deploy.sh` script to start the deployment.
+
      ```
      ./deploy.sh
      ```
@@ -50,6 +52,7 @@
  * Password: admin
  
  Please note that API Gateway will be available on following ports.
+ 
  ```
     https://localhost:8243
     https://localhost:8280
