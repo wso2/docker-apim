@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # ------------------------------------------------------------------------
 # Copyright 2018 WSO2, Inc. (http://wso2.com)
 #
@@ -32,14 +32,13 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
 
 # shared artifact directories
-set "executionplans" "synapse-configs"
+directories=("executionplans" "synapse-configs")
 # if the original directory locations of artifacts to be synced between nodes are empty,
 # copy the preserved, default content of these folders to these original locations
-for shared_directory
-do
+for shared_directory in ${directories[@]}; do
   if test -d ${original_deployment_artifacts}/${shared_directory};
   then
-    if [ -z "$(ls -A ${deployment_volume}/${shared_directory})" ]; then
+    if [[ -z "$(ls -A ${deployment_volume}/${shared_directory})" ]]; then
       if ! cp -R ${original_deployment_artifacts}/${shared_directory}/* ${deployment_volume}/${shared_directory};
       then
         echo "Failed to copy the preserved, default artifacts to original location (${deployment_volume}/${shared_directory})"
@@ -51,9 +50,9 @@ do
 done
 
 # copy any configuration changes mounted to config_volume
-test -d ${config_volume} && [ "$(ls -A ${config_volume})" ] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
+test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
-test -d ${artifact_volume} && [ "$(ls -A ${artifact_volume})" ] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
+test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 Carbon server
 sh ${WSO2_SERVER_HOME}/bin/wso2server.sh "$@"
