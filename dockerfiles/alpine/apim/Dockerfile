@@ -55,6 +55,7 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
     apk add --no-cache \
+        bash \
         libxml2-utils \
         netcat-openbsd
 # add the WSO2 product distribution to user's home directory
