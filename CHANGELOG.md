@@ -3,6 +3,14 @@ All notable changes to this project 3.0.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.0.0.2] - TBA
+
+### Fixed
+- Failure to accept product startup options
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v3.0.0.2](https://github.com/wso2/docker-apim/milestone/9).
+
 ## [v3.0.0.1] - 2019-10-28
 
 ### Added
@@ -13,4 +21,4 @@ and Identity Server as Key Manager version 5.9.x profiles
 For detailed information on the tasks carried out during this release, please see the GitHub milestone
 [v3.0.0.1](https://github.com/wso2/docker-apim/milestone/7).
 
-[v3.0.0.1]: https://github.com/wso2/docker-apim/compare/v2.6.0.7...v3.0.0.1
+[v3.0.0.2]: https://github.com/wso2/docker-apim/compare/v3.0.0.1...v3.0.0.2
