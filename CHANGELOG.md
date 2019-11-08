@@ -3,6 +3,14 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.9] - TBA
+
+### Added
+- Preserve the default H2 database data required for Solr indexing process
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v2.6.0.9](https://github.com/wso2/docker-apim/milestone/10).
+
 ## [v2.6.0.8] - 2019-11-05
 
 ### Fixed
@@ -75,4 +83,4 @@ For detailed information on the tasks carried out during this release, please se
 - WSO2 API Manager Identity Server as Key Manager v5.7.x Docker resources for Alpine, CentOS and Ubuntu
 - Docker Compose resources for WSO2 API Management
 
-[v2.6.0.7]: https://github.com/wso2/docker-apim/compare/v2.6.0.6...v2.6.0.7
+[v2.6.0.9]: https://github.com/wso2/docker-apim/compare/v2.6.0.8...v2.6.0.9
