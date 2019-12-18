@@ -1,7 +1,5 @@
 # WSO2 API Manager deployment with WSO2 API Manager Analytics
 
-![alt tag](deployment-diagram.png)
-
 ## Prerequisites
 
  * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
@@ -10,6 +8,8 @@
    subscription, you can sign up for a WSO2 Free Trial Subscription from [here](https://wso2.com/free-trial-subscription).
    Otherwise, you can proceed with Docker images which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`. <br><br>
+  
+<br>
 
 ## Quick Start Guide
 
@@ -33,18 +33,13 @@
    > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
     i.e. for example: git checkout tags/v2.6.0.8 and continue below steps.
 
-3. [Optional] If you are using WSO2 product Docker images with WSO2 updates, replace the WSO2 product Docker image names
-   (relevant `image` attribute under each WSO2 product profile service) in the Docker Compose deployment definition.
-    
-  **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
+3. Execute the `deploy.sh` script to start the deployment.
 
-4. Execute following Docker Compose command to start the deployment.
+     ```
+     ./deploy.sh
+     ```
 
-   ```
-   docker-compose up
-   ```
-
-5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+4. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
    ```
    https://localhost:9443/publisher
@@ -64,9 +59,3 @@
    https://localhost:8243
    https://localhost:8280
    ```
-
-## References
-
- * Docker Compose file version 3 does not support condition form of `depends_on` (refer official [documentation](https://docs.docker.com/compose/compose-file/#depends_on)).
-   Hence, the current implementation of WSO2 product Docker Compose resources use sh-compatible [wait-for](https://github.com/eficode/wait-for/blob/master/wait-for) script
-   to control the startup order of services, as suggested in Docker Compose official [documentation](https://docs.docker.com/compose/startup-order/).

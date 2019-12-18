@@ -34,7 +34,7 @@ services:
       retries: 5
       start_period: 30s
   am-analytics:
-    image: docker.wso2.com/wso2am-analytics-worker:2.6.0
+    image: wso2/wso2am-analytics-worker:2.6.0
     ports:
       - "9091:9091"
       - "9444:9444"
@@ -57,9 +57,9 @@ services:
       - "--"
       - "./init.sh"
   api-manager:
-    image: docker.wso2.com/wso2am:2.6.0
+    image: wso2/wso2am:2.6.0
     healthcheck:
-      test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
+      test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
       timeout: 10s
       start_period: 150s

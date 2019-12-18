@@ -31,18 +31,13 @@
     > If you want to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
      i.e. for example: git checkout tags/v2.6.0.8 and continue below steps.
 
-3. [Optional] If you are using WSO2 product Docker images with WSO2 updates, replace the WSO2 product Docker image names
-   (relevant `image` attribute under each WSO2 product profile service) in the Docker Compose deployment definition.
-    
-  **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
+3. Execute the `deploy.sh` script to start the deployment.
 
-4. Execute following Docker Compose command to start the deployment.
+     ```
+     ./deploy.sh
+     ```
 
-   ```
-   docker-compose up
-   ```
-
-5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+4. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
  ```
    https://localhost:9443/publisher
@@ -63,12 +58,5 @@
     https://localhost:8280
  ```
 
- WSO2 API Manager will use WSO2 Identity Server to generate OAuth2 tokens and validate those tokens during API invocations.
-
-
-
-## References
-
- * Docker Compose file version 3 does not support condition form of `depends_on` (refer official [documentation](https://docs.docker.com/compose/compose-file/#depends_on)).
-   Hence, the current implementation of WSO2 product Docker Compose resources use sh-compatible [wait-for](https://github.com/eficode/wait-for/blob/master/wait-for) script
-   to control the startup order of services, as suggested in Docker Compose official [documentation](https://docs.docker.com/compose/startup-order/).
+ WSO2 API Manager will use WSO2 Identity Server to generate OAuth2 tokens and validate those tokens <br> during API invocations.
+ 
