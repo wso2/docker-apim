@@ -3,10 +3,10 @@ All notable changes to this project 3.0.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v3.0.0.2] - 2019-11-05
+## [v3.0.0.2] - 2020-01-21
 
 ### Fixed
-- Failure to accept product startup options
+- Invalid MySQL connector jar download location
 
 For detailed information on the tasks carried out during this release, please see the GitHub milestone
 [v3.0.0.2](https://github.com/wso2/docker-apim/milestone/9).
