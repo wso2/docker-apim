@@ -34,7 +34,7 @@
    `docker-apim-<released-version-here>/docker-compose/apim-is-as-km-with-analytics` folder. 
      
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: `git checkout tags/v3.0.0.1`, switch to `docker-compose/apim-is-as-km-with-analytics` folder and continue with below steps.
+    i.e. for example: `git checkout tags/v3.1.0.1`, switch to `docker-compose/apim-is-as-km-with-analytics` folder and continue with below steps.
 
 4. Execute following Docker Compose command to start the deployment.
 
