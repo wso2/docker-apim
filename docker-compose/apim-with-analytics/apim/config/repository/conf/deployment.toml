@@ -13,7 +13,7 @@ password = "admin"
 create_admin_account = true
 
 [user_store]
-type = "database"
+type = "database_unique_id"
 
 [database.apim_db]
 type = "mysql"
@@ -35,6 +35,20 @@ type =  "JKS"
 password =  "wso2carbon"
 alias =  "wso2carbon"
 key_password =  "wso2carbon"
+
+#[keystore.primary]
+#file_name =  "wso2carbon.jks"
+#type =  "JKS"
+#password =  "wso2carbon"
+#alias =  "wso2carbon"
+#key_password =  "wso2carbon"
+
+#[keystore.internal]
+#file_name =  "wso2carbon.jks"
+#type =  "JKS"
+#password =  "wso2carbon"
+#alias =  "wso2carbon"
+#key_password =  "wso2carbon"
 
 [[apim.gateway.environment]]
 name = "Production and Sandbox"
@@ -106,6 +120,10 @@ analytics_auth_url =["ssl://am-analytics-worker:7712"]
 #key_validation_handler_type = "default"
 #key_validation_handler_type = "custom"
 #key_validation_handler_impl = "org.wso2.carbon.apimgt.keymgt.handlers.DefaultKeyValidationHandler"
+
+#[apim.idp]
+#authorize_endpoint = "https://localhost:${mgt.transport.https.port}/oauth2/authorize"
+#oidc_logout_endpoint = "https://localhost:${mgt.transport.https.port}/oidc/logout"
 
 #[apim.jwt]
 #enable = true
@@ -179,9 +197,9 @@ allow_credentials = false
 #service_url = "https://localhost:9445/bpmn"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
-#callback_endpoint = "https://localhost:${mgt.transport.https.port}/api/am/admin/v0.15/workflows/update-workflow-status"
+#callback_endpoint = "https://localhost:${mgt.transport.https.port}/api/am/admin/v0.16/workflows/update-workflow-status"
 #token_endpoint = "https://localhost:${https.nio.port}/token"
-#client_registration_endpoint = "https://localhost:${mgt.transport.https.port}/client-registration/v0.15/register"
+#client_registration_endpoint = "https://localhost:${mgt.transport.https.port}/client-registration/v0.16/register"
 #client_registration_username = "$ref{super_admin.username}"
 #client_registration_password = "$ref{super_admin.password}"
 
