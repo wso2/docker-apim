@@ -52,7 +52,7 @@
    https://localhost:9443/admin
    https://localhost:9443/carbon
    ```
-   Access the servers using following credentials.
+   Login to the web UIs using following credentials.
    
    * Username: admin <br>
    * Password: admin
@@ -67,7 +67,7 @@
    ```
    https://localhost:9643/analytics-dashboard
    ```
-   Access the servers using following credentials.
+   Login to the web UIs using following credentials.
     
    * Username: admin <br>
    * Password: admin
