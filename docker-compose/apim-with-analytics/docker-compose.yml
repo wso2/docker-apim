@@ -62,8 +62,7 @@ services:
       am-analytics-worker:
         condition: service_healthy
     volumes:
-      - ./apim/config:/home/wso2carbon/wso2-config-volume
-      - ./apim/artifact:/home/wso2carbon/wso2-artifact-volume
+      - ./apim:/home/wso2carbon/wso2-config-volume
     ports:
       - "9763:9763"
       - "9443:9443"
@@ -84,5 +83,4 @@ services:
       api-manager:
         condition: service_healthy
     volumes:
-      - ./apim-analytics-dashboard/config:/home/wso2carbon/wso2-config-volume
-      - ./apim-analytics-dashboard/artifact:/home/wso2carbon/wso2-artifact-volume
+      - ./apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume
