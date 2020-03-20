@@ -6,9 +6,8 @@
    in order to run the steps provided in following Quick start guide. <br><br>
  * In order to use Docker images with WSO2 updates, you need an active WSO2 subscription.
    Otherwise, you can proceed with Docker images available at [DockerHub](https://hub.docker.com/u/wso2/), which are created using GA releases.<br><br>
- * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources available from [here](../../dockerfiles/) and
-   remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`. <br><br>
-    
+ * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`. <br><br>
+
 ## Quick Start Guide
 
 1. Login to WSO2's Private Docker Registry via Docker client. When prompted, enter the username and password of your WSO2 Subscription.
@@ -69,5 +68,3 @@
     
    * Username: admin <br>
    * Password: admin
-
-   WSO2 API Manager will use WSO2 Identity Server to generate OAuth2 tokens and validate those tokens <br> during API invocations.
