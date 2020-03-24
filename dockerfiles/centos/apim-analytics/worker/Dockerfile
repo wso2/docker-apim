@@ -77,7 +77,7 @@ ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose ports
-EXPOSE 9091 9444 7712 7612 9613 9713 7444 7071
+EXPOSE 9090 9443 7712 7612 9613 9713 7444 7071
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]

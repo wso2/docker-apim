@@ -351,11 +351,11 @@ wso2.transport.http:
   listenerConfigurations:
     - id: "default"
       host: "0.0.0.0"
-      port: 9092
+      port: 9089
 
     - id: "default-https"
       host: "0.0.0.0"
-      port: 9643
+      port: 9640
       scheme: https
       keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
       keyStorePassword: wso2carbon
@@ -392,11 +392,11 @@ auth.configs:
     kmPassword: admin
     portalAppContext: analytics-dashboard
     businessRulesAppContext : business-rules
-    cacheTimeout: 900
-    baseUrl: https://localhost:9643
+    cacheTimeout: 30
+    baseUrl: https://localhost:9640
     grantType: authorization_code
     publisherUrl: https://api-manager:9443
-    #storeUrl: https://localhost:9443
+    devPortalUrl: https://localhost:9443
     externalLogoutUrl: https://localhost:9443/oidc/logout
 
 wso2.dashboard:
@@ -404,3 +404,12 @@ wso2.dashboard:
     creators:
       - apim_analytics:admin_carbon.super
   themeConfigProviderClass: org.wso2.carbon.dashboards.core.DefaultDashboardThemeConfigProvider
+
+## RDBMS Data Provider configuration
+wso2.rdbms.data.provider:
+  timeTypes:
+    - DATE
+    - TIME
+    - DATETIME
+    - TIMESTAMP
+    - TIMESTAMP WITHOUT TIME ZONE
