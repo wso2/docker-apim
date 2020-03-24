@@ -157,7 +157,7 @@ service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey"]
 allow_credentials = false
 
 #[apim.throttling]
@@ -248,3 +248,6 @@ HostnameVerifier="AllowAll"
 
 [config_data]
 path = "/_system/apim/config"
+
+[database.local]
+url = "jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE"
