@@ -37,10 +37,10 @@ services:
   am-analytics-worker:
     image: docker.wso2.com/wso2am-analytics-worker:3.1.0
     ports:
-      - "9091:9091"
-      - "9444:9444"
+      - "9090"
+      - "9443"
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9444"]
+      test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
       start_period: 20s
       retries: 5
@@ -63,7 +63,7 @@ services:
       - ./is-as-km:/home/wso2carbon/wso2-config-volume
     ports:
       - "9765:9763"
-      - "9445:9443"
+      - "9444:9443"
   api-manager:
     image: docker.wso2.com/wso2am:3.1.0
     healthcheck:
@@ -81,16 +81,15 @@ services:
     volumes:
       - ./apim:/home/wso2carbon/wso2-config-volume
     ports:
-      - "9763:9763"
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
   am-analytics-dashboard:
     image: docker.wso2.com/wso2am-analytics-dashboard:3.1.0
     ports:
-      - "9643:9643"
+      - "9640:9640"
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9643"]
+      test: ["CMD", "nc", "-z","localhost", "9640"]
       interval: 10s
       retries: 5
       start_period: 20s
