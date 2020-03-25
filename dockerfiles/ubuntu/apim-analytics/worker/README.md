@@ -28,8 +28,9 @@ git clone https://github.com/wso2/docker-apim.git
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9091:9091 wso2am-analytics-worker:3.1.0`
-> Here, only port 9091 has been mapped to a Docker host port.
+- `docker run -p 9090:9090 wso2am-analytics-worker:3.1.0`
+
+> Here, only port 9090 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
 ## How to update configurations
@@ -37,11 +38,11 @@ You may map other container service ports, which have been exposed to Docker hos
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
 As an example, steps required to change the port offset using `deployment.yaml` is as follows:
 
-##### 1. Stop the Identity Server Analytics container if it's already running.
+##### 1. Stop the API Manager Analytics container if it's already running.
 
 In WSO2 API Manager Analytics version 3.1.0 product distribution, `deployment.yaml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/conf/worker`. Copy the file to some suitable location of the host machine, <br>
-referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the offset value under ports to 2.
+referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the `offset` value under `ports` to 2.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`.
 
