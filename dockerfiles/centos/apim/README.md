@@ -29,6 +29,7 @@ git clone https://github.com/wso2/docker-apim.git
 ##### 3. Running the Docker image.
 
 - `docker run -it -p 9443:9443 wso2am:3.1.0-centos`
+
 > Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
