@@ -4,6 +4,16 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.2] - 2020-04-07
+
+### Changed
+- Add support for WSO2 API Manager
+[Solr indexing](https://apim.docs.wso2.com/en/latest/administer/product-configurations/common-runtime-and-configuration-artifacts/#persistent-runtime-artifacts).
+- Execute the profile optimization script explicitly to apply changes
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v3.1.0.2](https://github.com/wso2/docker-apim/milestone/14).
+
 ## [v3.1.0.1] - 2020-04-07
 
 ### Added
@@ -15,4 +25,4 @@ and Identity Server as Key Manager version 5.10.x profiles
 For detailed information on the tasks carried out during this release, please see the GitHub milestone
 [v3.1.0.1](https://github.com/wso2/docker-apim/milestone/13).
 
-[v3.1.0.1]: https://github.com/wso2/docker-apim/compare/v3.0.0.3...v3.1.0.1
+[v3.1.0.2]: https://github.com/wso2/docker-apim/compare/v3.1.0.1...v3.1.0.2
