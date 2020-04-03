@@ -37,10 +37,10 @@ services:
   am-analytics-worker:
     image: docker.wso2.com/wso2am-analytics-worker:3.1.0
     ports:
-      - "9090"
-      - "9443"
+      - "9091"
+      - "9444"
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9443"]
+      test: ["CMD", "nc", "-z","localhost", "9444"]
       interval: 10s
       start_period: 20s
       retries: 5
@@ -70,9 +70,9 @@ services:
   am-analytics-dashboard:
     image: docker.wso2.com/wso2am-analytics-dashboard:3.1.0
     ports:
-      - "9640:9640"
+      - "9643:9643"
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9640"]
+      test: ["CMD", "nc", "-z","localhost", "9643"]
       interval: 10s
       retries: 5
       start_period: 20s
