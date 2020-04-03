@@ -28,15 +28,15 @@ git clone https://github.com/wso2/docker-apim.git
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9640:9640 wso2am-analytics-dashboard:3.1.0-alpine`
+- `docker run -p 9643:9643 wso2am-analytics-dashboard:3.1.0-alpine`
 
-> Here, only port 9640 has been mapped to a Docker host port.
+> Here, only port 9643 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
 ##### 4. Accessing the Dashboard portal.
 
 - For dashboard,
-    + `https:<DOCKER_HOST>:9640/analytics-dashboard`
+    + `https:<DOCKER_HOST>:9643/analytics-dashboard`
     
 > In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
