@@ -393,10 +393,10 @@ auth.configs:
     portalAppContext: analytics-dashboard
     businessRulesAppContext : business-rules
     cacheTimeout: 30
-    baseUrl: https://localhost:9640
+    baseUrl: https://localhost:9643
     grantType: authorization_code
     publisherUrl: https://api-manager:9443
-    devPortalUrl: https://localhost:9443
+    devPortalUrl: https://api-manager:9443
     externalLogoutUrl: https://localhost:9443/oidc/logout
 
 wso2.dashboard:

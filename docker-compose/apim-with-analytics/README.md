@@ -63,7 +63,7 @@
    Access the WSO2 API Manager Analytics web UIs using the below URL via a web browser.
    
    ```
-   https://localhost:9640/analytics-dashboard
+   https://localhost:9643/analytics-dashboard
    ```
    Login to the web UIs using following credentials.
     
