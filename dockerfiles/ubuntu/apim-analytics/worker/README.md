@@ -28,9 +28,9 @@ git clone https://github.com/wso2/docker-apim.git
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9090:9090 wso2am-analytics-worker:3.1.0`
+- `docker run -p 9091:9091 wso2am-analytics-worker:3.1.0`
 
-> Here, only port 9090 has been mapped to a Docker host port.
+> Here, only port 9091 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
 ## How to update configurations
