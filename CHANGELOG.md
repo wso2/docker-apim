@@ -4,6 +4,14 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.2] - 2020-04-09
+
+### Fixed
+- Revert to the use of port 9643 in WSO2 API Manager Analytics Dashboard Profile
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v3.1.0.3](https://github.com/wso2/docker-apim/milestone/15).
+
 ## [v3.1.0.2] - 2020-04-07
 
 ### Changed
