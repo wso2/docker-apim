@@ -1,4 +1,4 @@
-FROM docker.wso2.com/wso2is-as-keymanager:5.3.0
+FROM docker.wso2.com/wso2is-km:5.3.0
 
 COPY pattern-7/is-key-manager/carbon/ /mnt/wso2-artifacts
 
