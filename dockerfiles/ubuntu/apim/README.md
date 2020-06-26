@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 API Manager #
 
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 API Manager 3.1.0.
+This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 API Manager 3.2.0.
 
 ## Prerequisites
 
@@ -21,13 +21,13 @@ git clone https://github.com/wso2/docker-apim.git
 
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am:3.1.0 .`
+    + `docker build -t wso2am:3.2.0 .`
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
     
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9443:9443 wso2am:3.1.0`
+- `docker run -it -p 9443:9443 wso2am:3.2.0`
 
 > Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
@@ -46,7 +46,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 ##### 1. Stop the API Manager container if it's already running.
 
-In WSO2 API Manager version 3.1.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 API Manager version 3.2.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -62,10 +62,10 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:3.1.0
+wso2am:3.2.0
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-3.1.0/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-3.2.0/repository/conf folder of the container.
 
 ## Docker command usage references
 

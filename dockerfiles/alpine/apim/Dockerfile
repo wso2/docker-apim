@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to AdoptOpenJDK Alpine Docker image
-FROM adoptopenjdk/openjdk11:jdk-11.0.6_10-alpine
+FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-alpine
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
 # set Docker image build arguments
@@ -29,7 +29,7 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am
-ARG WSO2_SERVER_VERSION=3.1.0
+ARG WSO2_SERVER_VERSION=3.2.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
