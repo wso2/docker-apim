@@ -20,7 +20,6 @@ set -e
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-patch_volume=${WORKING_DIRECTORY}/wso2-patch-volume
 # home of the directories to be artifact synced within the WSO2 product home
 deployment_volume=${WSO2_SERVER_HOME}/repository/deployment/server
 # home of the directories with preserved, default deployment artifacts
@@ -61,14 +60,6 @@ fi
 test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
 test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
-
-# copy any patches mounted to patch_volume
-if [[ ! `test -d ${WSO2_SERVER_HOME}/updates/wum` ]]
-then
-  test -d ${patch_volume} && [[ "$(ls -A ${patch_volume})" ]] \
-  && echo "Copying critical patch fixes to GA pack" \
-  && cp -RL ${patch_volume}/* ${WSO2_SERVER_HOME}/
-fi
 
 # start WSO2 Carbon server
 echo "Start WSO2 Carbon server" >&2
