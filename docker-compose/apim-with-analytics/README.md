@@ -7,7 +7,7 @@
  * In order to use Docker images with WSO2 updates, you need an active WSO2 subscription.
    Otherwise, you can proceed with Docker images available at [DockerHub](https://hub.docker.com/u/wso2/), which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources
-   available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`. <br><br>
+   available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the base image (i.e. `FROM` instruction) in the [Dockerfiles](dockerfiles). <br><br>
 
 ## Quick Start Guide
 
@@ -34,7 +34,7 @@
    `docker-apim-<released-version-here>/docker-compose/apim-with-analytics` folder. 
      
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: `git checkout tags/v3.1.0.1`, switch to `docker-compose/apim-with-analytics` folder and continue with below steps.
+    i.e. for example: `git checkout tags/v3.2.0.1`, switch to `docker-compose/apim-with-analytics` folder and continue with below steps.
 
 4. Execute following Docker Compose command to start the deployment.
 
