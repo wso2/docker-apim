@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: '2.3'
+version: '2.4'
 services:
   mysql:
     image: mysql:5.7.29
@@ -21,8 +21,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./mysql/scripts:/docker-entrypoint-initdb.d
-      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+      - ./conf/mysql/scripts:/docker-entrypoint-initdb.d
+      - ./conf/mysql/conf/my.cnf:/etc/mysql/my.cnf
     ulimits:
       nofile:
         soft: 20000
@@ -35,7 +35,7 @@ services:
       retries: 5
       start_period: 80s
   am-analytics-worker:
-    image: docker.wso2.com/wso2am-analytics-worker:3.1.0
+    build: ./dockerfiles/apim-analytics-worker
     ports:
       - "9091"
       - "9444"
@@ -48,9 +48,9 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics-worker:/home/wso2carbon/wso2-config-volume
+      - ./conf/apim-analytics-worker:/home/wso2carbon/wso2-config-volume
   api-manager:
-    image: docker.wso2.com/wso2am:3.1.0
+    build: ./dockerfiles/apim
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
@@ -62,13 +62,13 @@ services:
       am-analytics-worker:
         condition: service_healthy
     volumes:
-      - ./apim:/home/wso2carbon/wso2-config-volume
+      - ./conf/apim:/home/wso2carbon/wso2-config-volume
     ports:
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
   am-analytics-dashboard:
-    image: docker.wso2.com/wso2am-analytics-dashboard:3.1.0
+    build: ./dockerfiles/apim-analytics-dashboard
     ports:
       - "9643:9643"
     healthcheck:
@@ -82,4 +82,4 @@ services:
       api-manager:
         condition: service_healthy
     volumes:
-      - ./apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume
+      - ./conf/apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume
