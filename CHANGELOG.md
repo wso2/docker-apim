@@ -3,6 +3,23 @@ All notable changes to this project 2.2.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.2.0.5] - 2020-07-13
+
+### Removed
+- Remove copying the JDK and product pack from file directory
+
+###Added
+- Add MYSQL JDBC connector,version 5.1.49
+
+### Changed
+
+- In the current docker image build process it is instructed to copy the relevant JDK, Product pack and the MySQL JDBC connector to the
+  file directory and in the Dockerfile its copying the files from the file directory. In order to compatible with WSO2 Docker image create automation process, this has been changed to get the product pack from WUM, 
+  JDK from the Jenkins and MySQL from the maven central repository. 
+
+- Change the name of the `ENTRYPOINT` script as `docker-entrypoint.sh`
+
+
 ## [v2.2.0.4] - 2018-09-19
 
 ### Changed
@@ -20,3 +37,4 @@ Originally this was `wso2-server-volume`. But with this release, this is changed
 your deployment mount paths appropriately to match above folder changes.
 
 [v2.2.0.4]: https://github.com/wso2/docker-apim/compare/v2.2.0.3...v2.2.0.4
+[v2.2.0.5]: https://github.com/wso2/docker-apim/compare/v2.2.0.4...v2.2.0.5
