@@ -35,17 +35,17 @@ ARG WSO2_SERVER_VERSION=2.2.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
-ARG JDK_URL=https://download.oracle.com/otn/java/jdk/8u251-b08/${JDK_NAME}
+ARG WSO2_SERVER_DIST_URL
+ARG JDK_URL
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=5.1.49
 # build argument for MOTD
 ARG MOTD="\n\
-Welcome to WSO2 Docker Resources \n\
-    --------------------------------- \n\
-    This Docker container comprises of a WSO2 product, running with its latest updates \n\
-    which are under the End User License Agreement (EULA) 2.0. \n\
-    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n"
+Welcome to WSO2 Docker resources.\n\
+------------------------------------ \n\
+This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+which is under the Apache License, Version 2.0. \n\
+Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
 
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
