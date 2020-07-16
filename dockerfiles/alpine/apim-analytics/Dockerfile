@@ -26,32 +26,40 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set dependant files directory
-ARG FILES=./files
-# set wso2 product configurations
-ARG WSO2_SERVER=wso2am-analytics
+# build arguments for WSO2 product installation
+ARG WSO2_SERVER_NAME=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.5.0
-ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+ARG WSO2_SERVER_REPOSITORY=product-apim
+ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
+ARG WSO2_SERVER_DIST_URL
+# build arguments for external artifacts
+ARG MYSQL_CONNECTOR_VERSION=5.1.49
+# build argument for MOTD
+ARG MOTD="\n\
+Welcome to WSO2 Docker resources.\n\
+------------------------------------ \n\
+This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+which is under the Apache License, Version 2.0. \n\
+Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
+
+# create the non-root user and group and set MOTD login message
+RUN \
+    addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
+    && echo ${MOTD} > "${ENV}"
+
+# copy docker-entrypoint script to user home
+COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 
 # install required packages
-RUN  apk add --update --no-cache \
-     curl \
-     netcat-openbsd && \
-     rm -rf /var/cache/apk/* && \
-     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
-     >> /etc/bash.bashrc \
-     ; echo "\n\
-     Welcome to WSO2 Docker Resources \n\
-     --------------------------------- \n\
-     This Docker container comprises of a WSO2 product, running with its latest updates \n\
-     which are under the End User License Agreement (EULA) 2.0. \n\
-     Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
-     > /etc/motd
-
-# create a user group and a user
-RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
-     adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
+RUN \
+    apk add --no-cache \
+        wget \
+        unzip \
+        bash \
+        libxml2-utils \
+        netcat-openbsd
 
 # install Alpine Linux package to run binaries linked against glibc
 RUN apk --no-cache add ca-certificates wget; \
@@ -59,25 +67,22 @@ RUN apk --no-cache add ca-certificates wget; \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.27-r0/glibc-2.27-r0.apk; \
     apk add glibc-2.27-r0.apk;
 
-# create Java prefs dir
 # this is to avoid warning logs printed by FileSystemPreferences class
 RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     mkdir -p ${USER_HOME}/.java/.userPrefs  && \
     chmod -R 755 ${USER_HOME}/.java && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
-# copy wso2 product distribution zip files to user's home directory and set ownership
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/ ${WSO2_SERVER_HOME}/
-# copy shared artifacts to a temporary location
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/ ${USER_HOME}/wso2-tmp/deployment/
-# copy init script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
-# copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/repository/components/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.1.7/snappy-java-1.1.1.7.jar ${USER_HOME}/${WSO2_SERVER_PACK}/repository/components/lib/
-# add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/repository/components/lib/
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
+# add the WSO2 product distribution to user's home directory
+RUN \
+    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
+    && mkdir ${USER_HOME}/wso2-tmp \
+    && cp -r ${WSO2_SERVER_HOME}/repository/deployment ${USER_HOME}/wso2-tmp \
+    && rm -f ${WSO2_SERVER}.zip
+# add MySQL JDBC connector to server home as a third party library
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
 
 # set environment variables
 ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \
@@ -93,5 +98,5 @@ ENV WORKING_DIRECTORY=${USER_HOME}
 # expose ports
 EXPOSE 9764 9444 7712 7612 4041
 
-# initiate container and start WSO2 Carbon server
-ENTRYPOINT ${WORKING_DIRECTORY}/init.sh
+# initiate container and start WSO2 Carbon Server
+ENTRYPOINT ${WORKING_DIRECTORY}/docker-entrypoint.sh
