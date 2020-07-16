@@ -4,6 +4,11 @@ The section defines the step-by-step instructions to build the Docker image for 
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
+* WSO2 API Key Manager pack downloaded through [WUM](https://wso2.com/wum/download)
+* Download JDK 8 through [Oracle](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+  - Host the downloaded pack and JDK locally or on a remote location.
+>The hosted product pack location and JDK location will be passed as the build arguments WSO2_SERVER_DIST_URL and JDK_URL when building the Docker image.
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -13,36 +18,25 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfiles/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 API Manager distributions and MySQL connector to `<IS_KM_DOCKERFILE_HOME>/files`
-- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
-and extract that to `<IS_KM_DOCKERFILE_HOME>/files`.
-- Download the WSO2 Identity Server as Key Manager 5.6.0 distribution (http://wso2.com/api-management/try-it/)
-and extract that to `<IS_KM_DOCKERFILE_HOME>/files`. <br>
-- Once both JDK and WSO2 API Manager distributions are extracted the folder structure should be as follows;
-
-    ```bash
-    <IS_KM_DOCKERFILE_HOME>/files/jdk<version>/
-    <IS_KM_DOCKERFILE_HOME>/files/wso2is-km-5.6.0/
-    ```
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<IS_KM_DOCKERFILE_HOME>/files` folder
-
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
-##### 3. Build the Docker image.
+##### 2. Build the Docker image.
 - Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2is-km:5.6.0-alpine .`
-    
-##### 4. Running the Docker image.
+
+  + `docker build --build-arg WSO2_SERVER_DIST_URL=<URL_OF_THE_HOSTED_LOCATION/FILENAME> JDK_URL=<URL_OF_THE_HOSTED_JDK_LOCATION/FILENAME> -t wso2is-km:5.6.0-alpine .`
+    - eg:- Hosted locally: docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2is-km.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2is-km:5.6.0-alpine . 
+    - eg:- Hosted remotely: docker build --build-arg WSO2_SERVER_DIST_URL=http://<public_ip:port>/wso2is-km.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2is-km:5.6.0-alpine .
+      
+##### 3. Running the Docker image.
 - `docker run -it -p 9443:9443 wso2is-km:5.6.0-alpine`
 
-##### 5. Accessing management console.
+##### 4. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
     + `https:<DOCKER_HOST>:9443/carbon`
     
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
-
 
 ## How to update configurations
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
