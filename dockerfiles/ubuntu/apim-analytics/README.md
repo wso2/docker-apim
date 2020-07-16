@@ -17,7 +17,7 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfile/ubuntu/apim-analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
->Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
+>Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/updates/Getting+Started)
 in order to obtain latest bug fixes and updates for the product.
 
 ##### 2. Build the Docker image.
