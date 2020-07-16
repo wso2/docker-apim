@@ -17,10 +17,10 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfiles/ubuntu/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
    
->Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
+>Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
-##### 3. Build the Docker image.
+##### 2. Build the Docker image.
 - Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
 
@@ -28,7 +28,7 @@ in order to obtain latest bug fixes and updates for the product.
     - eg:- Hosted locally: docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2is-km-5.5.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2is-km:5.5.0 . 
     - eg:- Hosted remotely: docker build --build-arg WSO2_SERVER_DIST_URL=http://<public_ip:port>/wso2is-km-5.5.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2is-km:5.5.0 .
    
-##### 4. Running the Docker image.
+##### 3. Running the Docker image.
 - `docker run -it -p 9443:9443 wso2is-km:5.5.0`
 
 ##### 5. Accessing management console.

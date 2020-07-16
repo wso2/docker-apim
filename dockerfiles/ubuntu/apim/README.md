@@ -17,10 +17,10 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfiles/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
->Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
+>Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
-##### 3. Build the Docker image.
+##### 2. Build the Docker image.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
 
@@ -28,12 +28,12 @@ in order to obtain latest bug fixes and updates for the product.
     - eg:- Hosted locally: docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2am-2.2.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2am:2.2.0 . 
     - eg:- Hosted remotely: docker build --build-arg WSO2_SERVER_DIST_URL=http://<public_ip:port>/wso2am-2.2.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2am:2.2.0 .
   
-##### 4. Running the Docker image.
+##### 3. Running the Docker image.
 - `docker run -it -p 9443:9443 wso2am:2.2.0`
 >Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
-##### 5. Accessing management console.
+##### 4. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
     + `https://<DOCKER_HOST>:9443/carbon`
     

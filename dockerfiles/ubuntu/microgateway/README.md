@@ -17,10 +17,10 @@ git clone https://github.com/wso2/docker-apim.git
 
 >The local copy of the `dockerfile/ubuntu/microgateway` directory will be referred to as `AM_MICRO_GW_DOCKERFILE_HOME` from this point onwards.
  
->Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
+>Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
 in order to obtain latest bug fixes and updates for the product.
 
-##### 3. Build the Docker image.
+##### 2. Build the Docker image.
 - Navigate to `<AM_MICRO_GW_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
 
@@ -28,7 +28,7 @@ in order to obtain latest bug fixes and updates for the product.
     - eg:- Hosted locally: docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2am-micro-gw-2.2.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2am-micro-gw:2.2.0 . 
     - eg:- Hosted remotely: docker build --build-arg WSO2_SERVER_DIST_URL=http://<public_ip:port>/wso2am-micro-gw-2.2.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2am-micro-gw:2.2.0 .
 
-##### 4. Running the Docker image.
+##### 3. Running the Docker image.
 - `docker run -it -p 8243:8243 wso2am-micro-gw:2.2.0`
 
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
