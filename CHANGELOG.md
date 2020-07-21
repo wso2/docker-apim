@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - Alpine, CentOS and Ubuntu based Docker resources for WSO2 API Manager, API Manager Analytics Dashboard and Worker version `3.2.x`
-- Upgrade AdoptOpenJDK 11 version to the latest version - 11.0.7_10-jdk
+- Upgrade AdoptOpenJDK 11 version to the latest version - 11.0.8_10-jdk
 - Remove unnecessary patch volume mount option
 
 For detailed information on the tasks carried out during this release, please see the GitHub milestone
