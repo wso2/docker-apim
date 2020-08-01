@@ -381,7 +381,7 @@ auth.configs:
   ssoEnabled: true
   properties:
     adminScope: apim_analytics:admin_carbon.super
-    allScopes: apim_analytics:admin openid apim:api_view apim:subscribe apim_analytics:monitoring_dashboard:own apim_analytics:monitoring_dashboard:edit apim_analytics:monitoring_dashboard:view apim_analytics:manager_dashboard:own apim_analytics:manager_dashboard:edit apim_analytics:manager_dashboard:view apim_analytics:publisher_dashboard:own apim_analytics:publisher_dashboard:edit apim_analytics:publisher_dashboard:view apim_analytics:subscriber_dashboard:own apim_analytics:subscriber_dashboard:edit apim_analytics:subscriber_dashboard:view
+    allScopes: apim_analytics:admin openid apim:api_view apim:subscribe apim_analytics:monitoring_dashboard:own apim_analytics:monitoring_dashboard:edit apim_analytics:monitoring_dashboard:view apim_analytics:business_analytics:own apim_analytics:business_analytics:edit apim_analytics:business_analytics:view apim_analytics:api_analytics:own apim_analytics:api_analytics:edit apim_analytics:api_analytics:view apim_analytics:application_analytics:own apim_analytics:application_analytics:edit apim_analytics:application_analytics:view
     adminUsername: admin
     adminPassword: admin
     kmDcrUrl: https://api-manager:9443/client-registration/v0.17/register
