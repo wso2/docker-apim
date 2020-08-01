@@ -54,8 +54,8 @@ services:
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
-      start_period: 100s
-      retries: 10
+      start_period: 180s
+      retries: 20
     depends_on:
       mysql:
         condition: service_healthy
