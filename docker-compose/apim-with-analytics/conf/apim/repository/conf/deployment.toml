@@ -161,7 +161,7 @@ analytics_auth_url =["ssl://am-analytics-worker:7712"]
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "testKey"]
 allow_credentials = false
 
 #[apim.throttling]
