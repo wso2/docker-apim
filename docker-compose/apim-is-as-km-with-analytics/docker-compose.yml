@@ -15,7 +15,7 @@
 version: '2.3'
 services:
   mysql:
-    image: mysql:5.7.29
+    image: mysql:5.7.31
     ports:
       - 3306
     environment:
