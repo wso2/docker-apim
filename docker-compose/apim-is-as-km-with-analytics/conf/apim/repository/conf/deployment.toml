@@ -111,8 +111,8 @@ analytics_auth_url =["ssl://am-analytics-worker:7712"]
 #analytics_auth_url =["ssl://analytics1:7712","ssl://analytics2:7712"]
 #type = "failover"
 
-[apim.key_manager]
-service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
+#[apim.key_manager]
+#service_url = "https://localhost:${mgt.transport.https.port}/services/"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
 #pool.init_idle_capacity = 50
@@ -122,18 +122,21 @@ service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
 #key_validation_handler_impl = "org.wso2.carbon.apimgt.keymgt.handlers.DefaultKeyValidationHandler"
 
 #[apim.idp]
+#server_url = "https://localhost:${mgt.transport.https.port}"
 #authorize_endpoint = "https://localhost:${mgt.transport.https.port}/oauth2/authorize"
 #oidc_logout_endpoint = "https://localhost:${mgt.transport.https.port}/oidc/logout"
+#oidc_check_session_endpoint = "https://localhost:${mgt.transport.https.port}/oidc/checksession"
 
 #[apim.jwt]
 #enable = true
 #encoding = "base64" # base64,base64url
 #generator_impl = "org.wso2.carbon.apimgt.keymgt.token.JWTGenerator"
 #claim_dialect = "http://wso2.org/claims"
+#convert_dialect = false
 #header = "X-JWT-Assertion"
 #signing_algorithm = "SHA256withRSA"
 #enable_user_claims = true
-#claims_extractor_impl = "org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever"
+#claims_extractor_impl = "org.wso2.carbon.apimgt.impl.token.ExtendedDefaultClaimsRetriever"
 
 #[apim.oauth_config]
 #enable_outbound_auth_header = false
@@ -153,11 +156,12 @@ service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
 #enable_comments = true
 #enable_ratings = true
 #enable_forum = true
+#enable_anonymous_mode=true
 
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "testKey"]
 allow_credentials = false
 
 #[apim.throttling]
@@ -197,9 +201,9 @@ allow_credentials = false
 #service_url = "https://localhost:9445/bpmn"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
-#callback_endpoint = "https://localhost:${mgt.transport.https.port}/api/am/admin/v0.16/workflows/update-workflow-status"
+#callback_endpoint = "https://localhost:${mgt.transport.https.port}/api/am/admin/v0.17/workflows/update-workflow-status"
 #token_endpoint = "https://localhost:${https.nio.port}/token"
-#client_registration_endpoint = "https://localhost:${mgt.transport.https.port}/client-registration/v0.16/register"
+#client_registration_endpoint = "https://localhost:${mgt.transport.https.port}/client-registration/v0.17/register"
 #client_registration_username = "$ref{super_admin.username}"
 #client_registration_password = "$ref{super_admin.password}"
 
@@ -243,11 +247,19 @@ subscriptions=["POST_ADD_USER"]
 [service_provider]
 sp_name_regex = "^[\\sa-zA-Z0-9._-]*$"
 
-[transport.passthru_https.sender.parameters]
-HostnameVerifier="AllowAll"
+[database.local]
+url = "jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE"
+
+[[event_listener]]
+id = "token_revocation"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.ApimOauthEventInterceptor"
+order = 1
+[event_listener.properties]
+notification_endpoint = "https://localhost:${mgt.transport.https.port}/internal/data/v1/notify"
+username = "${admin.username}"
+password = "${admin.password}"
+'header.X-WSO2-KEY-MANAGER' = "default"
 
 [config_data]
 path = "/_system/apim/config"
-
-[database.local]
-url = "jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE"
