@@ -48,7 +48,7 @@ services:
       mysql:
         condition: service_healthy
     volumes:
-      - ./apim-analytics-worker:/home/wso2carbon/wso2-config-volume
+      - ./conf/apim-analytics-worker:/home/wso2carbon/wso2-config-volume
   is-as-km:
     image: docker.wso2.com/wso2is-km:5.10.0
     healthcheck:
@@ -64,12 +64,12 @@ services:
     ports:
       - "9444:9443"
   api-manager:
-    image: docker.wso2.com/wso2am:3.1.0
+    build: ./dockerfiles/apim
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9443"]
       interval: 10s
-      start_period: 100s
-      retries: 10
+      start_period: 180s
+      retries: 20
     depends_on:
       mysql:
         condition: service_healthy
@@ -78,13 +78,13 @@ services:
       is-as-km:
         condition: service_healthy
     volumes:
-      - ./apim:/home/wso2carbon/wso2-config-volume
+      - ./conf/apim:/home/wso2carbon/wso2-config-volume
     ports:
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
   am-analytics-dashboard:
-    image: docker.wso2.com/wso2am-analytics-dashboard:3.1.0
+    build: ./dockerfiles/apim-analytics-dashboard
     ports:
       - "9643:9643"
     healthcheck:
@@ -98,4 +98,4 @@ services:
       api-manager:
         condition: service_healthy
     volumes:
-      - ./apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume
+      - ./conf/apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume
