@@ -111,8 +111,9 @@ analytics_auth_url =["ssl://am-analytics-worker:7712"]
 #analytics_auth_url =["ssl://analytics1:7712","ssl://analytics2:7712"]
 #type = "failover"
 
-#[apim.key_manager]
-#service_url = "https://localhost:${mgt.transport.https.port}/services/"
+[apim.key_manager]
+service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
+type = "WSO2-IS"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
 #pool.init_idle_capacity = 50
@@ -263,3 +264,6 @@ password = "${admin.password}"
 
 [config_data]
 path = "/_system/apim/config"
+
+[transport.passthru_https.sender.parameters]
+HostnameVerifier="AllowAll"
