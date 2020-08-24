@@ -39,7 +39,7 @@
 4. Execute following Docker Compose command to start the deployment.
 
    ```
-   docker-compose up
+   docker-compose up --build
    ```
 
 5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
