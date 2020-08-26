@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v3.2.0.1] - 2020-08-26
 
+### Environments
+
+- Successful evaluation using Docker Engine Community version `19.03.5` (both client and server)
+- Successful evaluation using Docker Compose version `1.23.1, build b02f1306`
+
 ### Added
 
 - Alpine, CentOS and Ubuntu based Docker resources for WSO2 API Manager, API Manager Analytics Dashboard and Worker version `3.2.0` (refer to [issue](https://github.com/wso2/docker-apim/issues/313))
