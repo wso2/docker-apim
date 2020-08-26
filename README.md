@@ -4,6 +4,7 @@ This repository contains following Docker resources:
 
 - Alpine, CentOS and Ubuntu based Docker resources for WSO2 API Manager, API Manager Analytics Dashboard and Worker and
 Identity Server as Key Manager profiles
+
 - Docker Compose resources for the most common WSO2 API Management deployment patterns
 
 Docker resources for WSO2 API Manager, API Manager Analytics and WSO2 Identity Server as Key Manager
