@@ -35,13 +35,21 @@
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
     i.e. for example: `git checkout tags/v3.2.0.1`, switch to `docker-compose/apim-is-as-km-with-analytics` folder and continue with below steps.
 
-4. Execute following Docker Compose command to start the deployment.
+4. [Optional] Replace the existing IS extensions with the latest.
+
+   For this, refer to steps `3`, `4` and `5` of the [`Configure WSO2 IS` section](https://apim.docs.wso2.com/en/next/administer/key-managers/configure-wso2is-connector/#step-1-configure-wso2-is).
+   
+   You may replace the JARs in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/dropins` as defined in step 4.
+   
+   You may replace the web app in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/webapps` as defined in step 5.
+
+5. Execute following Docker Compose command to start the deployment.
 
    ```
    docker-compose up --build
    ```
 
-5. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+6. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
    ```
    https://localhost:9443/publisher
