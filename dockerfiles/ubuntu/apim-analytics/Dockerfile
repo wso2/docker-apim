@@ -63,6 +63,7 @@ RUN \
         netcat \
         unzip \
         wget \
+        ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # installe Oracle JDK
