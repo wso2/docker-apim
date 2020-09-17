@@ -86,16 +86,14 @@ RUN \
 # add MySQL JDBC connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
 
-# set environment variables
-ENV WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK} \
-    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
-
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV WORKING_DIRECTORY=${USER_HOME}
+ENV WORKING_DIRECTORY=${USER_HOME} \
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
 
 # expose ports
 EXPOSE 9764 9444 7712 7612 4041
