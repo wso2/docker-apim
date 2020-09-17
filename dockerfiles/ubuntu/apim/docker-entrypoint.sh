@@ -21,7 +21,7 @@ set -e
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
 # home of the directories to be artifact synced within the WSO2 product home
-deployment_volume=${WSO2_SERVER_HOME}/repository/deployment/server
+deployment_volume=${WSO2_SERVER_HOME}/repository
 # home of the directories with preserved, default deployment artifacts
 original_deployment_artifacts=${WORKING_DIRECTORY}/wso2-tmp
 
@@ -32,7 +32,7 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
 
 # shared artifact directories
-directories=("executionplans" "synapse-configs")
+directories=("deployment/server/executionplans" "deployment/server/synapse-configs" "database")
 # if the original directory locations of artifacts to be synced between nodes are empty,
 # copy the preserved, default content of these folders to these original locations
 for shared_directory in ${directories[@]}; do
