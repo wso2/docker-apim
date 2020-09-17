@@ -18,7 +18,8 @@
 
 # set to latest Ubuntu LTS
 FROM ubuntu:16.04
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.2.0.6"
 
 # set user configurations
 ARG USER=wso2carbon
