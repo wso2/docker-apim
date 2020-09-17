@@ -18,7 +18,8 @@
 
 # set base Docker image to latest CentOS Docker image
 FROM centos:7
-LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.4"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
