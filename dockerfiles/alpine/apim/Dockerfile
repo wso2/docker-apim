@@ -18,7 +18,8 @@
 
 # set to latest Alpine
 FROM openjdk:8u171-jdk-alpine3.8
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org”
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.5.0.3"
 
 # set user configurations
 ARG USER=wso2carbon
@@ -27,7 +28,7 @@ ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set wso2 product configurations
-ARG WSO2_SERVER=wso2am
+ARG WSO2_SERVER_NAME=wso2am
 ARG WSO2_SERVER_VERSION=2.5.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
