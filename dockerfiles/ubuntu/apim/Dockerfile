@@ -36,7 +36,7 @@ ARG WSO2_SERVER_VERSION=2.5.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL
+ARG WSO2_SERVER_DIST_URL="https://github.com/wso2/product-apim/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip"
 ARG JDK_URL
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=5.1.49
@@ -65,19 +65,20 @@ RUN \
         netcat \
         unzip \
         wget \
+        ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # installe Oracle JDK
 RUN \
     mkdir -p ${JAVA_HOME} \
-    && wget --no-check-certificate -O ${JDK_NAME} ${JDK_URL} \
+    && wget -O ${JDK_NAME} ${JDK_URL} \
     && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
     && rm -f ${JDK_NAME}
 
 # add the WSO2 product distribution to user's home directory
 RUN \
-    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && mkdir ${USER_HOME}/wso2-tmp \
