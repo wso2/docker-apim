@@ -70,14 +70,14 @@ RUN \
 # installe Oracle JDK
 RUN \
     mkdir -p ${JAVA_HOME} \
-    && wget --no-check-certificate -O ${JDK_NAME} ${JDK_URL} \
+    && wget -O ${JDK_NAME} ${JDK_URL} \
     && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
     && rm -f ${JDK_NAME}
 
 # add the WSO2 product distribution to user's home directory
 RUN \
-    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && mkdir ${USER_HOME}/wso2-tmp \
