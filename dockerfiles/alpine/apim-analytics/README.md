@@ -6,10 +6,6 @@ The section defines the step-by-step instructions to build an Alpine OpenJDK Doc
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
-* WSO2 API Manager Analytics downloaded through [WUM](https://wso2.com/wum/download)
-* Download JDK 8 through [Oracle](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
-  - Host the downloaded pack and JDK locally or on a remote location.
->The hosted product pack location and JDK location will be passed as the build arguments WSO2_SERVER_DIST_URL and JDK_URL when building the Docker image.
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -26,10 +22,8 @@ in order to obtain latest bug fixes and updates for the product.
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
 
-  + `docker build --build-arg WSO2_SERVER_DIST_URL=<URL_OF_THE_HOSTED_LOCATION/FILENAME> JDK_URL=<URL_OF_THE_HOSTED_JDK_LOCATION/FILENAME> -t wso2am-analytics:2.5.0-alpine .`
-    - eg:- Hosted locally: docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2am-analytics.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2am-analytics:2.5.0-alpine . 
-    - eg:- Hosted remotely: docker build --build-arg WSO2_SERVER_DIST_URL=http://<public_ip:port>/wso2am-analytics.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2am-analytics:2.5.0-alpine .
-  
+  + `docker build -t wso2am-analytics:2.5.0-alpine .`
+
 ##### 3. Running the Docker image.
 - docker run -it -p 9444:9444 wso2am-analytics:2.5.0-alpine
 
