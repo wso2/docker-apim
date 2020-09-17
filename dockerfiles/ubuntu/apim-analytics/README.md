@@ -9,7 +9,7 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 >The hosted JDK location will be passed as the build argument JDK_URL when building the Docker image.
 
 ## How to build an image and run
-##### 1. Checkout this repository into your local machine using the following git command.
+##### 1. Checkout this repository into your local machine using the following Git command.
 ```
 git clone https://github.com/wso2/docker-apim.git
 ```

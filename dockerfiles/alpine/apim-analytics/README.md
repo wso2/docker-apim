@@ -8,7 +8,7 @@ The section defines the step-by-step instructions to build an Alpine OpenJDK Doc
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
 
 ## How to build an image and run
-##### 1. Checkout this repository into your local machine using the following git command.
+##### 1. Checkout this repository into your local machine using the following Git command.
 ```
 git clone https://github.com/wso2/docker-apim.git
 ```
