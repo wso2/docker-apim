@@ -37,11 +37,11 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
 # build argument for MOTD
 ARG MOTD='printf "\n\
- Welcome to WSO2 Docker Resources \n\
- --------------------------------- \n\
- This Docker container comprises of a WSO2 product, running with its latest GA release \n\
- which is under the Apache License, Version 2.0. \n\
- Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
+Welcome to WSO2 Docker resources.\n\
+-----------------------------------------\n\
+This Docker container comprises of a WSO2 product, running with its latest WSO2 updates\n\
+which are under the End User License Agreement (EULA) 3.1.\n\
+Read more about EULA 3.1 here:  @ https://wso2.com/license/wso2-update/3.1/LICENSE.txt\n"'
 ENV ENV=${USER_HOME}"/.ashrc"
 
 # create the non-root user and group and set MOTD login message
