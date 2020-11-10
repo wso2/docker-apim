@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v3.2.0.2] - 2020-11-10
 
 ### Added
-- Add git release tag as a label
+- Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/338))
 
 ### Changed
 - Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-apim/issues/345))
