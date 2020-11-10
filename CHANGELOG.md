@@ -4,6 +4,14 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.3] - 2020-11-10
+
+### Added
+- Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/347))
+
+### Changed
+- Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-apim/issues/348))
+
 ## [v3.1.0.2] - 2020-04-09
 
 ### Fixed
@@ -34,3 +42,4 @@ For detailed information on the tasks carried out during this release, please se
 [v3.1.0.1](https://github.com/wso2/docker-apim/milestone/13).
 
 [v3.1.0.2]: https://github.com/wso2/docker-apim/compare/v3.1.0.1...v3.1.0.2
+[v3.1.0.3]: https://github.com/wso2/docker-apim/compare/v3.1.0.2...v3.1.0.3
