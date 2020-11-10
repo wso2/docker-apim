@@ -3,6 +3,16 @@ All notable changes to this project 2.2.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.2.0.6] - 2020-11-10
+
+### Added
+- Add git release tag as a label
+- Add ca-certificates for Ubuntu base images
+
+### Changed
+- Enable SSL verification when retrieving remote resources using wget
+- Update GA product download source
+
 ## [v2.2.0.5] - 2020-07-13
 
 ### Removed
@@ -38,3 +48,4 @@ your deployment mount paths appropriately to match above folder changes.
 
 [v2.2.0.4]: https://github.com/wso2/docker-apim/compare/v2.2.0.3...v2.2.0.4
 [v2.2.0.5]: https://github.com/wso2/docker-apim/compare/v2.2.0.4...v2.2.0.5
+[v2.2.0.6]: https://github.com/wso2/docker-apim/compare/v2.2.0.5...v2.2.0.6
