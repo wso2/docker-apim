@@ -3,6 +3,15 @@ All notable changes to this project 2.5.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.5.0.3] - 2020-10-11
+
+### Added
+- Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/358))
+
+### Changed
+- Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-apim/issues/359))
+- Update GA product download source (refer to [issue](https://github.com/wso2/docker-apim/issues/362))
+
 ## [v2.5.0.2] - 2020-07-16
 
 ### Changed
@@ -13,4 +22,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Removed
 - Remove copying the JDK and product pack from file directory
 
-[v2.5.0.1]: https://github.com/wso2/docker-apim/compare/v2.5.0.1...v2.5.0.2
+[v2.5.0.2]: https://github.com/wso2/docker-apim/compare/v2.5.0.1...v2.5.0.2
+[v2.5.0.3]: https://github.com/wso2/docker-apim/compare/v2.5.0.2...v2.5.0.3
