@@ -6,12 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v2.2.0.6] - 2020-11-10
 
 ### Added
-- Add git release tag as a label
+- Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/357))
 - Add ca-certificates for Ubuntu base images
 
 ### Changed
-- Enable SSL verification when retrieving remote resources using wget
-- Update GA product download source
+- Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-apim/issues/356))
+- Update GA product download source (refer to [issue](https://github.com/wso2/docker-apim/issues/360))
 
 ## [v2.2.0.5] - 2020-07-13
 
