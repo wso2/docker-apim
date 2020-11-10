@@ -4,6 +4,15 @@ All notable changes to Docker and Docker Compose resources for WSO2 API Manageme
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.2.0.2] - 2020-11-10
+
+### Added
+- Add git release tag as a label
+
+### Changed
+- Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-apim/issues/345))
+- Update source label key
+
 ## [v3.2.0.1] - 2020-08-26
 
 ### Environments
@@ -32,3 +41,4 @@ For detailed information on the tasks carried out during this release, please se
 [v3.2.0.1](https://github.com/wso2/docker-apim/milestone/17).
 
 [v3.2.0.1]: https://github.com/wso2/docker-apim/compare/v3.1.0.3...v3.2.0.1
+[v3.2.0.2]: https://github.com/wso2/docker-apim/compare/v3.2.0.1...v3.2.0.2
