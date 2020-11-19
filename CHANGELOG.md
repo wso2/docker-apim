@@ -10,8 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/338))
 
 ### Changed
+- Upgrade AdoptOpenJDK 11 version to the latest version - `11.0.9_11-jdk` (refer to [issue](https://github.com/wso2/docker-apim/issues/377))
 - Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-apim/issues/345))
 - Update source label key
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v3.2.0.2](https://github.com/wso2/docker-apim/milestone/21).
 
 ## [v3.2.0.1] - 2020-08-26
 
