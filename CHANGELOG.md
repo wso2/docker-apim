@@ -4,7 +4,7 @@ All notable changes to Docker and Docker Compose resources for WSO2 API Manageme
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v3.2.0.2] - 2020-11-10
+## [v3.2.0.2] - 2020-11-20
 
 ### Added
 - Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/338))
