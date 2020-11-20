@@ -3,7 +3,7 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v2.6.0.9] - 2020-11-10
+## [v2.6.0.10] - 2020-11-25
 
 ### Added
 - Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-apim/issues/353))
