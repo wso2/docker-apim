@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v2.6.0.11] - 2020-12-01
 
 ### Changed
-- Use AdoptOpenJDK version `jdk8u272-b10` in Alpine, CentOS, Ubuntu based Docker resources
+- Use AdoptOpenJDK version `jdk8u272-b10` in Alpine, CentOS, Ubuntu based Docker resources (refer to [issue](https://github.com/wso2/docker-apim/issues/386))
 
 ## [v2.6.0.10] - 2020-11-25
 
