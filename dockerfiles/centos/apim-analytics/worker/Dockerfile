@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to latest CentOS Docker image
-FROM centos:7
+FROM adoptopenjdk/openjdk8:jdk8u272-b10-centos
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
       com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.10"
 
@@ -28,8 +28,6 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set JDK configurations
-ARG JAVA_HOME=${USER_HOME}/java
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am-analytics
 ARG WSO2_SERVER_VERSION=2.6.0
@@ -62,14 +60,6 @@ RUN \
         unzip \
         wget \
     && rm -rf /var/cache/yum/*
-# install AdoptOpenJDK HotSpot
-RUN \
-    mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u272-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u272b10.tar.gz \
-    && echo "6f124b69d07d8d3edf39b9aa5c58473f63a380b686ddb73a5495e01d25c2939a  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
-    && tar -xf OpenJDK8U-jdk_x64_linux_hotspot.tar.gz -C ${JAVA_HOME} --strip-components=1 \
-    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -84,9 +74,7 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=${JAVA_HOME}/bin:${PATH} \
-    WORKING_DIRECTORY=${USER_HOME} \
+ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose ports
