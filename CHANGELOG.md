@@ -4,6 +4,11 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.5] - 2020-12-04
+
+### Changed
+- Upgrade AdoptOpenJDK 11 version to the latest version - `jdk-11.0.9_11` (refer to [issue](https://github.com/wso2/docker-apim/issues/389))
+
 ## [v3.1.0.4] - 2020-11-25
 
 ### Added
