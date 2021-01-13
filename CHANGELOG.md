@@ -3,6 +3,11 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.12] - 2021-01-13
+
+### Changed
+- Upgrade MySql version to 5.1.49
+
 ## [v2.6.0.11] - 2020-12-01
 
 ### Changed
