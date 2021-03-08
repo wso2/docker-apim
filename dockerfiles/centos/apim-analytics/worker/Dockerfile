@@ -17,9 +17,9 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to latest CentOS Docker image
-FROM adoptopenjdk/openjdk8:jdk8u272-b10-centos
+FROM adoptopenjdk/openjdk8:jdk8u282-b08-centos
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.10"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.14"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
