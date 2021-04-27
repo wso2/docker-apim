@@ -1,8 +1,6 @@
 [server]
 hostname = "localhost"
-node_ip = "127.0.0.1"
 #offset=0
-mode = "single" #single or ha
 base_path = "${carbon.protocol}://${carbon.host}:${carbon.management.port}"
 #discard_empty_caches = false
 server_role = "default"
@@ -51,7 +49,7 @@ key_password =  "wso2carbon"
 #key_password =  "wso2carbon"
 
 [[apim.gateway.environment]]
-name = "Production and Sandbox"
+name = "Default"
 type = "hybrid"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
@@ -63,6 +61,11 @@ ws_endpoint = "ws://localhost:9099"
 wss_endpoint = "wss://localhost:8099"
 http_endpoint = "http://localhost:${http.nio.port}"
 https_endpoint = "https://localhost:${https.nio.port}"
+websub_event_receiver_http_endpoint = "http://localhost:9021"
+websub_event_receiver_https_endpoint = "https://localhost:8021"
+
+[apim.sync_runtime_artifacts.gateway]
+gateway_labels =["Default"]
 
 #[apim.cache.gateway_token]
 #enable = true
@@ -94,22 +97,8 @@ https_endpoint = "https://localhost:${https.nio.port}"
 
 [apim.analytics]
 enable = true
-store_api_url = "https://am-analytics-worker:7444"
-#username = "$ref{super_admin.username}"
-#password = "$ref{super_admin.password}"
-#event_publisher_type = "default"
-#event_publisher_impl = "org.wso2.carbon.apimgt.usage.publisher.APIMgtUsageDataBridgeDataPublisher"
-#publish_response_size = true
-
-[[apim.analytics.url_group]]
-analytics_url =["tcp://am-analytics-worker:7612"]
-analytics_auth_url =["ssl://am-analytics-worker:7712"]
-#type = "loadbalance"
-
-#[[apim.analytics.url_group]]
-#analytics_url =["tcp://analytics1:7612","tcp://analytics2:7612"]
-#analytics_auth_url =["ssl://analytics1:7712","ssl://analytics2:7712"]
-#type = "failover"
+config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
+auth_token = "<on-prem-key>"
 
 [apim.key_manager]
 service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
@@ -158,11 +147,13 @@ type = "WSO2-IS"
 #enable_ratings = true
 #enable_forum = true
 #enable_anonymous_mode=true
+#enable_cross_tenant_subscriptions = true
+#default_reserved_username = "apim_reserved_user"
 
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "testKey"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "Internal-Key"]
 allow_credentials = false
 
 #[apim.throttling]
