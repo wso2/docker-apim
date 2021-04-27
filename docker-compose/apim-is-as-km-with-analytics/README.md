@@ -1,4 +1,4 @@
-# WSO2 API Manager with Identity Server as Key Manager and API Manager Analytics Support
+# WSO2 API Manager with Identity Server as Key Manager and Analytics Support
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@
    `docker-apim-<released-version-here>/docker-compose/apim-is-as-km-with-analytics` folder. 
      
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: `git checkout tags/v3.2.0.1`, switch to `docker-compose/apim-is-as-km-with-analytics` folder and continue with below steps.
+    i.e. for example: `git checkout tags/v4.0.0.1`, switch to `docker-compose/apim-is-as-km-with-analytics` folder and continue with below steps.
 
 4. [Optional] Replace the existing IS extensions with the latest.
 
@@ -43,13 +43,24 @@
    
    You may replace the web app in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/webapps` as defined in step 5.
 
-5. Execute following Docker Compose command to start the deployment.
+5. WSO2 no longer provides an on-premise Analytics solution. In order to connect WSO2 API Manager to [Choreo Analytics](https://analytics.choreo.dev/), obtain an `on-prem-key` by following the steps in the [documentation](https://apim.docs.wso2.com/en/4.0.0/observe/api-manager-analytics/configure-analytics/register-for-analytics/).
+
+6. Update the analytics configurations in [deployment.toml](./conf/apim/repository/conf/deployment.toml) with the `on-prem key` obtained.
+
+    ```toml
+    [apim.analytics]
+    enable = true
+    config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
+    auth_token = "<on-prem-key>"
+    ```
+
+7. Execute following Docker Compose command to start the deployment.
 
    ```
    docker-compose up --build
    ```
 
-6. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+8. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
    ```
    https://localhost:9443/publisher
@@ -67,12 +78,5 @@
    https://localhost:8243
    https://localhost:8280
    ```
-   Access the WSO2 API Manager Analytics web UIs using the below URL via a web browser.
-   
-   ```
-   https://localhost:9643/analytics-dashboard
-   ```
-   Login to the web UIs using following credentials.
-    
-   * Username: admin <br>
-   * Password: admin
+
+9. To see analytics data, log in to [Choreo Analytics](https://analytics.choreo.dev/).
