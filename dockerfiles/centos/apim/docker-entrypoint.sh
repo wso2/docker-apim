@@ -66,8 +66,8 @@ echo "Start WSO2 Carbon server" >&2
 if [[ -z "${PROFILE_NAME}" ]]
 then
   # start the server with the provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/wso2server.sh "$@"
+  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@"
 else
   # start the server with the specified profile and provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/wso2server.sh -Dprofile=${PROFILE_NAME} "$@"
+  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh -Dprofile=${PROFILE_NAME} "$@"
 fi
