@@ -1,4 +1,4 @@
-# Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+# Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -50,3 +50,20 @@ services:
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
+  micro-integrator:
+    build: ./dockerfiles/mi
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8253"]
+      interval: 10s
+      start_period: 30s
+      retries: 10
+    depends_on:
+      mysql:
+        condition: service_healthy
+      api-manager:
+        condition: service_healthy
+    volumes:
+      - ./conf/mi:/home/wso2carbon/wso2-config-volume
+    ports:
+      - "8290:8290"
+      - "8253:8253"

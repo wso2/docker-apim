@@ -15,7 +15,7 @@
 version: '2.4'
 services:
   mysql:
-    image: mysql:5.7.31
+    image: mysql:5.7.34
     ports:
       - 3306
     environment:
@@ -34,21 +34,6 @@ services:
       timeout: 60s
       retries: 5
       start_period: 80s
-  am-analytics-worker:
-    build: ./dockerfiles/apim-analytics-worker
-    ports:
-      - "9091"
-      - "9444"
-    healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9444"]
-      interval: 10s
-      start_period: 20s
-      retries: 5
-    depends_on:
-      mysql:
-        condition: service_healthy
-    volumes:
-      - ./conf/apim-analytics-worker:/home/wso2carbon/wso2-config-volume
   is-as-km:
     build: ./dockerfiles/is-as-km
     healthcheck:
@@ -73,8 +58,6 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-      am-analytics-worker:
-        condition: service_healthy
       is-as-km:
         condition: service_healthy
     volumes:
@@ -83,19 +66,3 @@ services:
       - "9443:9443"
       - "8280:8280"
       - "8243:8243"
-  am-analytics-dashboard:
-    build: ./dockerfiles/apim-analytics-dashboard
-    ports:
-      - "9643:9643"
-    healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9643"]
-      interval: 10s
-      retries: 5
-      start_period: 20s
-    depends_on:
-      mysql:
-        condition: service_healthy
-      api-manager:
-        condition: service_healthy
-    volumes:
-      - ./conf/apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume

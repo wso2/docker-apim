@@ -1,4 +1,4 @@
-# WSO2 API Manager with Identity Server as Key Manager and Analytics Support
+# WSO2 API Manager with Micro Integrator
 
 ## Prerequisites
 
@@ -24,43 +24,32 @@
    
    > If you are to try out an already released zip of this repo, please ignore this 2nd step. 
 
-3. Switch to `docker-compose/apim-is-as-km-with-analytics` folder.
+3. Switch to `docker-compose/apim-with-mi` folder.
 
    ```
-   cd docker-apim/docker-compose/apim-is-as-km-with-analytics
+   cd docker-apim/docker-compose/apim-with-mi
    ```
    > If you intend to try out an already released zip of this repository, extract the zip file and directly browse to
-   `docker-apim-<released-version-here>/docker-compose/apim-is-as-km-with-analytics` folder. 
+   `docker-apim-<released-version-here>/docker-compose/apim-with-mi` folder. 
      
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: `git checkout tags/v4.0.0.1`, switch to `docker-compose/apim-is-as-km-with-analytics` folder and continue with below steps.
+    i.e. for example: `git checkout tags/v4.0.0.1`, switch to `docker-compose/apim-with-mi` folder and continue with below steps.
 
-4. [Optional] Replace the existing IS extensions with the latest.
+4. Add deployable `CAR` files
+    
+   You may add the relevant CAR files of your integration services to  `docker-compose/apim-with-mi/dockerfiles/mi/capps/`.
 
-   For this, refer to steps `3`, `4` and `5` of the [`Configure WSO2 IS` section](https://apim.docs.wso2.com/en/next/administer/key-managers/configure-wso2is-connector/#step-1-configure-wso2-is).
-   
-   You may replace the JARs in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/dropins` as defined in step 4.
-   
-   You may replace the web app in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/webapps` as defined in step 5.
+   Those will be added to the Service Catalog in APIM through Micro Integrator. For more information, refer the [documentation](https://apim.docs.wso2.com/en/4.0.0/tutorials/integration-tutorials/service-catalog-tutorial/#exposing-an-integration-service-as-a-managed-api).
 
-5. WSO2 no longer provides an on-premise Analytics solution. In order to connect WSO2 API Manager to [Choreo Analytics](https://analytics.choreo.dev/), obtain an `on-prem-key` by following the steps in the [documentation](https://apim.docs.wso2.com/en/4.0.0/observe/api-manager-analytics/configure-analytics/register-for-analytics/).
+   The backend service of the sample `CAR` provided can be found [here](https://github.com/wso2-docs/WSO2_EI/blob/master/Back-End-Service/Hospital-Service-JDK11-2.0.0.jar).
 
-6. Update the analytics configurations in [deployment.toml](./conf/apim/repository/conf/deployment.toml) with the `on-prem key` obtained.
-
-    ```toml
-    [apim.analytics]
-    enable = true
-    config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
-    auth_token = "<on-prem-key>"
-    ```
-
-7. Execute following Docker Compose command to start the deployment.
+5. Execute following Docker Compose command to start the deployment.
 
    ```
    docker-compose up --build
    ```
 
-8. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
+6. Access the WSO2 API Manager web UIs using the below URLs via a web browser.
 
    ```
    https://localhost:9443/publisher
@@ -69,14 +58,9 @@
    https://localhost:9443/carbon
    ```
    Login to the web UIs using following credentials.
-   
-   * Username: admin <br>
-   * Password: admin
 
    Please note that API Gateway will be available on following ports.
    ```
    https://localhost:8243
    https://localhost:8280
    ```
-
-9. To see analytics data, log in to [Choreo Analytics](https://analytics.choreo.dev/).

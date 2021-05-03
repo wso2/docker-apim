@@ -17,9 +17,9 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to AdoptOpenJDK Ubuntu Docker image
-FROM adoptopenjdk:11.0.9_11-jdk-hotspot-focal
+FROM adoptopenjdk:11.0.10_9-jdk-hotspot-focal
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.2.0.2"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.0.0.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -30,7 +30,7 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am
-ARG WSO2_SERVER_VERSION=3.2.0
+ARG WSO2_SERVER_VERSION=4.0.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}

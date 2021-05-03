@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2020 WSO2, Inc. (http://wso2.com)
+# Copyright 2021 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to WSO2 API Manager Docker image with latest WSO2 Updates
-FROM docker.wso2.com/wso2am:4.0.0
+FROM docker.wso2.com/wso2mi:4.0.0
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
-# build arguments for external artifacts
-ARG MYSQL_CONNECTOR_VERSION=8.0.17
-
-# add MySQL JDBC connector to server home as a third party library
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
+# copy CAR files to the MI server home
+COPY capps ${WSO2_SERVER_HOME}/repository/deployment/server/carbonapps/

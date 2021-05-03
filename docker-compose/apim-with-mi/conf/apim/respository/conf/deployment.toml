@@ -96,13 +96,12 @@ gateway_labels =["Default"]
 #expiry_time = "2m"
 
 [apim.analytics]
-enable = true
-config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
-auth_token = "<on-prem-key>"
+enable = false
+config_endpoint = "https://localhost:8080/auth/v1"
+auth_token = ""
 
-[apim.key_manager]
-service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
-type = "WSO2-IS"
+#[apim.key_manager]
+#service_url = "https://localhost:${mgt.transport.https.port}/services/"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
 #pool.init_idle_capacity = 50
@@ -153,7 +152,7 @@ type = "WSO2-IS"
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "Internal-Key"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","Internal-Key"]
 allow_credentials = false
 
 #[apim.throttling]
@@ -252,9 +251,3 @@ notification_endpoint = "https://localhost:${mgt.transport.https.port}/internal/
 username = "${admin.username}"
 password = "${admin.password}"
 'header.X-WSO2-KEY-MANAGER' = "default"
-
-[config_data]
-path = "/_system/apim/config"
-
-[transport.passthru_https.sender.parameters]
-HostnameVerifier="AllowAll"
