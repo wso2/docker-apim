@@ -3,6 +3,12 @@
 All notable changes to Docker and Docker Compose resources for WSO2 API Management version `4.0.x` in each resource release, will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+## [v4.0.0.2] - 2021-6-14
+
+### Changed
+- Upgrade AdoptOpenJDK 11 version to the latest version - `jdk-11.0.11_9`
+
 ## [v4.0.0.1] - 2021-04-28
 
 ### Added
