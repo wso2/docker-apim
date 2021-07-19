@@ -3,6 +3,12 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.15] - 2021-07-19
+
+### Added
+- Create Java prefs directory to avoid warning logs printed by FileSystemPreferences class in centos apim and is-as-km images
+- Set JAVA_OPTS as an environment variable with values for java.util.prefs.systemRoot and java.util.prefs.userRoot
+
 ## [v2.6.0.12] - 2021-01-13
 
 ### Changed
