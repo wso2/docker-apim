@@ -37,7 +37,7 @@
 
 4. [Optional] Replace the existing IS extensions with the latest.
 
-   For this, refer to steps `3`, `4` and `5` of the [`Configure WSO2 IS` section](https://apim.docs.wso2.com/en/next/administer/key-managers/configure-wso2is-connector/#step-1-configure-wso2-is).
+   For this, refer to steps `3`, `4` and `5` of the [Configure WSO2 IS section](https://apim.docs.wso2.com/en/latest/administer/key-managers/configure-wso2is-connector/#step-1-configure-wso2-is).
    
    You may replace the JARs in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/dropins` as defined in step 4.
    
