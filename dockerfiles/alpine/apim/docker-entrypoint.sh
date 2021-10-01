@@ -65,9 +65,19 @@ test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${ar
 echo "Start WSO2 Carbon server" >&2
 if [[ -z "${PROFILE_NAME}" ]]
 then
+  # Trapping Kill Signals and killing the leaf process
+  trap 'echo kill signal received!; kill -TERM $(tr -d "\0" < ${WSO2_SERVER_HOME}/wso2carbon.pid); wait' TERM INT
   # start the server with the provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@"
+  ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@" &
+  # Waiting for the Subprocess to finish
+  PID=$! 
+  wait $PID
 else
+  # Trapping Kill Signals and killing the leaf process
+  trap 'echo kill signal received!; kill -TERM $(tr -d "\0" < ${WSO2_SERVER_HOME}/wso2carbon.pid); wait' TERM INT
   # start the server with the specified profile and provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh -Dprofile=${PROFILE_NAME} "$@"
+  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh -Dprofile=${PROFILE_NAME} "$@" &
+  # Waiting for the Subprocess to finish
+  PID=$!
+  wait $PID
 fi
