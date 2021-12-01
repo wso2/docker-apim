@@ -17,9 +17,9 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to AdoptOpenJDK Alpine Docker image
-FROM adoptopenjdk/openjdk8:jdk8u282-b08-alpine
+FROM adoptopenjdk/openjdk8:jdk8u312-b07-alpine
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.14"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.16"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -63,8 +63,18 @@ RUN \
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
+
+# update the packages
+RUN \
+    apk update
+        
 # install required packages
 RUN apk add --no-cache netcat-openbsd
+
+#upgrade the packages
+RUN \ 
+    apk upgrade --no-cache
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
