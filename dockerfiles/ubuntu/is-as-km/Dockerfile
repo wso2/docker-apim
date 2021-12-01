@@ -63,11 +63,15 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
-    apt-get update \
+    DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         netcat \
         unzip \
-        wget \
+        wget
+
+#Upgrade the existing packages
+RUN \
+    DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical  apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 # add the WSO2 product distribution to user's home directory
 RUN \

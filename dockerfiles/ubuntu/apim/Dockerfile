@@ -62,13 +62,18 @@ RUN \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
-    apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get -y update \
+    && DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get install -y --no-install-recommends \
         libxml2-utils \
         netcat \
         unzip \
-        wget \
+        wget 
+        
+#Upgrade the existing packages
+RUN \
+    DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical  apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
