@@ -28,3 +28,4 @@ rat.txt
 
 # exception to the rule
 !**/files/.gitkeep
+.DS_Store
