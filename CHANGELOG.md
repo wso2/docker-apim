@@ -3,6 +3,11 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.18] - 2022-01-21
+
+### Changed
+- Update the base image of alpine based image to `alpine:3.15` and added `Adoptium OpenJDK8U-jdk_x64_linux_hotspot_8u312b07` as the JDK for the image.
+
 ## [v2.6.0.16] - 2021-12-01
 
 ### Changed
