@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2017 WSO2, Inc. (http://wso2.com)
+# Copyright 2022 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
