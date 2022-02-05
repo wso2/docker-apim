@@ -4,7 +4,7 @@ All notable changes to Docker and Docker Compose resources for WSO2 API Manageme
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [v4.0.0.2] - 2022-02-05
+## [v4.0.0.3] - 2022-02-07
 
 ### Changed
 - Change folder structure of dockerfile locations and introduced separate images for jdk8 and jdk11 (refer to [issue](https://github.com/wso2/product-apim/issues/12223)
