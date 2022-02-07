@@ -21,13 +21,13 @@ git clone https://github.com/wso2/docker-apim.git
 
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am:4.0.0-alpine .`
+    + `docker build -t wso2am:4.0.0-alpine-jdk8 .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9443:9443 wso2am:4.0.0-alpine`
+- `docker run -it -p 9443:9443 wso2am:4.0.0-alpine-jdk8`
 
 > Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
@@ -62,7 +62,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.0.0-alpine
+wso2am:4.0.0-alpine-jdk8
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.0.0/repository/conf folder of the container.
