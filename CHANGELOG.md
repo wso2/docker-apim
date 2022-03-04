@@ -4,6 +4,14 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.5] - 2022-03-04
+
+### Changed
+# API Manager, API Manager Analytics
+- Use base OS images as opposed to AdoptOpenJDK images for each corresponding OS flavour (Alpine, CentOS, Ubuntu).
+- Use Temurin OpenJDK binaries to build OpenJDK on top of the base OS image.
+- Upgrade OpenJDK versions to the latest available versions of Temurin OpenJDK from Adoptium. 
+
 ## [v3.1.0.5] - 2020-12-04
 
 ### Changed
