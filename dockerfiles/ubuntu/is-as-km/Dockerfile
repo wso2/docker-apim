@@ -16,10 +16,44 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to AdoptOpenJDK Ubuntu Docker image
-FROM adoptopenjdk:8u222-b10-jdk-hotspot
+# Set base Docker image to Ubuntu docker image. 
+FROM ubuntu:20.04
+
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
       com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.6"
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+# Install JDK Dependencies.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales \
+    && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+    && locale-gen en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_VERSION jdk8u322-b06
+
+# Install JDK8.
+RUN set -eux; \
+    ARCH="$(dpkg --print-architecture)"; \
+    case "${ARCH}" in \
+        amd64|x86_64) \
+            ESUM='3d62362a78c9412766471b05253507a4cfc212daea5cdf122860173ce902400e'; \
+            BINARY_URL='https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_x64_linux_hotspot_8u322b06.tar.gz'; \
+            ;; \
+       *) \
+            echo "Unsupported arch: ${ARCH}"; \
+            exit 1; \
+            ;; \
+    esac; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+    mkdir -p /opt/java/openjdk; \
+    cd /opt/java/openjdk; \
+    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    rm -rf /tmp/openjdk.tar.gz;
+
+ENV JAVA_HOME=/opt/java/openjdk \
+    PATH="/opt/java/openjdk/bin:$PATH"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -52,8 +86,17 @@ RUN \
     && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
     && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
 
+# create Java prefs dir
+# this is to avoid warning logs printed by FileSystemPreferences class
+RUN \
+    mkdir -p ${USER_HOME}/.java/.systemPrefs \
+    && mkdir -p ${USER_HOME}/.java/.userPrefs \
+    && chmod -R 755 ${USER_HOME}/.java \
+    && chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
+
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
+
 # install required packages
 RUN \
     apt-get update \
@@ -62,12 +105,14 @@ RUN \
         unzip \
         wget \
     && rm -rf /var/lib/apt/lists/*
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && rm -f ${WSO2_SERVER}.zip
+
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/${DNS_JAVA_VERSION}/dnsjava-${DNS_JAVA_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/${K8S_MEMBERSHIP_SCHEME_VERSION}/kubernetes-membership-scheme-${K8S_MEMBERSHIP_SCHEME_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
@@ -79,7 +124,8 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV WORKING_DIRECTORY=${USER_HOME} \
+ENV JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs" \
+    WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose ports

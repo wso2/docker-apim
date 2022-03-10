@@ -3,7 +3,7 @@ All notable changes to this project 3.0.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v3.0.0.6] - 2022-03-10
+## [v3.0.0.6] - 2022-03-14
 
 ### Changed
 #### IS
@@ -52,3 +52,5 @@ For detailed information on the tasks carried out during this release, please se
 
 [v3.0.0.2]: https://github.com/wso2/docker-apim/compare/v3.0.0.1...v3.0.0.2
 [v3.0.0.4]: https://github.com/wso2/docker-apim/compare/v3.0.0.3...v3.0.0.4
+[v3.0.0.5]: https://github.com/wso2/docker-apim/compare/v3.0.0.4...v3.0.0.5
+[v3.0.0.6]: https://github.com/wso2/docker-apim/compare/v3.0.0.5...v3.0.0.6

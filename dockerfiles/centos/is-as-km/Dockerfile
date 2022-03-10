@@ -16,19 +16,19 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to CentOS Docker image
+# Set base Docker image to CentOS Docker image.
 FROM centos:7
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
       com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.6"
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# Instal JDK Dependencies
+# Instal JDK Dependencies.
 RUN yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar \
     && yum clean all
 
 ENV JAVA_VERSION jdk8u322-b06
 
-# Install JDK8
+# Install JDK8.
 RUN set -eux; \
     ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
         case "${ARCH}" in \
