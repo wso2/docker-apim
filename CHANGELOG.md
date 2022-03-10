@@ -4,6 +4,12 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.6] - 2022-03-10
+
+### Changed
+#### IS
+- Changed base image of dockerfiles to an OS image and installed Temurin JDK on it.
+
 ## [v3.1.0.5] - 2022-03-04
 
 ### Changed
@@ -56,3 +62,4 @@ For detailed information on the tasks carried out during this release, please se
 
 [v3.1.0.2]: https://github.com/wso2/docker-apim/compare/v3.1.0.1...v3.1.0.2
 [v3.1.0.3]: https://github.com/wso2/docker-apim/compare/v3.1.0.2...v3.1.0.3
+[v3.1.0.6]: https://github.com/wso2/docker-apim/compare/v3.1.0.5...v3.1.0.6
