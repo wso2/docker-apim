@@ -3,6 +3,13 @@ All notable changes to this project 3.0.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.0.0.6] - 2022-03-10
+
+### Changed
+#### IS
+- Changed base image of dockerfiles to an OS image and installed Temurin JDK on it.
+ 
+
 ## [v3.0.0.5] - 2022-03-04
 
 ### Changed
