@@ -11,7 +11,12 @@ password = "admin"
 create_admin_account = true
 
 [user_store]
-type = "database_unique_id"
+# type = "database_unique_id"
+type = "read_write_ldap_unique_id"
+connection_url = "ldap://is-as-km:10390"
+connection_name = "uid=admin,ou=system"
+connection_password = "admin"
+base_dn = "dc=wso2,dc=org"
 
 [database.apim_db]
 type = "mysql"
@@ -101,7 +106,7 @@ config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
 auth_token = "<on-prem-key>"
 
 [apim.key_manager]
-service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
+service_url = "https://is-as-km:9444/services/"
 type = "WSO2-IS"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
