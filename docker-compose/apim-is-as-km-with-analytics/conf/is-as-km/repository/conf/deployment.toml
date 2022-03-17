@@ -142,3 +142,6 @@ scopes = "internal_application_mgt_delete"
 
 [tenant_context.rewrite]
 custom_webapps = ["/keymanager-operations/"]
+
+[config_data]
+path = "/_system/is_as_km/config"
