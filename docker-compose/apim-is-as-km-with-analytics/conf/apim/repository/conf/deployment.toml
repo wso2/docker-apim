@@ -34,6 +34,9 @@ password =  "wso2carbon"
 alias =  "wso2carbon"
 key_password =  "wso2carbon"
 
+#[keystore.listener_profile]
+#bind_address = "0.0.0.0"
+
 #[keystore.primary]
 #file_name =  "wso2carbon.jks"
 #type =  "JKS"
@@ -51,6 +54,7 @@ key_password =  "wso2carbon"
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
+#provider = "wso2"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
 show_as_token_endpoint_url = true
@@ -95,16 +99,16 @@ gateway_labels =["Default"]
 #[apim.cache.tags]
 #expiry_time = "2m"
 
-[apim.analytics]
-enable = true
-config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
-auth_token = "<on-prem-key>"
+[apim.analytics]	
+enable = true	
+config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"	
+auth_token = "<<on-prem-key>>"
 
-[apim.key_manager]
-service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
+[apim.key_manager]	
+service_url = "https://is-as-km:${mgt.transport.https.port}/services/"	
 type = "WSO2-IS"
-#username = "$ref{super_admin.username}"
-#password = "$ref{super_admin.password}"
+username = "$ref{super_admin.username}"
+password = "$ref{super_admin.password}"
 #pool.init_idle_capacity = 50
 #pool.max_idle = 100
 #key_validation_handler_type = "default"
@@ -153,7 +157,7 @@ type = "WSO2-IS"
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "Internal-Key"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","Internal-Key"]
 allow_credentials = false
 
 #[apim.throttling]
@@ -253,8 +257,13 @@ username = "${admin.username}"
 password = "${admin.password}"
 'header.X-WSO2-KEY-MANAGER' = "default"
 
-[config_data]
-path = "/_system/apim/config"
+[oauth.grant_type.token_exchange]
+enable = true
+allow_refresh_tokens = true
+iat_validity_period = "1h"
 
-[transport.passthru_https.sender.parameters]
+[config_data]	
+path = "/_system/apim/config"	
+
+[transport.passthru_https.sender.parameters]	
 HostnameVerifier="AllowAll"
