@@ -11,7 +11,13 @@ password = "admin"
 create_admin_account = true
 
 [user_store]
-type = "database_unique_id"
+# type = "database_unique_id"
+type = "read_write_ldap_unique_id"
+connection_url = "ldap://is-as-km:10390"
+connection_name = "uid=admin,ou=system"
+connection_password = "admin"
+base_dn = "dc=wso2,dc=org"
+
 
 [database.apim_db]
 type = "mysql"
@@ -34,6 +40,9 @@ password =  "wso2carbon"
 alias =  "wso2carbon"
 key_password =  "wso2carbon"
 
+#[keystore.listener_profile]
+#bind_address = "0.0.0.0"
+
 #[keystore.primary]
 #file_name =  "wso2carbon.jks"
 #type =  "JKS"
@@ -51,6 +60,7 @@ key_password =  "wso2carbon"
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
+#provider = "wso2"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
 show_as_token_endpoint_url = true
@@ -95,13 +105,13 @@ gateway_labels =["Default"]
 #[apim.cache.tags]
 #expiry_time = "2m"
 
-[apim.analytics]
-enable = true
-config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
-auth_token = "<on-prem-key>"
+[apim.analytics]	
+enable = true	
+config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"	
+auth_token = "23fbe8d8-3d08-4724-b34c-fe995ac9b314"	
 
-[apim.key_manager]
-service_url = "https://is-as-km:${mgt.transport.https.port}/services/"
+[apim.key_manager]	
+service_url = "https://is-as-km:9444/services/"
 type = "WSO2-IS"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
@@ -247,14 +257,20 @@ id = "token_revocation"
 type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
 name = "org.wso2.is.notification.ApimOauthEventInterceptor"
 order = 1
+
 [event_listener.properties]
 notification_endpoint = "https://localhost:${mgt.transport.https.port}/internal/data/v1/notify"
 username = "${admin.username}"
 password = "${admin.password}"
-'header.X-WSO2-KEY-MANAGER' = "default"
+'header.X-WSO2-KEY-MANAGER' = "WSO2-IS"
 
-[config_data]
-path = "/_system/apim/config"
+[oauth.grant_type.token_exchange]
+enable = true
+allow_refresh_tokens = true
+iat_validity_period = "1h"
 
-[transport.passthru_https.sender.parameters]
+[config_data]	
+path = "/_system/apim/config"	
+
+[transport.passthru_https.sender.parameters]	
 HostnameVerifier="AllowAll"

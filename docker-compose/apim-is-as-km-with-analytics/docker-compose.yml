@@ -15,7 +15,7 @@
 version: '2.4'
 services:
   mysql:
-    image: mysql:5.7.34
+    image: mysql:5.7.37
     ports:
       - 3306
     environment:
@@ -37,7 +37,7 @@ services:
   is-as-km:
     build: ./dockerfiles/is-as-km
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9443"]
+      test: ["CMD", "nc", "-z","localhost", "9444"]
       interval: 10s
       start_period: 180s
       retries: 20
@@ -47,7 +47,7 @@ services:
     volumes:
       - ./conf/is-as-km:/home/wso2carbon/wso2-config-volume
     ports:
-      - "9444:9443"
+      - "9444:9444"
   api-manager:
     build: ./dockerfiles/apim
     healthcheck:
