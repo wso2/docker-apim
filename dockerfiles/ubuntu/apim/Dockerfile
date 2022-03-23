@@ -76,7 +76,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.1.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.1.0.0"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
