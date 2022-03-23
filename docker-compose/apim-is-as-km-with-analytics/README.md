@@ -80,3 +80,5 @@
    ```
 
 9. To see analytics data, log in to [Choreo Analytics](https://analytics.choreo.dev/).
+
+Note: In order to support the renewed wso2carbon certificate in API Manager, we are mounting wso2carbon and client-truststore keystores with the renewed certificate in the Identity Server.
