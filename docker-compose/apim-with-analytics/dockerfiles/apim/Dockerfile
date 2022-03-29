@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to WSO2 API Manager Docker image with latest WSO2 Updates
-FROM docker.wso2.com/wso2am:4.0.0.0
+FROM wso2am:4.1.0-ubuntu
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
 # build arguments for external artifacts
