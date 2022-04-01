@@ -68,7 +68,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.1.0.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.1.0.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -83,7 +83,7 @@ ARG WSO2_SERVER_VERSION=4.1.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_VERSION}-rc2/${WSO2_SERVER}-rc2.zip
+ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
 # build argument for MOTD
 ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
@@ -111,15 +111,15 @@ RUN \
     && rm -rf /var/lib/apt/lists/*
 # add the WSO2 product distribution to user's home directory
 RUN \
-    wget -O ${WSO2_SERVER}-rc2.zip "${WSO2_SERVER_DIST_URL}" \
-    && unzip -d ${USER_HOME} ${WSO2_SERVER}-rc2.zip \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && mkdir ${USER_HOME}/wso2-tmp \
     && bash -c 'mkdir -p ${USER_HOME}/solr/{indexed-data,database}' \
     && chown wso2carbon:wso2 -R ${USER_HOME}/solr \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-configs ${USER_HOME}/wso2-tmp \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/executionplans ${USER_HOME}/wso2-tmp \
-    && rm -f ${WSO2_SERVER}-rc2.zip
+    && rm -f ${WSO2_SERVER}.zip
 
 # set the user and work directory
 USER ${USER_ID}
