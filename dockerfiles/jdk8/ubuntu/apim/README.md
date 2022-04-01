@@ -27,9 +27,9 @@ git clone https://github.com/wso2/docker-apim.git
     
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9443:9443 wso2am:4.1.0-jdk8`
+- `docker run -it -p 9443:9443 -p 8242:8243 wso2am:4.1.0-jdk8`
 
-> Here, only port 9443 (HTTPS servlet transport) has been mapped to a Docker host port.
+> Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
 ##### 4. Accessing management console.
@@ -61,6 +61,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 ```
 docker run \
 -p 9444:9444 \
+-p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
 wso2am:4.1.0-jdk8
 ```
