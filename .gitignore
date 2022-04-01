@@ -23,6 +23,9 @@ hs_err_pid*
 .idea/
 *.iml
 
+# macOS
+.DS_Store
+
 rat.txt
 
 # exclude everything
