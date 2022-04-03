@@ -101,6 +101,20 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2
 > - Use command "docker buildx ls" to see list of existing builders and supported platforms.
 > - Please note we have only tested this for linux/amd64 and linux/arm64 platforms only
 
+## Running official wso2am images
+It is possible to use official wso2am images without building them from the scratch.
+
+- To run on amd64
+```
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:latest
+```
+
+- To run on native Apple Silicon ( arm64 )
+```
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.1.0-multiarch
+```
+
+
 ## Docker command usage references
 
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)

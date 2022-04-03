@@ -68,6 +68,16 @@ wso2am:4.1.0-alpine
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.1.0/repository/conf folder of the container.
 
+## Running official wso2am image
+It is possible to use official wso2am images without building them from the scratch.
+
+- To run on amd64
+```
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.1.0-alpine
+```
+> This image is only supported for amd64.
+
+
 ## Docker command usage references
 
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
