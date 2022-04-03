@@ -25,6 +25,12 @@ git clone https://github.com/wso2/docker-apim.git
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
+> Note:- wso2am:4.1.0-alpine-jdk8 image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
+
+```
+docker buildx build --platform linux/amd64 -t wso2am:4.1.0-alpine-jdk8 .
+```
+
 ##### 3. Running the Docker image.
 
 - `docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.1.0-alpine-jdk8`
