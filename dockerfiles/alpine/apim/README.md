@@ -91,3 +91,4 @@ docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.1.0-alpine
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
 * [Docker run command reference](https://docs.docker.com/engine/reference/run/)
 * [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+* [Docker buildx reference](https://docs.docker.com/buildx/working-with-buildx/)

@@ -79,3 +79,4 @@ wso2am:4.1.0-alpine-jdk8
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
 * [Docker run command reference](https://docs.docker.com/engine/reference/run/)
 * [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+* [Docker buildx reference](https://docs.docker.com/buildx/working-with-buildx/)

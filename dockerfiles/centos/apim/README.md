@@ -78,8 +78,43 @@ docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.1.0-centos
 ```
 > This official image is built for amd64 thus it will not run on Apple silicon natively. But it will run on emulated docker on Rosetta.
 
+## How to build a Docker image with multi architecture support
+
+The above wso2am:4.1.0 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.1.0 image to support any CPU architecture.
+
+#### 1. Install [Docker Buildx](https://docs.docker.com/buildx/working-with-buildx/)
+
+#### 2. Install [QEMU Emulators](https://github.com/tonistiigi/binfmt)
+```
+docker run -it --rm --privileged tonistiigi/binfmt --install all
+```
+
+#### 3. Create, switch and inspect a new builder
+```
+docker buildx create --name wso2ambuilder
+```
+```
+docker buildx use wso2ambuilder
+```
+```
+docker buildx inspect --bootstrap
+```
+#### 4. Build and push 
+
+```
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.1.0-centos-multiarch --push .
+```
+
+> - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
+> - Use command "docker login" to authenticate first if it fails to push.
+> - You can specify any number of platforms to support --platform flag
+> - Use command "docker buildx ls" to see list of existing builders and supported platforms.
+> - Please note we have only tested this for linux/amd64 and linux/arm64 platforms only
+
 ## Docker command usage references
 
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
 * [Docker run command reference](https://docs.docker.com/engine/reference/run/)
 * [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+* [Docker multi architecture build reference](https://docs.docker.com/desktop/multi-arch/)
+* [Docker buildx reference](https://docs.docker.com/buildx/working-with-buildx/)
