@@ -54,7 +54,7 @@ key_password =  "wso2carbon"
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
-#provider = "wso2"
+provider = "wso2"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
 show_as_token_endpoint_url = true
@@ -102,7 +102,7 @@ gateway_labels =["Default"]
 [apim.analytics]
 enable = false
 config_endpoint = "https://localhost:8080/auth/v1"
-auth_token = ""
+auth_token = "<on-prem-key>"
 
 #[apim.key_manager]
 #service_url = "https://localhost:${mgt.transport.https.port}/services/"
