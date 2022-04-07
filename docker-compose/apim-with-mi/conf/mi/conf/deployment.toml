@@ -72,6 +72,11 @@ algorithm = "AES"
 # parameter.username = "guest"
 # parameter.password = "guest"
 
+# [[transport.phase_order]]
+# Entire phase_order list can be found under 'Axis2 Phases' in <MI_HOME>/repository/resources/conf/deployment-full.toml.
+# If an Axis2 phase needs to added/removed, include all of the
+# Inflow, OutFlow & OutFaultFlow phases found in the deployment-full.toml and change them as needed.
+
 # [system.parameter]
 # 'key' = "value"
 
@@ -105,3 +110,6 @@ apim_host = "https://api-manager:9443"
 enable = true
 username = "admin"
 password = "admin"
+
+# [dashboard_config]
+# dashboard_url = "https://localhost:9743/dashboard/api/"
