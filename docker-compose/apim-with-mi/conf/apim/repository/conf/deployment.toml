@@ -102,7 +102,7 @@ gateway_labels =["Default"]
 [apim.analytics]
 enable = false
 config_endpoint = "https://localhost:8080/auth/v1"
-auth_token = "<on-prem-key>"
+auth_token = ""
 
 #[apim.key_manager]
 #service_url = "https://localhost:${mgt.transport.https.port}/services/"
