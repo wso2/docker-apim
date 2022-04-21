@@ -117,6 +117,13 @@ RUN \
         unzip \
         wget \
     && rm -rf /var/lib/apt/lists/*
+
+# update existing packages
+RUN \
+    DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
