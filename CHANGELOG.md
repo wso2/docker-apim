@@ -4,6 +4,11 @@ All notable changes to Docker and Docker Compose resources for WSO2 API Manageme
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.2.0.6] - 2022-04-21
+
+### Changed
+- Updated Ubuntu based images for APIM and APIM Analytics to update the OS packages at build time.
+
 ## [v3.2.0.4] - 2022-03-04
 
 ### Changed
