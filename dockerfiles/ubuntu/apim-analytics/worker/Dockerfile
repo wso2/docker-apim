@@ -76,7 +76,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.2.0.4"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.2.0.6"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -116,6 +116,13 @@ RUN \
         unzip \
         wget \
     && rm -rf /var/lib/apt/lists/*
+
+# update existing packages
+RUN \
+    DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
