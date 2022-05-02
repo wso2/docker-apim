@@ -8,6 +8,8 @@
    Otherwise, you can proceed with Docker images available at [DockerHub](https://hub.docker.com/u/wso2/), which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose setup using Docker images built locally, build Docker images using Docker resources
    available from [here](../../dockerfiles/) and remove the `docker.wso2.com/` prefix from the base image (i.e. `FROM` instruction) in the [Dockerfiles](dockerfiles). <br><br>
+* If you don't have a valid WSO2 Subscription, you can replace the images in [dockerfiles](../apim-with-analytics/dockerfiles/) with the [public image](https://hub.docker.com/repository/docker/wso2/wso2am) (`wso2/wso2am:4.1.0`). <br><br>
+* If you are trying this out on Apple Silicon (with M1), use the public image that supports arm64 architecture (`wso2/wso2am:4.1.0-multiarch`). <br><br>
 
 ## Quick Start Guide
 
