@@ -104,10 +104,10 @@ gateway_labels =["Default"]
 #[apim.cache.tags]
 #expiry_time = "2m"
 
-[apim.analytics]	
-enable = true	
-config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"	
-auth_token = "<on-prem-key>"	
+[apim.analytics]
+enable = true
+config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
+auth_token = "<on-prem-key>"
 
 [apim.key_manager]
 service_url = "https://is-as-km:9444/services/"
@@ -268,8 +268,8 @@ enable = true
 allow_refresh_tokens = true
 iat_validity_period = "1h"
 
-[config_data]	
-path = "/_system/apim/config"	
+[config_data]
+path = "/_system/apim/config"
 
-[transport.passthru_https.sender.parameters]	
+[transport.passthru_https.sender.parameters]
 HostnameVerifier="AllowAll"
