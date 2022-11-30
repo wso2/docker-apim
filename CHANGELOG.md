@@ -4,6 +4,11 @@ All notable changes to Docker and Docker Compose resources for WSO2 API Manageme
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.2.0.7] - 2022-11-30
+
+### Changed
+- Upgrade JDK version in APIM 3.2.0 Docker images to Temurin OpenJDK 11.0.17+8
+
 ## [v3.2.0.6] - 2022-04-21
 
 ### Changed
