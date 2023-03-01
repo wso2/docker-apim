@@ -101,6 +101,9 @@ RUN \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/executionplans ${USER_HOME}/wso2-tmp \
     && rm -f ${WSO2_SERVER}.zip
 
+# remove unnecesary packages
+RUN apk del netcat-openbsd
+
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
