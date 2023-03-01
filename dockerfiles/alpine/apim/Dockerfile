@@ -17,23 +17,23 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Alpine Docker image
-FROM alpine:3.15
+FROM alpine:3.17.2
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# install JDK Dependencies
-RUN apk add --no-cache tzdata musl-locales musl-locales-lang \
+# install dependencies
+RUN apk add --no-cache tzdata musl-locales musl-locales-lang bash libxml2-utils netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-11.0.14+9
+ENV JAVA_VERSION jdk-17.0.6+10
 
-# install OpenJDK 11
+# install Temurin OpenJDK 17
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='f94a01258a5496eda9e3de6807e6ecfe08a5ad4a2d42e4332a77f74174706f5c'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_x64_alpine-linux_hotspot_11.0.14_9.tar.gz'; \
+         ESUM='0df7c1a58debee2668931ba4a07cb642475b23a5c61473761b6f293eba7c024a'; \
+         BINARY_URL='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.6%2B10/OpenJDK17U-jdk_x64_alpine-linux_hotspot_17.0.6_10.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -54,14 +54,8 @@ RUN set -eux; \
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
-# Verify Java installation
-RUN echo Verifying install ... \
-    && echo javac --version && javac --version \
-    && echo java --version && java --version \
-    && echo Complete.
-
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"  \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.1.0.1"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.2.0.0"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -72,7 +66,7 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am
-ARG WSO2_SERVER_VERSION=4.1.0
+ARG WSO2_SERVER_VERSION=4.2.0-beta
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
@@ -94,12 +88,7 @@ RUN \
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
-# install required packages
-RUN \
-    apk add --no-cache \
-        bash \
-        libxml2-utils \
-        netcat-openbsd
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -111,6 +100,9 @@ RUN \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-configs ${USER_HOME}/wso2-tmp \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/executionplans ${USER_HOME}/wso2-tmp \
     && rm -f ${WSO2_SERVER}.zip
+
+# remove unnecesary packages
+RUN apk del netcat-openbsd
 
 # set the user and work directory
 USER ${USER_ID}

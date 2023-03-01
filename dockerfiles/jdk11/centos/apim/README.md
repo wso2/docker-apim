@@ -1,11 +1,12 @@
 # Dockerfile for WSO2 API Manager #
 
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 API Manager 4.1.0.
+This section defines the step-by-step instructions to build an [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for WSO2 API Manager 4.2.0.
 
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
+
 
 ## How to build an image and run
 
@@ -15,22 +16,23 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/centos/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
 #### 2. Build the Docker image.
 
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
+
 ```
-docker build -t wso2am:4.1.0-jdk8 .
+docker build -t wso2am:4.2.0-centos-jdk11 .
 ```
-    
+
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
-    
+
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8242:8243 wso2am:4.1.0-jdk8
+docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.2.0-centos-jdk11
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
@@ -50,7 +52,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 #### 1. Stop the API Manager container if it's already running.
 
-In WSO2 API Manager version 4.1.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 API Manager version 4.2.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -63,18 +65,18 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 #### 3. Run the image by mounting the file to container as follows:
 
 ```
-docker run \
+docker run -it \
 -p 9444:9444 \
 -p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.1.0-jdk8
+wso2am:4.2.0-centos-jdk11
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.1.0/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.2.0/repository/conf folder of the container.
 
 ## How to build a Docker image with multi architecture support
 
-The above wso2am:4.1.0-jdk8 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.1.0-jdk8 image to support any CPU architecture.
+The above wso2am:4.2.0-centos-jdk11 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.2.0-centos-jdk11 image to support any CPU architecture.
 
 #### 1. Install [Docker Buildx](https://docs.docker.com/buildx/working-with-buildx/)
 
@@ -96,7 +98,7 @@ docker buildx inspect --bootstrap
 #### 4. Build and push 
 
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.1.0-jdk8-multiarch --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.2.0-centos-jdk11-multiarch --push .
 ```
 
 > - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
@@ -107,7 +109,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2
 
 #### 5. Run
 ```
-docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.1.0-jdk8-multiarch
+docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.2.0-centos-jdk11-multiarch
 ```
 > Docker will pull the suitable image for the architecture and run
 
