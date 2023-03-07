@@ -85,6 +85,7 @@ id = "token_revocation"
 type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
 name = "org.wso2.is.notification.ApimOauthEventInterceptor"
 order = 1
+
 [event_listener.properties]
 notification_endpoint = "https://api-manager:9443/internal/data/v1/notify"
 username = "${admin.username}"

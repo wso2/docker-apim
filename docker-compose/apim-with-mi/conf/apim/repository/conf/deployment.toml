@@ -13,7 +13,7 @@ create_admin_account = true
 [user_store]
 type = "database_unique_id"
 
-[database.apim_db]
+[database.apim_db]	
 type = "mysql"
 url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;useSSL=false"
 username = "wso2carbon"
@@ -23,8 +23,8 @@ driver = "com.mysql.cj.jdbc.Driver"
 [database.shared_db]
 type = "mysql"
 url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;useSSL=false"
-username = "wso2carbon"
-password = "wso2carbon"
+username = "wso2carbon"	
+password = "wso2carbon"	
 driver = "com.mysql.cj.jdbc.Driver"
 
 [keystore.tls]
@@ -101,10 +101,10 @@ gateway_labels =["Default"]
 
 [apim.analytics]
 enable = false
-config_endpoint = "https://localhost:8080/auth/v1"
 auth_token = ""
 
-#[apim.key_manager]
+[apim.key_manager]
+enable_apikey_subscription_validation = true
 #service_url = "https://localhost:${mgt.transport.https.port}/services/"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
@@ -250,6 +250,7 @@ id = "token_revocation"
 type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
 name = "org.wso2.is.notification.ApimOauthEventInterceptor"
 order = 1
+
 [event_listener.properties]
 notification_endpoint = "https://localhost:${mgt.transport.https.port}/internal/data/v1/notify"
 username = "${admin.username}"

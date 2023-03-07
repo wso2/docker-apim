@@ -54,7 +54,7 @@ key_password =  "wso2carbon"
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
-#provider = "wso2"
+provider = "wso2"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
 show_as_token_endpoint_url = true
@@ -104,7 +104,8 @@ enable = true
 config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"	
 auth_token = "<on-prem-key>"
 
-#[apim.key_manager]
+[apim.key_manager]
+enable_apikey_subscription_validation = true
 #service_url = "https://localhost:${mgt.transport.https.port}/services/"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
