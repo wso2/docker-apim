@@ -36,9 +36,9 @@
    `docker-apim-<released-version-here>/docker-compose/apim-with-analytics` folder. 
      
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: `git checkout tags/v4.1.0.1`, switch to `docker-compose/apim-with-analytics` folder and continue with below steps.
+    i.e. for example: `git checkout tags/v4.2.0.0`, switch to `docker-compose/apim-with-analytics` folder and continue with below steps.
 
-4. WSO2 no longer provides an on-premise Analytics solution. In order to connect WSO2 API Manager to [Choreo Analytics](https://analytics.choreo.dev/), obtain an `on-prem-key` by following the steps in the [documentation](https://apim.docs.wso2.com/en/4.1.0/observe/api-manager-analytics/configure-analytics/register-for-analytics/).
+4. WSO2 no longer provides an on-premise Analytics solution. In order to connect WSO2 API Manager to [Choreo Analytics](https://analytics.choreo.dev/), obtain an `on-prem-key` by following the steps in the [documentation](https://apim.docs.wso2.com/en/4.2.0/observe/api-manager-analytics/configure-analytics/register-for-analytics/).
 
 5. Update the analytics configurations in [deployment.toml](./conf/apim/repository/conf/deployment.toml) with the `on-prem key` obtained.
 
