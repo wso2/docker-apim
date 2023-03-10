@@ -122,6 +122,9 @@ docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.2.0-centos-m
 ```
 > Docker will pull the suitable image for the architecture and run
 
+> **Note**
+> If you are using Rancher to run the Docker image, you will not be able to use port 9443, which is already allocated by Rancher. As a workaround, you can follow the instructions given in [How to update configurations](#how-to-update-configurations) to run the APIM image in a different port.
+
 ## Docker command usage references
 
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
