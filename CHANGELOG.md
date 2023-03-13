@@ -3,6 +3,11 @@ All notable changes to this project 2.6.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.6.0.20] - 2022-03-14
+
+### Changed
+- Update kubernetes membership schema to 1.0.11 in IS-KM-5.7.0
+
 ## [v2.6.0.19] - 2022-03-04
 
 ### Changed

@@ -20,7 +20,7 @@
 # set base Docker image to JDK Ubuntu 20.04 Docker image
 FROM ubuntu:20.04
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.16"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v2.6.0.20"
 
 #Install Open JDK
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
@@ -70,7 +70,7 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
 # build arguments for external artifacts
 ARG DNS_JAVA_VERSION=2.1.8
-ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.5
+ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.11
 ARG MYSQL_CONNECTOR_VERSION=5.1.49
 # build argument for MOTD
 ARG MOTD="\n\
