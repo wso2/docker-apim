@@ -20,6 +20,7 @@ git clone https://github.com/wso2/docker-apim.git
 #### 2. Build the Docker image.
 
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
+- Change <APIM_DIST_URL> in Dockerfile to the location of the product pack.
   Execute `docker build` command as shown below.
 ```
 docker build -t wso2am:4.2.0 .
