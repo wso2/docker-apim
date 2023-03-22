@@ -20,8 +20,10 @@ git clone https://github.com/wso2/docker-apim.git
 
 #### 2. Build the Docker image.
 
+- Download wso2am-4.2.0.zip from [here](https://wso2.com/api-management/install/)
+- Host the product pack using a webserver.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
-- Change <APIM_DIST_URL> in Dockerfile to the location of the product pack.
+- Change <APIM_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
 
 ```
@@ -125,6 +127,10 @@ docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.2.0-centos-m
 
 > **Note**
 > If you are using Rancher to run the Docker image, you will not be able to use port 9443, which is already allocated by Rancher. As a workaround, you can follow the instructions given in [How to update configurations](#how-to-update-configurations) to run the APIM image in a different port.
+
+## WSO2 Private Docker images
+
+If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://docker.wso2.com/)
 
 ## Docker command usage references
 
