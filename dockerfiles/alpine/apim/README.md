@@ -91,6 +91,9 @@ docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.2.0-alpine
 ```
 > This image is only supported for amd64.
 
+## WSO2 Private Docker images
+
+If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://docker.wso2.com/)
 
 ## Docker command usage references
 
