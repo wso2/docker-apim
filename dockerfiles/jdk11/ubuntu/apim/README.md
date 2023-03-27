@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 API Manager #
 
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 API Manager 4.1.0.
+This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 API Manager 4.2.0.
 
 ## Prerequisites
 
@@ -19,10 +19,13 @@ git clone https://github.com/wso2/docker-apim.git
 
 #### 2. Build the Docker image.
 
+- Download wso2am-4.2.0.zip from [here](https://wso2.com/api-management/install/)
+- Host the product pack using a webserver.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
+- Change <APIM_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
 ```
-docker build -t wso2am:4.1.0-jdk8 .
+docker build -t wso2am:4.2.0-jdk11 .
 ```
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
@@ -30,7 +33,7 @@ docker build -t wso2am:4.1.0-jdk8 .
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8242:8243 wso2am:4.1.0-jdk8
+docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.2.0-jdk11
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
@@ -50,7 +53,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 #### 1. Stop the API Manager container if it's already running.
 
-In WSO2 API Manager version 4.1.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 API Manager version 4.2.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -63,18 +66,18 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 #### 3. Run the image by mounting the file to container as follows:
 
 ```
-docker run \
+docker run -it \
 -p 9444:9444 \
 -p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.1.0-jdk8
+wso2am:4.2.0-jdk11
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.1.0/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.2.0/repository/conf folder of the container.
 
 ## How to build a Docker image with multi architecture support
 
-The above wso2am:4.1.0-jdk8 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.1.0-jdk8 image to support any CPU architecture.
+The above wso2am:4.2.0-jdk11 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.2.0-jdk11 image to support any CPU architecture.
 
 #### 1. Install [Docker Buildx](https://docs.docker.com/buildx/working-with-buildx/)
 
@@ -96,7 +99,7 @@ docker buildx inspect --bootstrap
 #### 4. Build and push 
 
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.1.0-jdk8-multiarch --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.2.0-jdk11-multiarch --push .
 ```
 
 > - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
@@ -107,9 +110,16 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2
 
 #### 5. Run
 ```
-docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.1.0-jdk8-multiarch
+docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.2.0-jdk11-multiarch
 ```
 > Docker will pull the suitable image for the architecture and run
+
+> **Note**
+> If you are using Rancher to run the Docker image, you will not be able to use port 9443, which is already allocated by Rancher. As a workaround, you can follow the instructions given in [How to update configurations](#how-to-update-configurations) to run the APIM image in a different port.
+
+## WSO2 Private Docker images
+
+If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://docker.wso2.com/)
 
 ## Docker command usage references
 
