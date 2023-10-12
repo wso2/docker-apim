@@ -4,7 +4,7 @@ This section defines the step-by-step instructions to build an [CentOS](https://
 
 ## Prerequisites
 
-* [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+* [Docker](https://www.docker.com/get-docker) v20.10.x or above
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
 
 
