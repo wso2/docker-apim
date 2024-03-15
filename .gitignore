@@ -30,3 +30,6 @@ rat.txt
 
 # exception to the rule
 !**/files/.gitkeep
+
+# OS specific files
+.DS_Store
