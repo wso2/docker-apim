@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to CentOS Docker image
-FROM centos:7
+FROM rockylinux:9.3
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
