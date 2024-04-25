@@ -2,7 +2,7 @@
 
 This repository contains following Docker resources:
 
-- Alpine, CentOS and Ubuntu based Docker resources for WSO2 API Manager, Identity Server as Key Manager, and 
+- Alpine, Rocky Linux and Ubuntu based Docker resources for WSO2 API Manager, Identity Server as Key Manager, and 
 Micro Integrator profiles.
 
 - Docker Compose resources for the most common WSO2 API Management deployment patterns
