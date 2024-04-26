@@ -33,13 +33,13 @@
    `docker-apim-<released-version-here>/docker-compose/apim-with-mi` folder. 
      
    > If you intend to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-    i.e. for example: `git checkout tags/v4.2.0.1`, switch to `docker-compose/apim-with-mi` folder and continue with below steps.
+    i.e. for example: `git checkout tags/v4.3.0.1`, switch to `docker-compose/apim-with-mi` folder and continue with below steps.
 
 4. Add deployable `CAR` files
     
    You may add the relevant CAR files of your integration services to  `docker-compose/apim-with-mi/dockerfiles/mi/capps/`.
 
-   Those will be added to the Service Catalog in APIM through Micro Integrator. For more information, refer the [documentation](https://apim.docs.wso2.com/en/4.2.0/tutorials/integration-tutorials/service-catalog-tutorial/#exposing-an-integration-service-as-a-managed-api).
+   Those will be added to the Service Catalog in APIM through Micro Integrator. For more information, refer the [documentation](https://apim.docs.wso2.com/en/4.3.0/tutorials/integration-tutorials/service-catalog-tutorial/#exposing-an-integration-service-as-a-managed-api).
 
    The backend service of the sample `CAR` provided can be found [here](https://github.com/wso2-docs/WSO2_EI/blob/master/Back-End-Service/Hospital-Service-JDK11-2.0.0.jar).
 

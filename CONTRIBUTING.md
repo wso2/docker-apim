@@ -23,13 +23,13 @@ The issues page on GitHub is for tracking bugs and feature requests. When posing
 
 If you like to contribute with a bug fix or a new feature, start by posting an issue and discussing the best way to implement it.
 
-Unlike most projects, development for this repository is carried out on the `4.2.x` branch. This is because the `master` branch contains the latest stable release of the project.
-The code in `4.2.x` is merged to the `master` branch after a final review and a round of testing.
+Unlike most projects, development for this repository is carried out on the `4.3.x` branch. This is because the `master` branch contains the latest stable release of the project.
+The code in `4.3.x` is merged to the `master` branch after a final review and a round of testing.
 
 Please follow these guidelines when contributing to the code:
 
 1. Fork the current repository.
-2. Create a topic branch from the `4.2.x` branch.
+2. Create a topic branch from the `4.3.x` branch.
 3. Make commits in logical units.
 4. Before you send out the pull request, sync your forked repository with a remote repository. This makes your pull request simple and clear.
 
@@ -37,7 +37,7 @@ Please follow these guidelines when contributing to the code:
 git clone https://github.com/<user>/docker-apim.git
 git remote add upstream https://github.com/wso2/docker-apim.git
 git fetch upstream
-git checkout -b <topic-branch> upstream/4.2.x
+git checkout -b <topic-branch> upstream/4.3.x
 
 # add some work
 

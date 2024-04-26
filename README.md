@@ -2,7 +2,7 @@
 
 This repository contains following Docker resources:
 
-- Alpine, CentOS and Ubuntu based Docker resources for WSO2 API Manager, Identity Server as Key Manager, and 
+- Alpine, Rocky Linux and Ubuntu based Docker resources for WSO2 API Manager, Identity Server as Key Manager, and 
 Micro Integrator profiles.
 
 - Docker Compose resources for the most common WSO2 API Management deployment patterns
@@ -19,4 +19,4 @@ Docker Compose files have been created according to the most common API Manageme
 to quickly evaluate product features along side their co-operate API Management requirements. The Compose files make use of per profile
 Docker images of WSO2 API Manager, WSO2 Identity Server as Key Manager, and Micro Integrator as well as MySQL.
 
-**Change log** from previous v4.1.0.2 release: [View Here](https://github.com/wso2/docker-apim/blob/4.1.x/CHANGELOG.md)
+**Change log** from previous v4.2.0.1 release: [View Here](https://github.com/wso2/docker-apim/blob/4.2.x/CHANGELOG.md)
