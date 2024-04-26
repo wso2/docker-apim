@@ -98,7 +98,7 @@ docker buildx inspect --bootstrap
 #### 4. Build and push 
 
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.3.0-jdk21-multiarch --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.3.0-jdk21 --push .
 ```
 
 > - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
@@ -109,7 +109,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2
 
 #### 5. Run
 ```
-docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.3.0-jdk21-multiarch
+docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.3.0-jdk21
 ```
 > Docker will pull the suitable image for the architecture and run
 
