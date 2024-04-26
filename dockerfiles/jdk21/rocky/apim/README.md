@@ -78,7 +78,7 @@ wso2am:4.3.0-rocky-jdk21
 
 ## How to build a Docker image with multi architecture support
 
-The above wso2am:4.3.0-rocky-jdk21 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.3.0-docky-jdk21 image to support any CPU architecture.
+The above wso2am:4.3.0-rocky-jdk21 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.3.0-rocky-jdk21 image to support any CPU architecture.
 
 #### 1. Install [Docker Buildx](https://docs.docker.com/buildx/working-with-buildx/)
 
@@ -100,7 +100,7 @@ docker buildx inspect --bootstrap
 #### 4. Build and push 
 
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.3.0-docky-jdk21-multiarch --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.3.0-rocky-jdk21-multiarch --push .
 ```
 
 > - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
