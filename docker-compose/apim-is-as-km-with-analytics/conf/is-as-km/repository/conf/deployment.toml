@@ -10,28 +10,24 @@ password = "admin"
 create_admin_account = true
 
 [user_store]
-type = "read_write_ldap_unique_id"
-connection_url = "ldap://localhost:${Ports.EmbeddedLDAP.LDAPServerPort}"
-connection_name = "uid=admin,ou=system"
-connection_password = "admin"
-base_dn = "dc=wso2,dc=org"      #refers the base dn on which the user and group search bases will be generated
+type = "database_unique_id"
 
 [database.identity_db]
-type = "h2"
-url = "jdbc:h2:./repository/database/WSO2IDENTITY_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
-username = "wso2carbon"
-password = "wso2carbon"
-
-[database.shared_db]
 type = "mysql"
-url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;useSSL=false"
+url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
 username = "wso2carbon"
 password = "wso2carbon"
 driver = "com.mysql.cj.jdbc.Driver"
 
-[keystore.primary]
-file_name = "wso2carbon.jks"
-password = "wso2carbon"
+[database.shared_db]
+type = "mysql"
+url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "wso2carbon"	
+password = "wso2carbon"	
+driver = "com.mysql.cj.jdbc.Driver"
+
+[keystore]
+userstore_password_encryption = "InternalKeyStore"
 
 [truststore]
 file_name="client-truststore.jks"
@@ -65,7 +61,7 @@ app_password= "dashboard"
 #Google reCAPTCHA settings.
 
 #[recaptcha]
-#enabled = "true"
+#enabled = true
 #api_url = "https://www.google.com/recaptcha/api.js"
 #verify_url = "https://www.google.com/recaptcha/api/siteverify"
 #site_key = ""
@@ -79,7 +75,6 @@ app_password= "dashboard"
 #hostname= "smtp.gmail.com"
 #port= 587
 
-# custom identity server as key manager configurations
 [[event_listener]]
 id = "token_revocation"
 type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
@@ -123,23 +118,32 @@ scopes = "internal_application_mgt_view"
 [[resource.access_control]]
 context = "(.*)/keymanager-operations/dcr/register(.*)"
 secure = true
-http_method = "PUT"
-permissions = "/permission/admin/manage/identity/applicationmgt/update"
-scopes = "internal_application_mgt_update"
+http_method = "DELETE"
+permissions = "/permission/admin/manage/identity/applicationmgt/delete"
+scopes = "internal_application_mgt_delete"
 
 [[resource.access_control]]
-context = "(.)/keymanager-operations/dcr/register(.)"
+context = "(.*)/keymanager-operations/dcr/register(.*)"
 secure = true
-http_method = "POST"
+http_method = "PUT"
 permissions = "/permission/admin/manage/identity/applicationmgt/update"
 scopes = "internal_application_mgt_update"
 
 [[resource.access_control]]
 context = "(.*)/keymanager-operations/dcr/register(.*)"
 secure = true
-http_method = "DELETE"
-permissions = "/permission/admin/manage/identity/applicationmgt/delete"
-scopes = "internal_application_mgt_delete"
+http_method = "POST"
+permissions = "/permission/admin/manage/identity/applicationmgt/update"
+scopes = "internal_application_mgt_update"
 
 [tenant_context.rewrite]
 custom_webapps = ["/keymanager-operations/"]
+
+[system.parameter]
+"org.wso2.CipherTransformation" = "RSA/ECB/OAEPwithSHA1andMGF1Padding"
+
+[encryption]
+internal_crypto_provider = "org.wso2.carbon.crypto.provider.KeyStoreBasedInternalCryptoProvider"
+
+[authorization_manager.properties]
+GroupAndRoleSeparationEnabled = false
