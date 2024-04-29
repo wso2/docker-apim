@@ -11,25 +11,20 @@ password = "admin"
 create_admin_account = true
 
 [user_store]
-# type = "database_unique_id"
-type = "read_write_ldap_unique_id"
-connection_url = "ldap://is-as-km:10390"
-connection_name = "uid=admin,ou=system"
-connection_password = "admin"
-base_dn = "dc=wso2,dc=org"
+type = "database_unique_id"
 
-[database.apim_db]
+[database.apim_db]	
 type = "mysql"
-url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;useSSL=false"
+url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
 username = "wso2carbon"
 password = "wso2carbon"
 driver = "com.mysql.cj.jdbc.Driver"
 
 [database.shared_db]
 type = "mysql"
-url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;useSSL=false"
-username = "wso2carbon"
-password = "wso2carbon"
+url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "wso2carbon"	
+password = "wso2carbon"	
 driver = "com.mysql.cj.jdbc.Driver"
 
 [keystore.tls]
@@ -59,8 +54,8 @@ key_password =  "wso2carbon"
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
-provider = "wso2"
 gateway_type = "Regular"
+provider = "wso2"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
 show_as_token_endpoint_url = true
@@ -106,7 +101,7 @@ gateway_labels =["Default"]
 #expiry_time = "2m"
 
 [apim.analytics]	
-enable = true
+enable = true	
 config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"	
 auth_token = "<on-prem-key>"
 
@@ -116,9 +111,9 @@ token = ""
 endpoint = ""
 
 [apim.key_manager]
-enable_apikey_subscription_validation = true
 service_url = "https://is-as-km:9444/services/"
 type = "WSO2-IS"
+#service_url = "https://localhost:${mgt.transport.https.port}/services/"
 #username = "$ref{super_admin.username}"
 #password = "$ref{super_admin.password}"
 #pool.init_idle_capacity = 50
@@ -167,10 +162,13 @@ type = "WSO2-IS"
 #enable_cross_tenant_subscriptions = true
 #default_reserved_username = "apim_reserved_user"
 
+#[apim.publisher]
+#enable_portal_configuration_only_mode = false
+
 [apim.cors]
 allow_origins = "*"
 allow_methods = ["GET","PUT","POST","DELETE","PATCH","OPTIONS"]
-allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey", "Internal-Key"]
+allow_headers = ["authorization","Access-Control-Allow-Origin","Content-Type","SOAPAction","apikey","Internal-Key"]
 allow_credentials = false
 
 #[apim.throttling]
@@ -269,18 +267,12 @@ order = 1
 notification_endpoint = "https://localhost:${mgt.transport.https.port}/internal/data/v1/notify"
 username = "${admin.username}"
 password = "${admin.password}"
-'header.X-WSO2-KEY-MANAGER' = "WSO2-IS"
+'header.X-WSO2-KEY-MANAGER' = "default"
 
 [oauth.grant_type.token_exchange]
-enable = true
+enable = false
 allow_refresh_tokens = true
 iat_validity_period = "1h"
-
-[config_data]	
-path = "/_system/apim/config"	
-
-[transport.passthru_https.sender.parameters]	
-HostnameVerifier="AllowAll"
 
 #[integration.transaction_counter]
 #enable = true
