@@ -35,6 +35,7 @@ docker build -t wso2am:4.2.0-jdk11 .
 ```
 docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.2.0-jdk11
 ```
+> If you encounter issue related to downloading the product pack from hosted webserver, use the IP address of the network interface instead of `localhost` or `127.0.0.1` in the `WSO2_SERVER_DIST_URL`.
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
