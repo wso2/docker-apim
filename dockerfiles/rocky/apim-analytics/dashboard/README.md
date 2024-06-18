@@ -1,6 +1,6 @@
-# Dockerfile for Worker Profile of WSO2 API Manager Analytics #
+# Dockerfile for Dashboard Profile of WSO2 API Manager Analytics #
 
-This section defines the step-by-step instructions to build [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for Worker profile of
+This section defines the step-by-step instructions to build [Rocky Linux](https://hub.docker.com/_/rockylinux) based Docker image for for Dashboard profile of
 WSO2 API Manager Analytics 3.2.0.
 
 ## Prerequisites
@@ -16,23 +16,30 @@ WSO2 API Manager Analytics 3.2.0.
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfile/centos/apim-analytics/worker` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfile/rocky/apim-analytics/dasboard` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics-worker:3.2.0-centos .`
+    + `docker build -t wso2am-analytics-dashboard:3.2.0-rocky .`
 > If you encounter issue related to downloading the product pack from hosted webserver, use the IP address of the network interface instead of `localhost` or `127.0.0.1` in the `WSO2_SERVER_DIST_URL`.
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9091:9091 wso2am-analytics-worker:3.2.0-centos`
+- `docker run -p 9643:9643 wso2am-analytics-dashboard:3.2.0-rocky`
 
-> Here, only port 9091 has been mapped to a Docker host port.
+> Here, only port 9643 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
+
+##### 4. Accessing the Dashboard portal.
+
+- For dashboard,
+    + `https:<DOCKER_HOST>:9643/analytics-dashboard`
+    
+> In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
 ## How to update configurations
 
@@ -42,8 +49,8 @@ As an example, steps required to change the port offset using `deployment.yaml` 
 ##### 1. Stop the API Manager Analytics container if it's already running.
 
 In WSO2 API Manager Analytics version 3.2.0 product distribution, `deployment.yaml` configuration file <br>
-can be found at `<DISTRIBUTION_HOME>/conf/worker`. Copy the file to some suitable location of the host machine, <br>
-referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the `offset` value under `ports` to 2.
+can be found at `<DISTRIBUTION_HOME>/conf/dashboard`. Copy the file to some suitable location of the host machine, <br>
+referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the `offset` value under `ports` to 1.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`.
 
@@ -55,12 +62,12 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 
 ```
 docker run 
--p 7713:7713
+-p 9641:9641
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
-wso2am-analytics-worker:3.2.0-centos
+wso2am-analytics-dashboard:3.2.0-rocky
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-3.2.0/conf/worker folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-3.2.0/conf/dashboard folder of the container.
 
 ## Docker command usage references
 
