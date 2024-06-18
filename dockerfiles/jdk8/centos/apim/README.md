@@ -23,6 +23,7 @@ git clone https://github.com/wso2/docker-apim.git
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2am:4.0.0-centos-jdk8 .`
+> If you encounter issue related to downloading the product pack from hosted webserver, use the IP address of the network interface instead of `localhost` or `127.0.0.1` in the `WSO2_SERVER_DIST_URL`.
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
