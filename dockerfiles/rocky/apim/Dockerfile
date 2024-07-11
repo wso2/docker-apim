@@ -22,7 +22,7 @@ FROM rockylinux:9.3
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install JDK Dependencies
-RUN yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar \
+RUN yum install -y tzdata openssl ca-certificates fontconfig gzip tar \
     && yum clean all
 
 ENV JAVA_VERSION jdk-11.0.17+8
