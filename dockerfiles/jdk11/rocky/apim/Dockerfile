@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2023 WSO2, LLC. (http://wso2.com)
+# Copyright 2024 WSO2, LLC. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ ARG WSO2_SERVER_VERSION=4.2.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=http://10.100.8.45:8000/wso2am-4.2.0.zip
+ARG WSO2_SERVER_DIST_URL=<APIM_DIST_URL>
 # build argument for MOTD
 ARG MOTD='printf "\n\
 Welcome to WSO2 Docker resources.\n\
