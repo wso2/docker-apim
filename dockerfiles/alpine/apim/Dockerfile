@@ -63,7 +63,7 @@ RUN set -eux; \
     case "${ARCH}" in \
        amd64|x86_64) \
          ESUM='3d62362a78c9412766471b05253507a4cfc212daea5cdf122860173ce902400e'; \
-         BINARY_URL='https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_x64_linux_hotspot_8u322b06.tar.gz'; \
+         BINARY_URL='https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u372-b07/OpenJDK8U-jdk_x64_linux_hotspot_8u372b07.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
