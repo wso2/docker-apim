@@ -28,7 +28,7 @@ RUN apt-get update \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_VERSION jdk8u322-b06
+ENV JAVA_VERSION jdk8u372-b07
 
 RUN set -eux; \
     ARCH="$(dpkg --print-architecture)"; \

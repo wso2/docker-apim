@@ -55,7 +55,7 @@ RUN apk add --no-cache tzdata --virtual .build-deps curl binutils zstd \
     && apk del --purge .build-deps glibc-i18n \
     && rm -rf /tmp/*.apk /tmp/gcc /tmp/gcc-libs.tar* /tmp/libz /tmp/libz.tar.xz /var/cache/apk/*
 
-ENV JAVA_VERSION=jdk8u322-b06
+ENV JAVA_VERSION=jdk8u372-b07
 
 RUN set -eux; \
     apk add --no-cache --virtual .fetch-deps curl; \

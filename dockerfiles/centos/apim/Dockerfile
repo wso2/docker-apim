@@ -25,7 +25,7 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar \
     && yum clean all
 
-ENV JAVA_VERSION jdk8u322-b06
+ENV JAVA_VERSION jdk8u372-b07
 
 # install OpenJDK 8
 RUN set -eux; \
