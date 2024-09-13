@@ -105,7 +105,7 @@ RUN \
     && rm -f ${WSO2_SERVER}.zip
 
 # remove unnecesary packages
-RUN yum remove -y nc unzip wget
+RUN yum remove -y unzip wget
 
 # set the user and work directory
 USER ${USER_ID}

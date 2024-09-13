@@ -13,18 +13,18 @@ create_admin_account = true
 [user_store]
 type = "database_unique_id"
 
-[database.apim_db]
+[database.apim_db]	
 type = "mysql"
-url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;useSSL=false"
+url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
 username = "wso2carbon"
 password = "wso2carbon"
 driver = "com.mysql.cj.jdbc.Driver"
 
 [database.shared_db]
 type = "mysql"
-url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;useSSL=false"
-username = "wso2carbon"
-password = "wso2carbon"
+url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "wso2carbon"	
+password = "wso2carbon"	
 driver = "com.mysql.cj.jdbc.Driver"
 
 [keystore.tls]
@@ -54,8 +54,8 @@ key_password =  "wso2carbon"
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
-provider = "wso2"
 gateway_type = "Regular"
+provider = "wso2"
 display_in_api_console = true
 description = "This is a hybrid gateway that handles both production and sandbox token traffic."
 show_as_token_endpoint_url = true
