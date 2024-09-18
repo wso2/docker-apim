@@ -17,8 +17,17 @@
 # set base Docker image to CentOS Docker image
 FROM rockylinux:8
 
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+# Update the system to the specific 8.10 version
+RUN dnf -y update && \
+    dnf -y distro-sync && \
+    dnf clean all
 
+# Install necessary locale packages
+RUN yum install -y glibc-langpack-en && \
+    yum install -y langpacks-en glibc-locale-source && \
+    localedef -c -f UTF-8 -i en_US en_US.UTF-8
+
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 # install JDK Dependencies
 RUN yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar \
     && yum clean all
@@ -75,7 +84,7 @@ ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_APIM_RELEASE_VERSION}/${WSO2_SERVER}.zip
 # build arguments for external artifacts
-ARG DNS_JAVA_VERSION=2.1.8
+ARG DNS_JAVA_VERSION=3.6.1
 ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.7
 ARG MYSQL_CONNECTOR_VERSION=8.0.17
 # build argument for MOTD
@@ -92,6 +101,14 @@ RUN \
     && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
     && echo ${MOTD} > /etc/profile.d/motd.sh
 
+# create Java prefs dir
+# this is to avoid warning logs printed by FileSystemPreferences class
+RUN \
+    mkdir -p ${USER_HOME}/.java/.systemPrefs \
+    && mkdir -p ${USER_HOME}/.java/.userPrefs \
+    && chmod -R 755 ${USER_HOME}/.java \
+    && chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
+
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
@@ -102,12 +119,14 @@ RUN \
         unzip \
         wget \
     && rm -rf /var/cache/yum/*
+
 # add the WSO2 product distribution to user's home directory
-COPY --chown=wso2carbon:wso2 wso2is-km-5.10.0.zip ${USER_HOME}/
 RUN \
-    unzip -d ${USER_HOME} ${USER_HOME}/wso2is-km-5.10.0.zip \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && rm -f ${WSO2_SERVER}.zip
+
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/${DNS_JAVA_VERSION}/dnsjava-${DNS_JAVA_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib
 ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/repositories/releases/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/${K8S_MEMBERSHIP_SCHEME_VERSION}/kubernetes-membership-scheme-${K8S_MEMBERSHIP_SCHEME_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
@@ -117,6 +136,11 @@ ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/mysql/mysql-connector
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
+
+# set environment variables
+ENV JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs" \
+    WORKING_DIRECTORY=${USER_HOME} \
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # set environment variables
 ENV WORKING_DIRECTORY=${USER_HOME} \

@@ -1,5 +1,6 @@
 # Dockerfile for WSO2 Identity Server deployed as the API Key Manager #
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 IS deployed as API Key Manager.
+
+This section defines the step-by-step instructions to build an [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for WSO2 IS deployed as API Key Manager.
 
 ## Prerequisites
 
@@ -14,25 +15,25 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/ubuntu/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/centos/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
 - Navigate to `<IS_KM_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2is-km:5.10.0 .`
-    
+  + `docker build -t wso2is-km:5.10.0-rocky .`
+
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
-    
+
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9443:9443 wso2is-km:5.10.0`
+- `docker run -it -p 9443:9443 wso2is-km:5.10.0-rocky`
 
 ##### 4. Accessing management console.
 
 - To access the management console, use the docker host IP and port 9443.
-    + `https:<DOCKER_HOST>:9443/carbon`
-    
+  + `https:<DOCKER_HOST>:9443/carbon`
+
 > In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
 ## How to update configurations
@@ -42,7 +43,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 ##### 1. Stop the Identity Server as Key Manager container if it's already running.
 
-In WSO2 Identity Server as Key Manager version 5.10.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 Identity Server as Key Manager 5.10.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -58,7 +59,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2is-km:5.10.0
+wso2is-km:5.10.0-rocky
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2is-km-5.10.0/repository/conf folder of the container.
