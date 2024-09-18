@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 Identity Server deployed as the API Key Manager #
 
-This section defines the step-by-step instructions to build an [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for WSO2 IS deployed as API Key Manager.
+This section defines the step-by-step instructions to build an [Rocky Linux](https://hub.docker.com/_/rockylinux/) Linux based Docker image for WSO2 IS deployed as API Key Manager.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ This section defines the step-by-step instructions to build an [CentOS](https://
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/centos/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/rocky/is-as-km` directory will be referred to as `IS_KM_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
