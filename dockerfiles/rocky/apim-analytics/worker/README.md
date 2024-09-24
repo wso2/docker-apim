@@ -1,6 +1,6 @@
 # Dockerfile for Worker Profile of WSO2 API Manager Analytics #
 
-This section defines the step-by-step instructions to build [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for Worker profile of
+This section defines the step-by-step instructions to build [Rocky Linux](https://hub.docker.com/r/rockylinux/rockylinux)  Linux based Docker image for Worker profile of
 WSO2 API Manager Analytics 3.0.0.
 
 ## Prerequisites
@@ -16,19 +16,19 @@ WSO2 API Manager Analytics 3.0.0.
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfile/centos/apim-analytics/worker` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfile/rocky/apim-analytics/worker` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics-worker:3.0.0-centos .`
+    + `docker build -t wso2am-analytics-worker:3.0.0-rocky .`
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9091:9091 wso2am-analytics-worker:3.0.0-centos`
+- `docker run -p 9091:9091 wso2am-analytics-worker:3.0.0-rocky`
 > Here, only port 9091 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
@@ -55,7 +55,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 docker run 
 -p 7713:7713
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
-wso2am-analytics-worker:3.0.0-centos
+wso2am-analytics-worker:3.0.0-rocky
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-3.0.0/conf/worker folder of the container.

@@ -1,6 +1,6 @@
 # Dockerfile for Dashboard Profile of WSO2 API Manager Analytics #
 
-This section defines the step-by-step instructions to build [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for Dashboard profile of
+This section defines the step-by-step instructions to build [Rocky Linux](https://hub.docker.com/r/rockylinux/rockylinux)  Linux based Docker image for Dashboard profile of
 WSO2 API Manager Analytics 3.0.0.
 
 ## Prerequisites
@@ -16,7 +16,7 @@ WSO2 API Manager Analytics 3.0.0.
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfile/centos/apim-analytics/dasboard` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfile/rocky/apim-analytics/dasboard` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
