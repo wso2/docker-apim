@@ -22,13 +22,13 @@ git clone https://github.com/wso2/docker-apim.git
 
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2am-analytics-dashboard:3.0.0-centos .`
+    + `docker build -t wso2am-analytics-dashboard:3.0.0-rocky .`
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
     
 ##### 3. Running Docker images specific to each profile.
 
-- `docker run -p 9643:9643 wso2am-analytics-dashboard:3.0.0-centos`
+- `docker run -p 9643:9643 wso2am-analytics-dashboard:3.0.0-rocky`
 > Here, only port 9643 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
@@ -62,7 +62,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 docker run 
 -p 7713:7713
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
-wso2am-analytics-worker:3.0.0-centos
+wso2am-analytics-worker:3.0.0-rocky
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-analytics-3.0.0/conf/worker folder of the container.
