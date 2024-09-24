@@ -20,7 +20,7 @@
 FROM rockylinux/rockylinux:9.4
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.6"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.5"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -34,7 +34,7 @@ ARG WSO2_SERVER_NAME=wso2am
 ARG WSO2_SERVER_VERSION=3.0.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=http://10.100.7.141:9000/${WSO2_SERVER}.zip
+ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=8.0.17
 # build argument for MOTD
@@ -101,12 +101,6 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 RUN chown wso2carbon:wso2 -R ${JAVA_HOME} 
-
-# Verify Java installation
-RUN echo Verifying install ... \
-    && echo javac -version && javac -version \
-    && echo java -version && java -version \
-    && echo Complete.
 
 # add the WSO2 product distribution to user's home directory
 RUN \

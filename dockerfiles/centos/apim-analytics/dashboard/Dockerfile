@@ -101,12 +101,6 @@ ENV JAVA_HOME=/opt/java/openjdk \
 
 RUN chown wso2carbon:wso2 -R ${JAVA_HOME} 
 
-# Verify Java installation
-RUN echo Verifying install ... \
-    && echo javac -version && javac -version \
-    && echo java -version && java -version \
-    && echo Complete.
-
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
