@@ -19,7 +19,7 @@
 # set base Docker image to latest CentOS Docker image
 FROM centos:7
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.5"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.6"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -100,12 +100,6 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 RUN chown wso2carbon:wso2 -R ${JAVA_HOME} 
-
-# Verify Java installation
-RUN echo Verifying install ... \
-    && echo javac -version && javac -version \
-    && echo java -version && java -version \
-    && echo Complete.
 
 # add the WSO2 product distribution to user's home directory
 RUN \

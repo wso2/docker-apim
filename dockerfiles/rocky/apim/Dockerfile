@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2018 WSO2, Inc. (http://wso2.com)
+# Copyright 2024 WSO2, LLC. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to latest CentOS Docker image
-FROM centos:7
+# set base Docker image to latest Rocky Linux image
+FROM rockylinux/rockylinux:9.4
+
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.6"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.0.0.5"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -60,7 +61,7 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 RUN \
     yum -y update \
     && yum install -y \
-        tzdata openssl curl ca-certificates fontconfig gzip tar \
+        tzdata openssl ca-certificates fontconfig gzip tar \
         nc \
         unzip \
         wget \
