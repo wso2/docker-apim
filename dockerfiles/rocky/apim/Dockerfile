@@ -19,6 +19,11 @@
 # set base Docker image to Rocky Linux
 FROM rockylinux:9.3
 
+# Install necessary locale packages
+RUN yum install -y glibc-langpack-en && \
+    yum install -y langpacks-en glibc-locale-source && \
+    localedef -c -f UTF-8 -i en_US en_US.UTF-8
+
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install JDK Dependencies
@@ -65,7 +70,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.1.0.8"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v3.1.0.9"
 # set Docker image build arguments
 # build arguments for user/group configurations
 ARG USER=wso2carbon
