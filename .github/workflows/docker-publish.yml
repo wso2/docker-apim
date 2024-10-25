@@ -1,0 +1,64 @@
+name: Docker image Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: 'Operating System'
+        required: true
+        default: 'ubuntu'
+        type: choice
+        options:
+          - ubuntu
+          - alpine
+          - rocky
+      tag:
+        description: 'Docker image tag'
+        required: true
+        default: 'latest'
+      product_version:
+        description: 'Product version'
+        required: true
+      product_zip_file:
+        description: 'Product zip file'
+        required: true
+      product_distribution_name:
+        description: 'Product distribution name'
+        required: true
+      platforms:
+        description: 'Platforms for multi-arch build'
+        required: true
+        default: 'linux/amd64,linux/arm64'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        repository: wso2/docker-apim
+        ref: master
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: dockerfiles/${{ github.event.inputs.os }}/apim/Dockerfile
+        platforms: ${{ github.event.inputs.platforms }}
+        push: true
+        tags: ${{ github.event.inputs.tag }}
+        build-args: |
+          WSO2_SERVER_DIST_URL=${{ github.event.inputs.product_zip_file }}
+          WSO2_SERVER_VERSION=${{ github.event.inputs.product_version }}
+          WSO2_SERVER=${{ github.event.inputs.product_distribution_name }}
