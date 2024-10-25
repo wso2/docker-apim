@@ -54,7 +54,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: dockerfiles/${{ github.event.inputs.os }}
+        context: dockerfiles/${{ github.event.inputs.os }}/apim
         file: dockerfiles/${{ github.event.inputs.os }}/apim/Dockerfile
         platforms: ${{ github.event.inputs.platforms }}
         push: true
