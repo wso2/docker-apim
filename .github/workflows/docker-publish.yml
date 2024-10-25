@@ -28,6 +28,7 @@ on:
       platforms:
         description: 'Platforms for multi-arch build'
         required: true
+        type: text
         default: 'linux/amd64,linux/arm64'
 
 jobs:
