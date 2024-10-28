@@ -19,6 +19,11 @@
 # set base Docker image to Rocky Linux
 FROM rockylinux:9.3
 
+# Install necessary locale packages
+RUN yum install -y glibc-langpack-en && \
+    yum install -y langpacks-en glibc-locale-source && \
+    localedef -c -f UTF-8 -i en_US en_US.UTF-8
+
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install dependencies
@@ -33,11 +38,11 @@ ENV JAVA_HOME=/opt/java/openjdk \
 RUN set -eux; \
     ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
     case "${ARCH}" in \
-       amd64) \
+       amd64|i386:x86-64) \
          ESUM='3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c'; \
          BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.5%2B11/OpenJDK21U-jdk_x64_linux_hotspot_21.0.5_11.tar.gz'; \
          ;; \
-       arm64) \
+       arm64|aarch64) \
          ESUM='6482639ed9fd22aa2e704cc366848b1b3e1586d2bf1213869c43e80bca58fe5c'; \
          BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.5%2B11/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.5_11.tar.gz'; \
          ;; \
