@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2023 WSO2, LLC. (http://wso2.com)
+# Copyright 2018 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,56 +16,45 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to Ubuntu
-FROM ubuntu:24.04
+# set base Docker image to Alpine
+FROM alpine:3.19.1
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install dependencies
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales python-is-python3 libxml2-utils netcat unzip wget \
-    && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-    && locale-gen en_US.UTF-8 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache tzdata musl-locales musl-locales-lang bash libxml2-utils netcat-openbsd \
+    && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-21.0.3+9
+ENV JAVA_VERSION jdk-17.0.11+9
 
-# install Temurin OpenJDK 11
+# install Temurin OpenJDK 17
 RUN set -eux; \
-    ARCH="$(dpkg --print-architecture)"; \
+    ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
-       aarch64|arm64) \
-         ESUM='7d3ab0e8eba95bd682cfda8041c6cb6fa21e09d0d9131316fd7c96c78969de31'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.3%2B9/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.3_9.tar.gz'; \
-         ;; \
-       ppc64el|powerpc:common64) \
-         ESUM='9a1079d7f0fc72951fdc9a0029e49a15f6ba114683aee626f882ee2c761f1d57'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.3%2B9/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.3_9.tar.gz'; \
-         ;; \
-       s390x|s390:64-bit) \
-         ESUM='f57a078d417614e5d78c07c77a6d8a04701058cf692c8e2868d593582be92768'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.3%2B9/OpenJDK21U-jdk_s390x_linux_hotspot_21.0.3_9.tar.gz'; \
-         ;; \
-       amd64|i386:x86-64) \
-         ESUM='fffa52c22d797b715a962e6c8d11ec7d79b90dd819b5bc51d62137ea4b22a340'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.3%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.3_9.tar.gz'; \
+       amd64|x86_64) \
+         ESUM='839326b5b4b3e4ac2edc3b685c8ab550f9b6d267eddf966323c801cb21e3e018'; \
+         BINARY_URL='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_x64_alpine-linux_hotspot_17.0.11_9.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
          exit 1; \
          ;; \
     esac; \
-    curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
-    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
-    mkdir -p /opt/java/openjdk; \
-    cd /opt/java/openjdk; \
-    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+	  wget -O /tmp/openjdk.tar.gz ${BINARY_URL}; \
+	  echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+	  mkdir -p /opt/java/openjdk; \
+	  tar --extract \
+	      --file /tmp/openjdk.tar.gz \
+	      --directory /opt/java/openjdk \
+	      --strip-components 1 \
+	      --no-same-owner \
+	  ; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
-LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"  \
       com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.3.0.1"
 
 # set Docker image build arguments
@@ -83,22 +72,22 @@ ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
 # build argument for MOTD
-ARG MOTD="\n\
-Welcome to WSO2 Docker resources.\n\
------------------------------------- \n\
-This Docker container comprises of a WSO2 product, running with its latest GA release \n\
-which is under the Apache License, Version 2.0. \n\
-Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
+ARG MOTD='printf "\n\
+ Welcome to WSO2 Docker Resources \n\
+ --------------------------------- \n\
+ This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+ which is under the Apache License, Version 2.0. \n\
+ Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
+ENV ENV=${USER_HOME}"/.ashrc"
 
 # create the non-root user and group and set MOTD login message
 RUN \
-    groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
-    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
-    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
+    addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
+    && echo ${MOTD} > "${ENV}"
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
-# install required packages
 
 # add the WSO2 product distribution to user's home directory
 RUN \
@@ -113,7 +102,7 @@ RUN \
     && rm -f ${WSO2_SERVER}.zip
 
 # remove unnecesary packages
-RUN apt-get purge -y netcat unzip wget
+RUN apk del netcat-openbsd
 
 # set the user and work directory
 USER ${USER_ID}
