@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 API Manager #
 
-This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 API Manager 4.3.0.
+This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 API Manager 4.4.0.
 
 ## Prerequisites
 
@@ -19,27 +19,27 @@ git clone https://github.com/wso2/docker-apim.git
 
 #### 2. Build the Docker image.
 
-- Download wso2am-4.3.0.zip from [here](https://wso2.com/api-management/install/)
+- Download wso2am-4.4.0.zip from [here](https://wso2.com/api-management/install/)
 - Host the product pack using a webserver.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
 - Execute `docker build` command as shown below.
 
 ```
-docker build -t wso2am:4.3.0-alpine-jdk21 .
+docker build -t wso2am:4.4.0-alpine-jdk17 .
 ```
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
-> Note:- wso2am:4.3.0-alpine-jdk21 image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
+> Note:- wso2am:4.4.0-alpine-jdk17 image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
 
 ```
-docker buildx build --platform linux/amd64 -t wso2am:4.3.0-alpine-jdk21 .
+docker buildx build --platform linux/amd64 -t wso2am:4.4.0-alpine-jdk17 .
 ```
 
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.3.0-alpine-jdk21
+docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.4.0-alpine-jdk17
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
@@ -59,7 +59,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 #### 1. Stop the API Manager container if it's already running.
 
-In WSO2 API Manager version 4.3.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 API Manager version 4.4.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -72,14 +72,23 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 #### 3. Run the image by mounting the file to container as follows:
 
 ```
-docker run -it \
+docker run \
 -p 9444:9444 \
 -p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.3.0-alpine-jdk21
+wso2am:4.4.0-alpine-jdk17
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.3.0/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.4.0/repository/conf folder of the container.
+
+## Running official wso2am image
+It is possible to use official wso2am images without building them from the scratch.
+
+- To run on amd64
+```
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-alpine-jdk17
+```
+> This image is only supported for amd64.
 
 ## WSO2 Private Docker images
 

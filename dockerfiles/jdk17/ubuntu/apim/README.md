@@ -1,12 +1,11 @@
 # Dockerfile for WSO2 API Manager #
 
-This section defines the step-by-step instructions to build an [Rocky Linux](https://hub.docker.com/_/rockylinux/) based Docker image for WSO2 API Manager 4.3.0.
+This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 API Manager 4.4.0.
 
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-docker) v20.10.x or above
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
-
 
 ## How to build an image and run
 
@@ -16,25 +15,24 @@ This section defines the step-by-step instructions to build an [Rocky Linux](htt
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/rocky/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
 #### 2. Build the Docker image.
 
-- Download wso2am-4.3.0.zip from [here](https://wso2.com/api-management/install/)
+- Download wso2am-4.4.0.zip from [here](https://wso2.com/api-management/install/)
 - Host the product pack using a webserver.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
 - Execute `docker build` command as shown below.
-
 ```
-docker build -t wso2am:4.3.0-rocky-jdk21 .
+docker build -t wso2am:4.4.0-jdk17 .
 ```
-
+    
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
-
+    
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.3.0-rocky-jdk21
+docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.4.0-jdk17
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
@@ -54,7 +52,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 #### 1. Stop the API Manager container if it's already running.
 
-In WSO2 API Manager version 4.3.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 API Manager version 4.4.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -67,18 +65,18 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 #### 3. Run the image by mounting the file to container as follows:
 
 ```
-docker run -it \
+docker run \
 -p 9444:9444 \
 -p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.3.0-rocky-jdk21
+wso2am:4.4.0-jdk17
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.3.0/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.4.0/repository/conf folder of the container.
 
 ## How to build a Docker image with multi architecture support
 
-The above wso2am:4.3.0-rocky-jdk21 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.3.0-rocky-jdk21 image to support any CPU architecture.
+The above wso2am:4.4.0-jdk17 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.4.0-jdk17 image to support any CPU architecture.
 
 #### 1. Install [Docker Buildx](https://docs.docker.com/buildx/working-with-buildx/)
 
@@ -100,7 +98,7 @@ docker buildx inspect --bootstrap
 #### 4. Build and push 
 
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.3.0-rocky-jdk21 --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.4.0-jdk17 --push .
 ```
 
 > - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
@@ -111,12 +109,26 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2
 
 #### 5. Run
 ```
-docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.3.0-rocky-jdk21
+docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.4.0-jdk17
 ```
 > Docker will pull the suitable image for the architecture and run
 
 > **Note**
 > If you are using Rancher to run the Docker image, you will not be able to use port 9443, which is already allocated by Rancher. As a workaround, you can follow the instructions given in [How to update configurations](#how-to-update-configurations) to run the APIM image in a different port.
+
+## Running official wso2am images
+It is possible to use official wso2am images without building them from the scratch.
+
+- To run on amd64
+```
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-jdk17
+```
+
+- To run on native Apple Silicon ( arm64 )
+```
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-jdk17
+```
+
 
 ## WSO2 Private Docker images
 
