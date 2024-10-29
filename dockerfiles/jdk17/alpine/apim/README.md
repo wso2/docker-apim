@@ -25,21 +25,21 @@ git clone https://github.com/wso2/docker-apim.git
 - Execute `docker build` command as shown below.
 
 ```
-docker build -t wso2am:4.4.0-alpine .
+docker build -t wso2am:4.4.0-alpine-jdk17 .
 ```
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
-> Note:- wso2am:4.4.0-alpine image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
+> Note:- wso2am:4.4.0-alpine-jdk17 image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
 
 ```
-docker buildx build --platform linux/amd64 -t wso2am:4.4.0-alpine .
+docker buildx build --platform linux/amd64 -t wso2am:4.4.0-alpine-jdk17 .
 ```
 
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.4.0-alpine
+docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.4.0-alpine-jdk17
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
@@ -76,7 +76,7 @@ docker run \
 -p 9444:9444 \
 -p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.4.0-alpine
+wso2am:4.4.0-alpine-jdk17
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.4.0/repository/conf folder of the container.
@@ -86,7 +86,7 @@ It is possible to use official wso2am images without building them from the scra
 
 - To run on amd64
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-alpine
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-alpine-jdk17
 ```
 > This image is only supported for amd64.
 

@@ -24,7 +24,7 @@ git clone https://github.com/wso2/docker-apim.git
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
 - Execute `docker build` command as shown below.
 ```
-docker build -t wso2am:4.4.0 .
+docker build -t wso2am:4.4.0-jdk17 .
 ```
     
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
@@ -32,7 +32,7 @@ docker build -t wso2am:4.4.0 .
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.4.0
+docker run -it -p 9443:9443 -p 8243:8243 wso2am:4.4.0-jdk17
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
@@ -69,14 +69,14 @@ docker run \
 -p 9444:9444 \
 -p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am:4.4.0
+wso2am:4.4.0-jdk17
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-4.4.0/repository/conf folder of the container.
 
 ## How to build a Docker image with multi architecture support
 
-The above wso2am:4.4.0 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.4.0 image to support any CPU architecture.
+The above wso2am:4.4.0-jdk17 image will only be supported for the CPU architecture of your current machine. Docker buildx plugin can be used to build wso2am:4.4.0-jdk17 image to support any CPU architecture.
 
 #### 1. Install [Docker Buildx](https://docs.docker.com/buildx/working-with-buildx/)
 
@@ -98,7 +98,7 @@ docker buildx inspect --bootstrap
 #### 4. Build and push 
 
 ```
-docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.4.0 --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2am:4.4.0-jdk17 --push .
 ```
 
 > - Here <DOCKER_USERNAME> is a valid Docker or Dockerhub username.
@@ -109,7 +109,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <DOCKER_USERNAME>/wso2
 
 #### 5. Run
 ```
-docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.4.0
+docker run -it -p 9443:9443 -p 8243:8243 <DOCKER_USERNAME>/wso2am:4.4.0-jdk17
 ```
 > Docker will pull the suitable image for the architecture and run
 
@@ -121,12 +121,12 @@ It is possible to use official wso2am images without building them from the scra
 
 - To run on amd64
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-jdk17
 ```
 
 - To run on native Apple Silicon ( arm64 )
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0
+docker run -it -p 9443:9443 -p 8243:8243 wso2/wso2am:4.4.0-jdk17
 ```
 
 
