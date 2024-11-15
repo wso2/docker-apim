@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Ubuntu Focal Docker image
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -99,7 +99,7 @@ RUN \
     apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         libxml2-utils \
-        netcat \
+        netcat-traditional \
         unzip \
         wget \
     && rm -rf /var/lib/apt/lists/*
