@@ -4,6 +4,12 @@ All notable changes to this project 3.1.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0.11] - 2024-12-18
+
+### Changed
+#### Identity Server Key Manager
+- Update Alpine version 3.17.2 to to the latest version - v3.20.3
+
 ## [v3.1.0.5] - 2022-03-04
 
 ### Changed
