@@ -23,6 +23,7 @@ services:
     volumes:
       - ./conf/mysql/scripts:/docker-entrypoint-initdb.d
       - ./conf/mysql/conf/my.cnf:/etc/mysql/my.cnf
+      - wso2:/var/lib/mysql
     ulimits:
       nofile:
         soft: 20000
@@ -99,3 +100,6 @@ services:
         condition: service_healthy
     volumes:
       - ./conf/apim-analytics-dashboard:/home/wso2carbon/wso2-config-volume
+
+volumes:
+  wso2: {}
