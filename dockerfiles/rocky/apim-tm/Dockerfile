@@ -74,7 +74,7 @@ ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=10001
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
-ARG WSO2_SERVER_NAME=wso2am-gw
+ARG WSO2_SERVER_NAME=wso2am-tm
 ARG WSO2_SERVER_VERSION=4.5.0-m1
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
@@ -105,7 +105,7 @@ RUN \
     && mkdir ${USER_HOME}/wso2-tmp \
     && bash -c 'mkdir -p ${USER_HOME}/solr/{indexed-data,database}' \
     && chown wso2carbon:wso2 -R ${USER_HOME}/solr \
-    && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-configs ${USER_HOME}/wso2-tmp \
+    && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/executionplans ${USER_HOME}/wso2-tmp \
     && rm -f ${WSO2_SERVER}.zip
 
 COPY --chown=wso2carbon:wso2 components/mysql-connector-j-8.4.0.jar ${WSO2_SERVER_HOME}/repository/components/lib/
