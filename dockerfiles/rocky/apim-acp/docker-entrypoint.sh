@@ -54,6 +54,9 @@ if [[ ! -z "${PROFILE_NAME}" ]]
 then
   echo "Optimizing WSO2 Carbon Server" >&2
   sh ${WSO2_SERVER_HOME}/bin/profileSetup.sh -Dprofile=${PROFILE_NAME}
+else
+  echo "Optimizing WSO2 Carbon Server with control-plane profile" >&2
+  sh ${WSO2_SERVER_HOME}/bin/profileSetup.sh -Dprofile="control-plane"
 fi
 
 # copy any configuration changes mounted to config_volume
