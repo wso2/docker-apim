@@ -64,7 +64,7 @@ RUN set -eux; \
     java -Xshare:dump;
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.4.0.1"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.5.0.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
