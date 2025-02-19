@@ -56,4 +56,4 @@ test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${ar
 
 # start WSO2 Carbon server
 echo "Start WSO2 Carbon server" >&2
-sh ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@"
+sh ${WSO2_SERVER_HOME}/bin/traffic-manager.sh "$@"
