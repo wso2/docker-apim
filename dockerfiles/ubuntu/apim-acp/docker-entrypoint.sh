@@ -50,13 +50,10 @@ for shared_directory in ${directories[@]}; do
 done
 
 # optimize WSO2 Carbon Server, if the profile name is defined as an environment variable
-if [[ ! -z "${PROFILE_NAME}" ]]
+if [[ "${PROFILE_NAME}" == "key-manager" ]]
 then
   echo "Optimizing WSO2 Carbon Server" >&2
   sh ${WSO2_SERVER_HOME}/bin/profileSetup.sh -Dprofile=${PROFILE_NAME}
-else
-  echo "Optimizing WSO2 Carbon Server with control-plane profile" >&2
-  sh ${WSO2_SERVER_HOME}/bin/profileSetup.sh -Dprofile="control-plane"
 fi
 
 # copy any configuration changes mounted to config_volume
