@@ -13,7 +13,7 @@ create_admin_account = true
 [user_store]
 type = "database_unique_id"
 
-[database.apim_db]	
+[database.apim_db]
 type = "mysql"
 url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
 username = "wso2carbon"
@@ -23,8 +23,8 @@ driver = "com.mysql.cj.jdbc.Driver"
 [database.shared_db]
 type = "mysql"
 url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
-username = "wso2carbon"	
-password = "wso2carbon"	
+username = "wso2carbon"
+password = "wso2carbon"
 driver = "com.mysql.cj.jdbc.Driver"
 
 [keystore.tls]
@@ -50,6 +50,9 @@ key_password =  "wso2carbon"
 #password =  "wso2carbon"
 #alias =  "wso2carbon"
 #key_password =  "wso2carbon"
+
+[apim]
+gateway_type = "Regular,APK,AWS"
 
 [[apim.gateway.environment]]
 name = "Default"
@@ -107,7 +110,7 @@ auth_token = "<on-prem-key>"
 
 [apim.ai]
 enable = true
-token = ""
+key = ""
 endpoint = ""
 
 [apim.key_manager]
@@ -274,7 +277,7 @@ enable = false
 allow_refresh_tokens = true
 iat_validity_period = "1h"
 
-#[integration.transaction_counter]
+#[apim.transaction_counter]
 #enable = true
 #server_id = "Gateway1"
 #producer_counting_thread_pool_size = 10
