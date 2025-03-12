@@ -13,7 +13,7 @@ create_admin_account = true
 [user_store]
 type = "database_unique_id"
 
-[database.apim_db]
+[database.apim_db]	
 type = "mysql"
 url = "jdbc:mysql://mysql:3306/WSO2AM_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
 username = "wso2carbon"
@@ -23,8 +23,8 @@ driver = "com.mysql.cj.jdbc.Driver"
 [database.shared_db]
 type = "mysql"
 url = "jdbc:mysql://mysql:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
-username = "wso2carbon"
-password = "wso2carbon"
+username = "wso2carbon"	
+password = "wso2carbon"	
 driver = "com.mysql.cj.jdbc.Driver"
 
 [keystore.tls]
@@ -110,7 +110,7 @@ auth_token = "<on-prem-key>"
 
 [apim.ai]
 enable = true
-key = ""
+token = ""
 endpoint = ""
 
 [apim.key_manager]
