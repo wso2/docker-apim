@@ -21,7 +21,7 @@ on:
           - apim
           - apim-acp
           - apim-gw
-          - apim-gw
+          - apim-tm
       tag:
         description: 'Docker image tag'
         required: true
