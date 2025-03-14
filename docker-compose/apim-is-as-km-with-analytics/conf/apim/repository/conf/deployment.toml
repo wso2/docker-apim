@@ -51,6 +51,9 @@ key_password =  "wso2carbon"
 #alias =  "wso2carbon"
 #key_password =  "wso2carbon"
 
+[apim]
+gateway_type = "Regular,APK,AWS"
+
 [[apim.gateway.environment]]
 name = "Default"
 type = "hybrid"
@@ -274,7 +277,7 @@ enable = false
 allow_refresh_tokens = true
 iat_validity_period = "1h"
 
-#[integration.transaction_counter]
+#[apim.transaction_counter]
 #enable = true
 #server_id = "Gateway1"
 #producer_counting_thread_pool_size = 10

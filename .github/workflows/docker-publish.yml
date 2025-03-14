@@ -12,6 +12,16 @@ on:
           - ubuntu
           - alpine
           - rocky
+      component:
+        description: 'Component'
+        required: true
+        default: 'apim'
+        type: choice
+        options:
+          - apim
+          - apim-acp
+          - apim-universal-gw
+          - apim-tm
       tag:
         description: 'Docker image tag'
         required: true
@@ -54,8 +64,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: dockerfiles/${{ github.event.inputs.os }}/apim
-        file: dockerfiles/${{ github.event.inputs.os }}/apim/Dockerfile
+        context: dockerfiles/${{ github.event.inputs.os }}/${{ github.event.inputs.component }}
+        file: dockerfiles/${{ github.event.inputs.os }}/${{ github.event.inputs.component }}/Dockerfile
         platforms: ${{ github.event.inputs.platforms }}
         push: true
         tags: ${{ github.event.inputs.tag }}
