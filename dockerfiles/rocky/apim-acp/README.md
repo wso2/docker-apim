@@ -1,4 +1,4 @@
-# Dockerfile for WSO2 API Manager #
+# Dockerfile for WSO2 API Manager - API Control Plane #
 
 This section defines the step-by-step instructions to build an [Rocky Linux](https://hub.docker.com/_/rockylinux/) based Docker image for WSO2 API Manager 4.5.0.
 
@@ -34,10 +34,10 @@ docker build -t wso2am-acp:4.5.0-rocky .
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2am-acp:4.5.0-rocky
+docker run -it -p 9443:9443 -p 9611:9611 -p 9711:9711 -p 5672:5672 wso2am-acp:4.5.0-rocky
 ```
 
-> Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
+> Here, only port 9443 (HTTPS servlet transport) and ports 9611, 9711, 5672 have been mapped to Docker host ports.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
 #### 4. Accessing management console.
@@ -69,7 +69,6 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 ```
 docker run -it \
 -p 9444:9444 \
--p 8244:8244 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
 wso2am-acp:4.5.0-rocky
 ```

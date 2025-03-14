@@ -1,4 +1,4 @@
-# Dockerfile for WSO2 API Manager #
+# Dockerfile for WSO2 API Manager - Gateway #
 
 This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 API Manager Gateway 4.5.0.
 
@@ -15,7 +15,7 @@ This section defines the step-by-step instructions to build an [Alpine](https://
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/alpine/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/alpine/apim-gw` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
 #### 2. Build the Docker image.
 
@@ -39,10 +39,10 @@ docker buildx build --platform linux/amd64 -t wso2am-gw:4.5.0-alpine .
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 8243:8243 wso2am-gw:4.5.0-alpine
+docker run -it -p 8243:8243 wso2am-gw:4.5.0-alpine
 ```
 
-> Here, only port 9443 (HTTPS servlet transport) and port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
+> Here, port 8243 (Passthrough or NIO HTTPS transport) have been mapped to Docker host ports.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
 #### 4. Accessing management console.
