@@ -21,7 +21,7 @@ on:
           - apim
           - apim-acp
           - apim-gw
-          - apim-tm
+          - apim-gw
       tag:
         description: 'Docker image tag'
         required: true
@@ -49,8 +49,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        repository: kavindasr/docker-apim
-        ref: feat/distributeed-setup
+        repository: wso2/docker-apim
+        ref: master
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
