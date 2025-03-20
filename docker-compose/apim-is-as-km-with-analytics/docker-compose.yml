@@ -37,7 +37,7 @@ services:
   is-as-km:
     build: ./dockerfiles/is-as-km
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9444"]
+      test: ["CMD", "sh", "-c", "mysqladmin ping -uroot -proot && [ -f /var/lib/mysql/initialization-complete.flag ]"]
       interval: 10s
       start_period: 180s
       retries: 20
@@ -51,7 +51,7 @@ services:
   api-manager:
     build: ./dockerfiles/apim
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9443"]
+      test: ["CMD", "curl", "--fail", "http://localhost:9763/services/Version"]
       interval: 10s
       start_period: 180s
       retries: 20
