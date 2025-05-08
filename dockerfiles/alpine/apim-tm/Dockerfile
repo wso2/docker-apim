@@ -65,7 +65,7 @@ LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"  \
 # build arguments for user/group configurations
 ARG USER=wso2carbon
 ARG USER_ID=10001
-ARG USER_GROUP=wso2-tm
+ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=10001
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
