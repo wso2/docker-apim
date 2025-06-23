@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Alpine Docker image
-FROM alpine:3.19.2
+FROM alpine:3.21.3
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -70,7 +70,7 @@ ARG WSO2_SERVER_VERSION=4.2.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=<APIM_DIST_URL>
+ARG WSO2_SERVER_DIST_URL=http://localhost:8889/wso2am-4.2.0.zip
 # build argument for MOTD
 ARG MOTD='printf "\n\
  Welcome to WSO2 Docker Resources \n\
