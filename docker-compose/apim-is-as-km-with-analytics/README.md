@@ -51,7 +51,7 @@
     [apim.analytics]
     enable = true
     config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
-    auth_token = "<on-prem-key>"
+    auth_token = "on-prem-key"
     ```
 
 7. Execute following Docker Compose command to start the deployment.
