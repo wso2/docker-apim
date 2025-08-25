@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: '2.4'
+#version: "2.4"
 services:
   mysql:
     image: mysql:8.0.36
+    platform: linux/amd64
     ports:
       - 3306
     environment:
@@ -29,13 +30,20 @@ services:
         hard: 40000
     command: [--ssl=0]
     healthcheck:
-      test: ["CMD", "sh", "-c", "mysqladmin ping -uroot -proot && [ -f /var/lib/mysql/initialization-complete.flag ]"]
+      test:
+        [
+          "CMD",
+          "sh",
+          "-c",
+          "mysqladmin ping -uroot -proot && [ -f /var/lib/mysql/initialization-complete.flag ]",
+        ]
       interval: 30s
       timeout: 60s
       retries: 5
       start_period: 80s
   api-manager:
     build: ./dockerfiles/apim
+    platform: linux/amd64
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:9763/services/Version"]
       interval: 10s
@@ -52,6 +60,7 @@ services:
       - "8243:8243"
   micro-integrator:
     build: ./dockerfiles/mi
+    platform: linux/amd64
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8253"]
       interval: 10s
