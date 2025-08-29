@@ -59,7 +59,7 @@ RUN set -eux; \
 
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"  \
-      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.5.0.1"
+      com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.6.0.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -70,7 +70,7 @@ ARG USER_GROUP_ID=10001
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am-acp
-ARG WSO2_SERVER_VERSION=4.5.0
+ARG WSO2_SERVER_VERSION=4.6.0
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}

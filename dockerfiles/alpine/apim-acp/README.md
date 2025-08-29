@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 API Manager - API Control Plane #
 
-This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 API Manager API Control Plane 4.5.0.
+This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 API Manager API Control Plane 4.6.0.
 
 ## Prerequisites
 
@@ -19,27 +19,27 @@ git clone https://github.com/wso2/docker-apim.git
 
 #### 2. Build the Docker image.
 
-- Download wso2am-acp-4.5.0.zip from [here](https://wso2.com/api-management/install/)
+- Download wso2am-acp-4.6.0.zip from [here](https://wso2.com/api-management/install/)
 - Host the product pack using a webserver.
 - Navigate to `<AM_DOCKERFILE_HOME>` directory. <br>
 - Execute `docker build` command as shown below.
 
 ```
-docker build -t wso2am-acp:4.5.0-alpine .
+docker build -t wso2am-acp:4.6.0-alpine .
 ```
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
-> Note:- wso2am-acp:4.5.0-alpine image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
+> Note:- wso2am-acp:4.6.0-alpine image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
 
 ```
-docker buildx build --platform linux/amd64 -t wso2am-acp:4.5.0-alpine .
+docker buildx build --platform linux/amd64 -t wso2am-acp:4.6.0-alpine .
 ```
 
 #### 3. Running the Docker image.
 
 ```
-docker run -it -p 9443:9443 -p 9611:9611 -p 9711:9711 -p 5672:5672 wso2am-acp:4.5.0-alpine
+docker run -it -p 9443:9443 -p 9611:9611 -p 9711:9711 -p 5672:5672 wso2am-acp:4.6.0-alpine
 ```
 
 > Here, only port 9443 (HTTPS servlet transport) and ports 9611, 9711, 5672 have been mapped to Docker host ports.
@@ -59,7 +59,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 #### 1. Stop the API Manager container if it's already running.
 
-In WSO2 API Manager version 4.5.0 product distribution, `deployment.toml` configuration file <br>
+In WSO2 API Manager version 4.6.0 product distribution, `deployment.toml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/repository/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the offset value (`[server]->offset`) to 1.
 
@@ -75,10 +75,10 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run -it \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2am-acp:4.5.0-alpine
+wso2am-acp:4.6.0-alpine
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-acp-4.5.0/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-acp-4.6.0/repository/conf folder of the container.
 
 ## WSO2 Private Docker images
 
