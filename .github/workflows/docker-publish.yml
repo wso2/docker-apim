@@ -25,7 +25,7 @@ on:
       tag:
         description: 'Docker image tag'
         required: true
-        default: 'latest'
+        default: 'wso2/wso2am:latest'
       product_version:
         description: 'Product version'
         required: true
