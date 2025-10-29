@@ -71,10 +71,12 @@ ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2am
 ARG WSO2_SERVER_VERSION=4.6.0
+ARG WSO2_SERVER_ZIP_VERSION=${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_REPOSITORY=product-apim
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_ZIP=${WSO2_SERVER_NAME}-${WSO2_SERVER_ZIP_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
+ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_ZIP_VERSION}/${WSO2_SERVER_ZIP}.zip
 # build argument for MOTD
 ARG MOTD='printf "\n\
  Welcome to WSO2 Docker Resources \n\
@@ -95,15 +97,17 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
     
 # add the WSO2 product distribution to user's home directory
 RUN \
-    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
-    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+    wget -O ${WSO2_SERVER_ZIP}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER_ZIP}.zip \
+    && EXTRACTED_DIR=$(ls -1 ${USER_HOME} | grep "^${WSO2_SERVER_NAME}-" | head -1) \
+    && if [ "${EXTRACTED_DIR}" != "${WSO2_SERVER}" ]; then mv ${USER_HOME}/${EXTRACTED_DIR} ${USER_HOME}/${WSO2_SERVER}; fi \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && mkdir ${USER_HOME}/wso2-tmp \
     && bash -c 'mkdir -p ${USER_HOME}/solr/{indexed-data,database}' \
     && chown wso2carbon:wso2 -R ${USER_HOME}/solr \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/synapse-configs ${USER_HOME}/wso2-tmp \
     && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/executionplans ${USER_HOME}/wso2-tmp \
-    && rm -f ${WSO2_SERVER}.zip
+    && rm -f ${WSO2_SERVER_ZIP}.zip
 
 # remove unnecesary packages
 RUN apk del netcat-openbsd
