@@ -19,9 +19,6 @@ on:
       zip_version:
         description: 'ZIP file version (if different from product version)'
         required: false
-      product_distribution_name:
-        description: 'Product distribution name'
-        required: true
       platforms:
         description: 'Platforms for multi-arch build'
         required: true
@@ -61,23 +58,27 @@ jobs:
           fi
           
           for component in "${COMPONENT_ARRAY[@]}"; do
-            # Map component to repository and pack name
+            # Map component to repository, pack name, and server name
             case "$component" in
               "apim")
                 repo="wso2/wso2am"
                 pack="wso2am-${ZIP_VERSION}.zip"
+                server_name="wso2am"
                 ;;
               "apim-acp")
                 repo="wso2/wso2am-acp"
                 pack="wso2am-acp-${ZIP_VERSION}.zip"
+                server_name="wso2am-acp"
                 ;;
               "apim-universal-gw")
                 repo="wso2/wso2am-universal-gw"
                 pack="wso2am-universal-gw-${ZIP_VERSION}.zip"
+                server_name="wso2am-universal-gw"
                 ;;
               "apim-tm")
                 repo="wso2/wso2am-tm"
                 pack="wso2am-tm-${ZIP_VERSION}.zip"
+                server_name="wso2am-tm"
                 ;;
               *)
                 echo "Unknown component: $component"
@@ -89,11 +90,11 @@ jobs:
             product_zip_file="https://github.com/wso2/product-apim/releases/download/v${ZIP_VERSION}/${pack}"
             
             for os in "${OS_ARRAY[@]}"; do
-              # Generate tag based on OS
+              # Generate tag based on OS (using ZIP_VERSION for tag)
               if [ "$os" = "ubuntu" ]; then
-                tag="${repo}:${{ github.event.inputs.product_version }}"
+                tag="${repo}:${ZIP_VERSION}"
               else
-                tag="${repo}:${{ github.event.inputs.product_version }}-${os}"
+                tag="${repo}:${ZIP_VERSION}-${os}"
               fi
               
               # Check if this OS should also be tagged as latest
@@ -108,7 +109,7 @@ jobs:
                 matrix+=","
               fi
               
-              matrix+="{\"os\":\"${os}\",\"component\":\"${component}\",\"repo\":\"${repo}\",\"tag\":\"${tag}\",\"latest_tag\":\"${latest_tag}\",\"product_zip_file\":\"${product_zip_file}\"}"
+              matrix+="{\"os\":\"${os}\",\"component\":\"${component}\",\"repo\":\"${repo}\",\"tag\":\"${tag}\",\"latest_tag\":\"${latest_tag}\",\"product_zip_file\":\"${product_zip_file}\",\"zip_version\":\"${ZIP_VERSION}\",\"server_name\":\"${server_name}\"}"
             done
           done
           
@@ -161,8 +162,8 @@ jobs:
         build-args: |
           WSO2_SERVER_DIST_URL=${{ matrix.product_zip_file }}
           WSO2_SERVER_VERSION=${{ github.event.inputs.product_version }}
-          WSO2_SERVER_ZIP_VERSION=${{ github.event.inputs.zip_version || github.event.inputs.product_version }}
-          WSO2_SERVER=${{ github.event.inputs.product_distribution_name }}
+          WSO2_SERVER_ZIP_VERSION=${{ matrix.zip_version }}
+          WSO2_SERVER_NAME=${{ matrix.server_name }}
 
     - name: Image build summary
       run: |
