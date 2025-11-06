@@ -20,8 +20,10 @@
 FROM rockylinux:9.3
 
 # Install necessary locale packages
-RUN yum install -y glibc-langpack-en && \
-    yum install -y langpacks-en glibc-locale-source && \
+RUN yum clean all && \
+    yum makecache && \
+    yum -y update && \
+    yum install -y --nobest glibc-langpack-en langpacks-en glibc-locale-source && \
     localedef -c -f UTF-8 -i en_US en_US.UTF-8
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
