@@ -1,0 +1,179 @@
+name: Docker Multi-Image Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: 'Operating Systems (comma-separated: ubuntu,alpine,rocky)'
+        required: true
+        type: string
+        default: 'ubuntu'
+      component:
+        description: 'Components (comma-separated: apim,apim-acp,apim-universal-gw,apim-tm)'
+        required: true
+        type: string
+        default: 'apim'
+      product_version:
+        description: 'Product version'
+        required: true
+      zip_version:
+        description: 'ZIP file version (if different from product version)'
+        required: false
+      platforms:
+        description: 'Platforms for multi-arch build'
+        required: true
+        type: string
+        default: 'linux/amd64,linux/arm64'
+      latest_os:
+        description: 'OS to tag as latest (leave empty for no latest tag)'
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Prepare build matrix
+        id: set-matrix
+        run: |
+          # Parse comma-separated inputs
+          IFS=',' read -ra OS_ARRAY <<< "${{ github.event.inputs.os }}"
+          IFS=',' read -ra COMPONENT_ARRAY <<< "${{ github.event.inputs.component }}"
+          
+          # Trim whitespace
+          OS_ARRAY=("${OS_ARRAY[@]// /}")
+          COMPONENT_ARRAY=("${COMPONENT_ARRAY[@]// /}")
+          
+          # Build matrix JSON
+          matrix="["
+          first=true
+          
+          # Determine zip version
+          ZIP_VERSION="${{ github.event.inputs.zip_version }}"
+          if [ -z "$ZIP_VERSION" ]; then
+            ZIP_VERSION="${{ github.event.inputs.product_version }}"
+          fi
+          
+          for component in "${COMPONENT_ARRAY[@]}"; do
+            # Map component to repository, pack name, and server name
+            case "$component" in
+              "apim")
+                repo="wso2/wso2am"
+                pack="wso2am-${ZIP_VERSION}.zip"
+                server_name="wso2am"
+                ;;
+              "apim-acp")
+                repo="wso2/wso2am-acp"
+                pack="wso2am-acp-${ZIP_VERSION}.zip"
+                server_name="wso2am-acp"
+                ;;
+              "apim-universal-gw")
+                repo="wso2/wso2am-universal-gw"
+                pack="wso2am-universal-gw-${ZIP_VERSION}.zip"
+                server_name="wso2am-universal-gw"
+                ;;
+              "apim-tm")
+                repo="wso2/wso2am-tm"
+                pack="wso2am-tm-${ZIP_VERSION}.zip"
+                server_name="wso2am-tm"
+                ;;
+              *)
+                echo "Unknown component: $component"
+                exit 1
+                ;;
+            esac
+            
+            # Construct product zip file URL
+            product_zip_file="https://github.com/wso2/product-apim/releases/download/v${ZIP_VERSION}/${pack}"
+            
+            for os in "${OS_ARRAY[@]}"; do
+              # Generate tag based on OS (using ZIP_VERSION for tag)
+              if [ "$os" = "ubuntu" ]; then
+                tag="${repo}:${ZIP_VERSION}"
+              else
+                tag="${repo}:${ZIP_VERSION}-${os}"
+              fi
+              
+              # Check if this OS should also be tagged as latest
+              latest_tag=""
+              if [ -n "${{ github.event.inputs.latest_os }}" ] && [ "$os" = "${{ github.event.inputs.latest_os }}" ]; then
+                latest_tag="${repo}:latest"
+              fi
+              
+              if [ "$first" = true ]; then
+                first=false
+              else
+                matrix+=","
+              fi
+              
+              matrix+="{\"os\":\"${os}\",\"component\":\"${component}\",\"repo\":\"${repo}\",\"tag\":\"${tag}\",\"latest_tag\":\"${latest_tag}\",\"product_zip_file\":\"${product_zip_file}\",\"zip_version\":\"${ZIP_VERSION}\",\"server_name\":\"${server_name}\"}"
+            done
+          done
+          
+          matrix+="]"
+          echo "matrix=${matrix}" >> $GITHUB_OUTPUT
+          echo "Generated matrix: ${matrix}"
+
+  build:
+    needs: prepare-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.prepare-matrix.outputs.matrix) }}
+      fail-fast: false
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: wso2/docker-apim
+        ref: master
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Prepare tags
+      id: prep-tags
+      run: |
+        tags="${{ matrix.tag }}"
+        if [ -n "${{ matrix.latest_tag }}" ]; then
+          tags="${tags},${{ matrix.latest_tag }}"
+        fi
+        echo "tags=${tags}" >> $GITHUB_OUTPUT
+        echo "Using tags: ${tags}"
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: dockerfiles/${{ matrix.os }}/${{ matrix.component }}
+        file: dockerfiles/${{ matrix.os }}/${{ matrix.component }}/Dockerfile
+        platforms: ${{ github.event.inputs.platforms }}
+        push: true
+        tags: ${{ steps.prep-tags.outputs.tags }}
+        build-args: |
+          WSO2_SERVER_DIST_URL=${{ matrix.product_zip_file }}
+          WSO2_SERVER_VERSION=${{ github.event.inputs.product_version }}
+          WSO2_SERVER_ZIP_VERSION=${{ matrix.zip_version }}
+          WSO2_SERVER_NAME=${{ matrix.server_name }}
+
+    - name: Image build summary
+      run: |
+        echo "### Built Image :rocket:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Component**: ${{ matrix.component }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **OS**: ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Tag**: \`${{ matrix.tag }}\`" >> $GITHUB_STEP_SUMMARY
+        if [ -n "${{ matrix.latest_tag }}" ]; then
+          echo "- **Latest Tag**: \`${{ matrix.latest_tag }}\` ✨" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "- **Repository**: ${{ matrix.repo }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Product ZIP**: ${{ matrix.product_zip_file }}" >> $GITHUB_STEP_SUMMARY

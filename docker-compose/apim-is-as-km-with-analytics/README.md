@@ -43,15 +43,19 @@
    
    You may replace the web app in `docker-compose/apim-is-as-km-with-analytics/dockerfiles/is-as-km/webapps` as defined in step 5.
 
-5. WSO2 no longer provides an on-premise Analytics solution. In order to connect WSO2 API Manager to [Choreo Analytics](https://analytics.choreo.dev/), obtain an `on-prem-key` by following the steps in the [documentation](https://apim.docs.wso2.com/en/4.6.0/observe/api-manager-analytics/configure-analytics/register-for-analytics/).
+5. Moesif-powered WSO2 Analytics replaces Choreo Analytics for enhanced insights and observability. Go to [Moesif's official website for WSO2 API Manager](https://www.moesif.com/wrap/basic?onboard=true), sign up for a new account and obtain an `Moesif API Key` by following the steps in the [documentation](https://apim.docs.wso2.com/en/latest/monitoring/api-analytics/moesif-analytics/moesif-integration-guide/).
 
-6. Update the analytics configurations in [deployment.toml](./conf/apim/repository/conf/deployment.toml) with the `on-prem key` obtained.
+6. Update the analytics configurations in [deployment.toml](./conf/apim/repository/conf/deployment.toml) with the `Moesif API Key` obtained.
 
     ```toml
     [apim.analytics]
     enable = true
-    config_endpoint = "https://analytics-event-auth.choreo.dev/auth/v1"
-    auth_token = "on-prem-key"
+    type = "moesif"
+
+    [apim.analytics.properties]
+    moesifKey = "YOUR_MOESIF_API_KEY_HERE"
+    moesif_base_url = "https://api.moesif.net"
+    send_headers = false
     ```
 
 7. Execute following Docker Compose command to start the deployment.

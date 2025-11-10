@@ -29,6 +29,9 @@ on:
       product_version:
         description: 'Product version'
         required: true
+      zip_version:
+        description: 'ZIP file version (if different from product version)'
+        required: false
       product_zip_file:
         description: 'Product zip file'
         required: true
@@ -38,7 +41,7 @@ on:
       platforms:
         description: 'Platforms for multi-arch build'
         required: true
-        type: text
+        type: string
         default: 'linux/amd64,linux/arm64'
 
 jobs:
@@ -72,4 +75,5 @@ jobs:
         build-args: |
           WSO2_SERVER_DIST_URL=${{ github.event.inputs.product_zip_file }}
           WSO2_SERVER_VERSION=${{ github.event.inputs.product_version }}
+          WSO2_SERVER_ZIP_VERSION=${{ github.event.inputs.zip_version || github.event.inputs.product_version }}
           WSO2_SERVER=${{ github.event.inputs.product_distribution_name }}

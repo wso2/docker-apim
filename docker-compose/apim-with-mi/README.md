@@ -39,7 +39,7 @@
     
    You may add the relevant CAR files of your integration services to  `docker-compose/apim-with-mi/dockerfiles/mi/capps/`.
 
-   Those will be added to the Service Catalog in APIM through Micro Integrator. For more information, refer the [documentation](https://apim.docs.wso2.com/en/4.6.0/tutorials/integration-tutorials/service-catalog-tutorial/#exposing-an-integration-service-as-a-managed-api).
+   Those will be added to the Service Catalog in APIM through Micro Integrator. For more information, refer the [documentation](https://mi.docs.wso2.com/en/4.5.0/learn/integration-tutorials/service-catalog-tutorial/#exposing-an-integration-service-as-a-managed-api).
 
    The backend service of the sample `CAR` provided can be found [here](https://github.com/wso2-docs/WSO2_EI/blob/master/Back-End-Service/Hospital-Service-JDK11-2.0.0.jar).
 
