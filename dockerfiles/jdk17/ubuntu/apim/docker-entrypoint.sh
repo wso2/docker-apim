@@ -49,13 +49,6 @@ for shared_directory in ${directories[@]}; do
   fi
 done
 
-# optimize WSO2 Carbon Server, if the profile name is defined as an environment variable
-if [[ ! -z "${PROFILE_NAME}" ]]
-then
-  echo "Optimizing WSO2 Carbon Server" >&2
-  sh ${WSO2_SERVER_HOME}/bin/profileSetup.sh -Dprofile=${PROFILE_NAME}
-fi
-
 # copy any configuration changes mounted to config_volume
 test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
@@ -63,11 +56,4 @@ test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${ar
 
 # start WSO2 Carbon server
 echo "Start WSO2 Carbon server" >&2
-if [[ -z "${PROFILE_NAME}" ]]
-then
-  # start the server with the provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@"
-else
-  # start the server with the specified profile and provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/api-manager.sh -Dprofile=${PROFILE_NAME} "$@"
-fi
+sh ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@"
