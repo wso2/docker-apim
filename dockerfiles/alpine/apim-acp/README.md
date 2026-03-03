@@ -76,7 +76,7 @@ docker run -it \
 wso2am-acp:4.7.0-alpine
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-acp-4.7.0-m1/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-acp-4.7.0-m2/repository/conf folder of the container.
 
 ## WSO2 Private Docker images
 
