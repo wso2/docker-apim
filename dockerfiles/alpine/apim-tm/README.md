@@ -31,7 +31,7 @@ docker build -t wso2am-tm:4.7.0-alpine .
 > Note:- wso2am-tm:4.7.0-alpine image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple Silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
 
 ```
-docker buildx build --platform linux/amd64 -t wso2am-tm:4.7.0-alpine .
+docker buildx build --platform linux/amd64 --load -t wso2am-tm:4.7.0-alpine .
 ```
 
 #### 3. Running the Docker image.
@@ -77,7 +77,7 @@ docker run -it \
 wso2am-tm:4.7.0-alpine
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-tm-4.7.0-m1/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-tm-4.7.0-m2/repository/conf folder of the container.
 
 ## WSO2 Private Docker images
 
