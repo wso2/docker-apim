@@ -71,7 +71,7 @@ docker run -it \
 wso2am-acp:4.7.0-rocky
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-acp-4.7.0-m3/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-acp-4.7.0-alpha/repository/conf folder of the container.
 
 ## How to build a Docker image with multi-architecture support
 
