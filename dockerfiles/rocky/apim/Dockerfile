@@ -61,7 +61,7 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 RUN \
     yum -y update \
     && yum install -y \
-        tzdata openssl ca-certificates fontconfig gzip tar bsdtar \
+        tzdata openssl ca-certificates fontconfig gzip tar \
         nc \
         unzip \
         wget \
@@ -94,7 +94,7 @@ RUN set -eux; \
     echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
     mkdir -p /opt/java/openjdk; \
     cd /opt/java/openjdk; \
-    bsdtar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
