@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to WSO2 API Manager Docker image with latest WSO2 Updates
-FROM docker.wso2.com/wso2is:6.1.0.0
+FROM registry.wso2.com/wso2-is/is:6.1.0.0
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
 ARG MYSQL_CONNECTOR_VERSION=8.0.30
