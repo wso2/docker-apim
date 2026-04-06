@@ -81,7 +81,7 @@ wso2am-tm:4.7.0-alpine
 
 ## WSO2 Private Docker images
 
-If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://docker.wso2.com/)
+If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://registry.wso2.com/)
 
 ## Docker command usage references
 
