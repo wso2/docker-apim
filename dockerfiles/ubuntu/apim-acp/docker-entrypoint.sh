@@ -61,13 +61,30 @@ test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config
 # copy any artifact changes mounted to artifact_volume
 test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
+server_pid=""
+
+stop_handler() {
+  echo "Stopping WSO2 gracefully..." >&2
+  if [[ "${PROFILE_NAME}" == "key-manager" ]]
+  then
+    sh "${WSO2_SERVER_HOME}/bin/key-manager.sh" stop
+  else
+    sh "${WSO2_SERVER_HOME}/bin/api-cp.sh" stop
+  fi
+  wait "${server_pid}"
+}
+
+trap 'stop_handler' SIGTERM SIGINT
+
 # start WSO2 Carbon server
 echo "Start WSO2 Carbon server" >&2
 if [[ "${PROFILE_NAME}" == "key-manager" ]]
 then
   # start the server with the key-manager profile and provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/key-manager.sh "$@"
+  sh ${WSO2_SERVER_HOME}/bin/key-manager.sh "$@" &
 else
   # start the server with the control-plane and provided startup arguments
-  sh ${WSO2_SERVER_HOME}/bin/api-cp.sh "$@"
+  sh ${WSO2_SERVER_HOME}/bin/api-cp.sh "$@" &
 fi
+server_pid=$!
+wait "${server_pid}"
