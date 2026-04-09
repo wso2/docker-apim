@@ -58,14 +58,16 @@ server_pid=""
 
 stop_handler() {
   echo "Stopping WSO2 gracefully..." >&2
-  sh "${WSO2_SERVER_HOME}/bin/gateway.sh" stop
-  wait "${server_pid}"
+  sh "${WSO2_SERVER_HOME}/bin/gateway.sh" stop || true
+  if [[ -n "${server_pid}" ]]; then
+    wait "${server_pid}"
+  fi
 }
 
 trap 'stop_handler' SIGTERM SIGINT
 
 # start WSO2 Carbon server
 echo "Start WSO2 Carbon server" >&2
-sh ${WSO2_SERVER_HOME}/bin/gateway.sh "$@" &
+sh "${WSO2_SERVER_HOME}/bin/gateway.sh" "$@" &
 server_pid=$!
 wait "${server_pid}"
