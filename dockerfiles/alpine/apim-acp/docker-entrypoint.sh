@@ -72,7 +72,7 @@ stop_handler() {
     sh "${WSO2_SERVER_HOME}/bin/api-cp.sh" stop || true
   fi
   if [[ -n "${server_pid}" ]]; then
-    wait "${server_pid}"
+    wait "${server_pid}" || sleep 60
   fi
 }
 
@@ -89,4 +89,4 @@ else
   sh "${WSO2_SERVER_HOME}/bin/api-cp.sh" "$@" &
 fi
 server_pid=$!
-wait "${server_pid}"
+wait "${server_pid}" || sleep 60

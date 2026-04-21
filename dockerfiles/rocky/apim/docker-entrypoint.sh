@@ -60,7 +60,7 @@ stop_handler() {
   echo "Stopping WSO2 gracefully..." >&2
   sh "${WSO2_SERVER_HOME}/bin/api-manager.sh" stop || true
   if [[ -n "${server_pid}" ]]; then
-    wait "${server_pid}"
+    wait "${server_pid}" || sleep 60
   fi
 }
 
@@ -70,4 +70,4 @@ trap 'stop_handler' SIGTERM SIGINT
 echo "Start WSO2 Carbon server" >&2
 sh "${WSO2_SERVER_HOME}/bin/api-manager.sh" "$@" &
 server_pid=$!
-wait "${server_pid}"
+wait "${server_pid}" || sleep 60
