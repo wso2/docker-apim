@@ -57,11 +57,13 @@ test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${ar
 server_pid=""
 
 stop_handler() {
+  trap - SIGTERM SIGINT
   echo "Stopping WSO2 gracefully..." >&2
   sh "${WSO2_SERVER_HOME}/bin/traffic-manager.sh" stop || true
   if [[ -n "${server_pid}" ]]; then
     kill -0 "${server_pid}" 2>/dev/null && wait "${server_pid}"
   fi
+  exit 0
 }
 
 trap 'stop_handler' SIGTERM SIGINT
