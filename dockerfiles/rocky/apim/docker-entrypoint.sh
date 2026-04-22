@@ -54,6 +54,22 @@ test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config
 # copy any artifact changes mounted to artifact_volume
 test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
+server_pid=""
+
+stop_handler() {
+  trap - SIGTERM SIGINT
+  echo "Stopping WSO2 gracefully..." >&2
+  sh "${WSO2_SERVER_HOME}/bin/api-manager.sh" stop || true
+  if [[ -n "${server_pid}" ]]; then
+    kill -0 "${server_pid}" 2>/dev/null && wait "${server_pid}"
+  fi
+  exit 0
+}
+
+trap 'stop_handler' SIGTERM SIGINT
+
 # start WSO2 Carbon server
 echo "Start WSO2 Carbon server" >&2
-sh ${WSO2_SERVER_HOME}/bin/api-manager.sh "$@"
+sh "${WSO2_SERVER_HOME}/bin/api-manager.sh" "$@" &
+server_pid=$!
+kill -0 "${server_pid}" 2>/dev/null && wait "${server_pid}"
