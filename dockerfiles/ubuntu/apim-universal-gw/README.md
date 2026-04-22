@@ -70,7 +70,7 @@ docker run -it \
 wso2am-universal-gw:4.7.0
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-universal-gw-4.7.0-beta/repository/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2am-universal-gw-4.7.0/repository/conf folder of the container.
 
 ## How to build a Docker image with multi-architecture support
 
