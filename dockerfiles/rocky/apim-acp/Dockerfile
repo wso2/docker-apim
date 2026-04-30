@@ -32,7 +32,7 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
-ENV JAVA_VERSION=jdk-21.0.10+7
+ENV JAVA_VERSION=jdk-25.0.2+10
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
