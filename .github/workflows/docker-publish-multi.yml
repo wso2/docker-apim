@@ -130,7 +130,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: wso2/docker-apim
-        ref: master
+        ref: ${{ github.ref_name }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
