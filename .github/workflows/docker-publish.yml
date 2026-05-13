@@ -20,7 +20,7 @@ on:
         options:
           - apim
           - apim-acp
-          - apim-universal-gw
+          - apim-classic-gw
           - apim-tm
       tag:
         description: 'Docker image tag'
