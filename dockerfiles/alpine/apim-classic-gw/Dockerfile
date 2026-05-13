@@ -16,17 +16,14 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to Ubuntu
-FROM ubuntu:24.04
+# set base Docker image to Alpine
+FROM alpine:3.23
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install dependencies
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales python-is-python3 libxml2-utils netcat-traditional unzip wget \
-    && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-    && locale-gen en_US.UTF-8 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache tzdata musl-locales musl-locales-lang bash libxml2-utils netcat-openbsd \
+    && rm -rf /var/cache/apk/*
 
 ENV JAVA_VERSION=jdk-25.0.2+10
 ENV JAVA_HOME=/opt/java/openjdk \
@@ -34,38 +31,34 @@ ENV JAVA_HOME=/opt/java/openjdk \
 
 # install Temurin OpenJDK 21
 RUN set -eux; \
-    ARCH="$(dpkg --print-architecture)"; \
+    ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
-       amd64) \
-         ESUM='987387933b64b9833846dee373b640440d3e1fd48a04804ec01a6dbf718e8ab8'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_linux_hotspot_25.0.2_10.tar.gz'; \
+       aarch64) \
+         ESUM='e8d928fb018eabb31a148ebadaa5a5ec69273e6562afede21c426960a6a67143'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_aarch64_alpine-linux_hotspot_25.0.2_10.tar.gz'; \
          ;; \
-       arm64) \
-         ESUM='a9d73e711d967dc44896d4f430f73a68fd33590dabc29a7f2fb9f593425b854c'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_aarch64_linux_hotspot_25.0.2_10.tar.gz'; \
-         ;; \
-       ppc64el) \
-         ESUM='b262b735b215173003766da36588d5f717dceada0286db41b439f93fb2ada468'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_ppc64le_linux_hotspot_25.0.2_10.tar.gz'; \
-         ;; \
-       s390x) \
-         ESUM='15e5cbcadcf3d43623c31b825063cdc2817b9f1ba840b51dc6ef70e5d33c84e3'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_s390x_linux_hotspot_25.0.2_10.tar.gz'; \
+       x86_64) \
+         ESUM='961f13ba0ee1e18c41c50ab642361e4283dee5e7947a48ed6a72c8a661d0cca0'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_alpine-linux_hotspot_25.0.2_10.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
          exit 1; \
          ;; \
     esac; \
-    curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    wget -O /tmp/openjdk.tar.gz ${BINARY_URL}; \
     echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
     mkdir -p /opt/java/openjdk; \
-    cd /opt/java/openjdk; \
-    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
-    rm -rf /tmp/openjdk.tar.gz; \
-    java -Xshare:dump;
+    tar --extract \
+        --file /tmp/openjdk.tar.gz \
+        --directory /opt/java/openjdk \
+        --strip-components 1 \
+        --no-same-owner \
+    ; \
+    rm -rf /tmp/openjdk.tar.gz;
 
-LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
+
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"  \
       com.wso2.docker.source="https://github.com/wso2/docker-apim/releases/tag/v4.7.0.1"
 
 # set Docker image build arguments
@@ -76,7 +69,7 @@ ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=10001
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
-ARG WSO2_SERVER_NAME=wso2am-universal-gw
+ARG WSO2_SERVER_NAME=wso2am-classic-gw
 ARG WSO2_SERVER_VERSION=4.7.0
 ARG WSO2_SERVER_ZIP_VERSION=${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_REPOSITORY=product-apim
@@ -85,23 +78,23 @@ ARG WSO2_SERVER_ZIP=${WSO2_SERVER_NAME}-${WSO2_SERVER_ZIP_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_ZIP_VERSION}/${WSO2_SERVER_ZIP}.zip
 # build argument for MOTD
-ARG MOTD="\n\
-Welcome to WSO2 Docker resources.\n\
------------------------------------- \n\
-This Docker container comprises of a WSO2 product, running with its latest GA release \n\
-which is under the Apache License, Version 2.0. \n\
-Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
+ARG MOTD='printf "\n\
+ Welcome to WSO2 Docker Resources \n\
+ --------------------------------- \n\
+ This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+ which is under the Apache License, Version 2.0. \n\
+ Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
+ENV ENV=${USER_HOME}"/.ashrc"
 
 # create the non-root user and group and set MOTD login message
 RUN \
-    groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
-    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
-    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
+    addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
+    && echo ${MOTD} > "${ENV}"
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
-# install required packages
-
+    
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER_ZIP}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -116,7 +109,7 @@ RUN \
     && rm -f ${WSO2_SERVER_ZIP}.zip
 
 # remove unnecesary packages
-RUN apt-get purge -y netcat-traditional unzip wget
+RUN apk del netcat-openbsd
 
 # set the user and work directory
 USER ${USER_ID}

@@ -9,7 +9,7 @@ on:
         type: string
         default: 'ubuntu'
       component:
-        description: 'Components (comma-separated: apim,apim-acp,apim-universal-gw,apim-tm)'
+        description: 'Components (comma-separated: apim,apim-acp,apim-classic-gw,apim-tm)'
         required: true
         type: string
         default: 'apim'
@@ -70,10 +70,10 @@ jobs:
                 pack="wso2am-acp-${ZIP_VERSION}.zip"
                 server_name="wso2am-acp"
                 ;;
-              "apim-universal-gw")
-                repo="wso2/wso2am-universal-gw"
-                pack="wso2am-universal-gw-${ZIP_VERSION}.zip"
-                server_name="wso2am-universal-gw"
+              "apim-classic-gw")
+                repo="wso2/wso2am-classic-gw"
+                pack="wso2am-classic-gw-${ZIP_VERSION}.zip"
+                server_name="wso2am-classic-gw"
                 ;;
               "apim-tm")
                 repo="wso2/wso2am-tm"
