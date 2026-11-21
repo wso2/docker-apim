@@ -25,15 +25,15 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apk add --no-cache tzdata musl-locales musl-locales-lang bash libxml2-utils netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-21.0.13+9
+ENV JAVA_VERSION jdk-21.0.13.1+2
 
 # install Temurin OpenJDK 21
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='dc453842ee3f24710258f42a95bdfe5c2bfc0ca9d70c12f950ead82aee0c8361'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.13_9.tar.gz'; \
+         ESUM='87af8e1557222db2a29c9d055c34a317916b4ddbdb91474d04b35229d337193e'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.13.1_2.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
