@@ -16,7 +16,7 @@ This section defines the step-by-step instructions to build an [Rocky Linux](htt
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/rocky/apim-gw` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/rocky/apim-universal-gw` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
 #### 2. Build the Docker image.
 

@@ -15,7 +15,7 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 git clone https://github.com/wso2/docker-apim.git
 ```
 
-> The local copy of the `dockerfiles/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
+> The local copy of the `dockerfiles/jdk17/ubuntu/apim` directory will be referred to as `AM_DOCKERFILE_HOME` from this point onwards.
 
 #### 2. Build the Docker image.
 
