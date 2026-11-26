@@ -31,6 +31,8 @@ docker build -t wso2am:4.6.0-rocky-jdk17 .
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
+> To build the image from a product binary (for example, an updated pack downloaded from `registry.wso2.com/wso2-apim/binaries/am` using [ORAS](https://oras.land)), copy the ZIP into `<AM_DOCKERFILE_HOME>` and pass it with the `BINARY_PATH` build argument, for example `--build-arg BINARY_PATH=wso2am-4.6.0.<update-level>.zip`.
+
 #### 3. Running the Docker image.
 
 ```
