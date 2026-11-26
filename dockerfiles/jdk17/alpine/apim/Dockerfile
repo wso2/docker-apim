@@ -22,7 +22,7 @@ ARG BINARY_PATH=""
 # extract the BINARY_PATH ZIP, if given, in a separate stage so that the ZIP is not kept in the image
 FROM alpine:3.23 AS binary
 ARG BINARY_PATH
-COPY docker-entrypoint.sh ${BINARY_PATH} /tmp/binary/
+COPY ${BINARY_PATH:-docker-entrypoint.sh} /tmp/binary/
 RUN mkdir /binary \
     && if [ -n "${BINARY_PATH}" ]; then \
         unzip -q -d /binary "/tmp/binary/$(basename "${BINARY_PATH}")"; \
