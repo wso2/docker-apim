@@ -28,7 +28,7 @@ services:
         soft: 20000
         hard: 40000
     healthcheck:
-      test: ["CMD", "sh", "-c", "mysqladmin ping -uroot -proot && [ -f /var/lib/mysql/initialization-complete.flag ]"]
+      test: ["CMD", "sh", "-c", "mysqladmin ping -uroot -proot && [ -f /var/lib/mysql/initialization-complete.flag ] && mysql -h localhost -uroot -proot -D WSO2AM_SHARED_DB -e 'SELECT 1 FROM UM_ORG LIMIT 1;'"]
       interval: 30s
       timeout: 60s
       retries: 5
