@@ -28,6 +28,8 @@ docker build -t wso2am-tm:4.7.0-alpine .
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
+> To build the image from a product binary (for example, an updated pack downloaded from `registry.wso2.com/wso2-apim/binaries/am-tm` using [ORAS](https://oras.land)), copy the ZIP into `<AM_DOCKERFILE_HOME>` and pass it with the `BINARY_PATH` build argument, for example `--build-arg BINARY_PATH=wso2am-tm-4.7.0.<update-level>.zip`.
+
 > Note:- wso2am-tm:4.7.0-alpine image can only be built on amd64(x86_64). It is not supported to be built or run natively on Apple Silicon. But it is possible to build an amd64 image using [Docker buildx](https://docs.docker.com/desktop/multi-arch/) and then run via emulation on rosetta. Use following command.
 
 ```
