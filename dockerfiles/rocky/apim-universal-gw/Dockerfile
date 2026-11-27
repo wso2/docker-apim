@@ -16,6 +16,18 @@
 #
 # ------------------------------------------------------------------------
 
+# optional product ZIP inside the build context, used instead of WSO2_SERVER_DIST_URL
+ARG BINARY_PATH=""
+
+# extract the BINARY_PATH ZIP, if given, in a separate stage so that the ZIP is not kept in the image
+FROM rockylinux:9.3 AS binary
+ARG BINARY_PATH
+COPY ${BINARY_PATH:-docker-entrypoint.sh} /tmp/binary/
+RUN mkdir /binary \
+    && if [ -n "${BINARY_PATH}" ]; then \
+        yum install -y unzip && unzip -q -d /binary "/tmp/binary/$(basename "${BINARY_PATH}")"; \
+    fi
+
 # set base Docker image to Rocky Linux
 FROM rockylinux:9.3
 
@@ -84,6 +96,7 @@ ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_ZIP=${WSO2_SERVER_NAME}-${WSO2_SERVER_ZIP_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_ZIP_VERSION}/${WSO2_SERVER_ZIP}.zip
+ARG BINARY_PATH
 # build argument for MOTD
 ARG MOTD='printf "\n\
 Welcome to WSO2 Docker resources.\n\
@@ -102,12 +115,17 @@ RUN \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 
 # add the WSO2 product distribution to user's home directory
+COPY --from=binary --chown=wso2carbon:wso2 /binary/ ${USER_HOME}/
 RUN \
-    wget -O ${WSO2_SERVER_ZIP}.zip "${WSO2_SERVER_DIST_URL}" \
-    && unzip -d ${USER_HOME} ${WSO2_SERVER_ZIP}.zip \
-    && EXTRACTED_DIR=$(ls -1 ${USER_HOME} | grep "^${WSO2_SERVER_NAME}-" | head -1) \
-    && if [ "${EXTRACTED_DIR}" != "${WSO2_SERVER}" ]; then mv ${USER_HOME}/${EXTRACTED_DIR} ${USER_HOME}/${WSO2_SERVER}; fi \
-    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
+    if [ -z "${BINARY_PATH}" ]; then \
+        wget -O ${WSO2_SERVER_ZIP}.zip "${WSO2_SERVER_DIST_URL}" \
+        && unzip -d ${USER_HOME} ${WSO2_SERVER_ZIP}.zip \
+        && EXTRACTED_DIR=$(ls -1 ${USER_HOME} | grep "^${WSO2_SERVER_NAME}-" | head -1) \
+        && if [ "${EXTRACTED_DIR}" != "${WSO2_SERVER}" ]; then mv ${USER_HOME}/${EXTRACTED_DIR} ${USER_HOME}/${WSO2_SERVER}; fi \
+        && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}; \
+    else \
+        chmod g-s ${WSO2_SERVER_HOME}; \
+    fi \
     && mkdir ${USER_HOME}/wso2-tmp \
     && bash -c 'mkdir -p ${USER_HOME}/solr/{indexed-data,database}' \
     && chown wso2carbon:wso2 -R ${USER_HOME}/solr \
